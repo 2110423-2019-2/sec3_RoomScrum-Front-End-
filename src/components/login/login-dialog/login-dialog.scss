@@ -1,0 +1,45 @@
+.login-dialog {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  max-width: 360px;
+  padding: 16px 32px;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+
+  .column {
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    
+    > * {
+      margin: 0.5em 0;
+    }
+    
+    .title {
+      font-weight: bold;
+    }
+
+    .input {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+  
+      label {
+        color: gray;
+      }
+  
+      input {
+        padding: 0.5em;
+        border: 0;
+        background-color: lightgray;
+      }
+    }
+  }
+  
+  
+
+  
+}
+
