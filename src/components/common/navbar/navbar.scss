@@ -1,0 +1,38 @@
+.navbar {
+
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 0 16px;
+
+  &.flex-row, .flex-row {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  
+  .navbar-left {
+    .title {
+      font-size: 2em;
+      font-weight: bold;
+    }
+  }
+
+  .navbar-right {
+    
+    .link-section, .dynamic-section {
+      display: flex;
+      align-items: center;
+      > * {
+        padding-left: 1em;
+      }
+    }
+
+  }
+
+}
+
+.login-buttons {
+  > * {
+    margin-left: 1em;
+  }
+}
