@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar } from '../../components/common';
+import { Navbar } from 'src/components/common';
 
 
 const Login = () => {

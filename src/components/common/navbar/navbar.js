@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './navbar.scss';
 import { Link as Button } from 'react-router-dom';
-import { LoginDialog } from 'components/login';
+import { LoginDialog } from 'src/components/login';
 
 const LoginButtons = () => {
   const [isOpen, setOpen] = useState(false);
