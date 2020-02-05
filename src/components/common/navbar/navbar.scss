@@ -37,27 +37,36 @@
   }
 }
 
-.user-account {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  
-  > * {
-    margin-left: 0.5em;
-  }
-}
 
-.dropdown {
-  position: absolute;
-  width: 200px;
-
-  > * {
-    width: 100%;
-    text-align: center;
+.account-wrapper {
+  .user-account {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
     cursor: pointer;
+    
+    > * {
+      margin-left: 0.5em;
+    }
   }
-
-  .w-full {
-    background-color: green;
+  
+  .dropdown {
+    float: right;
+    right: 1em;
+    position: absolute;
+    width: 200px;
+    display: none;
+    background-color: white;
+  
+    &.show {
+      display: block;
+    }
+  
+    > * {
+      width: 100%;
+      text-align: center;
+      cursor: pointer;
+    }
   }
+  
 }
