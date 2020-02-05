@@ -36,3 +36,28 @@
     margin-left: 1em;
   }
 }
+
+.user-account {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  
+  > * {
+    margin-left: 0.5em;
+  }
+}
+
+.dropdown {
+  position: absolute;
+  width: 200px;
+
+  > * {
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .w-full {
+    background-color: green;
+  }
+}
