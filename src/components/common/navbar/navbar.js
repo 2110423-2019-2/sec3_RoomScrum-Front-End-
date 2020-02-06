@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import './navbar.scss';
 import { Link } from 'react-router-dom';
 import { LoginDialog } from 'src/components/login';
-import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faCaretDown, faTruckMonster } from '@fortawesome/free-solid-svg-icons';
-import { logout } from 'src/store/login-state';
+import { globalLoginState } from 'src/store/login-state';
+import { observer } from 'mobx-react';
 import classname from 'classname';
+import './navbar.scss';
+
+
 const LoginButtons = () => {
   const [isOpen, setOpen] = useState(false);
   const closeDialog = () => {
@@ -25,20 +27,17 @@ const LoginButtons = () => {
   );
 };
 
-const _Avatar = ({username, logout}) => {
+const Avatar = observer(({loginState}) => {
   const [showDropdown, setDropdown] = useState(false);
   const toggleDropdown = () => setDropdown(!showDropdown);
-
   const onLogout = () => {
-    logout();
-    document.cookie = "token=";
-    document.location.href = "/";
+    loginState.username = null;
   }
 
   return (
     <div className="account-wrapper">
       <div className="user-account text-white" onClick={toggleDropdown}>
-        <span> logged in as {username}</span>
+        <span> logged in as {loginState.username}</span>
         <span style={{fontSize: "32px"}}>
           <FontAwesomeIcon icon={faUserCircle}/>
         </span>
@@ -55,22 +54,9 @@ const _Avatar = ({username, logout}) => {
       </div>
     </div>
   );
-}
+});
 
-const Avatar = connect(
-  state => {
-    return {
-      username: state.loginState.username
-    };
-  },
-  dispatch => ({
-    logout: () => dispatch(logout()),
-  })
-)(_Avatar);
-
-
-const Navbar = ({isLoggedIn, username}) => {
-  console.log(isLoggedIn, username);
+const Navbar = observer(({loginState}) => {
   return (
     <div className="navbar flex-row bg-primary shadow-sm">
       <div className="navbar-left">
@@ -84,24 +70,12 @@ const Navbar = ({isLoggedIn, username}) => {
           <Link className="text-white" to="/find/bands"> Find Bands </Link>
         </div>
         <div className="dynamic-section">
-          { !isLoggedIn && <LoginButtons/> }
-          { isLoggedIn && <Avatar username={username}/> }
+          { !loginState.isLoggedIn && <LoginButtons/> }
+          { loginState.isLoggedIn && <Avatar loginState={loginState}/> }
         </div>
       </div>
     </div>
   );
-};
+});
 
-const mapStateToProps = (state, ownProps) => {
-  const { loginState } = state;
-  return {
-    isLoggedIn: !!loginState.username,
-    username: loginState.username,
-  };
-}
-
-
-export default connect(
-  mapStateToProps,
-  null,
-)(Navbar);
+export default () => <Navbar loginState={globalLoginState}/>;

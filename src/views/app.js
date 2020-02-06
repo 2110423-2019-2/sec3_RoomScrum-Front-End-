@@ -3,13 +3,12 @@ import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Login from './login';
 import NotFoundPage from './not-found';
 import Home from './home';
-import { connect } from 'react-redux';
-import { login } from 'src/store/login-state';
 import request from 'superagent';
 
 import config from 'src/config';
+import { globalLoginState } from 'src/store';
 
-const App = ({setUsername}) => {
+const App = ({loginState}) => {
   const attempt = useRef(false);
   
   if (!attempt.current) {
@@ -19,7 +18,7 @@ const App = ({setUsername}) => {
       .then(res => {
         const {username} = JSON.parse(res.text);
         if (username){
-          setUsername(username);
+          loginState.username = username;
           console.log("logged in as", username);
         }
       })
@@ -44,11 +43,4 @@ const App = ({setUsername}) => {
   );
 };
 
-const dispatchToProps = dispatch => ({
-  setUsername: username => dispatch(login(username)),
-});
-
-export default connect(
-    null,
-    dispatchToProps,
-)(App);
+export default () => <App loginState={globalLoginState}/>; 

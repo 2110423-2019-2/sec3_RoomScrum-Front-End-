@@ -1,24 +1,16 @@
-export const login = (username) => {
-  return {
-    type: 'LOGIN',
-    username,
-  };
-}
+import { decorate, computed, observable } from 'mobx';
 
-export const logout = (username) => {
-  return {
-    type: 'LOGOUT',
-  };
-}
-
-export const loginStateReducer = (loginState = {username: null}, action) => {
-  switch (action.type) {
-    case 'LOGIN':
-      let { username }= action;
-      return {username};
-    case 'LOGOUT':
-      return {username: null};
-    default:
-      return loginState;
+class LoginState {
+  username = null;
+  get isLoggedIn() {
+    return this.username !== null;
   }
-}
+};
+
+decorate(LoginState, {
+  username: observable,
+  isLoggedIn: computed,
+});
+
+
+export const globalLoginState = new LoginState();
