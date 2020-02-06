@@ -32,6 +32,7 @@ const Avatar = observer(({loginState}) => {
   const toggleDropdown = () => setDropdown(!showDropdown);
   const onLogout = () => {
     loginState.username = null;
+    document.cookie = 'token=; expires = 01 Jan 1970 00:00:00'; // clear cookie
   }
 
   return (
