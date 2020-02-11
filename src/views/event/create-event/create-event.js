@@ -44,11 +44,19 @@ const CreateEventPage = () => {
             .send(form)
     }
     const postData = async () => {
-
+        const data = {}
+        for (let key in form) {
+            data[key] = form[key].value;
+        }
+        await request.post(`${config.API_URL}/event/`)
+            .send(data)
+        console.log('create event ok');
     }
 
-    const foo = () => {
-        
+    const foo = async () => {
+        await postData();
+        // TODO use postData to determine which user image to upload
+        await uploadImage();
     }
     return (
         <div className="create-event bg-info">
