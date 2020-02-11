@@ -6,7 +6,6 @@ import request from 'superagent';
 
 import config from 'src/config';
 import { globalLoginState } from 'src/store';
-import EventPages from './event';
 
 const App = ({loginState}) => {
   const attempt = useRef(false);
@@ -29,9 +28,6 @@ const App = ({loginState}) => {
   return (
       <Router>
         <Switch>
-          <Route path='/event'>
-            <EventPages/>
-          </Route>
           <Route exact path="/">
             <Home/>
           </Route>
