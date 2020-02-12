@@ -8,6 +8,8 @@ import config from 'src/config';
 import { globalLoginState } from 'src/store';
 import EventPages from './event';
 
+import ProfilePage from './profile'
+
 const App = ({loginState}) => {
   const attempt = useRef(false);
   
@@ -31,6 +33,9 @@ const App = ({loginState}) => {
         <Switch>
           <Route path='/event'>
             <EventPages/>
+          </Route>
+          <Route path='/profile'>
+            <ProfilePage/>
           </Route>
           <Route exact path="/">
             <Home/>

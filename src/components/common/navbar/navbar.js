@@ -52,8 +52,16 @@ const Avatar = observer(({loginState}) => {
             "show": showDropdown,
           })
         }>
+        <Link className="dropdown-item text-muted" to="/event/create"> Create Event </Link>
+        <Link className="dropdown-item text-muted" to="/event/create"> Some </Link>
+        <Link className="dropdown-item text-muted" to="/event/create"> Extra </Link>
+        <Link className="dropdown-item text-muted" to="/event/create"> Item </Link>
+        <div className="dropdown-divider"></div>
+        <Link className="dropdown-item text-muted" to="/event/create"> Some </Link>
+        <Link className="dropdown-item text-muted" to="/event/create"> Extra </Link>
+        <Link className="dropdown-item text-muted" to="/event/create"> Item </Link>
+        <div className="dropdown-divider"></div>
         <div className="text-danger dropdown-item" onClick={onLogout}> Logout </div>
-        <Link className="dropdown-item" to="/event/create"> Create Event </Link>
       </div>
     </div>
   );
