@@ -32,6 +32,7 @@ const Avatar = observer(({loginState}) => {
   const toggleDropdown = () => setDropdown(!showDropdown);
   const onLogout = () => {
     loginState.username = null;
+    document.location.href = "/";
     document.cookie = 'token=; expires = 01 Jan 1970 00:00:00'; // clear cookie
   }
 
@@ -52,6 +53,7 @@ const Avatar = observer(({loginState}) => {
           })
         }>
         <div className="text-danger dropdown-item" onClick={onLogout}> Logout </div>
+        <Link className="dropdown-item" to="/event/create"> Create Event </Link>
       </div>
     </div>
   );

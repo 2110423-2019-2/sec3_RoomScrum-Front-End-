@@ -19,7 +19,6 @@ const validateFields = (validators, value) => {
 }
 
 const checkForm = (updateInfo, form, validator) => {
-    console.log("validate", updateInfo, validator)
     const {field, value} = updateInfo;
     if (!validator[field]) return form;
     return {
@@ -43,15 +42,15 @@ const formReducer = (validator, field) => (form, action) => {
     }
 }
 
-export const formStateBuilder = (fields) => {
+export const formStateBuilder = (formDefinition) => {
     const validator = {};
     const field = {}
     const initState = {}
-    for (let key in fields) {
-        validator[key] = fields[key].validator || [];
+    for (let key in formDefinition) {
+        validator[key] = formDefinition[key].validator || [];
         field[key] = true;
         initState[key] = {
-            value: fields[key].default,
+            value: formDefinition[key].default,
         }
     }    
     return () => useReducer(formReducer(validator, field), initState);

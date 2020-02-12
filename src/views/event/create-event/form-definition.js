@@ -1,6 +1,6 @@
 // please use field name same as DTO
 
-const createEventFormDefinition = {
+export const formUpper = {
     name: {
         type: "text",
         label: "Event Name",
@@ -9,18 +9,19 @@ const createEventFormDefinition = {
             () => "Fake error",
             () => "Fake error2",
         ],
-        width: "sm-6"
     },
     date: {
         type: "date",
         label: "Event Date",
-        width: "sm-3",
     },
+}
+
+
+export  const formBelow = {
     description: {
-        type: "text",
+        type: "textarea",
         label: "Event Details",
         default: "lorem ipsum",
-        width: "sm-3",
     },
     address: {
         type: "text",
@@ -47,9 +48,21 @@ const createEventFormDefinition = {
         ]
     },
     country: {
-        type: "text",
+        type: "options",
         label: "Country",
+        choice: [
+            {
+                display: "China",
+                value: 1,
+            },
+            {
+                display: "Thailand",
+                value: 2,
+            },
+            {
+                display: "USA",
+                value: 3,
+            }
+        ]
     },
 }
-
-export default createEventFormDefinition;
