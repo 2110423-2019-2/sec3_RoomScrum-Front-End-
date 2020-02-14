@@ -3,7 +3,7 @@ import './create-event.scss';
 import { Navbar, Form } from 'src/components/common';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
-import classname from 'classname';
+import classnames from 'classnames';
 import request from 'superagent';
 import config from 'src/config';
 
@@ -71,7 +71,7 @@ const CreateEventPage = () => {
 
                             <input name="image" ref={uploadedFile} onChange={updateEventImage} type="file" hidden/>
                             <div className={
-                                classname({
+                                classnames({
                                     overlay: true,
                                     'force-show': !eventImage,
                                 })
