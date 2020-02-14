@@ -1,17 +1,22 @@
 import React, { useRef } from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import request from 'superagent';
+
 import NotFoundPage from './not-found';
 import Home from './home';
 import Register from './register';
+import EventPages from './event';
+import AdminPages from './admin'
+
+// todo fix this
 import Dashboard from './RawDashboard/dashboard';
 import Eventinfo from './RawDashboard/Event Info';
 import Appliedmusician from './RawDashboard/AppliedMusician';
 import Currentcontract from './RawDashboard/CurrentContract';
-import request from 'superagent';
 
 import config from 'src/config';
 import { globalLoginState } from 'src/store';
-import EventPages from './event';
+
 
 const App = ({loginState}) => {
   const attempt = useRef(false);
@@ -34,8 +39,11 @@ const App = ({loginState}) => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <Home/>
+        <Route path='/event'>
+          <EventPages/>
+        </Route>
+        <Route path='/admin'>
+          <AdminPages/>
         </Route>
         <Route path="/dashboard">
           <Dashboard/>
@@ -52,11 +60,11 @@ const App = ({loginState}) => {
         <Route path="/register">
           <Register/>
         </Route>
+        <Route exact path="/">
+          <Home/>
+        </Route>
         <Route path="/">
           <NotFoundPage/>
-        </Route>
-        <Route path='/event'>
-          <EventPages/>
         </Route>
       </Switch>
     </Router>
