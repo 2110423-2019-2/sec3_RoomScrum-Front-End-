@@ -26,10 +26,11 @@ const LoginDialog = ({open, onRequestClose}) => {
       password: passwordInput.current.value,
     })
     .then(res => {
-      const { token } = JSON.parse(res.text);
+      const { token, username } = JSON.parse(res.text);
+      
       if (token) {
-        document.cookie = joinCookie(document.cookie, `token=${token}`);
-        alert(`login ok ${token}`);
+        document.cookie = `token=${token}`;
+        document.location = "/";
       } else {
         alert('invalid response from server')
       }
@@ -38,18 +39,6 @@ const LoginDialog = ({open, onRequestClose}) => {
       alert('wrong password')
     });
   }
-
-  // const checkState = () => {
-  //   request.get(`${config.API_URL}/auth/status`)
-  //   .withCredentials()
-  //   .then(res => {
-  //     console.log('status:', JSON.parse(res.text));
-  //   })
-  //   .catch(err => {
-  //     console.log('status: not logged in');
-  //   })
-  // }
-
   return (
     <Modal isOpen={open} onRequestClose={onRequestClose} className="login-dialog shadow">
       <div className="column">
@@ -63,11 +52,10 @@ const LoginDialog = ({open, onRequestClose}) => {
           <input ref={passwordInput} type="password"/>
         </div>
         <button className="btn btn-primary" onClick={login}> Login </button>
-        {/* <button className="btn btn-primary" onClick={checkState}> check state </button> */}
         <Link to="/register" className="text-center"> No account, create an account now! </Link>
       </div>
     </Modal>
   )
 };
-
 export default LoginDialog;
+
