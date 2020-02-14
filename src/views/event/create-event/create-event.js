@@ -71,7 +71,7 @@ const CreateEventPage = () => {
 
                             <input name="image" ref={uploadedFile} onChange={updateEventImage} type="file" hidden/>
                             <div className={
-                                classname({
+                                classnames({
                                     overlay: true,
                                     'force-show': !eventImage,
                                 })
