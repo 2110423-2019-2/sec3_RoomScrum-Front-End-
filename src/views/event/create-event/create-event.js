@@ -3,7 +3,7 @@ import './create-event.scss';
 import { Navbar, Form } from 'src/components/common';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
-import classname from 'classname';
+import classnames from 'classnames';
 import request from 'superagent';
 import config from 'src/config';
 

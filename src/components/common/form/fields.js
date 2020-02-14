@@ -1,9 +1,9 @@
 import React from 'react'
 import './fields.scss';
-import classname from 'classname';
+import classnames from 'classnames';
 import { formBelow } from 'src/views/event/create-event/form-definition';
 
-const makeClassName = (errors) => classname({
+const makeClassName = (errors) => classnames({
     "form-control": true,
     "is-valid": errors && errors.length == 0,
     "is-invalid": errors && errors.length != 0,

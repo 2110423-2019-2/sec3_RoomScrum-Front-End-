@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faCaretDown, faTruckMonster } from '@fortawesome/free-solid-svg-icons';
 import { globalLoginState } from 'src/store/login-state';
 import { observer } from 'mobx-react';
-import classname from 'classname';
+import classnames from 'classnames';
 import './navbar.scss';
 
 
@@ -47,7 +47,7 @@ const Avatar = observer(({loginState}) => {
       </div>
       <div
         className={
-          classname({
+          classnames({
             "dropdown border border-dark rounded shadow p-1": true,
             "show": showDropdown,
           })
