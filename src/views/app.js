@@ -2,6 +2,11 @@ import React, { useRef } from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NotFoundPage from './not-found';
 import Home from './home';
+import Register from './register';
+import Dashboard from './RawDashboard/dashboard';
+import Eventinfo from './RawDashboard/Event Info';
+import Appliedmusician from './RawDashboard/AppliedMusician';
+import Currentcontract from './RawDashboard/CurrentContract';
 import request from 'superagent';
 
 import config from 'src/config';
@@ -27,19 +32,35 @@ const App = ({loginState}) => {
   }
 
   return (
-      <Router>
-        <Switch>
-          <Route path='/event'>
-            <EventPages/>
-          </Route>
-          <Route exact path="/">
-            <Home/>
-          </Route>
-          <Route path="/">
-            <NotFoundPage/>
-          </Route>
-        </Switch>
-      </Router>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Home/>
+        </Route>
+        <Route path="/dashboard">
+          <Dashboard/>
+        </Route>
+        <Route path="/eventinfo">
+          <Eventinfo/>
+        </Route>
+        <Route path="/appliedmusician">
+          <Appliedmusician/>
+        </Route>
+        <Route path="/currentcontract">
+          <Currentcontract/>
+        </Route>
+        <Route path="/register">
+          <Register/>
+        </Route>
+        <Route path="/">
+          <NotFoundPage/>
+        </Route>
+        <Route path='/event'>
+          <EventPages/>
+        </Route>
+      </Switch>
+    </Router>
+          
   );
 };
 
