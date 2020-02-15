@@ -21,7 +21,7 @@ export const DashboardNavigation = ({children}) => {
 
 export const DashboardContent = ({children}) => {
     return (
-        <div className="col stretch">
+        <div className="col stretch p-0">
             { children }
         </div>
     );
