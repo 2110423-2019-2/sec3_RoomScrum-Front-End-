@@ -29,7 +29,7 @@ export default () => {
     }
 
     const removeShownMusician = () => {
-        setMusician(musicians.filter(m => m.userId !== shownMusician.id));
+        setMusician(musicians.filter(m => m != shownMusician));
     }
     return (
         <div className="approve-musician bg-light pt-2">
