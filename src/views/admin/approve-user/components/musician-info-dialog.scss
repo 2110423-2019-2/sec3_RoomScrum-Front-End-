@@ -6,9 +6,21 @@
     top: 50%;
     left: 50%;
     width: 80vw;
-    max-height: 80vh;
+    max-height: 90vh;
     max-width: 768px;
     overflow-y: auto;
+
+    .profile-image {
+        width: 250px;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .national-id-image {
+        width: 192px;
+        height: 120px;
+        object-fit: cover;
+    }
 
     .center {
         justify-self: center;
@@ -16,5 +28,22 @@
 
     .info {
         font-size: 14px;
+    }
+
+    .img-btn {
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+.image-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    .content {
+        padding: 0 1rem 1rem 1rem;
     }
 }

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import './musician-info-dialog.scss';
 import request from 'superagent';
 import config from 'src/config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCross, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const Field = ({fieldName, value}) => {
     return  (
@@ -62,44 +64,63 @@ export default ({
         })
     }
 
+    const [image, setImage] = useState(null);
+    
+
     return (
-        <Modal className="musician-info-dialog shadow rounded-lg" isOpen={isOpen} onRequestClose={onRequestClose}>
-            <div className="dialog-content row justify-content-center m-0">
-                <div className="center">
-                    <img src={imageProfile}/>
+        <>
+            <Modal className="musician-info-dialog shadow rounded-lg" isOpen={isOpen} onRequestClose={onRequestClose}>
+                <div className="dialog-content row justify-content-center m-0">
+                    <div className="center">
+                        <img src={imageProfile} className="profile-image btn img-btn" onClick={() => {
+                            setImage(imageProfile);
+                        }}/>
+                    </div>
+                    <div className="col-12"></div>
+                    <div className="col-12 col-sm-10 mt-4 info">
+                        <dl className="row">
+                            <Field fieldName="Name" value={`${firstName} ${lastName}`}/>
+                            <Field fieldName="Gender" value={gender}/>
+                            <Field fieldName="Age" value={calcAge(new Date(), new Date(birthdate))}/>
+                            <Field fieldName="Bio" value={bio}/>
+                            <Field fieldName="nationalId" value={nationalId}/>
+                            <Field fieldName="Genres" value={tags.join(", ")}/>
+                            <Field fieldName="Email" value={email}/>
+                            <Field fieldName="Tel" value={phoneNumber}/>
+                            <Field fieldName="Address" value={<div>
+                                {address}, {subdistrict} <br/>
+                                {district}, {cityState}, {zipCode}, {country}
+                            </div>}/>
+                            <Field fieldName="Video" value={
+                                <a href={videoUrl}> {videoUrl}</a>
+                            }/>
+                            <Field fieldName="Nation Card Image" value={
+                                <img src={nationalCardImage} className="national-id-image btn img-btn" onClick={() => {
+                                    setImage(nationalCardImage);
+                                }}/>
+                            }/>
+                        </dl>
+                    </div>
+                    <div className="col-12">
+                        <div className="row justify-content-between m-3">
+                            <button onClick={() => acceptMusician(userId)} className="btn btn-success col-6 rounded-0"> Accept </button>
+                            <button onClick={() => rejectMusician(userId)} className="btn btn-danger col-6 rounded-0"> Reject </button>
+                        </div>
+                    </div>
+
                 </div>
-                <div className="col-12"></div>
-                <div className="col-12 col-sm-10 mt-4 info">
-                    <dl className="row">
-                        <Field fieldName="Name" value={`${firstName} ${lastName}`}/>
-                        <Field fieldName="Gender" value={gender}/>
-                        <Field fieldName="Age" value={calcAge(new Date(), new Date(birthdate))}/>
-                        <Field fieldName="Bio" value={bio}/>
-                        <Field fieldName="nationalId" value={nationalId}/>
-                        <Field fieldName="Genres" value={tags.join(", ")}/>
-                        <Field fieldName="Email" value={email}/>
-                        <Field fieldName="Tel" value={phoneNumber}/>
-                        <Field fieldName="Address" value={<div>
-                            {address}, {subdistrict} <br/>
-                             {district}, {cityState}, {zipCode}, {country}
-                        </div>}/>
-                        <Field fieldName="Video" value={
-                            <a href={videoUrl}> {videoUrl}</a>
-                        }/>
-                        <Field fieldName="Nation Card Image" value={
-                            <img src={nationalCardImage}/>
-                        }/>
-                    </dl>
-                </div>
-                <div className="col-12">
-                    <div className="row justify-content-between m-3">
-                        <button onClick={() => acceptMusician(userId)} className="btn btn-success col-6 rounded-0"> Accept </button>
-                        <button onClick={() => rejectMusician(userId)} className="btn btn-danger col-6 rounded-0"> Reject </button>
+            </Modal>
+            <Modal isOpen={image !== null} onRequestClose={() => setImage(null)} className="image-popup">
+                <div className="bg-white content shadow-lg">
+                    <div className="btn float-right" onClick={() => setImage(null)}>
+                        <FontAwesomeIcon icon={faTimes}/>
+                    </div>
+                    <div>
+                        <img src={image}/>
                     </div>
                 </div>
-
-            </div>
-        </Modal>
+            </Modal>
+        </>
     )
 }
 

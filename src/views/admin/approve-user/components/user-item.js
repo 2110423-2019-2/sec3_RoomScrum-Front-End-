@@ -10,22 +10,31 @@ const UserInfo = ({field, value}) => {
     );
 };
 
-const UserItem = ({onViewMusician, userInfo}) => {
-    const {firstName, lastName, gender, age, bio, tags, imageProfile} = userInfo;
+const calcAge = (date1, date2) => {
+    return Math.floor((date1 - date2)/ 24/3600/365.25/1000); 
+}
 
+const UserItem = ({onViewMusician, userInfo}) => {
+    const {firstName, lastName, gender, birthdate, bio, tags, imageProfile} = userInfo;
+    const age = calcAge(new Date(), new Date(birthdate));
     return (
-        <div className="user-item card" style={{width: "224px"}}>
-            <img src={imageProfile} className="card-img-top p-3" alt="..."/>
+        <div className="user-item card">
+            <div className="text-center">
+                <img src={imageProfile} className="card-img-top rounded-circle p-3 d-inline-block" alt="..."/>
+            </div>
             <div className="card-body p-2">
-                <h5 className="card-title"> {firstName} {lastName}, {age}</h5>
-                <UserInfo field="Gender" value={gender}/>
-                <UserInfo field="" value={bio}/>
-                <div>
-                    {
-                        tags.map(tag => (
-                            <span className="badge badge-secondary mr-2"> {tag} </span>
-                        ))
-                    }
+                <div className="rounded-lg m-2 p-3 bg-gray">
+                    <div className="card-title h4"> {firstName} {lastName}</div>
+                    <UserInfo field="Gender" value={gender}/>
+                    <UserInfo field="Age" value={age}/>
+                    <UserInfo field="" value={bio}/>
+                    <div>
+                        {
+                            tags.map(tag => (
+                                <span className="badge badge-secondary mr-2"> {tag} </span>
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
             <div className="card-footer p-0 bg-white">

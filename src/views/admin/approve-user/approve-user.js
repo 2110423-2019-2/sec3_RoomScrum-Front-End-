@@ -40,9 +40,9 @@ export default () => {
                     userInfo={shownMusician}
                     isOpen={open} onRequestClose={() => setOpen(false)}
                 />
-            }
+            } 
             <h1 className="pl-4"> Approve Musicians </h1>
-            <div className="row justify-content-around">
+            <div className="grid">
                 {
                     musicians && musicians.map(m => (
                         <UserItem userInfo={m} onViewMusician={() => {

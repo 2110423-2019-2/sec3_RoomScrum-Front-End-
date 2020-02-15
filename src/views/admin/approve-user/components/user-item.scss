@@ -1,11 +1,16 @@
 .user-item.card {
-    margin: 8px;
+    width: 224px;
     font-size: 0.75em; 
     
     img {
-        height: 128px;
-        border-radius: 16px;
+        width: 192px;
+        height: 192px;
         object-fit: cover;
+    }
+
+
+    .bg-gray {
+        background-color: lightgrey;
     }
 
     .user-info {
