@@ -36,7 +36,7 @@ const UserItem = ({onViewMusician, userInfo}) => {
                 </div>
                 <UserInfo field="" value={bio}/>
             </div>
-            <div className="card-footer p-0 mt-1 bg-white">
+            <div className="card-footer p-0 bg-white">
                 <button className="btn btn-block" onClick={onViewMusician}> View </button>
             </div>
         </div>
