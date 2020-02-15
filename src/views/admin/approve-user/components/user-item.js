@@ -3,7 +3,7 @@ import './user-item.scss';
 
 const UserInfo = ({field, value}) => {
     return (
-        <div className="user-info">
+        <div className="user-info mb-1">
             <span className="field-name">{field}</span> {" "}
             <span className="field-value m-0">{value}</span>
         </div>    
@@ -22,22 +22,21 @@ const UserItem = ({onViewMusician, userInfo}) => {
             <div className="text-center">
                 <img src={imageProfile} className="card-img-top rounded-circle p-3 d-inline-block" alt="..."/>
             </div>
-            <div className="card-body p-2">
-                <div className="rounded-lg m-2 p-3 bg-gray">
-                    <div className="card-title h4"> {firstName} {lastName}</div>
-                    <UserInfo field="Gender" value={gender}/>
-                    <UserInfo field="Age" value={age}/>
-                    <UserInfo field="" value={bio}/>
-                    <div>
-                        {
-                            tags.map(tag => (
-                                <span className="badge badge-secondary mr-2"> {tag} </span>
-                            ))
-                        }
-                    </div>
+            <div className="card-body bg-gray">
+                <div className="h4 m-0"> {firstName}</div>
+                <div className="h5"> {lastName}</div>
+                <UserInfo field="Gender" value={gender}/>
+                <UserInfo field="Age" value={age}/>
+                <div>
+                    {
+                        tags.map(tag => (
+                            <span className="badge badge-secondary mr-2"> {tag} </span>
+                        ))
+                    }
                 </div>
+                <UserInfo field="" value={bio}/>
             </div>
-            <div className="card-footer p-0 bg-white">
+            <div className="card-footer p-0 mt-1 bg-white">
                 <button className="btn btn-block" onClick={onViewMusician}> View </button>
             </div>
         </div>
