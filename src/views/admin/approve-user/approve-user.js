@@ -42,6 +42,7 @@ export default () => {
                 />
             } 
             <h1 className="pl-4"> Approve Musicians </h1>
+            <div className="dropdown-divider"></div>
             <div className="grid">
                 {
                     musicians && musicians.map(m => (

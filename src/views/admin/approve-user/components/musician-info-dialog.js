@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Modal from 'react-modal';
 import './musician-info-dialog.scss';
 import request from 'superagent';
 import config from 'src/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCross, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { confirmAlert } from 'react-confirm-alert';
+import { ConfirmDialog } from 'src/components/common';
 
 const Field = ({fieldName, value}) => {
     return  (
@@ -29,6 +31,10 @@ export default ({
     onAcceptSuccess,
     userInfo,
 }) => {
+    const [image, setImage] = useState(null);
+    const [showAlert, setAlert] = useState(false);
+    const [dialogState, setDialogState] = useState({})
+    const callbackAction = useRef();
     const {
         userId, username, password, firstName,
         lastName, nationalId, gender, birthdate,
@@ -37,26 +43,28 @@ export default ({
         imageProfile, isMusician, bio, tags,
         isVerify, nationalCardImage, videoUrl, hireeId,
     } = userInfo;
+
     
-    const acceptMusician = () => {
+    const requestAcceptMusician = (userId) => () => {
         request.post(`${config.API_URL}/admin/user/approve`)
         .send({id: userId})
         .then(() => {
             onAcceptSuccess();
+            onRequestClose();
             alert("Approve User OK");
         })
         .catch(err => {
             console.error(err);
             alert("Approve User Error")
         })
-    }
-
-    const rejectMusician = () => {
+    };
+    const requestRejectMusician = (userId) => () => {
         request.post(`${config.API_URL}/admin/user/reject`)
         .send({id: userId})
         .then(() => {
             onRejectSuccess();
             alert("Reject User OK");
+            onRequestClose();
         })
         .catch(err => {
             console.error(err);
@@ -64,12 +72,36 @@ export default ({
         })
     }
 
-    const [image, setImage] = useState(null);
+    
+    const acceptMusician = (userId) => {
+        setAlert(true);
+        setDialogState({
+            title: "Accept Musician",
+            question: "Are you sure you want to accept this musician ?",
+        })
+        callbackAction.current = requestAcceptMusician(userId);
+    }
+
+    const rejectMusician = (userId) => {
+        setAlert(true);
+
+        setDialogState({
+            title: "Reject Musician",
+            question: "Are you sure you want to reject this musician ?",
+        })
+        callbackAction.current = requestRejectMusician(userId);
+    }
+
+    
+
     
 
     return (
         <>
             <Modal className="musician-info-dialog shadow rounded-lg" isOpen={isOpen} onRequestClose={onRequestClose}>
+                <button className="top-right btn" onClick={onRequestClose}>
+                    <FontAwesomeIcon icon={faTimes}/>
+                </button>
                 <div className="dialog-content row justify-content-center m-0">
                     <div className="center">
                         <img src={imageProfile} className="profile-image btn img-btn" onClick={() => {
@@ -110,7 +142,7 @@ export default ({
 
                 </div>
             </Modal>
-            <Modal isOpen={image !== null} onRequestClose={() => setImage(null)} className="image-popup">
+            <Modal isOpen={image !== null} onRequestClose={() => setImage(null)} className="center-popup">
                 <div className="bg-white content shadow-lg">
                     <div className="btn float-right" onClick={() => setImage(null)}>
                         <FontAwesomeIcon icon={faTimes}/>
@@ -120,33 +152,14 @@ export default ({
                     </div>
                 </div>
             </Modal>
+            <Modal className="center-popup" isOpen={showAlert}>
+                <ConfirmDialog {...dialogState} callback={confirm => {
+                    setAlert(false);
+                    if (confirm) {
+                        callbackAction.current();
+                    }
+                }}/>
+            </Modal>
         </>
     )
 }
-
-// const fieldNameMap = {
-//     userId: null,
-//     username: null,
-//     password: null,
-//     firstname: 'First Name',
-//     lastname: 'Last Name',
-//     nationalId: 'National ID',
-//     gender: 'Gender',
-//     birthdate: 'Birthdate',
-//     email: 'Email',
-//     phoneNumber: '',
-//     address: 
-//     subdistrict: 
-//     district: 
-//     cityState: 
-//     country: 
-//     zipcode: 
-//     imageProfile: 
-//     isMusician: 
-//     bio: 
-//     {tag}: 
-//     isVerify: 
-//     nationalCardImage: 
-//     videoUrl: 
-//     hireeId: 
-// }
