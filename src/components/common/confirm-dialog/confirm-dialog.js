@@ -18,7 +18,7 @@ const Dialog = ({title, question, callback}) => {
             <button type="button"
                     class="btn btn-primary"
                     onClick={() => callback(true)}
-                >Yes</button>
+                autoFocus>Yes</button>
                 <button type="button"
                     class="btn btn-secondary"
                     onClick={() => callback(false)}
