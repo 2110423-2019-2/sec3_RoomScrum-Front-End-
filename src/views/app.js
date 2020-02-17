@@ -8,11 +8,7 @@ import Register from './register';
 import EventPages from './event';
 import AdminPages from './admin'
 
-// todo fix this
-import Dashboard from './RawDashboard/dashboard';
-import Eventinfo from './RawDashboard/Event Info';
-import Appliedmusician from './RawDashboard/AppliedMusician';
-import Currentcontract from './RawDashboard/CurrentContract';
+
 
 import config from 'src/config';
 import { globalLoginState } from 'src/store';
@@ -44,18 +40,6 @@ const App = ({loginState}) => {
         </Route>
         <Route path='/admin'>
           <AdminPages/>
-        </Route>
-        <Route path="/dashboard">
-          <Dashboard/>
-        </Route>
-        <Route path="/eventinfo">
-          <Eventinfo/>
-        </Route>
-        <Route path="/appliedmusician">
-          <Appliedmusician/>
-        </Route>
-        <Route path="/currentcontract">
-          <Currentcontract/>
         </Route>
         <Route path="/register">
           <Register/>
