@@ -63,7 +63,7 @@ const CreateEventPage = () => {
         <div className="create-event bg-info">
             <Navbar/>
             <div className="container rounded-top rounded-lg shadow">
-                <h1> Create Event </h1>
+                <h1> Create Event</h1>
                 <div className="container-fluid" >
                     <div className="row upload-image">
                         <div className="upload-image">
@@ -86,7 +86,8 @@ const CreateEventPage = () => {
                         </div>
                     </div>
                     <Form formDef={formBelow} ref={formDataBelow}/>
-                    <button className="btn btn-primary" onClick={foo}> Submit </button>
+                    
+                    <button className="btn btn-primary mt-4" onClick={foo}> Submit </button>
                 </div>
             </div>
         </div>

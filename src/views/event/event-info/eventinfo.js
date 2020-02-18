@@ -116,7 +116,7 @@ const EventInfo = () => {
 
             <div class='col-md-3 border border-primary' >
                 <ul className="nav nav-pills nav-stacked justify-content-center ">
-                    <Link to='/eventinfo' className="active"><a href="#">Event Info</a></Link>
+                    <Link to='/event/info/1' className="active"><a href="#">Event Info</a></Link>
                 </ul>
             </div>
 
