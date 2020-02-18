@@ -40,8 +40,8 @@ export default ({
         lastName, nationalId, gender, birthdate,
         email, phoneNumber, address, subdistrict,
         district, cityState, country, zipCode,
-        imageProfile, isMusician, bio, tags,
-        isVerify, nationalCardImage, videoUrl, hireeId,
+        profileImage, isMusician, bio, tags = ["foo", "bar", "baz"] ,
+        musicianApprovement, nationalCardImage, videoUrl, hireeId,
     } = userInfo;
 
     
@@ -104,8 +104,8 @@ export default ({
                 </button>
                 <div className="dialog-content row justify-content-center m-0">
                     <div className="center">
-                        <img src={imageProfile} className="profile-image btn img-btn" onClick={() => {
-                            setImage(imageProfile);
+                        <img src={profileImage} className="profile-image btn img-btn" onClick={() => {
+                            setImage(profileImage);
                         }}/>
                     </div>
                     <div className="col-12"></div>
