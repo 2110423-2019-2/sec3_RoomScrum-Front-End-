@@ -38,7 +38,7 @@ const noValidHack = (errors) => {
     return errors;
 }
 
-export const InputField = ({name, type, label, width, value, errors, onChange, onBlur, ...otherProps}) => {
+export const InputField = ({name, type, label, width, value, errors, onChange, onBlur, placeholder,...otherProps}) => {
     return <div className={"input col-" + width}>
         <label> {label} </label>
         {
@@ -50,6 +50,7 @@ export const InputField = ({name, type, label, width, value, errors, onChange, o
                                 className={makeClassName(errors)}
                                 onChange={onChange(name)}
                                 onBlur={onBlur(name)} rows="4"
+                                placeholder = {placeholder}
                             /> 
                         )
                     case "options":
@@ -73,6 +74,7 @@ export const InputField = ({name, type, label, width, value, errors, onChange, o
                                 className={makeClassName(errors)}
                                 onChange={onChange(name)}
                                 onBlur={onBlur(name)}
+                                placeholder = {placeholder}
                             /> 
                         )
                 }                      
