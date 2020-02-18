@@ -36,13 +36,15 @@ export default ({
     const [dialogState, setDialogState] = useState({})
     const callbackAction = useRef();
     const {
-        userId, username, password, firstName,
+        userId, firstName,
         lastName, nationalId, gender, birthdate,
         email, phoneNumber, address, subdistrict,
-        district, cityState, country, zipCode,
-        profileImage, isMusician, bio, tags = ["foo", "bar", "baz"] ,
-        musicianApprovement, nationalCardImage, videoUrl, hireeId,
+        district, cityState, country, zipCode, bio, tags = ["foo", "bar", "baz"] ,
+        musicianApprovement, videoUrl,
     } = userInfo;
+
+    const profileImage = `${config.API_URL}/user/profile-pic/${userId}`;
+    const nationalCardImage = `${config.API_URL}/user/profile-pic/${userId}`; // TODO: change to correct URL
 
     
     const requestAcceptMusician = (userId) => () => {
