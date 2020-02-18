@@ -49,7 +49,7 @@ export default ({
     
     const requestAcceptMusician = (userId) => () => {
         request.post(`${config.API_URL}/admin/user/approve`)
-        .send({id: userId})
+        .send({userId})
         .then(() => {
             onAcceptSuccess();
             onRequestClose();
@@ -62,7 +62,7 @@ export default ({
     };
     const requestRejectMusician = (userId) => () => {
         request.post(`${config.API_URL}/admin/user/reject`)
-        .send({id: userId})
+        .send({userId})
         .then(() => {
             onRejectSuccess();
             alert("Reject User OK");
