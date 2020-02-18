@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import './event-item.scss';
 
-const EventItem = () => {
+const EventItem = ({ each }) => {
   return (
-    <div class='card event-item' style={{ width: 200 }}>
+    <div className='card event-item' style={{ width: 200 }}>
       <img
-        class='card-img-top'
-        src='http://dogs4family.taokweb.com/wp-content/uploads/2017/11/pikdog2324-275x275.jpg'
+        className='card-img-top'
+        src='https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/HB4AT3D3IMI6TMPTWIZ74WAR54.jpg&w=767'
         alt='Card image cap'
-      />{' '}
-      <div class='card-body'>
-        <h5 class='card-title'>Event name</h5>
-        <p class='card-text'>Event address</p>
-        <p class='card-text'>price</p>
-        <p class='card-text'>rating 4.5 (10)</p>
-        <p class='card-text'>hire name</p>
-        <a href='#' class='btn btn-primary'>
+      />
+      <div className='card-body'>
+        <h5 className='card-title'>Event name -> id </h5>
+        <p className='card-text'>information</p>
+        <p className='card-text'>price</p>
+        <p className='card-text'>rating 4.5 (10)</p>
+        <p className='card-text'>hire name</p>
+        <a href='#' className='btn btn-primary'>
           Go somewhere
         </a>
       </div>
