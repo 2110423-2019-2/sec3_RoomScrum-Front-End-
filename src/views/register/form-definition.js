@@ -30,7 +30,9 @@ export  const userFormDef = {
     gender: {
         type: "options",
         label: "gender",
+        default: "0",
         choice: [
+            {"display": "Select", value: 0},
             {"display": "Male", value: 1},
             {"display": "Female", value: 2},
             {"display": "Other", value: 3},
