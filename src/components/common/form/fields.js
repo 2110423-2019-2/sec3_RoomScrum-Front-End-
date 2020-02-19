@@ -39,7 +39,7 @@ const noValidHack = (errors) => {
 }
 
 export const InputField = ({name, type, label, width, value, errors, onChange, onBlur, placeholder,...otherProps}) => {
-    return <div className={"input col-" + width}>
+    return <div className={"input " + width.split(' ').map(w => "col-" + w).join(' ')}>
         <label> {label} </label>
         {
            (() => {
