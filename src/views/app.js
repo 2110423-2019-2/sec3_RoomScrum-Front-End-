@@ -7,11 +7,14 @@ import Home from './home';
 import Register from './register';
 import EventPages from './event';
 import AdminPages from './admin';
-import Chat from './chat';
 
 
 import config from 'src/config';
 import { globalLoginState } from 'src/store';
+import EventInfo from './RawDashboard/Event Info';
+import Dashboard from './RawDashboard/dashboard';
+import Appliedmusician from './RawDashboard/AppliedMusician';
+import Currentcontract from './RawDashboard/CurrentContract';
 
 
 const App = ({loginState}) => {
@@ -35,9 +38,6 @@ const App = ({loginState}) => {
   return (
     <Router>
       <Switch>
-        <Route path='/chat'>
-          <Chat/>
-        </Route>
         <Route path='/event'>
           <EventPages/>
         </Route>
@@ -48,7 +48,7 @@ const App = ({loginState}) => {
           <Dashboard/>
         </Route>
         <Route path="/eventinfo">
-          <Eventinfo/>
+          <EventInfo/>
         </Route>
         <Route path="/appliedmusician">
           <Appliedmusician/>
