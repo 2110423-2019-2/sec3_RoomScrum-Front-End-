@@ -1,7 +1,7 @@
 // please use field name same as DTO
 
 export const formUpper = {
-    name: {
+    eventName: {
         type: "text",
         label: "Event Name",
         // default: "foo",

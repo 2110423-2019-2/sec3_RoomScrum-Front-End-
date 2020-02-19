@@ -40,21 +40,36 @@ const CreateEventPage = () => {
             throw new Error("No file uploaded");
         form.append('image', uploadedFile.current.files[0]);
         request.post(`${config.API_URL}/upload-image`)
+            .withCredentials()
             .send(form)
     }
+
     const postData = async () => {
         const data = {}
-        for (let key in formDataUpper.current)
-            data[key] = formDataUpper.current[key].value
-        await request.post(`${config.API_URL}/event/`)
+        for (let key in formDataUpper.current) {
+            if (key != "startDate" && key != "startTime" && key != "endDate" && key != "endTime")
+                data[key] = formDataUpper.current[key].value
+        }
+        for (let key in formDataBelow.current) {
+            data[key] = formDataBelow.current[key].value
+        }
+
+        data['startdatetime'] = formDataUpper.current['startDate'].value + "T" + formDataUpper.current['startTime'].value + ":00.000Z";
+        data['enddatetime'] = formDataUpper.current['endDate'].value + "T" + formDataUpper.current['endTime'].value + ":00.000Z";    
+        console.log(JSON.stringify(data));
+        request.post(`${config.API_URL}/events`)
+            .withCredentials()
             .send(data)
-        console.log('create event ok');
+            .then(res=>console.log(res.text))
+            .catch(err => console.log(err)) 
+        // console.log('create event ok');
     }
 
-    const foo = async () => {
+    const createEvent = async () => {
         await postData();
         // TODO use postData to determine which user image to upload
-        await uploadImage();
+
+        // await uploadImage();
     }
 
 
@@ -87,7 +102,7 @@ const CreateEventPage = () => {
                     </div>
                     <Form formDef={formBelow} ref={formDataBelow}/>
                     
-                    <button className="btn btn-primary mt-4" onClick={foo}> Submit </button>
+                    <button className="btn btn-primary mt-4" onClick={createEvent}> Submit </button>
                 </div>
             </div>
         </div>
