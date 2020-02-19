@@ -2,9 +2,33 @@ import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 import { Modal, Button } from 'react-bootstrap';
 import './event-item.scss';
+import {ConfirmDialog} from '../../common/confirm-dialog/confirm-dialog';
+import request from 'superagent';
+import config from 'src/config';
 
-const MoreDetailModal = ({ description, startdatetime, enddatetime }) => {
+const MoreDetailModal = ({ description, startdatetime, enddatetime,eventId }) => {
   const [show, setShow] = useState(false);
+  const formdata = {
+    hireeId : 14,
+    eventId: eventId,
+    timestamp: new Date().toISOString(),
+    status: 2 ,
+  }
+
+
+  const handleApply = () => {
+    request.post(`${config.API_URL}/application/apply`)
+    .send(formdata)
+    .then(res => {
+      console.log(res.text)
+
+    }) 
+    .catch(err => {
+      alert('err' + err)
+    });
+    setShow(false);
+  }
+
   const handleClose = () => setShow(false);
 
   const handleShow = () => setShow(true);
@@ -28,7 +52,7 @@ const MoreDetailModal = ({ description, startdatetime, enddatetime }) => {
           <Button variant='secondary' onClick={handleClose}>
             Close
           </Button>
-          <Button variant='primary' onClick={handleClose}>
+          <Button variant='primary' onClick={handleApply}>
             apply
           </Button>
         </Modal.Footer>
