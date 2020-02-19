@@ -11,7 +11,7 @@ const RadioInput = ({ name, label, labels }) => {
                             labels.map(label =>
                                 <>
                                     <div className="form-check">
-                                    <input class="form-check-input" type="radio" name={name} id={label} value={label} />
+                                    <input class="form-check-input" type="radio" name={name} id={label} />
                                     <label class="form-check-label" for={label}> {label} </label>
                                     </div>
                                 </>
