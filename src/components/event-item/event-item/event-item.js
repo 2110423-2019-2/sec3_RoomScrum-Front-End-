@@ -2,11 +2,37 @@ import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import './event-item.scss';
 import Button from 'react-bootstrap/Button';
+import request from 'superagent';
+import config from 'src/config'
 
-const MoreDetailModal = ({ description, startdatetime, enddatetime }) => {
+const MoreDetailModal = ({ eventId ,description, startdatetime, enddatetime }) => {
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+
+
+
+  const formdata = {
+    hireeId : 10,
+    eventId: eventId,
+    timestamp: new Date().toISOString(),
+    status: 2 ,
+  }
+
+
+  const handleApply = () => {
+    request.post(`${config.API_URL}/application/apply`)
+    .send(formdata)
+    .then(res => {
+      console.log(res.text)
+
+    }) 
+    .catch(err => {
+      alert('err' + err)
+    });
+    setShow(false);
+ 
+  }
   const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   return (
     <div>
@@ -27,8 +53,8 @@ const MoreDetailModal = ({ description, startdatetime, enddatetime }) => {
           <Button variant='secondary' onClick={handleClose}>
             Close
           </Button>
-          <Button variant='primary' onClick={handleClose}>
-            apply
+          <Button variant='primary' onClick={handleApply}>
+            Apply
           </Button>
         </Modal.Footer>
       </Modal>
@@ -38,6 +64,7 @@ const MoreDetailModal = ({ description, startdatetime, enddatetime }) => {
 
 const EventItem = ({
   each: {
+    eventId,
     eventName,
     description,
     address,
@@ -69,6 +96,7 @@ const EventItem = ({
           {country},{zipcode}
         </p>
         <MoreDetailModal
+          eventId={eventId}
           description={description}
           startdatetime={startdatetime}
           enddatetime={enddatetime}
