@@ -6,6 +6,8 @@ import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 import request from 'superagent';
 import config from 'src/config';
+import Modal from "react-modal";
+import { ConfirmDialog } from 'src/components/common';
 
 import { formBelow, formUpper } from './form-definition';
 
@@ -60,7 +62,9 @@ const CreateEventPage = () => {
         request.post(`${config.API_URL}/events`)
             .withCredentials()
             .send(data)
-            .then(res=>console.log(res.text))
+            .then(()=>
+                {window.location.href = "/event/info"}
+            )
             .catch(err => console.log(err)) 
         // console.log('create event ok');
     }
@@ -71,6 +75,8 @@ const CreateEventPage = () => {
 
         // await uploadImage();
     }
+
+    const [showAlert, setAlert] = useState(false);
 
 
 
@@ -101,8 +107,18 @@ const CreateEventPage = () => {
                         </div>
                     </div>
                     <Form formDef={formBelow} ref={formDataBelow}/>
+
+                    <Modal className="center-popup" isOpen={showAlert}>
+                        <ConfirmDialog title="Confirm?" question="Do you want to create event" callback={confirm => {
+                            setAlert(false);
+                            if (confirm) {
+                                // callbackAction.current();
+                                createEvent();
+                            }
+                        }} />
+                    </Modal>
                     
-                    <button className="btn btn-primary mt-4" onClick={createEvent}> Submit </button>
+                    <button className="btn btn-primary mt-4" onClick={()=>{setAlert(true)}}> Submit </button>
                 </div>
             </div>
         </div>
