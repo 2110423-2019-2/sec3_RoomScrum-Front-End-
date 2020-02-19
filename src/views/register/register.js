@@ -14,11 +14,18 @@ const Registration = () => {
     const [musicianForm, dispatchMusicianForm] = formStateBuilder(musicianFormDef)();
     const [profileImage, setProfileImage] = useState(null);
     const [nationalCardImage, setNationalCardImage] = useState(null);
+    const [accepted, setAccepted] = useState(false);
 
+    const handleCheck = (evt) => {
+        console.log(evt.target.checked);
+        setAccepted(evt.target.checked);
+    }
 
     
 
     const submit = async () => {
+        dispatchMusicianForm({type: 'PRE_SUBMIT'});
+        dispatchUserForm({type: 'PRE_SUBMIT'});
         const profileImageName = await request.post(`${config.API_URL}/user/temp-pic`)
             .attach('image', profileImage)
             .then(res => {
@@ -46,10 +53,10 @@ const Registration = () => {
         
         const sendData = {}
         for (let key in userForm)
-            sendData[key] = userForm[key].value
+            if (!userFormDef[key].ignore) sendData[key] = userForm[key].value
         
         for (let key in musicianForm)
-            sendData[key] = musicianForm[key].value
+            if (!musicianFormDef[key].ignore) sendData[key] = musicianForm[key].value
 
         // hack
         sendData.gender = +userForm.gender.value
@@ -91,7 +98,11 @@ const Registration = () => {
                         <ImageUploader setImageFile={setNationalCardImage} title="Upload National Card"/>
                     </div>
                 }
-                <button className="btn btn-primary m-4" onClick={submit}> Register </button>
+                <div class="form-check mt-4">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1" checked={accepted} onChange={handleCheck}/>
+                    <label class="form-check-label" for="exampleCheck1">I accept <a href="#">terms and conditions</a></label>
+                </div>
+                <button className="btn btn-primary m-4" onClick={submit} disabled={!accepted}> Register </button>
             </div>
         </div>
     )

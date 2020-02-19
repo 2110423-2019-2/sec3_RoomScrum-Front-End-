@@ -12,23 +12,35 @@ const updateForm = (updateInfo, form, fields) => {
     };
 }
 
-const validateFields = (validators, value) => {
+const validateFields = (validators, value, allData) => {
     if (!validators) return []
     // validate all, filter false
-    return validators.map(validator => validator(value)).filter(t => t); 
+    return validators.map(validator => validator(value, allData)).filter(t => t); 
 }
 
 const checkForm = (updateInfo, form, validator) => {
-    const {field, value} = updateInfo;
+    let {field, value} = updateInfo;
     if (!validator[field]) return form;
     return {
         ...form,
         [field]: {
             ...form[field],
-            errors: validateFields(validator[field], value),
+            errors: validateFields(validator[field], value, form),
         }
     };
 } 
+
+const checkAll = (form, validator) => {
+    console.log("check:", form)
+    console.log("check validator:", validator);
+    for (let field in validator) {
+        form[field] = {
+            ...form[field],
+            errors: validateFields(validator[field], form[field].value, form),
+        }
+    }
+    return {...form};
+}
 
 const formReducer = (validator, field) => (form, action) => {
 
@@ -37,6 +49,8 @@ const formReducer = (validator, field) => (form, action) => {
             return updateForm(action.payload, form, field);
         case 'CHECK': // onblur or onsubmit/
             return checkForm(action.payload, form, validator);    
+        case 'PRE_SUBMIT':
+            return checkAll(form, validator);
         default:
             return form
     }
