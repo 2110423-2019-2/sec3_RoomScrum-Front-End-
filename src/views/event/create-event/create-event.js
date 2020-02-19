@@ -35,18 +35,7 @@ const CreateEventPage = () => {
         }
     }
 
-    const uploadImage = async () => {
-        const form = new FormData();
-        const upload = uploadedFile.current;
-        if (!upload.files || !upload.files[0])
-            throw new Error("No file uploaded");
-        form.append('image', uploadedFile.current.files[0]);
-        request.post(`${config.API_URL}/upload-image`)
-            .withCredentials()
-            .send(form)
-    }
-
-    const postData = async () => {
+    const postData = async (imageName) => {
         const data = {}
         for (let key in formDataUpper.current) {
             if (key != "startDate" && key != "startTime" && key != "endDate" && key != "endTime")
@@ -55,7 +44,7 @@ const CreateEventPage = () => {
         for (let key in formDataBelow.current) {
             data[key] = formDataBelow.current[key].value
         }
-
+        data['eventImage'] = imageName;
         data['startdatetime'] = formDataUpper.current['startDate'].value + "T" + formDataUpper.current['startTime'].value + ":00.000Z";
         data['enddatetime'] = formDataUpper.current['endDate'].value + "T" + formDataUpper.current['endTime'].value + ":00.000Z";    
         console.log(JSON.stringify(data));
@@ -66,14 +55,27 @@ const CreateEventPage = () => {
                 {window.location.href = "/event/info"}
             )
             .catch(err => console.log(err)) 
-        // console.log('create event ok');
     }
 
-    const createEvent = async () => {
-        await postData();
-        // TODO use postData to determine which user image to upload
+    const uploadImage = async () => {
+        const form = new FormData();
+        const upload = uploadedFile.current;
+        if (!upload.files || !upload.files[0])
+            throw new Error("No file uploaded");
+        form.append('image', uploadedFile.current.files[0]);
+        return request.post(`${config.API_URL}/events/pic`)
+            .withCredentials()
+            .send(form)
+            .then(res => {
+                return JSON.parse(res.text);
+            })
+    }
 
-        // await uploadImage();
+    
+
+    const createEvent = async () => {
+        const res = await uploadImage();
+        await postData(res.imageName);
     }
 
     const [showAlert, setAlert] = useState(false);
