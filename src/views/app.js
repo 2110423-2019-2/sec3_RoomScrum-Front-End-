@@ -6,13 +6,9 @@ import NotFoundPage from './not-found';
 import Home from './home';
 import Register from './register';
 import EventPages from './event';
-import AdminPages from './admin'
+import AdminPages from './admin';
+import Chat from './chat';
 
-// todo fix this
-import Dashboard from './RawDashboard/dashboard';
-import Eventinfo from './RawDashboard/Event Info';
-import Appliedmusician from './RawDashboard/AppliedMusician';
-import Currentcontract from './RawDashboard/CurrentContract';
 
 import config from 'src/config';
 import { globalLoginState } from 'src/store';
@@ -39,6 +35,9 @@ const App = ({loginState}) => {
   return (
     <Router>
       <Switch>
+        <Route path='/chat'>
+          <Chat/>
+        </Route>
         <Route path='/event'>
           <EventPages/>
         </Route>
