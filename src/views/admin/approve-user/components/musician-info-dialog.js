@@ -36,18 +36,20 @@ export default ({
     const [dialogState, setDialogState] = useState({})
     const callbackAction = useRef();
     const {
-        userId, username, password, firstName,
+        userId, firstName,
         lastName, nationalId, gender, birthdate,
         email, phoneNumber, address, subdistrict,
-        district, cityState, country, zipCode,
-        imageProfile, isMusician, bio, tags,
-        isVerify, nationalCardImage, videoUrl, hireeId,
+        district, cityState, country, zipCode, bio, tags = ["foo", "bar", "baz"] ,
+        musicianApprovement, videoUrl,
     } = userInfo;
+
+    const profileImage = `${config.API_URL}/user/profile-pic/${userId}`;
+    const nationalCardImage = `${config.API_URL}/user/profile-pic/${userId}`; // TODO: change to correct URL
 
     
     const requestAcceptMusician = (userId) => () => {
         request.post(`${config.API_URL}/admin/user/approve`)
-        .send({id: userId})
+        .send({userId})
         .then(() => {
             onAcceptSuccess();
             onRequestClose();
@@ -60,7 +62,7 @@ export default ({
     };
     const requestRejectMusician = (userId) => () => {
         request.post(`${config.API_URL}/admin/user/reject`)
-        .send({id: userId})
+        .send({userId})
         .then(() => {
             onRejectSuccess();
             alert("Reject User OK");
@@ -104,8 +106,8 @@ export default ({
                 </button>
                 <div className="dialog-content row justify-content-center m-0">
                     <div className="center">
-                        <img src={imageProfile} className="profile-image btn img-btn" onClick={() => {
-                            setImage(imageProfile);
+                        <img src={profileImage} className="profile-image btn img-btn" onClick={() => {
+                            setImage(profileImage);
                         }}/>
                     </div>
                     <div className="col-12"></div>
