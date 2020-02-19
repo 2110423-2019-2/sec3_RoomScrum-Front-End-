@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { Modal, Button } from 'react-bootstrap';
 import Modal from 'react-modal';
 import './event-item.scss';
 import request from 'superagent';
@@ -16,11 +15,11 @@ const customStyles = {
   }
 };
 
-const MoreDetailModal2 = ({
+const MoreDetailModal = ({
+  eventId,
   description,
   startdatetime,
-  enddatetime,
-  eventId
+  enddatetime
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
@@ -37,6 +36,7 @@ const MoreDetailModal2 = ({
   const handleApply = () => {
     request
       .post(`${config.API_URL}/application/apply`)
+      .withCredentials()
       .send(formdata)
       .then(res => {
         console.log(res.text);
@@ -74,6 +74,7 @@ const MoreDetailModal2 = ({
 
 const EventItem = ({
   each: {
+    eventId,
     eventName,
     description,
     address,
@@ -83,16 +84,13 @@ const EventItem = ({
     country,
     zipcode,
     startdatetime,
-    enddatetime
+    enddatetime,
+    eventImage
   }
 }) => {
   return (
     <div className='card event-item' style={{ width: 200 }}>
-      <img
-        className='card-img-top'
-        src='https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/HB4AT3D3IMI6TMPTWIZ74WAR54.jpg&w=767'
-        alt='Card image cap'
-      />
+      <img className='card-img-top' src={eventImage} alt='Card image cap' />
       <div className='card-body'>
         <h5 className='card-title'>{eventName} </h5>
         <p className='card-text'>
@@ -104,7 +102,8 @@ const EventItem = ({
         <p className='card-text'>
           {country},{zipcode}
         </p>
-        <MoreDetailModal2
+        <MoreDetailModal
+          eventId={eventId}
           description={description}
           startdatetime={startdatetime}
           enddatetime={enddatetime}
