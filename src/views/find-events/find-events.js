@@ -8,7 +8,6 @@ import config from 'src/config';
 const FindEvents = () => {
   const [isFetch, setIsFetch] = useState(false);
   const [eventList, setEventList] = useState([]);
-  // const [eventMap, setEventMap] = useState(new Map());
   if (!isFetch) {
     request
       .get(`${config.API_URL}/events`)
@@ -22,8 +21,12 @@ const FindEvents = () => {
       });
   }
 
-  const eventItems = eventList.map(event => {
-    return <div>{event.description}</div>;
+  const eventItems = eventList.map(each => {
+    return (
+      <div>
+        <EventItem each={each} />
+      </div>
+    );
   });
 
   return (

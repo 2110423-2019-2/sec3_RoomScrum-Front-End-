@@ -1,7 +1,55 @@
 import React, { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
 import './event-item.scss';
+import Button from 'react-bootstrap/Button';
 
-const EventItem = ({ each }) => {
+const MoreDetailModal = ({ description, startdatetime, enddatetime }) => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+    <div>
+      <Button variant='primary' onClick={handleShow}>
+        More detail
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{description}</p>
+          <p>{startdatetime}</p>
+          <p>{enddatetime}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant='primary' onClick={handleClose}>
+            apply
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  );
+};
+
+const EventItem = ({
+  each: {
+    eventName,
+    description,
+    address,
+    subdistrict,
+    district,
+    province,
+    country,
+    zipcode,
+    startdatetime,
+    enddatetime
+  }
+}) => {
   return (
     <div className='card event-item' style={{ width: 200 }}>
       <img
@@ -10,14 +58,21 @@ const EventItem = ({ each }) => {
         alt='Card image cap'
       />
       <div className='card-body'>
-        <h5 className='card-title'>Event name -> id </h5>
-        <p className='card-text'>information</p>
-        <p className='card-text'>price</p>
-        <p className='card-text'>rating 4.5 (10)</p>
-        <p className='card-text'>hire name</p>
-        <a href='#' className='btn btn-primary'>
-          Go somewhere
-        </a>
+        <h5 className='card-title'>{eventName} </h5>
+        <p className='card-text'>
+          {address},{subdistrict}
+        </p>
+        <p className='card-text'>
+          {district},{province}
+        </p>
+        <p className='card-text'>
+          {country},{zipcode}
+        </p>
+        <MoreDetailModal
+          description={description}
+          startdatetime={startdatetime}
+          enddatetime={enddatetime}
+        />
       </div>
     </div>
   );
