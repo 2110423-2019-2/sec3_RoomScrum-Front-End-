@@ -1,39 +1,24 @@
 import React, { useState } from 'react';
-// import { Modal, Button } from 'react-bootstrap';
-import Modal from 'react-modal';
+import ReactModal from 'react-modal';
+import { Modal, Button } from 'react-bootstrap';
 import './event-item.scss';
 import request from 'superagent';
 import config from 'src/config';
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
-  }
-};
-
-const MoreDetailModal2 = ({
+const MoreDetailModal = ({
   description,
   startdatetime,
   enddatetime,
   eventId
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const openModal = () => {
-    setIsOpen(true);
-  };
-  const afterOpenModal = () => {};
-  const closeModal = () => {
-    setIsOpen(false);
-  };
+  const [show, setShow] = useState(false);
   const formdata = {
+    hireeId: 14,
     eventId: eventId,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    status: 2
   };
+
   const handleApply = () => {
     request
       .post(`${config.API_URL}/application/apply`)
@@ -44,29 +29,36 @@ const MoreDetailModal2 = ({
       .catch(err => {
         alert('err' + err);
       });
-    setIsOpen(false);
+    setShow(false);
   };
+
+  const handleClose = () => setShow(false);
+
+  const handleShow = () => setShow(true);
 
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
-      <Modal
-        isOpen={isOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel='Modal'>
-        <div>
+      <Button variant='btn-primary' onClick={handleShow}>
+        More details
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Event detail</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <p>{description}</p>
           <p>{startdatetime}</p>
           <p>{enddatetime}</p>
-          <button
-            type='button'
-            class='btn btn-primary float-right'
-            onClick={handleApply}>
-            Apply
-          </button>
-        </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant='primary' onClick={handleApply}>
+            apply
+          </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );
@@ -104,7 +96,8 @@ const EventItem = ({
         <p className='card-text'>
           {country},{zipcode}
         </p>
-        <MoreDetailModal2
+
+        <MoreDetailModal
           description={description}
           startdatetime={startdatetime}
           enddatetime={enddatetime}
@@ -115,8 +108,3 @@ const EventItem = ({
 };
 
 export default EventItem;
-//  <MoreDetailModal
-// description={description}
-// startdatetime={startdatetime}
-// enddatetime={enddatetime}
-//       />
