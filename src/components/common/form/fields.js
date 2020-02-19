@@ -39,7 +39,7 @@ const noValidHack = (errors) => {
 }
 
 export const InputField = ({name, type, label, width, value, errors, onChange, onBlur, placeholder,...otherProps}) => {
-    return <div className={"input " + width.split(' ').map(w => "col-" + w).join(' ')}>
+    return <div className={"input mt-2 text-dark " + width.split(' ').map(w => "col-" + w).join(' ')}>
         <label> {label} </label>
         {
            (() => {
@@ -74,7 +74,7 @@ export const InputField = ({name, type, label, width, value, errors, onChange, o
                                 className={makeClassName(errors)}
                                 onChange={onChange(name)}
                                 onBlur={onBlur(name)}
-                                placeholder = {placeholder}
+                                placeholder={placeholder}
                             /> 
                         )
                 }                      

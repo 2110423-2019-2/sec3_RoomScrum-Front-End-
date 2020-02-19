@@ -26,6 +26,27 @@ const Registration = () => {
     const submit = async () => {
         dispatchMusicianForm({type: 'PRE_SUBMIT'});
         dispatchUserForm({type: 'PRE_SUBMIT'});
+        let hasError = false;
+        for (let key in userForm){
+            console.log(userForm[key]);
+            if (userForm[key].errors && userForm[key].errors.length > 0) {
+                hasError = true;
+                break;
+            }
+        }
+        // only validate if it's musician
+        if (userForm['userType'].value == 'M'){
+            for (let key in musicianForm)
+                if (musicianForm[key].errors && musicianForm[key].errors.length > 0) {
+                    hasError = true;
+                    break;
+                }
+        }
+        if (hasError) {
+            alert("Please enter all details")
+            return;
+        }
+
         const profileImageName = await request.post(`${config.API_URL}/user/temp-pic`)
             .attach('image', profileImage)
             .then(res => {
@@ -33,8 +54,9 @@ const Registration = () => {
                 return imageName;
             })
             .catch(err => {
-                alert('err')
+                alert('profile upload err')
                 console.log(err);
+                return null;
             })
         const nationalCardImageName = await request.post(`${config.API_URL}/user/temp-pic`)
             .attach('image', nationalCardImage)
@@ -43,10 +65,11 @@ const Registration = () => {
                 return imageName;
             })
             .catch(err => {
-                alert('err')
+                alert('national card upload err');
                 console.log(err);
+                return null;
             })
-
+        if (!profileImageName || !nationalCardImageName) return;
         alert("upload files success");
         
         
