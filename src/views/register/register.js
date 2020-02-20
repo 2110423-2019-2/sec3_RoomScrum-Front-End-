@@ -46,8 +46,7 @@ const Registration = () => {
             alert("Please enter all details")
             return;
         }
-
-        const profileImageName = await request.post(`${config.API_URL}/user/temp-pic`)
+        const profileImageName = await request.post(`${config.API_URL}/user/temp-profile-pic`)
             .attach('image', profileImage)
             .then(res => {
                 const {imageName} = JSON.parse(res.text);
@@ -58,18 +57,24 @@ const Registration = () => {
                 console.log(err);
                 return null;
             })
-        const nationalCardImageName = await request.post(`${config.API_URL}/user/temp-pic`)
-            .attach('image', nationalCardImage)
-            .then(res => {
-                const {imageName} = JSON.parse(res.text);
-                return imageName;
-            })
-            .catch(err => {
-                alert('national card upload err');
-                console.log(err);
-                return null;
-            })
-        if (!profileImageName || !nationalCardImageName) return;
+        if (!profileImageName) return;
+        
+        let nationalCardImageName;
+        if (userForm['userType'].value == 'M') {
+            nationalCardImageName = await request.post(`${config.API_URL}/user/temp-id-pic`)
+                .attach('image', nationalCardImage)
+                .then(res => {
+                    const {imageName} = JSON.parse(res.text);
+                    return imageName;
+                })
+                .catch(err => {
+                    alert('national card upload err');
+                    console.log(err);
+                    return null;
+                })
+                if (!nationalCardImageName) return;
+
+        }
         alert("upload files success");
         
         
@@ -93,10 +98,11 @@ const Registration = () => {
             .then(res => {
                 console.log(res.text);
                 alert("Register success");
+                window.location.href = "/";
             })
             .catch(err => {
                 console.error(err);
-                alert(JSON.stringify(err))
+                alert("Register failed " + err.message)
             })
     }
 

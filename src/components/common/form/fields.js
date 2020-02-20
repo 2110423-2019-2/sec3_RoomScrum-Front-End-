@@ -57,7 +57,7 @@ export const InputField = ({name, type, label, width, value, errors, onChange, o
                         const {choice} = otherProps;
                         return (
                             <select value={value}
-                                className={makeClassName(errors)}
+                                className={makeClassName(noValidHack(errors))}
                                 onChange={onChange(name)}
                                 onBlur={onBlur(name)}
                             >
