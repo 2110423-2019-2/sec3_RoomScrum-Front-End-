@@ -33,10 +33,10 @@ const FindEvents = () => {
     <div className='FindEvents'>
       <Navbar />
       <div className='row no-gutters'>
-        <div className='col-sm-3 '>
+        <div className='col-sm-3'>
           <SearchEventsBox />
         </div>
-        <div className='col-sm  d-flex flex-wrap justify-content-between'>
+        <div className='col-sm d-flex flex-wrap justify-content-between'>
           {eventItems}
         </div>
       </div>

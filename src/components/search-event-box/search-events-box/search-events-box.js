@@ -26,8 +26,8 @@ const SearchEventsBox = () => {
     position: 'relative',
     width: '90%',
     padding: 20,
-    margin: 'auto',
-    border: 'solid 1px'
+    margin: 'auto'
+    // border: 'solid 1px'
   };
 
   const optionBoxMaxWidth = {
@@ -37,7 +37,6 @@ const SearchEventsBox = () => {
 
   return (
     <div className='d-flex-row align-items-center justify-content-center'>
-      <h2 className='text-center'>Event Search</h2>
       <div>
         <form style={formBox}>
           <SlideBar

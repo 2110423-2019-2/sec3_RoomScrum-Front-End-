@@ -3,34 +3,35 @@ import Modal from 'react-bootstrap/Modal';
 import './event-item.scss';
 import Button from 'react-bootstrap/Button';
 import request from 'superagent';
-import config from 'src/config'
+import config from 'src/config';
 
-const MoreDetailModal = ({ eventId ,description, startdatetime, enddatetime }) => {
+const MoreDetailModal = ({
+  eventId,
+  description,
+  startdatetime,
+  enddatetime
+}) => {
   const [show, setShow] = useState(false);
 
-
-
   const formdata = {
-    hireeId : 10,
+    hireeId: 10,
     eventId: eventId,
     timestamp: new Date().toISOString(),
-    status: 2 ,
-  }
-
+    status: 2
+  };
 
   const handleApply = () => {
-    request.post(`${config.API_URL}/application/apply`)
-    .send(formdata)
-    .then(res => {
-      console.log(res.text)
-
-    }) 
-    .catch(err => {
-      alert('err' + err)
-    });
+    request
+      .post(`${config.API_URL}/application/apply`)
+      .send(formdata)
+      .then(res => {
+        console.log(res.text);
+      })
+      .catch(err => {
+        alert('err' + err);
+      });
     setShow(false);
- 
-  }
+  };
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
