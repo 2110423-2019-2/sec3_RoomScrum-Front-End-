@@ -161,7 +161,7 @@ export  const userFormDef = {
         label: "Zip Code",
         width: "sm-4",
         validator: [
-            MatchRegex(/[0-9]{5}/)
+            MatchRegex(/^[0-9]{5}$/)
         ]
     },
     userType: {
