@@ -1,15 +1,15 @@
-import React, { useRef } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import request from 'superagent';
+import React, { useRef } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import request from "superagent";
 
-import NotFoundPage from './not-found';
-import Home from './home';
-import Register from './register';
-import EventPages from './event';
-import AdminPages from './admin';
-import config from 'src/config';
-import { globalLoginState } from 'src/store';
-import FindEvents from './event/find-events';
+import NotFoundPage from "./not-found";
+import Home from "./home";
+import Register from "./register";
+import EventPages from "./event";
+import AdminPages from "./admin";
+import config from "src/config";
+import { globalLoginState } from "src/store";
+import FindEvents from "./event/find-events";
 
 const App = ({ loginState }) => {
   const attempt = useRef(false);
@@ -23,7 +23,7 @@ const App = ({ loginState }) => {
         const { username } = JSON.parse(res.text);
         if (username) {
           loginState.username = username;
-          console.log('logged in as', username);
+          console.log("logged in as", username);
         }
       })
       .catch(err => {});
@@ -32,22 +32,22 @@ const App = ({ loginState }) => {
   return (
     <Router>
       <Switch>
-        <Route path='/find/events'>
+        <Route path="/find/events">
           <FindEvents />
         </Route>
-        <Route path='/event'>
+        <Route path="/event">
           <EventPages />
         </Route>
-        <Route path='/admin'>
+        <Route path="/admin">
           <AdminPages />
         </Route>
-        <Route path='/register'>
+        <Route path="/register">
           <Register />
         </Route>
-        <Route exact path='/'>
+        <Route exact path="/">
           <Home />
         </Route>
-        <Route path='/'>
+        <Route path="/">
           <NotFoundPage />
         </Route>
       </Switch>

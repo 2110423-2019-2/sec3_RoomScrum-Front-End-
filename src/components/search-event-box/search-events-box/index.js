@@ -1,1 +1,1 @@
-export { default } from './search-events-box';
+export { default } from "./search-events-box";

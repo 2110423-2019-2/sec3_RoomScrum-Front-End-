@@ -1,1 +1,1 @@
-export { default } from './current-contract'
+export { default } from "./current-contract";

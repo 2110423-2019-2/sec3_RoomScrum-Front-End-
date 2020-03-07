@@ -1,1 +1,1 @@
-export { globalLoginState} from './login-state';
+export { globalLoginState } from "./login-state";
