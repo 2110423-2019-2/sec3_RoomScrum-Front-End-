@@ -73,7 +73,7 @@ const NotificationMenu = ({show}) => {
                 <div className="header"> Notification </div>
                 <div className="notif-list">
                     {
-                        notifications.map(notif => (
+                        notifications.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()).map(notif => (
                             <NotificationItem notif={notif}/>
                         ))
                     }
