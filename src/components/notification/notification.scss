@@ -6,13 +6,12 @@ $arrow-size: 16px;
 
 .notif-menu-container {
     // for notif triangle
-    position: relative;
-    top: 100px;
-    left: 100px;
+    position: absolute;
+    top: 48px;
+    right: 20px;
     width: 304px;
     height: $notif-menu-height;
     max-height: $notif-menu-height;
-
 }
 
 .notif-triangle {

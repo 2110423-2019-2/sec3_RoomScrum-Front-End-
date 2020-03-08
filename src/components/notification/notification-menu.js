@@ -38,8 +38,9 @@ const NotificationItem = ({ image, text, timestamp, actor }) => {
 }
 
 
-const NotificationMenu = () => {
+const NotificationMenu = ({show}) => {
     return (
+        show &&
         <div className="notif-menu-container">
             <div className="notif-triangle"></div>
             <div className="notif-menu">
