@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import './notification.scss';
 import * as moment from 'moment';
+import request from 'superagent';
+import config from 'src/config';
+import { getImageURLFromNotif, getTextFormat } from './util';
+import { TextFormatter } from './text-formatter';
 
 moment.locale('en', {
     relativeTime: {
@@ -20,18 +24,17 @@ moment.locale('en', {
     }
 });
 
-const NotificationItem = ({ image, text, timestamp, actor }) => {
+const NotificationItem = ({notif}) => {
     return (
         <div className="notif-item">
             <div className="image">
-                <img src={image} />
+                <img src={getImageURLFromNotif(notif)} />
             </div>
-            <div className="text">
+            <div className="notif-text">
                 <div> { /* desc container */}
-                    <span className="actor"> {actor}</span>
-                    <span className="desc"> {text} </span>
+                    <TextFormatter notif={notif}/>
                 </div>
-                <div className="timestamp"> {moment(timestamp).fromNow()}</div>
+                <div className="timestamp"> {moment(notif.timestamp).fromNow()}</div>
             </div>
         </div>
     );
@@ -39,6 +42,29 @@ const NotificationItem = ({ image, text, timestamp, actor }) => {
 
 
 const NotificationMenu = ({show}) => {
+
+    const hasInit = useRef(false);
+    const [notifications, setNotifications] = useState(null);
+    
+    if (!hasInit.current) {
+        hasInit.current = true;
+        request.get(config.API_URL + "/notification")
+        .withCredentials()
+        .send()
+        .then(res => {
+            const result = JSON.parse(res.text);
+            setNotifications(result);
+            console.log('fetch notif', result)
+
+            
+
+        })
+        .catch(err => {
+            console.error("error fetching notifications", err);
+        })
+    }
+    
+
     return (
         show &&
         <div className="notif-menu-container">
@@ -46,55 +72,11 @@ const NotificationMenu = ({show}) => {
             <div className="notif-menu">
                 <div className="header"> Notification </div>
                 <div className="notif-list">
-                    <NotificationItem
-                        actor="Road"
-                        image="/logo192.png"
-                        text="invite you to his band"
-                        timestamp={new Date("2020-03-08 17:05:40")}
-                    />
-                    <NotificationItem
-                        actor="Road"
-                        image="/logo192.png"
-                        text="invite you to his band"
-                        timestamp={new Date("2020-03-08 17:05:40")}
-                    />
-                    <NotificationItem
-                        actor="Road"
-                        image="/logo192.png"
-                        text="invite you to his band"
-                        timestamp={new Date("2020-03-08 17:05:40")}
-                    />
-                    <NotificationItem
-                        actor="Road"
-                        image="/logo192.png"
-                        text="invite you to his band"
-                        timestamp={new Date("2020-03-08 17:05:40")}
-                    />
-                    <NotificationItem
-                        actor="Road"
-                        image="/logo192.png"
-                        text="invite you to his band"
-                        timestamp={new Date("2020-03-08 17:05:40")}
-                    />
-                    <NotificationItem
-                        actor="Road"
-                        image="/logo192.png"
-                        text="invite you to his band"
-                        timestamp={new Date("2020-03-08 17:05:40")}
-                    />
-                    <NotificationItem
-                        actor="Road"
-                        image="/logo192.png"
-                        text="invite you to his band"
-                        timestamp={new Date("2020-03-08 17:05:40")}
-                    />
-                    <NotificationItem
-                        actor="Road"
-                        image="/logo192.png"
-                        text="invite you to his band"
-                        timestamp={new Date("2020-03-08 17:05:40")}
-                    />
-
+                    {
+                        notifications.map(notif => (
+                            <NotificationItem notif={notif}/>
+                        ))
+                    }
                 </div>
             </div>
         </div>

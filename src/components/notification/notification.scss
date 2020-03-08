@@ -67,12 +67,16 @@ $arrow-size: 16px;
         }
     }
 
-    .text {
+    .notif-text {
         font-size: 12px;
         padding: 8px;
         
-        .actor {
+        .bold {
             font-weight: bold;
+        }
+
+        .normal {
+            font-weight: normal;
         }
     }
 
