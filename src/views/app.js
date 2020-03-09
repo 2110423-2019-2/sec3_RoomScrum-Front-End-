@@ -10,6 +10,7 @@ import AdminPages from './admin';
 import config from 'src/config';
 import { globalLoginState } from 'src/store';
 import FindEvents from './event/find-events';
+import Profile from './profile';
 
 const App = ({ loginState }) => {
   const attempt = useRef(false);
@@ -29,6 +30,9 @@ const App = ({ loginState }) => {
       .catch(err => {});
   }
 
+
+
+
   return (
     <Router>
       <Switch>
@@ -43,6 +47,9 @@ const App = ({ loginState }) => {
         </Route>
         <Route path='/register'>
           <Register />
+        </Route>
+        <Route path='/profile'>
+          <Profile />
         </Route>
         <Route exact path='/'>
           <Home />
