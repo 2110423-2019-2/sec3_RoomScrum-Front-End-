@@ -1,0 +1,65 @@
+$dark-navy: #303E61;
+$navy: #364D9B;
+
+.banned-user-page {
+    overflow: auto;
+
+
+    .container {
+        position: relative;
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+
+        .centered {
+            width: 75%;
+            min-width: 240px;
+            max-width: 960px;
+        }
+
+        // title texts
+        .label {
+            color: $dark-navy;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 8px;
+            width: 100%;
+        }
+        
+        // header form block
+        
+
+        .user-list {
+            width: 100%;
+        }
+    }
+}
+
+.banned-user-item {
+    width: 100%;
+    align-self: stretch;
+    box-shadow: 0px 4px 4px #bababa;
+    margin-bottom: 16px;
+
+    .avatar {
+        float: left;
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        margin-right: 16px;
+    }
+
+    .user-info {
+
+        .fullname {
+            color: $dark-navy;
+            font-size: 24px;
+        }
+
+        .alias {
+            color: $navy;
+            font-size: 16px;
+        }
+    }
+
+}
