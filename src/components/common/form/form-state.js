@@ -55,7 +55,7 @@ const formReducer = (validator, field) => (form, action) => {
   }
 };
 
-export const formStateBuilder = formDefinition => {
+export const formStateBuilder = (formDefinition, defaultValue = {}) => {
   const validator = {};
   const field = {};
   const initState = {};
@@ -63,7 +63,7 @@ export const formStateBuilder = formDefinition => {
     validator[key] = formDefinition[key].validator || [];
     field[key] = true;
     initState[key] = {
-      value: formDefinition[key].default
+      value: defaultValue[key] || formDefinition[key].default
     };
   }
   return () => useReducer(formReducer(validator, field), initState);
