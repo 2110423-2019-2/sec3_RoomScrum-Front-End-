@@ -18,6 +18,7 @@ $light-navy: #989db1;
         font-size: 24px;
         font-weight: bold;
         color: $dark-navy;
+        cursor: pointer;
     }
 
     .info {
@@ -40,6 +41,10 @@ $light-navy: #989db1;
     background-color: white;
     padding: 48px;
     box-sizing: content-box;
+    width: 80vw;
+    min-width: 300px;
+    max-width: 640px;
+    box-shadow: 2px 2px 5px #dadada;
 
     .topic {
         font-weight: bold;
