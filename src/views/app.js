@@ -10,6 +10,7 @@ import AdminPages from "./admin";
 import config from "src/config";
 import { globalLoginState } from "src/store";
 import FindEvents from "./event/find-events";
+import HirerDashboard from "./hirer-dashboard"
 
 const App = ({ loginState }) => {
   const attempt = useRef(false);
@@ -43,6 +44,9 @@ const App = ({ loginState }) => {
         </Route>
         <Route path="/register">
           <Register />
+        </Route>
+        <Route path="/hirerdashboard">
+          <HirerDashboard />
         </Route>
         <Route exact path="/">
           <Home />
