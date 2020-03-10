@@ -35,7 +35,7 @@ const fakeUser = {
 const BannedUsersPage = () => {
     return (
         <div className="banned-user-page">
-            <div className="container">
+            <div className="container p-0">
                 <div className="centered header">
                     <div className="label"> Enter username to ban</div>
                     <input className="form-control"></input>

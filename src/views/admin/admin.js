@@ -15,6 +15,7 @@ import {
 import "./admin.scss";
 import { SideNavigation } from "src/components/common/sidebar/sidebar";
 import BannedUsersPage from 'src/views/admin/banned-user'
+import UserReportPage from "./user-report";
 
 const ListItem = ({ url, text }) => {
   return (
@@ -47,7 +48,9 @@ export default () => {
             <Route path={url + "/banned-users"}>
               <BannedUsersPage />
             </Route>
-            
+            <Route path={url + "/user-report"}>
+              <UserReportPage />
+            </Route>
             <Route path={url + "/"}>404 Admin</Route>
           </Switch>
         </DashboardContent>
