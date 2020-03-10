@@ -1,7 +1,6 @@
 import React from "react";
 import {
   useRouteMatch,
-  BrowserRouter,
   Switch,
   Route,
   Link
@@ -14,6 +13,9 @@ import {
   DashboardContent
 } from "src/components/common";
 import "./admin.scss";
+import { SideNavigation } from "src/components/common/sidebar/sidebar";
+import BannedUsersPage from 'src/views/admin/banned-user'
+import UserReportPage from "./user-report";
 
 const ListItem = ({ url, text }) => {
   return (
@@ -35,17 +37,20 @@ export default () => {
       <Navbar />
       <DashboardLayout>
         <DashboardNavigation>
-          <div className="list-group pt-4">
-            <ListItem url={url + "/approve-user"} text="Approve Musicians" />
-            <ListItem url={url + "/reports"} text="User Reports" />
-          </div>
+          <SideNavigation
+          />
         </DashboardNavigation>
         <DashboardContent>
           <Switch>
             <Route path={url + "/approve-user"}>
               <ApproveUserPage />
             </Route>
-            <Route exact path={url + "/"}></Route>
+            <Route path={url + "/banned-users"}>
+              <BannedUsersPage />
+            </Route>
+            <Route path={url + "/user-report"}>
+              <UserReportPage />
+            </Route>
             <Route path={url + "/"}>404 Admin</Route>
           </Switch>
         </DashboardContent>
