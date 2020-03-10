@@ -15,7 +15,11 @@ const UserItem = ({user}) => {
             <Img className="avatar" src={[
                 config.API_URL + "/user/pic" + userId,
                 `https://i.pravatar.cc/80?u=${userId}`   
-            ]}/>
+            ]}
+                loader={
+                    <div className="avatar placeholder"/>
+                }
+            />
             <div className="user-info">
                 <div className="fullname"> {firstName + " " + lastName} </div>
                 <div className="alias"> {alias} </div>

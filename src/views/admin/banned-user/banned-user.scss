@@ -48,6 +48,10 @@ $navy: #364D9B;
         height: 80px;
         object-fit: cover;
         margin-right: 16px;
+
+        &.placeholder {
+            background-color: #97AB7D;
+        }
     }
 
     .user-info {
