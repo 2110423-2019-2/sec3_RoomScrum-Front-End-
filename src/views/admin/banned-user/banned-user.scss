@@ -2,8 +2,9 @@ $dark-navy: #303E61;
 $navy: #364D9B;
 
 .banned-user-page {
-    overflow: auto;
-
+    // no need if don't want sticky ?
+    // overflow: auto;
+    // height: 100%; 
 
     .container {
         position: relative;
