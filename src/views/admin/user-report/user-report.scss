@@ -35,3 +35,45 @@ $light-navy: #989db1;
         }
     }
 }
+
+.report-dialog {
+    background-color: white;
+    padding: 48px;
+    box-sizing: content-box;
+
+    .topic {
+        font-weight: bold;
+        font-size: 30px;
+        color: $navy;
+        margin-bottom: 24px;
+    }
+
+    .offender {
+        font-size: 16px;
+        color: $navy;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .description {
+        font-size: 16px;
+        font-weight: 100;
+        color: $navy;
+        margin-bottom: 32px;
+    }
+
+    .reporter, .timestamp {
+        color: $light-navy;
+        font-size: 16px;;
+    }
+
+    .reporter {
+        float: left;
+    }
+
+    .timestamp {
+        float: right;
+    }
+
+
+}

@@ -32,6 +32,7 @@ const ListItem = ({ url, text }) => {
 export default () => {
   const { url } = useRouteMatch();
   console.log("admin =", url);
+  
   return (
     <div className="full-height">
       <Navbar />
