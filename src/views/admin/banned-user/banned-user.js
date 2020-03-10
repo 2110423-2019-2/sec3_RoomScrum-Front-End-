@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import './banned-user.scss';
 import Img from "react-image";
 import config from 'src/config';
+import request from 'superagent';
 
-const UserItem = ({user}) => {
-    const {
+const UserItem = ({
+    user: {
         userId,
-        firstName, lastName,
-        alias = "@foo_alias",
-    } = user;
-
+        username,
+        firstName, lastName
+    }
+}) => {
     return (
         <div className="banned-user-item clearfix">
             <Img className="avatar" src={[
@@ -22,21 +23,32 @@ const UserItem = ({user}) => {
             />
             <div className="user-info">
                 <div className="fullname"> {firstName + " " + lastName} </div>
-                <div className="alias"> {alias} </div>
+                <div className="alias"> @{username} </div>
             </div>
         </div>
     )
 
 }
 
-const fakeUser = {
-    userId: 1,
-    firstName: "Luctus",
-    lastName: "pellentesque",
-    alias: "@LuctisP"
-}
-
 const BannedUsersPage = () => {
+    const [bannedUsers, setBannedUsers] = useState(null);
+    const isFetch = useRef(false);
+
+    if (!isFetch.current) {
+        isFetch.current = true;
+        request.get(config.API_URL + '/admin/user/banlist')
+        .withCredentials()
+        .then(res => {
+            const users = JSON.parse(res.text);
+            console.dir("banned users", users);
+            setBannedUsers(users);
+        })
+        .catch(err => {
+            alert("error fethcing banned users");
+            console.error("error fetching banned users", err);
+        })
+    }
+    
     return (
         <div className="banned-user-page">
             <div className="container p-0">
@@ -47,21 +59,12 @@ const BannedUsersPage = () => {
                 <div className="centered">
                     <div className="label"> Banned users </div>
                     <div className="user-list">
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
-                        <UserItem user={fakeUser}/>
+                        {
+                            bannedUsers &&
+                            bannedUsers.map(user => (
+                                <UserItem user={user}/>
+                            ))
+                        }
                     </div>
                 </div>
             </div>
