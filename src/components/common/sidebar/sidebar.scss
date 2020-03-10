@@ -8,8 +8,13 @@
         line-height: 50px;
         text-align: center;
         font-size: 24px;
-        background-color: #364D9B;
+        background-color: black;
         color: #D7D7D7;
+        text-decoration: none;
+
+        &.active {
+            background-color: #364D9B;
+        }
     }
 }
 

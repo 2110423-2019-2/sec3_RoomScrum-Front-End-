@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import './sidebar.scss';
+import classname from 'classnames';
 
 
 const fakeItems = [
@@ -9,17 +10,34 @@ const fakeItems = [
     {text: "Banned users", href: "/admin/banned-users"},
 ] 
 
+const SideNavItem = ({item}) => {
+    const {text, href} = item;
+    const match = useRouteMatch(href);
+    
+    return (
+        <Link to={item.href} className={
+            classname({
+                "sidebar-item": true,
+                "active": !!match,
+            })
+        }> 
+            { item.text }
+        </Link>
+    );
+}
+
 export const SideNavigation = () => {
 
-    const {url} = useRouteMatch();
+    const match = useRouteMatch();
+    console.group("sidenav debug")
+    console.log(match)
+    console.groupEnd()
 
     return (
         <div className="sidebar">
             {
                 fakeItems.map(item => (
-                    <Link to={item.href} className="sidebar-item"> 
-                        { item.text }
-                    </Link>
+                    <SideNavItem item={item}/> 
                 ))
             }
         </div>
