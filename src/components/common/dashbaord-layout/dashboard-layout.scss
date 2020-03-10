@@ -5,15 +5,15 @@
     overflow: auto;
 
     .left-nav {
+        position: relative;
         align-self: flex-start;
-        max-height: 100%;
-        width: 192px;
-        position: sticky;
-        top: 0;
-        overflow: auto;
+        width: 304px;
     }
     
     .stretch {
+        max-height: 100%;
+        overflow: auto;
+        position: relative;
         align-self: stretch;
     }
 }
