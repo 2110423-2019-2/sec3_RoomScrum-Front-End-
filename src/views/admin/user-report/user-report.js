@@ -10,7 +10,7 @@ import config from 'src/config';
 const UserReportItem = ({report, onClick}) => {
     const {
         topic,
-        reporterUsername: reporter,
+        reportBy: reporter,
         timestamp,
     } = report;
 
@@ -27,24 +27,15 @@ const UserReportItem = ({report, onClick}) => {
     )
 }
 
-const fakeReport = {
-    topic: "Turpis turpis hendrerit arcu malesuada.",
-    offender: "foo_bar",
-    description: "Vulputate malesuada sit tempor a. Odio scelerisqu sit aliquam, ornare sed\
-     placerat enim. Pulvinar tortor id odio nunc, pulvinar quis egestas nunc, vestibulum.\
-      Feugiat eu consectetur non massa at cursus ut. Malesuada nisi.",
-    reporter: "Phasellus",
-    timestamp: "Jan 12, 2020  20:20",
-}
-
-const ReportDialog = ({report}) => {
-    const {
-        topic,
-        reporterUsername: reporter,
-        description,
-        offenderUsername: offender,
-        timestamp,
-    } = report;
+const ReportDialog = ({
+        report: {
+            topic,
+            reportBy: reporter,
+            description,
+            reportTo: offender,
+            timestamp,
+        } 
+    }) => {
     return (
         <div className="report-dialog">
             <div className="topic"> {topic} </div>
