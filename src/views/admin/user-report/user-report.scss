@@ -57,10 +57,11 @@ $light-navy: #989db1;
 
     .ban-button {
         font-size: 16px;
-        color: red;
+        color: #E02222;
         font-weight: bold;
         margin-bottom: 8px;
         cursor: pointer;
+        text-decoration: underline;
     }
 
     .description {
