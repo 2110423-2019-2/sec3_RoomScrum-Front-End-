@@ -42,12 +42,20 @@ const checkAll = (form, validator) => {
   return { ...form };
 };
 
+// field is map from available fields to true
 const formReducer = (validator, field) => (form, action) => {
   switch (action.type) {
     case "UPDATE": // when typing
       return updateForm(action.payload, form, field);
     case "CHECK": // onblur or onsubmit/
       return checkForm(action.payload, form, validator);
+    case "SET_FORM":
+      const result = {};
+      for (let key in field)
+        result[key] = {
+          value: action.payload[key]
+        };
+      return result;
     case "PRE_SUBMIT":
       return checkAll(form, validator);
     default:
