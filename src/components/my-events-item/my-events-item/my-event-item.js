@@ -4,6 +4,8 @@ import "./my-event-item.scss";
 import request from "superagent";
 import config from "src/config";
 import Applicants from "src/views/hirer-dashboard/raw-applied-musicians"
+import Edit from "src/views/hirer-dashboard/raw-edit-event"
+import Cancel from "src/views/hirer-dashboard/raw-cancel"
 
 
 
@@ -59,6 +61,7 @@ const EventInfoModal = ({
 const MyEventItem = ({
     each: {
       eventName,
+      eventId,
       description,
       address,
       subdistrict,
@@ -68,7 +71,7 @@ const MyEventItem = ({
       zipcode,
       startdatetime,
       enddatetime
-    }
+    }, onClick
   }) => {
     return (
       <div className="card event-item" style={{ width: 200 }}>
@@ -95,7 +98,15 @@ const MyEventItem = ({
           />
         </div>
         <div>
+          {Edit}
+        </div>
+        <div>
           {Applicants}
+        </div>
+        <div>
+        <Button variant='secondary' onClick={onClick}>
+            Cancel
+        </Button>
         </div>
       </div>
     );
