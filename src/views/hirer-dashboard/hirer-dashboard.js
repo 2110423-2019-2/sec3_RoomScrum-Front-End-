@@ -53,7 +53,7 @@ const HirerDashboard = () => {
           .catch(err => console.log(err));
      }
 
-    const myEventItem = myEventList.map(each => {
+    const myEventItems = myEventList.map(each => {
         return (
           <div>
             <MyEventItem each={each} onClick={deleteItem}/>
@@ -64,7 +64,7 @@ const HirerDashboard = () => {
     return (
         <div>
           <Navbar/>
-            {myEventItem}
+            {myEventItems}
         </div>
     )
     

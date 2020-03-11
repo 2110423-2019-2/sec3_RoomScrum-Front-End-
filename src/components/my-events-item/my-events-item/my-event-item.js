@@ -5,7 +5,7 @@ import request from "superagent";
 import config from "src/config";
 import Applicants from "src/views/hirer-dashboard/raw-applied-musicians"
 import Edit from "src/views/hirer-dashboard/raw-edit-event"
-import Cancel from "src/views/hirer-dashboard/raw-cancel"
+
 
 
 
@@ -32,7 +32,7 @@ const EventInfoModal = ({
       <div>
 
   
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={handleShow} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Event Info</Modal.Title>
           </Modal.Header>
@@ -61,7 +61,8 @@ const EventInfoModal = ({
 const MyEventItem = ({
     each: {
       eventName,
-      eventId,
+      // eventId,
+      // hirerId,
       description,
       address,
       subdistrict,
@@ -70,14 +71,15 @@ const MyEventItem = ({
       country,
       zipcode,
       startdatetime,
-      enddatetime
-    }, onClick
+      enddatetime,
+      eventImage
+    }
   }) => {
     return (
       <div className="card event-item" style={{ width: 200 }}>
         <img
           className="card-img-top"
-          src="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/HB4AT3D3IMI6TMPTWIZ74WAR54.jpg&w=767"
+          src={eventImage}
           alt="Card image cap"
         />
         <div className="card-body">
@@ -104,7 +106,7 @@ const MyEventItem = ({
           {Applicants}
         </div>
         <div>
-        <Button variant='secondary' onClick={onClick}>
+        <Button variant='secondary' onClick={() => onClick(eventId)}>
             Cancel
         </Button>
         </div>
