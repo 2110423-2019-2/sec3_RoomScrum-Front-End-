@@ -11,7 +11,8 @@ import AdminPages from "./admin";
 import config from "src/config";
 import { globalLoginState } from "src/store";
 import FindEvents from "./event/find-events";
-import HirerDashboard from "./hirer-dashboard"
+import HirerDashboard from "./hirer-dashboard";
+import Test from 'src/views/test';
 
 const App = ({ loginState }) => {
   const attempt = useRef(false);
