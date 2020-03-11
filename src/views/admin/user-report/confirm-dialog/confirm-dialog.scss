@@ -1,0 +1,54 @@
+$dark-navy: #303e61;
+$navy: #364d9b;
+$light-navy: #989db1;
+$grey: #939393;
+$light-blue: #559BE3;
+
+.ban-confirm-dialog {
+    background-color: white;
+    padding: 32px;
+
+    .icon {
+        text-align: center;
+        color: #FFA41B;
+        font-size: 38px;
+    }
+
+    .title, .question {
+        text-align: center;
+        color: $navy;
+    }
+
+    .title {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .question {
+        font-size: 16px;
+    }
+
+    .button {
+        vertical-align: middle;
+        padding: 8px 0px;
+        width: 100px;
+        margin: 16px;
+        font-size: 16px;
+        color: #ffffff;
+        border: none;
+
+        &.button-no {
+            background-color: $grey;
+        }
+
+        &.button-yes {
+            background-color: $light-blue;
+        }
+    }
+
+
+    .centered {
+        text-align: center;
+    }
+
+}
