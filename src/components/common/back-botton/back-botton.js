@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-const Btn = styled.button`
+const Back = styled.button`
   min-width: 120px;
   height: 40px;
   margin-top:22px;
@@ -17,8 +19,11 @@ const Btn = styled.button`
 
 const BackBotton = ({ name, color, type }) => {
   return (
-    <div>
-      <Btn type={type}>{name}</Btn>
+    <div
+      className='position-absolute align-middle'
+      style={{ bottom: '50px', left: '52px', color: '#939393' }}>
+      <FontAwesomeIcon icon={faChevronLeft} style={{ marginRight: 10 }} />
+      Back
     </div>
   );
 };

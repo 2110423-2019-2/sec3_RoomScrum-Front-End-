@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import { useRouteMatch, Switch, Route, Link } from 'react-router-dom';
 import {
   Button,
+  BackBotton,
   Navbar,
   DashboardLayout,
   DashboardNavigation,
   DashboardContent
 } from 'src/components/common';
 import { SideNavigation } from 'src/components/common/sidebar/sidebar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenSquare, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const FadeBackground = styled.div`
   background-color: hsla(224, 46%, 11%, 0.65);
@@ -28,7 +31,7 @@ const FadeBackground = styled.div`
   }
   .status-color {
     width: 15px;
-    height: 15px;
+    height: 11px;
     background-color: #ecbf4d;
     display: inline-block;
     margin-right: 10px;
@@ -54,6 +57,11 @@ const Test = () => {
         <DashboardContent>
           <FadeBackground className='container-fluid'>
             <ContractModal className='container-sm position-relative'>
+              <p
+                className='position-absolute'
+                style={{ right: 32, top: 10, fontSize: 30 }}>
+                x
+              </p>
               <h1>Contract</h1>
               <div className='row'>
                 <div className='label col-2'>Contract status</div>
@@ -61,27 +69,22 @@ const Test = () => {
                   <div className='status-color'></div> in review
                 </div>
               </div>
-
               <div className='row'>
                 <div className='label col-2'>Event name</div>
                 <div className='col-10'>SE night miniconcert</div>
               </div>
-
               <div className='row'>
                 <div className='label col-2'>Hirrer</div>
                 <div className='col-10'>John Minian</div>
               </div>
-
               <div className='row'>
                 <div className='label col-2'>Hiree</div>
                 <div className='col-10'>Little dog</div>
               </div>
-
               <div className='row'>
                 <div className='label col-2'>Budget</div>
                 <div className='col-10'>20,500 baht</div>
               </div>
-
               <div className='row '>
                 <div className='label col-2'>Detail</div>
                 <div className='col-10'>
@@ -101,6 +104,14 @@ const Test = () => {
                   vitae justo faucibus, faucibus erat ut, tempor arcu.
                 </div>
               </div>
+              <br></br>
+              <div className='row d-none'>
+                <div className='col-2'></div>
+                <div className='col-10'>
+                  <FontAwesomeIcon icon={faEdit} /> Edit my Contract
+                </div>
+              </div>
+
               <div
                 className='row position-absolute'
                 style={{ bottom: '50px', right: '72px' }}>
@@ -110,6 +121,7 @@ const Test = () => {
                   name='accept'
                   type='primary'></Button>
               </div>
+              <BackBotton></BackBotton>
             </ContractModal>
           </FadeBackground>
         </DashboardContent>
