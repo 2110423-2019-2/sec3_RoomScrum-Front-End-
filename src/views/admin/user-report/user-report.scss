@@ -10,6 +10,10 @@ $light-navy: #989db1;
         border-bottom: 1px solid #dadada;
     }
 
+    .icon {
+        margin-right: 8px;
+    }
+
     .topic {
         font-size: 24px;
         font-weight: bold;
@@ -40,7 +44,6 @@ $light-navy: #989db1;
     width: 80vw;
     min-width: 300px;
     max-width: 640px;
-    box-shadow: 2px 2px 5px #dadada;
 
     .topic {
         font-weight: bold;
@@ -56,7 +59,17 @@ $light-navy: #989db1;
         margin-bottom: 8px;
     }
 
+    .ban-button {
+        font-size: 16px;
+        color: #E02222;
+        font-weight: bold;
+        margin-bottom: 8px;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
     .description {
+        margin-top: 32px;
         font-size: 16px;
         font-weight: 100;
         color: $navy;
@@ -75,6 +88,4 @@ $light-navy: #989db1;
     .timestamp {
         float: right;
     }
-
-
 }

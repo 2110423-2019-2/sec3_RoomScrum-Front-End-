@@ -10,7 +10,7 @@ import config from 'src/config';
 const AppliedMusicianItem = ({
   each: {
     hireeName,
-    hireeUsername,
+    hireeId,
     eventId,
     timestamp,
     status,
@@ -18,19 +18,20 @@ const AppliedMusicianItem = ({
   }) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
+    const [showAlert, setAlert] = useState(false);
     
 
 const formdata = {
-  hireeName : {hireeName} ,
-  hireeUsername: {hireeUsername},
+  //hireeName : {hireeName} ,
+  hireeId: {hireeId},
   eventId: {eventId},
-  timestamp: new Date().toISOString(),
-  status: {status}
+  //timestamp: new Date().toISOString(),
+  //status: {status}
 };
 
 const handleAccept = () => {
   request
-    .post(`${config.API_URL}/application/apply`)
+    .post(`${config.API_URL}/application/accept`)
     .send(formdata)
     .then(res => {
       console.log(res.text);
@@ -67,10 +68,32 @@ const handleAccept = () => {
         <Button variant='secondary' onClick={handleClose}>
             Reject
         </Button>
-        <Button variant='primary' onClick={handleAccept}>
-            Accept
-        </Button>
+        <Modal className="center-popup" isOpen={showAlert}>
+                <ConfirmDialog
+                  title="Confirm?"
+                  question="Do you want to accept this musician?"
+                  callback={confirm => {
+                    setAlert(false);
+                    if (confirm) {
+                      // callbackAction.current();
+                      sendData();
+                    }
+                  }}
+                />
+              </Modal>
+    
+              <button
+                className="btn btn-primary mt-4"
+                onClick={() => {
+                  setAlert(true);
+                  handleAccept;
+                }}
+              >
+                {" "}
+                Submit{" "}
+              </button>
       </div>
+      
     </div>
   );
 };
