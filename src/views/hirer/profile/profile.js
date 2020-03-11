@@ -30,7 +30,19 @@ export default () => {
   //   setMusician(musicians.filter(m => m != shownMusician));
   // };
   return (
-    <div> 
+    <div class="row">
+    <div class="col-sm-2">
+      .col-sm-2
+    </div>
+    <div class="col-sm-5">
+      .col-sm-5
+    </div>
+    <div class="col-sm-2">
+      .col-sm-2
+    </div>
+    <div class="col-sm-3">
+      .col-sm-3
+    </div>
     </div>
   );
 };
