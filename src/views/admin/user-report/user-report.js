@@ -9,10 +9,15 @@ import { faEnvelopeOpen } from '@fortawesome/free-regular-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+const byDateDescending = (report1, report2) => {
+    const d1 = report1.timestamp;
+    const d2 = report2.timestamp;
+    return new Date(d2).getTime() - new Date(d1).getTime();
+}
+
 
 const UserReportItem = ({ report, onClick }) => {
     const {
-        reportId,
         topic,
         reportBy: reporter,
         timestamp,
@@ -102,7 +107,10 @@ const UserReportPage = () => {
         .withCredentials()
         .send()
         .then(res => {
-            setReports(JSON.parse(res.text));
+            const reports = JSON.parse(res.text);
+            reports.sort(byDateDescending);
+            console.log("report =>", reports);
+            setReports(reports);
         })
         .catch(err => {
             alert("error fetching report");
@@ -126,7 +134,7 @@ const UserReportPage = () => {
                 reports.map(r => {
                     if (r.reportId != id) return r;
                     return {...r, status: "READ"};
-                })
+                }).sort(byDateDescending)
             );
         })
         .catch(err => {
