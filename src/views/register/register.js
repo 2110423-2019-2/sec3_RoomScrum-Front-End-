@@ -165,7 +165,8 @@ const Registration = () => {
           disabled={!accepted}
         >
           {" "}
-          Register{" "}
+          Register
+          {" "}
         </button>
       </div>
     </div>
