@@ -3,30 +3,39 @@ import styled from 'styled-components';
 import { useRouteMatch, Switch, Route, Link } from 'react-router-dom';
 import {
   Button,
+  BackBotton,
   Navbar,
   DashboardLayout,
   DashboardNavigation,
   DashboardContent
 } from 'src/components/common';
 import { SideNavigation } from 'src/components/common/sidebar/sidebar';
-
-// const Button = styled.button`
-//   background-color: white;
-//   color: blue;
-//   border: 2px solid blue;
-//   ${props =>
-//     props.primary &&
-//     `
-//     background-color: blue
-//     color: white;
-//   `}
-// `;
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenSquare, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const FadeBackground = styled.div`
   background-color: hsla(224, 46%, 11%, 0.65);
-  /* width: 100%; */
   height: 97vh;
   padding-top: 3%;
+  color: #303e61;
+  font-size: 20px;
+  h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    color: #364d9b;
+  }
+  .label {
+    font-weight: bold;
+    color: #303e61;
+  }
+  .status-color {
+    width: 15px;
+    height: 11px;
+    background-color: #ecbf4d;
+    display: inline-block;
+    margin-right: 10px;
+  }
 `;
 
 const ContractModal = styled.div`
@@ -47,37 +56,37 @@ const Test = () => {
         </DashboardNavigation>
         <DashboardContent>
           <FadeBackground className='container-fluid'>
-            <ContractModal className='container-sm'>
+            <ContractModal className='container-sm position-relative'>
+              <p
+                className='position-absolute'
+                style={{ right: 32, top: 10, fontSize: 30 }}>
+                x
+              </p>
               <h1>Contract</h1>
               <div className='row'>
-                <div className='col-2'>Contract status</div>
+                <div className='label col-2'>Contract status</div>
                 <div className='col-10'>
-                  <div></div> in review
+                  <div className='status-color'></div> in review
                 </div>
               </div>
-
               <div className='row'>
-                <div className='col-2'>Event name</div>
+                <div className='label col-2'>Event name</div>
                 <div className='col-10'>SE night miniconcert</div>
               </div>
-
               <div className='row'>
-                <div className='col-2'>Hirrer</div>
+                <div className='label col-2'>Hirrer</div>
                 <div className='col-10'>John Minian</div>
               </div>
-
               <div className='row'>
-                <div className='col-2'>Hiree</div>
+                <div className='label col-2'>Hiree</div>
                 <div className='col-10'>Little dog</div>
               </div>
-
               <div className='row'>
-                <div className='col-2'>Budget</div>
+                <div className='label col-2'>Budget</div>
                 <div className='col-10'>20,500 baht</div>
               </div>
-
               <div className='row '>
-                <div className='col-2'>Detail</div>
+                <div className='label col-2'>Detail</div>
                 <div className='col-10'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Maecenas vitae justo faucibus, faucibus erat ut, tempor arcu.
@@ -95,13 +104,24 @@ const Test = () => {
                   vitae justo faucibus, faucibus erat ut, tempor arcu.
                 </div>
               </div>
-              <div className='d-flex flex-row justify-content-end'>
+              <br></br>
+              <div className='row d-none'>
+                <div className='col-2'></div>
+                <div className='col-10'>
+                  <FontAwesomeIcon icon={faEdit} /> Edit my Contract
+                </div>
+              </div>
+
+              <div
+                className='row position-absolute'
+                style={{ bottom: '50px', right: '72px' }}>
                 <Button name='reject' type='danger'></Button>
                 <Button
                   className='mr-auto'
                   name='accept'
                   type='primary'></Button>
               </div>
+              <BackBotton></BackBotton>
             </ContractModal>
           </FadeBackground>
         </DashboardContent>
