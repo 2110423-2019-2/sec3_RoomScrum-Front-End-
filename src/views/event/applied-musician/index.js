@@ -1,1 +1,1 @@
-export { default } from './applied-musician';
+export { default } from "./applied-musician";

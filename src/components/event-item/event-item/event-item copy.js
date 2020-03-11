@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import ReactModal from 'react-modal';
-import { Modal, Button } from 'react-bootstrap';
-import './event-item.scss';
-import request from 'superagent';
-import config from 'src/config';
+import React, { useState } from "react";
+import ReactModal from "react-modal";
+import { Modal, Button } from "react-bootstrap";
+import "./event-item.scss";
+import request from "superagent";
+import config from "src/config";
 
 const MoreDetailModal = ({
   description,
@@ -27,7 +27,7 @@ const MoreDetailModal = ({
         console.log(res.text);
       })
       .catch(err => {
-        alert('err' + err);
+        alert("err" + err);
       });
     setShow(false);
   };
@@ -38,7 +38,7 @@ const MoreDetailModal = ({
 
   return (
     <div>
-      <Button variant='btn-primary' onClick={handleShow}>
+      <Button variant="btn-primary" onClick={handleShow}>
         More details
       </Button>
 
@@ -52,10 +52,10 @@ const MoreDetailModal = ({
           <p>{enddatetime}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant='primary' onClick={handleApply}>
+          <Button variant="primary" onClick={handleApply}>
             apply
           </Button>
         </Modal.Footer>
@@ -79,21 +79,21 @@ const EventItem = ({
   }
 }) => {
   return (
-    <div className='card event-item' style={{ width: 200 }}>
+    <div className="card event-item" style={{ width: 200 }}>
       <img
-        className='card-img-top'
-        src='https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/HB4AT3D3IMI6TMPTWIZ74WAR54.jpg&w=767'
-        alt='Card image cap'
+        className="card-img-top"
+        src="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/HB4AT3D3IMI6TMPTWIZ74WAR54.jpg&w=767"
+        alt="Card image cap"
       />
-      <div className='card-body'>
-        <h5 className='card-title'>{eventName} </h5>
-        <p className='card-text'>
+      <div className="card-body">
+        <h5 className="card-title">{eventName} </h5>
+        <p className="card-text">
           {address},{subdistrict}
         </p>
-        <p className='card-text'>
+        <p className="card-text">
           {district},{province}
         </p>
-        <p className='card-text'>
+        <p className="card-text">
           {country},{zipcode}
         </p>
 

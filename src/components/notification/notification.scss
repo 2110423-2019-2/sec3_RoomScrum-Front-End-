@@ -1,0 +1,84 @@
+
+$header-height: 48px;
+$notif-menu-height: 360px;
+$arrow-size: 16px;
+
+
+.notif-menu-container {
+    // for notif triangle
+    position: absolute;
+    top: 48px;
+    right: 20px;
+    width: 304px;
+    height: $notif-menu-height;
+    max-height: $notif-menu-height;
+}
+
+.notif-triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 0;
+    right: 16px;
+    // float: right;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-bottom: 16px solid #364D9B;
+}
+
+.notif-menu {
+    position: relative;
+    top: 16px;
+    border-radius: 8px;
+    height: 100%;
+    max-height: 100%;
+    box-shadow: 0px 3px 4px 0px #00000044;
+
+    .header {
+        height: $header-height;
+        background-color: #364D9B;
+        border-radius: 8px 8px 0 0;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: $header-height;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .notif-list {
+        height: $notif-menu-height - $header-height;
+        overflow: auto;
+    }
+}
+
+.notif-item {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-bottom: 1px solid grey;
+
+    .image {
+        padding: 8px;
+
+        > img {
+            width: 22px;
+            height: 22px;
+        }
+    }
+
+    .notif-text {
+        font-size: 12px;
+        padding: 8px;
+        
+        .bold {
+            font-weight: bold;
+        }
+
+        .normal {
+            font-weight: normal;
+        }
+    }
+
+        margin-bottom: 2px;
+}

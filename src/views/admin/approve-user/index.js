@@ -1,1 +1,1 @@
-export { default } from './approve-user';
+export { default } from "./approve-user";
