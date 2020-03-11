@@ -1,0 +1,80 @@
+$dark-navy: #303e61;
+$navy: #364d9b;
+$light-navy: #989db1;
+
+
+.report-item {
+    padding: 8px 16px;
+    
+    &:not(:last-child) {
+        border-bottom: 1px solid #dadada;
+    }
+
+    .topic {
+        font-size: 24px;
+        font-weight: bold;
+        color: $dark-navy;
+        cursor: pointer;
+    }
+
+    .info {
+
+        .info-l {
+            float: left;
+            font-size: 16px;
+            color: $navy;
+        }
+
+        .info-r {
+            font-size: 16px;
+            float: right;
+            color: $light-navy;
+        }
+    }
+}
+
+.report-dialog {
+    background-color: white;
+    padding: 48px;
+    box-sizing: content-box;
+    width: 80vw;
+    min-width: 300px;
+    max-width: 640px;
+    box-shadow: 2px 2px 5px #dadada;
+
+    .topic {
+        font-weight: bold;
+        font-size: 30px;
+        color: $navy;
+        margin-bottom: 24px;
+    }
+
+    .offender {
+        font-size: 16px;
+        color: $navy;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .description {
+        font-size: 16px;
+        font-weight: 100;
+        color: $navy;
+        margin-bottom: 32px;
+    }
+
+    .reporter, .timestamp {
+        color: $light-navy;
+        font-size: 16px;;
+    }
+
+    .reporter {
+        float: left;
+    }
+
+    .timestamp {
+        float: right;
+    }
+
+
+}
