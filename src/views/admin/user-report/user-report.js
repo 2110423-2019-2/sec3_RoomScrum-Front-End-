@@ -5,20 +5,26 @@ import Dialog from 'src/components/common/dialog';
 import request from 'superagent';
 import config from 'src/config';
 import ConfirmDialog from './confirm-dialog';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelopeOpen } from '@fortawesome/free-regular-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const UserReportItem = ({ report, onClick }) => {
     const {
+        reportId,
         topic,
         reportBy: reporter,
         timestamp,
+        status,
     } = report;
 
     return (
         <div className="report-item">
-            <div className="topic" onClick={onClick}> {topic} </div>
+            <div className="topic" onClick={onClick}> 
+                <FontAwesomeIcon className="icon" icon={status == 'UNREAD' ? faEnvelope : faEnvelopeOpen}/>
+                {topic}
+            </div>
             <div className="info clearfix">
                 <div className="info-l"> Reported by @{reporter}</div>
                 <div className="info-r"> {
@@ -91,22 +97,43 @@ const UserReportPage = () => {
         setOpen(false);
     }
 
+    const fetchReports = () => {
+        request.post(config.API_URL + '/report/find')
+        .withCredentials()
+        .send()
+        .then(res => {
+            setReports(JSON.parse(res.text));
+        })
+        .catch(err => {
+            alert("error fetching report");
+            console.error("error fetching report", err);
+        })
+    }
+
     if (!isFetch.current) {
         isFetch.current = true;
-        request.post(config.API_URL + '/report/find')
-            .withCredentials()
-            .send({ status: "PENDING" })
-            .then(res => {
-                setReports(JSON.parse(res.text));
-            })
-            .catch(err => {
-                alert("error fetching report");
-                console.error("error fetching report", err);
-            })
+        fetchReports();
     }
 
 
-
+    const markAsRead = (id) => {
+        request.post(config.API_URL + '/report/' + id)
+        .withCredentials()
+        .send({id, newStatus: "READ"})
+        .then(() => {
+            // workaround !
+            setReports(
+                reports.map(r => {
+                    if (r.reportId != id) return r;
+                    return {...r, status: "READ"};
+                })
+            );
+        })
+        .catch(err => {
+            alert("mark as read error");
+            console.error("mark as read error", err)
+        })
+    }
 
     return (
 
@@ -115,9 +142,11 @@ const UserReportPage = () => {
                 {
                     reports &&
                     reports.map(report => {
-                        return <UserReportItem report={report} onClick={() => {
+                        return <UserReportItem key={report.reportId} report={report} onClick={() => {
                             setDialogReport(report);
                             setOpen(true);
+                            markAsRead(report.reportId);
+                            console.log("mark as read report", report.reportId);
                         }} />;
                     })
                 }
