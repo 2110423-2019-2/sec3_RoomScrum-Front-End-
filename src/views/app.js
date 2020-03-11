@@ -6,6 +6,7 @@ import NotFoundPage from "./not-found";
 import Home from "./home";
 import Register from "./register";
 import EventPages from "./event";
+import Hirerpages from "./hirer";
 import AdminPages from "./admin";
 import config from "src/config";
 import { globalLoginState } from "src/store";
@@ -43,6 +44,9 @@ const App = ({ loginState }) => {
         </Route>
         <Route path="/register">
           <Register />
+        </Route>
+        <Route path="/hirer">
+          <Hirerpages />
         </Route>
         <Route exact path="/">
           <Home />
