@@ -8,6 +8,7 @@ import { userFormDef } from "src/views/register/form-definition";
 export default () => {
   const isFetch = useRef(false);
   const [user, setUser] = useState({});
+  const [profileImageFile, setProfileImageFile] = useState({});
 
   if (!isFetch.current) {
     isFetch.current = true;
@@ -21,6 +22,10 @@ export default () => {
       .then(res => {
         setUser(res.body);
       })
+      request.get(config.API_URL + '/user/profile-pic/' + userId)
+      .then(res => {
+        setProfileImageFile(res.body);
+      })
   
     })
     .catch(err => {
@@ -28,9 +33,16 @@ export default () => {
       console.error(err);
     })
   }
-  const {username, firstName, lastName, email, phoneNumber, gender, birthdate, address, subdistrict, district, citystate, country, zipcode,profileImage } = user;
+  let {username, firstName, lastName, email, phoneNumber, gender, birthdate, address, subdistrict, district, cityState, country, zipcode,profileImage } = user;
+  console.log({profileImageFile})
 
-
+  if(gender==1) {
+    gender = "Male"
+  } else if(gender==2) {
+    gender="Female"
+  } else {
+    gender="Other"
+  }
   return (
     <div className="container view-profile">
       <div className="row pt-4 pl-5">
@@ -110,8 +122,8 @@ export default () => {
         <div className="col-sm-6">
           <div className="row pic pb-4">
             <div className="col-sm-5"></div>
-            <div className="col-sm-3 border">
-              {profileImage}
+            <div className="img col-sm-3 border">
+              <img src = {profileImageFile}/>
             </div>
             <div className="col-sm-4"></div>
           </div>
@@ -120,9 +132,9 @@ export default () => {
               Address
         </div>
             <div className="col-sm-8">
-              <textarea rows="5" cols="40">
-              {address}, {subdistrict}, {district}, {citystate}, {country}, {zipcode}
-        </textarea>
+              <div className="address">
+                {address + ", " + subdistrict + ", " + district + ", " + cityState + ", " + country + ", " + zipcode}
+              </div>
             </div>
             <div className="col-sm-1 ">
             </div>
@@ -130,7 +142,8 @@ export default () => {
 
         </div>
       </div>
-      <button className='posit'>
+      <button className='posit'
+      onClick={()=>{window.location.href = './edit'}}>
           Edit
         </button>
     </div>
