@@ -1,19 +1,21 @@
 import React from "react";
 import {
   useRouteMatch,
-  BrowserRouter,
   Switch,
   Route,
   Link
 } from "react-router-dom";
-import ApproveUserPage from "./approve-user";
+import Profile from "./profile";
 import {
   Navbar,
   DashboardLayout,
   DashboardNavigation,
   DashboardContent
 } from "src/components/common";
-import "./admin.scss";
+import "./hirer.scss";
+import { SideNavigation } from "src/components/common/sidebar-hirer/sidebar-hirer";
+import Event from 'src/views/hirer/event'
+import Contract from "./contract";
 
 const ListItem = ({ url, text }) => {
   return (
@@ -29,23 +31,27 @@ const ListItem = ({ url, text }) => {
 
 export default () => {
   const { url } = useRouteMatch();
-  console.log("admin =", url);
+  console.log("hirer =", url);
+  
   return (
     <div className="full-height">
       <Navbar />
       <DashboardLayout>
         <DashboardNavigation>
-          <div className="list-group pt-4">
-            <ListItem url={url + "/approve-user"} text="Approve Musicians" />
-            <ListItem url={url + "/reports"} text="User Reports" />
-          </div>
+          <SideNavigation
+          />
         </DashboardNavigation>
         <DashboardContent>
           <Switch>
-            <Route path={url + "/approve-user"}>
-              <ApproveUserPage />
+            <Route path={url + "/profile"}>
+              <Profile />
             </Route>
-            <Route exact path={url + "/"}></Route>
+            <Route path={url + "/event"}>
+              <Event />
+            </Route>
+            <Route path={url + "/contract"}>
+              <Contract />
+            </Route>
             <Route path={url + "/"}>404 Admin</Route>
           </Switch>
         </DashboardContent>

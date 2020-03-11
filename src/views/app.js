@@ -2,16 +2,16 @@ import React, { useRef } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import request from 'superagent';
 
-import NotFoundPage from './not-found';
-import Home from './home';
-import Register from './register';
-import EventPages from './event';
-import AdminPages from './admin';
-import config from 'src/config';
-import { globalLoginState } from 'src/store';
-import FindEvents from './event/find-events';
-import HirerDashboard from './hirer-dashboard';
-import Test from './test';
+import NotFoundPage from "./not-found";
+import Home from "./home";
+import Register from "./register";
+import EventPages from "./event";
+import Hirerpages from "./hirer";
+import AdminPages from "./admin";
+import config from "src/config";
+import { globalLoginState } from "src/store";
+import FindEvents from "./event/find-events";
+import HirerDashboard from "./hirer-dashboard"
 
 const App = ({ loginState }) => {
   const attempt = useRef(false);
@@ -30,6 +30,9 @@ const App = ({ loginState }) => {
       })
       .catch(err => {});
   }
+
+
+
 
   return (
     <Router>
