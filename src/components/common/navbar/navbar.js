@@ -5,14 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserCircle,
   faCaretDown,
-  faTruckMonster,
-  faBell
+  faTruckMonster
 } from "@fortawesome/free-solid-svg-icons";
 import { globalLoginState } from "src/store/login-state";
 import { observer } from "mobx-react";
 import classnames from "classnames";
 import "./navbar.scss";
-import NotificationMenu from "src/components/notification";
 
 const LoginButtons = () => {
   const [isOpen, setOpen] = useState(false);
@@ -40,10 +38,7 @@ const LoginButtons = () => {
 
 const Avatar = observer(({ loginState }) => {
   const [showDropdown, setDropdown] = useState(false);
-  const [showNotif, setNotif] = useState(false);
   const toggleDropdown = () => setDropdown(!showDropdown);
-  const toggleNotif = () => setNotif(!showNotif);
-
   const onLogout = () => {
     loginState.username = null;
     document.cookie = "token=; expires = 01 Jan 1970 00:00:00"; // clear cookie
@@ -54,18 +49,13 @@ const Avatar = observer(({ loginState }) => {
 
   return (
     <div className="account-wrapper">
-      <div className="user-account text-white">
-        <div>
-          <FontAwesomeIcon icon={faBell} onClick={toggleNotif}/>
-        </div>
+      <div className="user-account text-white" onClick={toggleDropdown}>
         <span> logged in as {loginState.username}</span>
         <span style={{ fontSize: "32px" }}>
-          <FontAwesomeIcon icon={faUserCircle} onClick={toggleDropdown}/>
+          <FontAwesomeIcon icon={faUserCircle} />
         </span>
-        <FontAwesomeIcon icon={faCaretDown} onClick={toggleDropdown}/>
+        <FontAwesomeIcon icon={faCaretDown} />
       </div>
-      <NotificationMenu show={showNotif}/>
-      {/* dropdown menu */}
       <div
         className={classnames({
           "dropdown-menu dropdown list-group": true,

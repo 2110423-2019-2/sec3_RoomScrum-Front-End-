@@ -7,7 +7,7 @@ export const DashboardLayout = ({ children }) => {
 };
 
 export const DashboardNavigation = ({ children }) => {
-  return <div className="left-nav stretch col-auto p-0">{children}</div>;
+  return <div className="left-nav col-auto">{children}</div>;
 };
 
 export const DashboardContent = ({ children }) => {
