@@ -1,16 +1,16 @@
 .navbar {
-
   justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 60px;
   padding: 0 16px;
 
-  &.flex-row, .flex-row {
+  &.flex-row,
+  .flex-row {
     display: flex;
     flex-flow: row wrap;
   }
-  
+
   .navbar-left {
     .title {
       font-size: 2em;
@@ -19,17 +19,16 @@
   }
 
   .navbar-right {
-    
-    .link-section, .dynamic-section {
+    .link-section,
+    .dynamic-section {
       display: flex;
       align-items: center;
+
       > * {
         padding-left: 1em;
       }
     }
-
   }
-
 }
 
 .login-buttons {
@@ -38,19 +37,18 @@
   }
 }
 
-
 .account-wrapper {
   .user-account {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     cursor: pointer;
-    
+
     > * {
       margin-left: 0.5em;
     }
   }
-  
+
   .dropdown {
     &.dropdown-menu {
       left: unset !important;
@@ -63,16 +61,15 @@
     width: 200px;
     display: none;
     // background-color: white;
-  
+
     &.show {
       display: block;
     }
-  
+
     > * {
       width: 100%;
       text-align: center;
       cursor: pointer;
     }
   }
-  
 }
