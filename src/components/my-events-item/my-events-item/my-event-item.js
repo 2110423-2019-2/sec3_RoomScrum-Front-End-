@@ -9,6 +9,7 @@ import Edit from "src/views/hirer-dashboard/raw-edit-event"
 
 
 
+
 const EventInfoModal = ({
     eventName,
     description,
@@ -49,9 +50,9 @@ const EventInfoModal = ({
             <p>{enddatetime}</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <button variant="secondary" onClick={handleClose}>
               Close
-            </Button>
+            </button>
           </Modal.Footer>
         </Modal>
       </div>
@@ -59,7 +60,10 @@ const EventInfoModal = ({
   };
 
 const MyEventItem = ({
-    each: {
+    each , onClick
+  }) => {
+    const {
+      eventId,
       eventName,
       // eventId,
       // hirerId,
@@ -72,11 +76,12 @@ const MyEventItem = ({
       zipcode,
       startdatetime,
       enddatetime,
-      eventImage
-    }
-  }) => {
+      isCancelled,
+      eventImage,
+      userId
+    } = each;
     return (
-      <div className="card event-item" style={{ width: 200 }}>
+      <div className="card event-item" style={{ width: 250 }}>
         <img
           className="card-img-top"
           src={eventImage}
@@ -99,18 +104,15 @@ const MyEventItem = ({
             enddatetime={enddatetime}
           />
         </div>
-        <div>
-          {Edit}
-        </div>
-        <div>
-          {Applicants}
-        </div>
-        <div>
-        <Button variant='secondary' onClick={() => onClick(eventId)}>
+        <div className = 'row' >
+          <Edit event={each}/>
+          <Applicants eventId={eventId}/>
+          <button variant='secondary' onClick={() => onClick(eventId)}>
             Cancel
-        </Button>
+          </button>
         </div>
       </div>
+        
     );
   };
 
