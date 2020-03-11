@@ -86,6 +86,8 @@ const BannedUsersPage = () => {
     }
 
     const handleBan = (confirm) => {
+        setOpenBanDialog(false);
+        if (!confirm) return;
         if (selectedUser) {
             request.post(config.API_URL + '/admin/user/ban')
             .send({username: selectedUser, banDuration: 7})
