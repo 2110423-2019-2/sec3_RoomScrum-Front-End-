@@ -15,7 +15,7 @@ const Btn = styled.button`
     ${props => props.type == 'danger' && 'background-color:#BA2B2B'};
 `;
 
-const Button = ({ name, color, type }) => {
+const BackBotton = ({ name, color, type }) => {
   return (
     <div>
       <Btn type={type}>{name}</Btn>
@@ -23,4 +23,4 @@ const Button = ({ name, color, type }) => {
   );
 };
 
-export default Button;
+export default BackBotton;

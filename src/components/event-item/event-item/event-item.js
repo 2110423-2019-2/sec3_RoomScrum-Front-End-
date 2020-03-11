@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import Modal from "react-modal";
-import "./event-item.scss";
-import request from "superagent";
-import config from "src/config";
+import React, { useState } from 'react';
+import Modal from 'react-modal';
+import './event-item.scss';
+import request from 'superagent';
+import config from 'src/config';
 
 const customStyles = {
   content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
   }
 };
 
@@ -42,7 +42,7 @@ const MoreDetailModal = ({
         console.log(res.text);
       })
       .catch(err => {
-        alert("err" + err);
+        alert('err' + err);
       });
     setIsOpen(false);
   };
@@ -55,17 +55,15 @@ const MoreDetailModal = ({
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Modal"
-      >
+        contentLabel='Modal'>
         <div>
           <p>{description}</p>
           <p>{startdatetime}</p>
           <p>{enddatetime}</p>
           <button
-            type="button"
-            class="btn btn-primary float-right"
-            onClick={handleApply}
-          >
+            type='button'
+            class='btn btn-primary float-right'
+            onClick={handleApply}>
             Apply
           </button>
         </div>
@@ -91,17 +89,17 @@ const EventItem = ({
   }
 }) => {
   return (
-    <div className="card event-item" style={{ width: 200 }}>
-      <img className="card-img-top" src={eventImage} alt="Card image cap" />
-      <div className="card-body">
-        <h5 className="card-title">{eventName} </h5>
-        <p className="card-text">
+    <div className='card event-item' style={{ width: 200 }}>
+      <img className='card-img-top' src={eventImage} alt='Card image cap' />
+      <div className='card-body'>
+        <h5 className='card-title'>{eventName} </h5>
+        <p className='card-text'>
           {address},{subdistrict}
         </p>
-        <p className="card-text">
+        <p className='card-text'>
           {district},{province}
         </p>
-        <p className="card-text">
+        <p className='card-text'>
           {country},{zipcode}
         </p>
         <MoreDetailModal
@@ -116,8 +114,3 @@ const EventItem = ({
 };
 
 export default EventItem;
-//  <MoreDetailModal
-// description={description}
-// startdatetime={startdatetime}
-// enddatetime={enddatetime}
-//       />
