@@ -52,7 +52,129 @@ const EventInfoModal = ({
   );
 };
 
+// const ContractModal = ({ eventId }) => {
+//   // alert(eventId);
+//   console.log(eventId);
+//   var description = '';
+//   var price = 0;
+//   const [isOpen, setIsOpen] = useState(false);
+//   const openModal = () => {
+//     setIsOpen(true);
+//   };
+//   const afterOpenModal = () => {};
+//   const closeModal = () => {
+//     setIsOpen(false);
+//   };
+//   const handleViewContract = () => {
+//     // alert('handleViewContract');
+//     console.log(eventId);
+//     request
+//       .get(`${config.API_URL}/contract/${eventId}`)
+//       .withCredentials()
+//       .then(res => {
+//         console.log(res.text);
+//         alert('complete ?');
+//       })
+//       .catch(err => {
+//         alert('err' + err);
+//       });
+//     setIsOpen(false);
+//   };
+
+//   return (
+//     <div>
+//       <button onClick={handleViewContract}>view contract</button>
+//       <Modal
+//         isOpen={isOpen}
+//         onAfterOpen={afterOpenModal}
+//         onRequestClose={closeModal}
+//         contentLabel='Modal'>
+//         <div>
+//           <p>{description}</p>
+//           <p>{price}</p>
+//           <button
+//             type='button'
+//             class='btn btn-primary float-right'
+//             onClick={handleViewContract}>
+//             view contract
+//           </button>
+//         </div>
+//       </Modal>
+//     </div>
+//   );
+// };
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
+
+const ContractModal = ({ eventId }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [description, setDescription] = useState();
+  const [price, setPrice] = useState(0);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const afterOpenModal = () => {};
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  // const formdata = {
+  //   eventId: eventId,
+  //   timestamp: new Date().toISOString()
+  // };
+  const handleApply = () => {
+    request
+      // .post(`${config.API_URL}/application/apply`)
+      .get(`${config.API_URL}/contract/${eventId}`)
+      .withCredentials()
+      // .send(formdata)
+      .then(res => {
+        console.log(res.text);
+        setDescription('description');
+        setPrice(10);
+      })
+      .catch(err => {
+        alert('err' + err);
+      });
+    setIsOpen(false);
+  };
+
+  return (
+    <div>
+      <button onClick={openModal}>Open Modal</button>
+      <Modal
+        isOpen={isOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel='Modal'>
+        <div>
+          <p>{description}</p>
+          <p>{price}</p>
+          <button
+            type='button'
+            class='btn btn-primary float-right'
+            onClick={handleApply}>
+            Apply
+          </button>
+        </div>
+      </Modal>
+    </div>
+  );
+};
+
 const MyEventItem = ({ each, onClick }) => {
+  const showContract = () => {
+    alert(eventId);
+  };
   const {
     eventId,
     eventName,
@@ -98,7 +220,7 @@ const MyEventItem = ({ each, onClick }) => {
         <button variant='secondary' onClick={() => onClick(eventId)}>
           Cancel
         </button>
-        <button>test</button>
+        <ContractModal eventId={eventId} />
       </div>
     </div>
   );
