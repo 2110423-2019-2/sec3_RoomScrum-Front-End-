@@ -14,8 +14,8 @@ import {
 } from "src/components/common";
 import "./hirer.scss";
 import { SideNavigation } from "src/components/common/sidebar-hirer/sidebar-hirer";
-import BannedUsersPage from 'src/views/hirer/banned-user'
-import UserReportPage from "./user-report";
+import Event from 'src/views/hirer/event'
+import Contract from "./contract";
 
 const ListItem = ({ url, text }) => {
   return (
@@ -46,11 +46,11 @@ export default () => {
             <Route path={url + "/profile"}>
               <Profile />
             </Route>
-            <Route path={url + "/banned-users"}>
-              <BannedUsersPage />
+            <Route path={url + "/event"}>
+              <Event />
             </Route>
-            <Route path={url + "/user-report"}>
-              <UserReportPage />
+            <Route path={url + "/contract"}>
+              <Contract />
             </Route>
             <Route path={url + "/"}>404 Admin</Route>
           </Switch>
