@@ -9,7 +9,7 @@ import { formStateBuilder } from "src/components/common/form/form-state";
 import ImageUploader from "src/components/common/image-upload/image-upload";
 
 const Registration = () => {
-  const [userForm, dispatchUserForm] = formStateBuilder(userFormDef)();
+  const [userForm, dispatchUserForm] = formStateBuilder(userFormDef, {username: "rod41732", address:"12312312"})();
   const [musicianForm, dispatchMusicianForm] = formStateBuilder(
     musicianFormDef
   )();
@@ -165,7 +165,8 @@ const Registration = () => {
           disabled={!accepted}
         >
           {" "}
-          Register{" "}
+          Register
+          {" "}
         </button>
       </div>
     </div>

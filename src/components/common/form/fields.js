@@ -21,6 +21,13 @@ const ErrorContainer = ({ errors }) => {
   );
 };
 
+export const setForm = dispatch => data => {
+  dispatch({
+    type: "SET_FORM",
+    payload: data,
+  })
+}
+
 export const updateForm = dispatch => fieldName => event =>
   dispatch({
     type: "UPDATE",
