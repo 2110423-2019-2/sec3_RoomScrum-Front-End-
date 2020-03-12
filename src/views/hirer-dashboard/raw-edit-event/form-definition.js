@@ -1,10 +1,23 @@
 // please use field name same as DTO
+import React, { useRef, useState } from "react";
+// import "./register.scss";
+import { Navbar, Form } from "src/components/common";
+import request from "superagent";
+import config from "src/config";
+
+
+
+
+
+
+
+
+
 
 export const formUpper = {
   eventName: {
     type: "text",
     label: "Event Name",
-    // default: "foo",
     validator: [
       value => {
         if (value) return false;

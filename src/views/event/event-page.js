@@ -5,6 +5,7 @@ import Dashboard from "./dashboard";
 import EventInfo from "./event-info";
 import Appliedmusician from "./applied-musician";
 import Currentcontract from "./current-contract";
+import HirerDashboard from "../hirer-dashboard"
 
 const EventPages = () => {
   const { url } = useRouteMatch();
@@ -22,8 +23,11 @@ const EventPages = () => {
           <Route path={url + "/dashboard"}>
             <Dashboard />
           </Route>
-          <Route path={url + "/info/:id"}>
+          {/* <Route path={url + "/info/:id"}>
             <EventInfo />
+          </Route> */}
+          <Route path={url + "/info/:id"}>
+            <HirerDashboard />
           </Route>
           <Route path={url + "/applied-musicians"}>
             <Appliedmusician />
