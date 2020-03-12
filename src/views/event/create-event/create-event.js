@@ -91,66 +91,69 @@ const CreateEventPage = () => {
   const [showAlert, setAlert] = useState(false);
 
   return (
-    <div className="create-event bg-info">
+    // style from admin
+    <div className="full-height create-event">
       <Navbar />
-      <div className="container rounded-top rounded-lg shadow">
-        <h1> Create Event</h1>
-        <div className="container-fluid">
-          <div className="row upload-image">
-            <div className="upload-image">
-              {eventImage && <img src={eventImage} />}
+      <div className="rest">
+        <div className="container rounded-top rounded-lg shadow">
+          <h1> Create Event</h1>
+          <div className="container-fluid">
+            <div className="row upload-image">
+              <div className="upload-image">
+                {eventImage && <img src={eventImage} />}
 
-              <input
-                name="image"
-                ref={uploadedFile}
-                onChange={updateEventImage}
-                type="file"
-                hidden
-              />
-              <div
-                className={classnames({
-                  overlay: true,
-                  "force-show": !eventImage
-                })}
-                onClick={clickUpload}
-              >
-                <div>
-                  <FontAwesomeIcon icon={faArrowCircleUp} />
+                <input
+                  name="image"
+                  ref={uploadedFile}
+                  onChange={updateEventImage}
+                  type="file"
+                  hidden
+                />
+                <div
+                  className={classnames({
+                    overlay: true,
+                    "force-show": !eventImage
+                  })}
+                  onClick={clickUpload}
+                >
+                  <div>
+                    <FontAwesomeIcon icon={faArrowCircleUp} />
+                  </div>
                 </div>
               </div>
+              <div className="col">
+                <Form formDef={formUpper} ref={formDataUpper} />
+              </div>
             </div>
-            <div className="col">
-              <Form formDef={formUpper} ref={formDataUpper} />
-            </div>
-          </div>
-          <Form formDef={formBelow} ref={formDataBelow} />
+            <Form formDef={formBelow} ref={formDataBelow} />
 
-          <Modal className="center-popup" isOpen={showAlert}>
-            <ConfirmDialog
-              title="Confirm?"
-              question="Do you want to create event"
-              callback={confirm => {
-                setAlert(false);
-                if (confirm) {
-                  // callbackAction.current();
-                  createEvent();
-                }
+            <Modal className="center-popup" isOpen={showAlert}>
+              <ConfirmDialog
+                title="Confirm?"
+                question="Do you want to create event"
+                callback={confirm => {
+                  setAlert(false);
+                  if (confirm) {
+                    // callbackAction.current();
+                    createEvent();
+                  }
+                }}
+              />
+            </Modal>
+
+            <button
+              className="btn btn-primary mt-4"
+              onClick={() => {
+                setAlert(true);
               }}
-            />
-          </Modal>
-
-          <button
-            className="btn btn-primary mt-4"
-            onClick={() => {
-              setAlert(true);
-            }}
-          >
-            {" "}
-            Submit{" "}
-          </button>
+            >
+              {" "}
+              Submit{" "}
+            </button>
+          </div>
+        </div>
         </div>
       </div>
-    </div>
   );
 };
 

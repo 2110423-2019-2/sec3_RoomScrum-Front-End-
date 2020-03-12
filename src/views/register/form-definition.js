@@ -146,7 +146,7 @@ export const userFormDef = {
     label: "I'm Regsitering as ...",
     default: "H",
     choice: [
-      { display: "Hiree", value: "H" },
+      { display: "Hirer", value: "H" },
       { display: "Musician", value: "M" }
     ],
     width: "sm-6"
