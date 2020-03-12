@@ -16,7 +16,8 @@ const EventInfoModal = ({
   country,
   zipcode,
   startdatetime,
-  enddatetime
+  enddatetime,
+  status
 }) => {
   const [show, setShow] = useState(false);
 
@@ -115,11 +116,12 @@ const customStyles = {
   }
 };
 
-const ContractModal = ({ eventId }) => {
+const ContractModal = ({ eventId, status }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [description, setDescription] = useState();
   const [price, setPrice] = useState(0);
   const openModal = () => {
+    getContractDetail();
     setIsOpen(true);
   };
   const afterOpenModal = () => {};
@@ -130,26 +132,66 @@ const ContractModal = ({ eventId }) => {
   //   eventId: eventId,
   //   timestamp: new Date().toISOString()
   // };
-  const handleApply = () => {
+
+  const getContractDetail = () => {
     request
-      // .post(`${config.API_URL}/application/apply`)
       .get(`${config.API_URL}/contract/${eventId}`)
       .withCredentials()
-      // .send(formdata)
       .then(res => {
-        console.log(res.text);
-        setDescription('description');
-        setPrice(10);
+        // console.log(res.text);
+        // console.log(res.body.eventId);
+        setDescription(res.body.description);
+        setPrice(res.body.price);
       })
       .catch(err => {
         alert('err' + err);
       });
     setIsOpen(false);
   };
+  const Accept = () => {
+    if (status == 'SENT') {
+      alert('accept complete');
+      //accept: POST http://localhost:3002/contract/accept/:id (if)
+      request
+        .post(`${config.API_URL}/contract/accept/${eventId}`)
+        .withCredentials()
+        .send()
+        .then(res => {
+          console.log('accept complete');
+          console.log(res.text);
+        })
+        .catch(err => {
+          alert('err' + err);
+        });
+    } else {
+      alert('Accept or Reject are not available now');
+    }
+    setIsOpen(false);
+  };
+
+  const Reject = () => {
+    if (status == 'SENT') {
+      alert('reject complete');
+      request
+        .post(`${config.API_URL}/contract/reject/${eventId}`)
+        .withCredentials()
+        .send()
+        .then(res => {
+          console.log('reject complete');
+          console.log(res.text);
+        })
+        .catch(err => {
+          alert('err' + err);
+        });
+    } else {
+      alert('Accept or Reject are not available now');
+    }
+    setIsOpen(false);
+  };
 
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
+      <button onClick={openModal}>View contract</button>
       <Modal
         isOpen={isOpen}
         onAfterOpen={afterOpenModal}
@@ -157,13 +199,21 @@ const ContractModal = ({ eventId }) => {
         style={customStyles}
         contentLabel='Modal'>
         <div>
-          <p>{description}</p>
-          <p>{price}</p>
+          <p>price : {price}</p>
+          <p>description : {description}</p>
+
           <button
             type='button'
             class='btn btn-primary float-right'
-            onClick={handleApply}>
-            Apply
+            onClick={Accept}
+            style={{ marginLeft: '22px' }}>
+            Accept
+          </button>
+          <button
+            type='button'
+            class='btn btn-danger float-right'
+            onClick={Reject}>
+            Reject
           </button>
         </div>
       </Modal>
@@ -178,7 +228,7 @@ const MyEventItem = ({ each, onClick }) => {
   const {
     eventId,
     eventName,
-    // eventId,
+    status,
     // hirerId,
     description,
     address,
@@ -212,6 +262,7 @@ const MyEventItem = ({ each, onClick }) => {
           zipcode={zipcode}
           startdatetime={startdatetime}
           enddatetime={enddatetime}
+          status={status}
         />
       </div>
       <div className='row'>
@@ -220,7 +271,7 @@ const MyEventItem = ({ each, onClick }) => {
         <button variant='secondary' onClick={() => onClick(eventId)}>
           Cancel
         </button>
-        <ContractModal eventId={eventId} />
+        <ContractModal eventId={eventId} status={status} />
       </div>
     </div>
   );
