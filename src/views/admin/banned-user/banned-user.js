@@ -124,7 +124,7 @@ const BannedUsersPage = () => {
                         multiple={false}
                         minLength={3}
                         onSearch={fetchChoice}
-                        placeholder="Search for a Github user..."
+                        placeholder="Search user to ban..."
                         onChange={handleSelection}
                         renderMenuItemChildren={(option, props) => {
                             const {firstName, lastName, username} = option;

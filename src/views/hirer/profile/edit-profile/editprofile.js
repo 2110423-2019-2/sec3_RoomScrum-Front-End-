@@ -114,7 +114,10 @@ const EditProfile = () => {
       // await 
       request.post(`${config.API_URL}/user/update/${user.userId}`).send(user)
       .withCredentials()
-      .then(() => alert("OK"))
+      .then(() => {
+        alert("Profile Updated")
+        window.location.href = './me'
+      })
         // request
         // .post(`${config.API_URL}/auth/login`)
         // .send({

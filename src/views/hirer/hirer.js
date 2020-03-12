@@ -32,7 +32,7 @@ const ListItem = ({ url, text }) => {
 
 export default () => {
   const { url } = useRouteMatch();
-  console.log("hirer =", url);
+  console.log("hirer = ", url);
   
   return (
     <div className="full-height">
@@ -44,10 +44,10 @@ export default () => {
         </DashboardNavigation>
         <DashboardContent>
           <Switch>
-            <Route path={url + "/profile"}>
+            <Route path={url + "/profile/me"}>
               <Profile />
             </Route>
-            <Route path={url + "/edit-profile"}>
+            <Route path={url + "/profile/edit"}>
               <EditProfile />
             </Route>
             <Route path={url + "/event"}>

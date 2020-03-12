@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
+import Modal from "react-modal";
 import './applied-musician-item.scss'
-import Button from 'react-bootstrap/Button';
 import request from 'superagent';
 import config from 'src/config';
-
+import { ConfirmDialog } from "src/components/common";
 
 
 const AppliedMusicianItem = ({
   each: {
-    hireeName,
-    hireeId,
     eventId,
+    hireeId,
     timestamp,
-    status,
+    status
   }
   }) => {
     const [show, setShow] = useState(false);
@@ -23,8 +21,8 @@ const AppliedMusicianItem = ({
 
 const formdata = {
   //hireeName : {hireeName} ,
-  hireeId: {hireeId},
-  eventId: {eventId},
+  hireeId: hireeId,
+  eventId: eventId,
   //timestamp: new Date().toISOString(),
   //status: {status}
 };
@@ -33,6 +31,7 @@ const handleAccept = () => {
   request
     .post(`${config.API_URL}/application/accept`)
     .send(formdata)
+    .withCredentials()
     .then(res => {
       console.log(res.text);
     })
@@ -42,17 +41,14 @@ const handleAccept = () => {
 };
   
   return (
-    <div className='card event-item' style={{ width: 1000 }}>
+    <div className='card event-item' style={{ width: 300 }}>
       <img
         className='card-img-top'
         src='https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/HB4AT3D3IMI6TMPTWIZ74WAR54.jpg&w=767'
         alt='Card image cap'
       />
       <div className='card-body'>
-        <h5 className='card-title'>{hireeName} </h5>
-        <p className='card-text'>
-          {hireeUsername}
-        </p>
+
         <p className='card-text'>
           {eventId}
         </p>
@@ -65,9 +61,9 @@ const handleAccept = () => {
           startdatetime={startdatetime}
           enddatetime={enddatetime}
         /> */}
-        <Button variant='secondary' onClick={handleClose}>
+        <button variant='secondary' onClick={handleClose}>
             Reject
-        </Button>
+        </button>
         <Modal className="center-popup" isOpen={showAlert}>
                 <ConfirmDialog
                   title="Confirm?"
@@ -76,21 +72,21 @@ const handleAccept = () => {
                     setAlert(false);
                     if (confirm) {
                       // callbackAction.current();
-                      sendData();
+                      handleAccept();
+                      handleClose();
                     }
                   }}
                 />
               </Modal>
     
               <button
-                className="btn btn-primary mt-4"
+                variant='secondary'
                 onClick={() => {
                   setAlert(true);
-                  handleAccept;
                 }}
               >
                 {" "}
-                Submit{" "}
+                Accept{" "}
               </button>
       </div>
       

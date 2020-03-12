@@ -28,12 +28,14 @@ const HirerDashboard = () => {
   
     if (!isFetch) {
       request
-      .get(`${config.API_URL}/events`)
+      .post(`${config.API_URL}/events/find-my-event`)
+      .withCredentials()
       .then(res => {
         setIsFetch(true);
+        console.log(res.body);
         setMyEventList(res.body);
         // setMyEventList('res.body');
-        console.log(res.body);
+        
       })
       .catch(err => {
         alert(err);
@@ -56,10 +58,11 @@ const HirerDashboard = () => {
     const myEventItems = myEventList.map(each => {
         return (
           <div>
-            <MyEventItem each={each} onClick={deleteItem}/>
+            <MyEventItem each={each} onClick={deleteItem} />
           </div>
         );
     });
+
 
     return (
         <div>
