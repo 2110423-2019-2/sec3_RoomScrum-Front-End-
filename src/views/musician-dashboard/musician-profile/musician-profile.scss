@@ -6,17 +6,24 @@
     grid-template-rows: 100%;
     max-height: 100%;
     height: 100%;
+
+    // prevent grid blowout
+    > * {
+       overflow: auto; 
+    }
+
+    .navy-bg {
+        background-color: $navy;
+    }
 }
 
 
 .musician-profile {
-    overflow: auto; // prevent grid-blowout
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 40px;
     min-height: 100%;
-    // bacg
 
     .title {
         color: $navy;
@@ -65,10 +72,9 @@
 }
 
 
+
 .musician-video {
     word-wrap: break-word;
-    overflow: auto;
-    background-color: $navy;
 
     .title {
         color: white;
@@ -102,5 +108,36 @@
                 }
             }
         }
+    }
+}
+
+.user-review {
+    padding: 32px;
+    
+    .title {
+        font-size: 32px;
+        padding: 0.5em 1em;
+        color: white;
+    }
+}
+
+.user-review-item {
+    background-color: white;
+    margin-bottom: 8px;
+    padding: 8px;
+        
+    .divider {
+        width: 100%;
+        margin: 8px 32px; 
+        height: 1px;
+        background-color: $grey;
+    }
+
+    .reviewer {
+        font-weight: bold;
+    }
+
+    .message {
+        
     }
 }

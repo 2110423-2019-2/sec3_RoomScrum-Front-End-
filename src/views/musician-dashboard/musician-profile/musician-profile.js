@@ -113,6 +113,60 @@ const MusicianVideo = ({ musician }) => {
     )
 }
 
+
+const fakeReview = {
+    reviewer: {
+        firstName: "John",
+        lastName: "Doge",
+    },
+    message: "lorem ipsum asdjwqkejfeal",
+    star: 5,
+};
+
+
+const UserReviewItem = ({review}) => {
+    const {
+        reviewer: {firstName, lastName},
+        message,
+        star,
+    } = review;
+    
+    return (
+        <div className="user-review-item">
+            <div className="reviewer"> {firstName} {lastName} </div>
+            <div className="divider"/>
+            <div className="message"> REVIEW: {message}</div>
+            <div className="rating"> {star} stars</div>
+        </div>
+    )
+}
+
+// user's review ()
+const UserReviews = ({userId}) => {
+    const [reviews, setReviews] = useState(null);
+    const isFetch = useRef(false);
+
+    const fetchReviews = () => {
+        setReviews(Array(10).fill(0).map(() => {
+           return {...fakeReview};
+        }));
+    }
+
+    if (!isFetch.current) {
+        isFetch.current = true;
+        fetchReviews();
+    }
+
+    return (
+        <div className="user-review">
+            <div className="title"> user reviews </div>
+            <div className="user-review-list">
+                {reviews && reviews.map(review => <UserReviewItem review={review}/>)}
+            </div>
+        </div>
+    )
+}
+
 const _MusicianProfilePage = observer(({ loginState: { userId } }) => {
     const [musicianInfo, setMusicianInfo] = useState(null);
     const lastFetched = useRef(null);
@@ -135,8 +189,10 @@ const _MusicianProfilePage = observer(({ loginState: { userId } }) => {
     return (
         <div className="musician-profile-page">
             {musicianInfo && <MusicianProfile musician={musicianInfo} />}
-            {musicianInfo && <MusicianVideo musician={musicianInfo} />}
+            <div className="navy-bg">
                 { musicianInfo && <MusicianVideo musician={musicianInfo} />}
+                { <UserReviews userId={userId}/>}
+            </div>
         </div>
     )
 });
