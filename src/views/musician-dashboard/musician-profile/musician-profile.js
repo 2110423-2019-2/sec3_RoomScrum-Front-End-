@@ -27,6 +27,7 @@ moment.locale('en', {
     }
 });
 
+// muscian profile component
 const MusicianProfile = ({
     musician: {
         firstName, lastName,
@@ -71,17 +72,41 @@ const MusicianProfile = ({
     )
 }
 
+// musician videos (youtube)
 const MusicianVideo = ({ musician }) => {
     return (
         <div className="musician-video">
-            <div className="yt-wrapper">
-                <div className="yt-container">
-                    <iframe
-                        src="https://www.youtube.com/embed/KU4qOebhkfs"
-                        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                        className="yt-vid"
-                    ></iframe>
+            <div className="title"> Videos </div>
+            <div className="musician-video-list">
+                <div className="yt-wrapper">
+                    <div className="yt-container">
+                        <iframe
+                            src="https://www.youtube.com/embed/KU4qOebhkfs"
+                            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            className="yt-vid"
+                        ></iframe>
+                    </div>
+                </div>
+                <div className="yt-wrapper">
+                    <div className="yt-container">
+                        <iframe
+                            src="https://www.youtube.com/embed/KU4qOebhkfs"
+                            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            className="yt-vid"
+                        ></iframe>
+                    </div>
+                </div>
+                <div className="yt-wrapper">
+                    <div className="yt-container">
+                        <iframe
+                            src="https://www.youtube.com/embed/KU4qOebhkfs"
+                            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            className="yt-vid"
+                        ></iframe>
+                    </div>
                 </div>
             </div>
         </div>
@@ -111,6 +136,7 @@ const _MusicianProfilePage = observer(({ loginState: { userId } }) => {
         <div className="musician-profile-page">
             {musicianInfo && <MusicianProfile musician={musicianInfo} />}
             {musicianInfo && <MusicianVideo musician={musicianInfo} />}
+                { musicianInfo && <MusicianVideo musician={musicianInfo} />}
         </div>
     )
 });
