@@ -17,7 +17,7 @@ const UserItem = ({
     return (
         <div className="banned-user-item clearfix">
             <Img className="avatar" src={[
-                config.API_URL + "/user/pic" + userId,
+                config.API_URL + "/user/profile-pic/" + userId,
                 `https://i.pravatar.cc/80?u=${userId}`   
             ]}
                 loader={
@@ -124,7 +124,7 @@ const BannedUsersPage = () => {
                         multiple={false}
                         minLength={3}
                         onSearch={fetchChoice}
-                        placeholder="Search user to ban..."
+                        placeholder="enter username to ban"
                         onChange={handleSelection}
                         renderMenuItemChildren={(option, props) => {
                             const {firstName, lastName, username} = option;

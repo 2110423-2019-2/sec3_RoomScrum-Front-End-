@@ -121,11 +121,11 @@ const Avatar = observer(({ loginState }) => {
 
 const Navbar = observer(({ loginState }) => {
   return (
-    <div className='navbar flex-row bg-primary shadow-sm'>
-      <div className='navbar-left'>
-        <Link className='title text-white' to='/'>
-          {' '}
-          Room scrum{' '}
+    <div className="navbar flex-row shadow-sm">
+      <div className="navbar-left">
+        <Link className="title text-white" to="/">
+          {" "}
+          Room scrum{" "}
         </Link>
       </div>
       <div className='navbar-right flex-row'>
