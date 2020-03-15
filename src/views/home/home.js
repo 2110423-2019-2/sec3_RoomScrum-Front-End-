@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar } from "src/components/common";
 import './home.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import LoginDialog from 'src/components/login';
 
 const Footer = () => {
   return (
@@ -13,6 +14,12 @@ const Footer = () => {
 }
 
 const Home = () => {
+  const [showLogin, setShowLogin] = useState(false);
+  
+  const showLoginDialog = () => setShowLogin(true);
+  const goRegister = () => window.location.href = "register";
+
+
   return (
     <div className="full-height home">
       <Navbar />
@@ -35,13 +42,14 @@ const Home = () => {
               <span> Find musicians or band </span>
             </div>
             <div className="cta-buttons">
-              <button> Register </button>
-              <button> Login </button>
+              <button onClick={goRegister}> Register </button>
+              <button onClick={showLoginDialog}> Login </button>
             </div>
           </div>
         </div>
         <Footer/>
       </div>
+      <LoginDialog open={showLogin} onRequestClose={() => setShowLogin(false)}/>
     </div>
   );
 };
