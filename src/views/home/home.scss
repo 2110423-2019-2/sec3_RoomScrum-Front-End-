@@ -66,6 +66,11 @@
                         color: white;
                         padding: 0.5em;
                         width: 160px;
+                        transition: 100ms background-color;
+
+                        &:hover {
+                            background-color: rgba(255, 255, 255, 0.5);
+                        }
                     }
                 }
             }
