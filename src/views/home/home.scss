@@ -1,0 +1,100 @@
+.home {
+    height: 100vh;
+    max-height: 100vh;
+
+    > .content {
+        height: 100%;
+        max-height: 100%;
+        overflow: auto;
+        padding: 0;
+        
+        // page 1
+        .image-1 {
+            width: 100%;
+            height: calc(100vh - 200px - 60px); // navbar and headline
+            object-fit: cover;
+        }
+
+        .headline {
+            height: 200px;
+            display: flex;
+            flex-direction: column; 
+            justify-content: space-around;
+
+            .line-1 {
+                font-size: 30px;
+            }
+
+            .line-2 {
+                font-size: 80px;
+            }
+        }
+
+        // page 2
+        .page-2 {
+            position: relative;
+            width: 100%;
+            height: 75vh; // ~768px on 1920
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+
+            > .content {
+                width: 75%;
+                min-width: 320px; // full-screen on mobile
+                max-width: 720px;
+                z-index: 99;
+                color: white;
+                
+                .features {
+                    padding: 8px;
+                    font-size: 60px;
+                }
+
+                .cta-buttons {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+
+                    button {
+                        margin: 8px;
+                        font-size: 24px;
+                        background-color: transparent;
+                        border: 1px solid #EDEDED;
+                        color: white;
+                        padding: 0.5em;
+                        width: 160px;
+                    }
+                }
+            }
+
+            .image-l {
+                position: absolute;
+                left: 0%;
+                width: 50%;
+                height: 75vh; 
+                opacity: 0.6;
+            }
+
+            .image-r {
+                position: absolute;
+                left: 50%;
+                width: 50%;
+                height: 75vh;
+                opacity: 0.6;
+            }
+        }
+    }
+}
+
+.footer {
+    background-color: #1c1c21;
+    color: #403f3f;
+    
+    .copyright {
+        float: right;
+        padding: 12px;
+    }
+}
