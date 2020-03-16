@@ -2,6 +2,8 @@ import React, {useState, useRef} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import Dialog from 'src/components/common/dialog';
+import ConfirmDialog from 'src/components/common/confirm-dialog-v2';
 
 import './my-events.scss';
 
@@ -30,15 +32,17 @@ const Indicator = ({color}) => {
 }
 
 
-const AppliedEventItem = ({event: {
-    name,
-    eventId,
-    status,
-    district, province,
-    hirerName, // computed ?
-    contractStatus, // computed ?
-    price, // computed ?
-}, onAccept, onReject}) => {
+const AppliedEventItem = ({
+    event: {
+        name,
+        eventId,
+        status,
+        district, province,
+        hirerName, // computed ?
+        contractStatus, // computed ?
+        price, // computed ?
+    }, onCancel // when click cancel
+}) => {
     return (
         
         <div className="applied-event-item clearfix">
@@ -78,7 +82,7 @@ const AppliedEventItem = ({event: {
                 <div className="currency"> baht </div>
             </div>
             <div className="cancel-wrapper">
-                <button>
+                <button onClick={() => onCancel(eventId)}>
                     <FontAwesomeIcon icon={faExclamationTriangle}/>
                     cancel
                 </button>
@@ -87,34 +91,46 @@ const AppliedEventItem = ({event: {
     )
 }
 
+const fakeEvent = {
+    name: "SE Miniconert 2020",
+    status: "Approved",
+    contractStatus: "In contract",
+    district: "Muang",
+    province: "Chon Buri",
+    eventId: 1,
+    hirerName: "John Doge",
+    price: 999999,
+};
+
 const MyEvents = () => {
     const [events, setEvents] = useState([]);
     const isFetch = useRef(false);
-    // const targetBand = useRef(null); // use Ref to prevent to many state
-    // const [showAcceptDialog, setShowAcceptDialog] = useState(false);
+    const targetEvent = useRef(null); // use Ref to prevent to many state
+    const [showCancelDialog, setShowCancelDialog] = useState(false);
     // const [showRejectDialog, setShowRejectDialog] = useState(false);
 
 
-    // const fetchBands = () => {
-    //     setBands(Array(10).fill(0).map(() => {
-    //         return {...fakeBand};
-    //     }))
-    // }
+    
+    const fetchEvents = () => {
+        setEvents(Array(10).fill(0).map(() => {
+            return {...fakeEvent};
+        }))
+    }
 
-    // if (!isFetch.current) {
-    //     isFetch.current = true;
-    //     fetchBands();
-    // }
+    if (!isFetch.current) {
+        isFetch.current = true;
+        fetchEvents();
+    }
 
     // const confirmAcceptBand = (bandId) => {
     //     targetBand.current = bandId;
     //     setShowAcceptDialog(true);
     // }
 
-    // const confirmRejectBand = (bandId) => {
-    //     targetBand.current = bandId;
-    //     setShowRejectDialog(true);
-    // }
+    const confirmCancelEvent = (eventId) => {
+        targetEvent.current = eventId;
+        setShowCancelDialog(true);
+    }
 
     // const acceptBand = (confirmed) => {
     //     // always hide dialog
@@ -123,38 +139,28 @@ const MyEvents = () => {
     //     alert("Confirm " + targetBand.current + " success!")
     // }
 
-    // const rejectBand = (confirmed) => {
-    //     // always hide dialog
-    //     setShowRejectDialog(false);
-    //     if (!confirmed) return;
-    //     alert("Reject " + targetBand.current + " success!")
-    // }
+    const cancelEvent = (confirmed) => {
+        // always hide dialog
+        setShowCancelDialog(false);
+        if (!confirmed) return;
+        alert("cancel " + targetEvent.current + " success!")
+    }
     
 
 
     return (
         <div className="band-invitations">
-            <AppliedEventItem event={{
-                name: "SE Miniconert 2020",
-                status: "Approved",
-                contractStatus: "In contract",
-                district: "Muang",
-                province: "Chon Buri",
-                eventId: 1,
-                hirerName: "John Doge",
-                price: 999999,
-            }}/>
-            {/* {
-                bands.map(band => (
-                    <BandInvitationItem band={band} onAccept={confirmAcceptBand} onReject={confirmRejectBand}/>
+            {
+                events.map(event => (
+                    <AppliedEventItem event={event} onCancel={confirmCancelEvent}/>
                 ))
             }
-            <Dialog isOpen={showAcceptDialog} onClose={() => setShowAcceptDialog(false)}>
+            {/* <Dialog isOpen={showAcceptDialog} onClose={() => setShowAcceptDialog(false)}>
                 <ConfirmDialog title="Accept band request" question="Do you want to join this band?" callback={acceptBand}/>
-            </Dialog>
-            <Dialog isOpen={showRejectDialog} onClose={() => setShowRejectDialog(false)}>
-                <ConfirmDialog title="Reject band request" question="Reject and remove this invitation? you can't join unless you're invited again" callback={rejectBand}/>
             </Dialog> */}
+            <Dialog isOpen={showCancelDialog} onClose={() => setShowCancelDialog(false)}>
+                <ConfirmDialog title="Cancel Event" question="This will withdraw you from event! this action can't be undone" callback={cancelEvent}/>
+            </Dialog>
         </div>
     )
 }
