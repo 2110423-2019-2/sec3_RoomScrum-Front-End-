@@ -1,8 +1,5 @@
-$dark-navy: #303e61;
-$navy: #364d9b;
-$light-navy: #989db1;
-$grey: #939393;
-$light-blue: #559BE3;
+@import '../../../../styles/color.scss';
+
 
 .ban-confirm-dialog {
     background-color: white;
