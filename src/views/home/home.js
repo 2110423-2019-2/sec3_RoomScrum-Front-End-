@@ -24,14 +24,13 @@ const Home = () => {
     <div className="full-height home">
       <Navbar />
       <div className="content">
-        <img className="image-1" src="/sample-bg.jpg"/>
+        <img className="cover-image" src="/bg-1.png"/>
         <div className="headline">
           <div className="line-1">The best platform for</div>
           <div className="line-2">Musician {"&"} Organizer </div>
         </div>
         <div className="page-2">
-          <img className="image-l" src="/sample-bg.jpg"/>
-          <img className="image-r" src="/sample-bg-2.jpg"/>
+          <img className="cover-image bg-image" src="/bg-2.png"/>
           <div className="content">
             <div className="features"> 
               <FontAwesomeIcon icon={faCheckCircle}/>

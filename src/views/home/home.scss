@@ -9,10 +9,17 @@
         padding: 0;
         
         // page 1
-        .image-1 {
+        .cover-image {
             width: 100%;
-            height: calc(100vh - 200px - 60px); // navbar and headline
+            height: 75vh; // navbar and headline
             object-fit: cover;
+
+            &.bg-image {
+                position: absolute;
+                left: 0%;
+                height: 75vh; 
+                opacity: 0.6;
+            }
         }
 
         .headline {
@@ -73,22 +80,6 @@
                         }
                     }
                 }
-            }
-
-            .image-l {
-                position: absolute;
-                left: 0%;
-                width: 50%;
-                height: 75vh; 
-                opacity: 0.6;
-            }
-
-            .image-r {
-                position: absolute;
-                left: 50%;
-                width: 50%;
-                height: 75vh;
-                opacity: 0.6;
             }
         }
     }
