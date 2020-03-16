@@ -5,6 +5,7 @@
   width: 100%;
   height: 60px;
   padding: 0 16px;
+  background-color: #111138;
 
   &.flex-row, .flex-row {
     display: flex;
@@ -23,8 +24,10 @@
     .link-section, .dynamic-section {
       display: flex;
       align-items: center;
+
       > * {
         padding-left: 1em;
+        font-weight: bold;
       }
     }
 
