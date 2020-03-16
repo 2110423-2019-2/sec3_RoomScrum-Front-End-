@@ -26,7 +26,7 @@ const SideNavItem = ({item}) => {
     );
 }
 
-export const SideNavigation = () => {
+const SideNavigation = () => {
 
     const match = useRouteMatch();
     console.group("sidenav debug")
@@ -43,3 +43,5 @@ export const SideNavigation = () => {
         </div>
     )
 }
+
+export default SideNavigation;

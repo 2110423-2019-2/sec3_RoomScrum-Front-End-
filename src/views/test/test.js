@@ -9,7 +9,7 @@ import {
   DashboardNavigation,
   DashboardContent
 } from 'src/components/common';
-import { SideNavigation } from 'src/components/common/sidebar/sidebar';
+import SideNavigation from 'src/components/common/sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenSquare, faEdit } from '@fortawesome/free-solid-svg-icons';
 

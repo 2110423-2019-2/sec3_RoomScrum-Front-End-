@@ -13,7 +13,7 @@ import {
   DashboardContent
 } from "src/components/common";
 import "./admin.scss";
-import { SideNavigation } from "src/components/common/sidebar/sidebar";
+import SideNavigation from "src/components/common/sidebar";
 import BannedUsersPage from 'src/views/admin/banned-user'
 import UserReportPage from "./user-report";
 
@@ -38,8 +38,7 @@ export default () => {
       <Navbar />
       <DashboardLayout>
         <DashboardNavigation>
-          <SideNavigation
-          />
+          <SideNavigation/>
         </DashboardNavigation>
         <DashboardContent>
           <Switch>
