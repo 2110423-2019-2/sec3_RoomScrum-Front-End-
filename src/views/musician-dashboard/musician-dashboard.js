@@ -4,6 +4,7 @@ import Sidebar, {SideNavItemDetail} from 'src/components/common/sidebar';
 import { Navbar } from 'src/components/common';
 import { Switch, useRouteMatch, Route } from 'react-router-dom';
 import BandInvitations from './band-invitations';
+import MyEventsPage from './my-events';
 
 const sidebarItems = [
     SideNavItemDetail("My Profile", "/musician/my-profile"),
@@ -29,6 +30,9 @@ const MusicianDashboard = () => {
                     <Switch>
                         <Route path={url + "/band-invitations"}>
                             <BandInvitations/>
+                        </Route>
+                        <Route path={url + "/my-events"}>
+                            <MyEventsPage/>
                         </Route>
                         <Route path="/">
                             404 musician dashbaord
