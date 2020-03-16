@@ -4,11 +4,9 @@ import './sidebar.scss';
 import classname from 'classnames';
 
 
-const fakeItems = [
-    {text: "Approve musicians", href: "/admin/approve-user"},
-    {text: "User report", href: "/admin/user-report"},
-    {text: "Banned users", href: "/admin/banned-users"},
-] 
+export const SideNavItemDetail = (text, href) => {
+    return {text, href};
+}
 
 const SideNavItem = ({item}) => {
     const {text, href} = item;
@@ -26,17 +24,19 @@ const SideNavItem = ({item}) => {
     );
 }
 
-const SideNavigation = () => {
+const SideNavigation = ({items = []}) => {
 
     const match = useRouteMatch();
     console.group("sidenav debug")
     console.log(match)
     console.groupEnd()
 
+    if (items.length == 0) console.warn("WARNING: items must not be empty");
+
     return (
         <div className="sidebar">
             {
-                fakeItems.map(item => (
+                items.map(item => (
                     <SideNavItem item={item}/> 
                 ))
             }

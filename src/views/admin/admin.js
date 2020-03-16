@@ -13,21 +13,15 @@ import {
   DashboardContent
 } from "src/components/common";
 import "./admin.scss";
-import SideNavigation from "src/components/common/sidebar";
+import Sidebar, { SideNavItemDetail } from "src/components/common/sidebar";
 import BannedUsersPage from 'src/views/admin/banned-user'
 import UserReportPage from "./user-report";
 
-const ListItem = ({ url, text }) => {
-  return (
-    <Link
-      to={url}
-      className="list-group-item list-group-item-action text-muted p-2"
-    >
-      {" "}
-      {text}{" "}
-    </Link>
-  );
-};
+const sidebarItems = [
+  SideNavItemDetail("Approve musicians", "/admin/approve-user"),
+  SideNavItemDetail("User report", "/admin/user-report"),
+  SideNavItemDetail("Banned users", "/admin/banned-users"),
+];
 
 export default () => {
   const { url } = useRouteMatch();
@@ -38,7 +32,7 @@ export default () => {
       <Navbar />
       <DashboardLayout>
         <DashboardNavigation>
-          <SideNavigation/>
+          <Sidebar items={sidebarItems}/>
         </DashboardNavigation>
         <DashboardContent>
           <Switch>
