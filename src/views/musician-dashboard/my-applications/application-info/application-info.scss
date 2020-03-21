@@ -35,6 +35,7 @@
     .desc {
         display: flex;
         flex-flow: row nowrap;
+        margin-bottom: 0.5em;
     
         > * {
             font-size: 14px;
@@ -49,6 +50,13 @@
         > .value {
             flex: 1 0 0;
             word-wrap: break-word;
+
+            .text-btn {
+                text-decoration: underline;
+                cursor: pointer;
+                margin-left: 0.5em;
+                font-size: 14px;
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ import Sidebar, {SideNavItemDetail} from 'src/components/common/sidebar';
 import { Navbar } from 'src/components/common';
 import { Switch, useRouteMatch, Route } from 'react-router-dom';
 import BandInvitations from './band-invitations';
-import MyEventsPage from './my-events';
+import MyEventsPage from './my-applications';
 
 const sidebarItems = [
     SideNavItemDetail("My Profile", "/musician/my-profile"),
