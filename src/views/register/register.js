@@ -7,9 +7,10 @@ import { userFormDef, musicianFormDef } from "./form-definition";
 import FormV2 from "src/components/common/form/form-v2";
 import { formStateBuilder } from "src/components/common/form/form-state";
 import ImageUploader from "src/components/common/image-upload/image-upload";
+import { UserType } from 'src/enums';
 
 const Registration = () => {
-  const [userForm, dispatchUserForm] = formStateBuilder(userFormDef, {username: "rod41732", address:"12312312"})();
+  const [userForm, dispatchUserForm] = formStateBuilder(userFormDef)();
   const [musicianForm, dispatchMusicianForm] = formStateBuilder(
     musicianFormDef
   )();
@@ -34,7 +35,7 @@ const Registration = () => {
       }
     }
     // only validate if it's musician
-    if (userForm["userType"].value == "M") {
+    if (userForm["userType"].value == UserType.MUSICIAN) {
       for (let key in musicianForm)
         if (musicianForm[key].errors && musicianForm[key].errors.length > 0) {
           hasError = true;
@@ -60,7 +61,7 @@ const Registration = () => {
     if (!profileImageName) return;
 
     let nationalCardImageName;
-    if (userForm["userType"].value == "M") {
+    if (userForm["userType"].value == UserType.MUSICIAN) {
       nationalCardImageName = await request
         .post(`${config.API_URL}/user/temp-id-pic`)
         .attach("image", nationalCardImage)
@@ -84,8 +85,6 @@ const Registration = () => {
     for (let key in musicianForm)
       if (!musicianFormDef[key].ignore) sendData[key] = musicianForm[key].value;
 
-    // hack
-    sendData.gender = +userForm.gender.value;
     Object.assign(sendData, {
       profileImage: profileImageName,
       nationalCardImage: nationalCardImageName
@@ -132,14 +131,14 @@ const Registration = () => {
           dispatch={dispatchUserForm}
           formDef={userFormDef}
         />
-        {userForm["userType"].value == "M" && ( // show only for musician
+        {userForm["userType"].value == UserType.MUSICIAN && ( // show only for musician
           <FormV2
             formData={musicianForm}
             dispatch={dispatchMusicianForm}
             formDef={musicianFormDef}
           />
         )}
-        {userForm["userType"].value == "M" && ( // show only for musician
+        {userForm["userType"].value == UserType.MUSICIAN && ( // show only for musician
           <div className="row justify-content-center mt-4">
             <ImageUploader
               setImageFile={setNationalCardImage}

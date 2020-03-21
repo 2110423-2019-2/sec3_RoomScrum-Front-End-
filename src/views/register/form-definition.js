@@ -1,3 +1,5 @@
+import { UserType, Gender } from "src/enums";
+
 const MinLength = length => value => {
   if (!value) return "Required";
   if (value.length < length) return `Must be at least ${length} characters`;
@@ -82,10 +84,10 @@ export const userFormDef = {
     label: "Gender",
     default: "0",
     choice: [
-      { display: "Select", value: 0 },
-      { display: "Male", value: 1 },
-      { display: "Female", value: 2 },
-      { display: "Other", value: 3 }
+      { display: "Select", value: null },
+      { display: "Male", value: Gender.MALE },
+      { display: "Female", value: Gender.FEMALE },
+      { display: "Other", value: Gender.OTHER }
     ],
     width: "sm-4",
     validator: [
@@ -144,10 +146,11 @@ export const userFormDef = {
   userType: {
     type: "options",
     label: "I'm Regsitering as ...",
-    default: "H",
+    default: "Hirer",
     choice: [
-      { display: "Hirer", value: "H" },
-      { display: "Musician", value: "M" }
+      { display: "Hirer", value: UserType.HIRER },
+      { display: "Musician", value: UserType.MUSICIAN },
+      { display: "Band", value: UserType.BAND },
     ],
     width: "sm-6"
   }
