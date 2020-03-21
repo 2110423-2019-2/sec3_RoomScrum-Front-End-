@@ -1,0 +1,98 @@
+@import '../../../styles/color.scss';
+
+// container
+.band-invitations {
+    background-color: white;
+    min-height: 100%;
+    padding: 8px;
+}
+
+.applied-event-item {
+    background-color: white;
+    box-shadow: 0px 4px 4px #bababa;
+    margin-bottom: 16px;
+    display: flex;
+    flex-flow: row wrap;
+
+    .event-image {
+        flex: 0 0 auto;
+        width: 160px;
+        height: 160px;
+        margin: 8px 24px 0px 8px;
+    }
+
+    .event-info {
+        flex: 1; // magic to fill remaining space
+
+        .event-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: $dark-navy;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .desc {
+            display: flex;
+            flex-flow: row nowrap;
+
+            > * {
+                font-size: 14px;
+                color: $dark-navy;
+            }
+
+            > .label {
+                flex: 0 0 180px;
+                font-weight: bold;
+            }
+
+            > .value {
+                flex: 1 0 0;
+                word-wrap: break-word;
+            }
+        }
+
+        .link-btn {
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            text-decoration: underline;
+        }
+    }
+    
+    .price-tag {
+        flex: 0 0 auto;
+        color: $dark-navy;
+        text-align: right;
+        padding-right: 16px;
+
+        .price {
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 32px; // reduce spacing
+        }
+        
+        .currency {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    .cancel-wrapper  {
+        flex: 0 0 100%;
+        text-align: right;
+
+        button {
+            border: none;
+            background-color: transparent;
+            color: $grey;
+
+            &:hover {
+                color: red;
+            }
+        }
+    }
+}
