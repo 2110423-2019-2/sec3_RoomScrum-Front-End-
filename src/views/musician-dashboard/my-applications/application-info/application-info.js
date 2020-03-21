@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import request from 'superagent';
 import config from 'src/config';
-import './event-info.scss';
-import { Indicator } from '../my-events';
+import './application-info.scss';
+import { Indicator } from '../my-applications';
 import moment from 'moment';
 import Image from 'react-image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,48 +16,52 @@ const TimeDisplay = ({start, end}) => {
     )
 } 
 
-const EventInfoDialog = ({eventId, onClose}) => {
-    const [isFetch, setFetch] = useState(null);
-    const [eventInfo, setEventInfo] = useState(null);
-    const [hirerInfo, setHirerInfo] = useState(null);
+const ApplicationInfoDialog = ({application, onClose, onCancel}) => {
+    
+    const {
+        status: applicationStatus,
+        event
+    } = application;
+    const {
+        eventId,
+        eventName,
+        status: eventStatus,
+        startdatetime,
+        enddatetime,
+        address, subdistrict, district, province, zipcode,
+        budget,
+        description,
+        userId: hirerId,
+    } = event;
 
-    if (isFetch != eventId) {
-        setFetch(eventId)
-        request.get(config.API_URL + '/events/' + eventId)
+    const [hirerData, setHirerData] = useState(null);
+    const isFetch = useRef(false);
+    if (!isFetch.current) {
+        isFetch.current = true;
+        request.get(config.API_URL + '/user/' + hirerId)
         .withCredentials()
         .then(res => {
-            setEventInfo(res.body);
-            const hirerId = res.body.userId;
-            request.get(config.API_URL + '/user/' + hirerId) 
-            .withCredentials()
-            .then(res2 => {
-                setHirerInfo(res2.body);
-                console.log(res2.body);
-            })
+            setHirerData(res.body);
         })
         .catch(err => {
-            alert("error fetching eventInfo for " + eventId);
-            console.error("error fetching" + eventId, err);
+            alert("error getting hirer's data");
+            console.error("error getting hirer's data", err);
         })
     }
 
-    
+    const showHirerName = (hirer) => {
+        if (!hirer) return null;
+        const {
+            firstName, lastName
+        } = hirer;
+        return `${firstName} ${lastName}`;
+    }
+
 
     return (
         <div className="event-info-dialog">
             {
-                (() => {
-                    if (!eventInfo) return null;
-                    const {
-                        eventName,
-                        status,
-                        startdatetime,
-                        enddatetime,
-                        address, subdistrict, district, province, zipcode,
-                        budget = 9999999,
-                        description,
-                        userId
-                    } = eventInfo;                 
+                (() => {            
                     return (
                         <div className="event-info">
                             <button className="top-right btn" onClick={onClose}>
@@ -67,7 +71,7 @@ const EventInfoDialog = ({eventId, onClose}) => {
                             <div className="image">
                                 <Image
                                     src={[
-                                        config.API_URL + '/events/pic/' + eventId,
+                                        config.API_URL + '/events/' + eventId + '/pic',
                                         'https://i.pravatar.cc/128'
                                     ]}
                                 />
@@ -76,7 +80,8 @@ const EventInfoDialog = ({eventId, onClose}) => {
                                 <div className="label"> Your status </div>
                                 <div className="value">
                                     <Indicator color="green"/>
-                                    {status}
+                                    {eventStatus}, {applicationStatus}
+                                    <span className="text-btn text-danger">cancel</span>
                                 </div>
                             </div>
                             <div className="desc">
@@ -84,6 +89,7 @@ const EventInfoDialog = ({eventId, onClose}) => {
                                 <div className="value">
                                     <Indicator color="yellow"/>
                                     {"TODO"}
+                                    <span className="text-btn text-muted">view</span>
                                 </div>
                             </div>
                             <div className="desc">
@@ -96,17 +102,13 @@ const EventInfoDialog = ({eventId, onClose}) => {
                             </div>
                             <div className="desc">
                                 <div className="label"> Budget </div>
-                                <div className="value"> {budget} baht </div>
+                                <div className="value"> {budget || '<<budget>>'} baht </div>
                             </div>
                             <div className="desc">
                                 <div className="label"> Hirer </div>
-                            <div className="value"> {
-                                (() => {
-                                    if (!hirerInfo) return "Loading ... ";
-                                    const {firstName, lastName} = hirerInfo;
-                                    return firstName + " " + lastName;
-                                })()
-                            }</div>
+                            <div className="value"> 
+                                { showHirerName(hirerData) }
+                            </div>
                             </div>
                             <div className="desc">
                                 <div className="label"> About </div>
@@ -120,4 +122,4 @@ const EventInfoDialog = ({eventId, onClose}) => {
     )
 }
 
-export default EventInfoDialog;
+export default ApplicationInfoDialog;

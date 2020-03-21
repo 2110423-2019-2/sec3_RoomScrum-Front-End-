@@ -10,3 +10,19 @@ export const Gender = {
     FEMALE: "Female",
     OTHER: "Other",
 }
+
+export const EventStatus = {
+    CREATED: "Created",
+    HAVE_APPLICANT: "HaveApplicant",
+    CANCELLED: "Cancelled",
+    CONTRACT_DRAFTING: "ContractDrafting",
+    SETTLE: "Settle",
+    COMPLETE: "Complete",
+}
+
+export const ApplicationStatus = {
+    IS_INVITED: "isInvited",
+    IS_APPLIED: "isApplied",
+    APPLICATION_REJECTED: "applicationRejected",
+    IS_ACCEPTED: "isAccepted",
+};
