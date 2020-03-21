@@ -7,17 +7,18 @@ import moment from 'moment';
 import Image from 'react-image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { EventStatusIndicator, ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
 
-const TimeDisplay = ({start, end}) => {
+const TimeDisplay = ({ start, end }) => {
     return (
         <div className="value">
             {moment(start).format("h:mm DD/MM/YYYY")} - {moment(end).format("h:mm DD/MM/YYYY")}
         </div>
     )
-} 
+}
 
-const ApplicationInfoDialog = ({application, onClose, onCancel}) => {
-    
+const ApplicationInfoDialog = ({ application, onClose, onCancel }) => {
+
     const {
         status: applicationStatus,
         event
@@ -39,14 +40,14 @@ const ApplicationInfoDialog = ({application, onClose, onCancel}) => {
     if (!isFetch.current) {
         isFetch.current = true;
         request.get(config.API_URL + '/user/' + hirerId)
-        .withCredentials()
-        .then(res => {
-            setHirerData(res.body);
-        })
-        .catch(err => {
-            alert("error getting hirer's data");
-            console.error("error getting hirer's data", err);
-        })
+            .withCredentials()
+            .then(res => {
+                setHirerData(res.body);
+            })
+            .catch(err => {
+                alert("error getting hirer's data");
+                console.error("error getting hirer's data", err);
+            })
     }
 
     const showHirerName = (hirer) => {
@@ -61,7 +62,7 @@ const ApplicationInfoDialog = ({application, onClose, onCancel}) => {
     return (
         <div className="event-info-dialog">
             {
-                (() => {            
+                (() => {
                     return (
                         <div className="event-info">
                             <button className="top-right btn" onClick={onClose}>
@@ -79,26 +80,26 @@ const ApplicationInfoDialog = ({application, onClose, onCancel}) => {
                             <div className="desc">
                                 <div className="label"> Your status </div>
                                 <div className="value">
-                                    <Indicator color="green"/>
-                                    {eventStatus}, {applicationStatus}
-                                    <span className="text-btn text-danger">cancel</span>
+                                    <EventStatusIndicator
+                                        eventStatus={eventStatus}
+                                        applicationStatus={applicationStatus}
+                                    />
                                 </div>
                             </div>
                             <div className="desc">
-                                <div className="label"> Contract status </div>
+                                <div className="label"> Contract Status </div>
                                 <div className="value">
-                                    <Indicator color="yellow"/>
-                                    {"TODO"}
-                                    <span className="text-btn text-muted">view</span>
+                                    {/** TODO */}
+                                    <ContractStatusIndicator contractStatus={"TODO"} />
                                 </div>
                             </div>
                             <div className="desc">
                                 <div className="label"> Address </div>
-                                <div className="value"> { address + ", " + subdistrict + ", " + district + ", " + province + ", " + zipcode}</div>
+                                <div className="value"> {address + ", " + subdistrict + ", " + district + ", " + province + ", " + zipcode}</div>
                             </div>
                             <div className="desc">
                                 <div className="label"> Time </div>
-                                <TimeDisplay start={startdatetime} end={enddatetime}/>
+                                <TimeDisplay start={startdatetime} end={enddatetime} />
                             </div>
                             <div className="desc">
                                 <div className="label"> Budget </div>
@@ -106,9 +107,9 @@ const ApplicationInfoDialog = ({application, onClose, onCancel}) => {
                             </div>
                             <div className="desc">
                                 <div className="label"> Hirer </div>
-                            <div className="value"> 
-                                { showHirerName(hirerData) }
-                            </div>
+                                <div className="value">
+                                    {showHirerName(hirerData)}
+                                </div>
                             </div>
                             <div className="desc">
                                 <div className="label"> About </div>
@@ -118,7 +119,7 @@ const ApplicationInfoDialog = ({application, onClose, onCancel}) => {
                     );
                 })()
             }
-        </div>    
+        </div>
     )
 }
 

@@ -1,7 +1,6 @@
 import React, {useState, useRef} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
 import Dialog from 'src/components/common/dialog';
 import ConfirmDialog from 'src/components/common/confirm-dialog-v2';
 import Image from 'react-image';
@@ -10,49 +9,9 @@ import './my-applications.scss';
 import ApplicationInfo from './application-info';
 import request from 'superagent';
 import config from 'src/config';
-import { ApplicationStatus } from 'src/enums';
-
-const toColor = (colorName) => {
-    // return "red";
-    switch (colorName) {
-        case "green":
-            return "#569D66";
-        case "yellow":
-            return "#ECBF4D";
-        default:
-            return colorName;
-    }
-}
-
-const _Indicator = styled.div`
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    margin-right: 8px;
-    background-color: ${props => toColor(props.color)};
-`
-
-// TODO: refactor
-export const Indicator = ({color}) => {
-    return <_Indicator color={color}/>
-}
+import { EventStatusIndicator, ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
 
 
-// const StatusConverter = (eventStatus, applicationStatus) => {
-//     switch (applicationStatus) {
-//         // 3 status พวกนี้รู้แน่ชัดว่าควรแสดงว่าไร
-//         case ApplicationStatus.IS_INVITED:
-//             return "Invited";
-//         case ApplicationStatus.IS_APPLIED:
-//             return "Applied";
-//         case ApplicationStatus.APPLICATION_REJECTED:
-//             return "Rejected";
-//         case ApplicationStatus.IS_ACCEPTED: // now check depend on event status
-//             switch (eventStatus) {
-//                 case EventStatus.
-//             }
-//     }
-// }
 
 const AppliedEventItem = ({
     application, onCancel, // when click cancel
@@ -84,15 +43,17 @@ const AppliedEventItem = ({
                 <div className="desc">
                     <div className="label"> Your status </div>
                     <div className="value"> 
-                        <Indicator color="green"/>
-                        {eventStatus}, {applicationStatus}
+                        <EventStatusIndicator
+                            eventStatus={eventStatus}
+                            applicationStatus={applicationStatus}
+                        />
                     </div>
                 </div>
                 <div className="desc">
                     <div className="label"> Contract Status </div>
                     <div className="value"> 
-                        <Indicator color="yellow"/>
-                        {contractStatus}
+                        {/** TODO */}
+                        <ContractStatusIndicator contractStatus={"TODO"} />
                     </div>
                 </div>
                 <div className="desc">
