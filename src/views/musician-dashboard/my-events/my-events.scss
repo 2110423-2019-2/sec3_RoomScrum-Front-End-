@@ -28,6 +28,11 @@
             font-size: 32px;
             font-weight: bold;
             color: $dark-navy;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
 
         .desc {

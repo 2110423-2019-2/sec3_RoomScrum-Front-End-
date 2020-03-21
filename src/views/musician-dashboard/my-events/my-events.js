@@ -6,6 +6,7 @@ import Dialog from 'src/components/common/dialog';
 import ConfirmDialog from 'src/components/common/confirm-dialog-v2';
 
 import './my-events.scss';
+import EventInfoDialog from './event-info';
 
 const toColor = (colorName) => {
     // return "red";
@@ -27,7 +28,8 @@ const _Indicator = styled.div`
     background-color: ${props => toColor(props.color)};
 `
 
-const Indicator = ({color}) => {
+// TODO: refactor
+export const Indicator = ({color}) => {
     return <_Indicator color={color}/>
 }
 
@@ -41,14 +43,15 @@ const AppliedEventItem = ({
         hirerName, // computed ?
         contractStatus, // computed ?
         price, // computed ?
-    }, onCancel // when click cancel
+    }, onCancel, // when click cancel
+    onSelectEvent,
 }) => {
     return (
         
         <div className="applied-event-item clearfix">
             <img className="event-image" src="https://i.pravatar.cc/160"/>
             <div className="event-info">
-                <div className="event-name"> {name} </div>
+                <div className="event-name" onClick={onSelectEvent}> {name} </div>
                 <div className="desc">
                     <div className="label"> Your status </div>
                     <div className="value"> 
@@ -61,7 +64,6 @@ const AppliedEventItem = ({
                     <div className="value"> 
                         <Indicator color="yellow"/>
                         {contractStatus}
-                        <button className="link-btn"> view contract </button>
                     </div>
                 </div>
                 <div className="desc">
@@ -82,7 +84,7 @@ const AppliedEventItem = ({
                 <div className="currency"> baht </div>
             </div>
             <div className="cancel-wrapper">
-                <button onClick={() => onCancel(eventId)}>
+                <button onClick={onCancel}>
                     <FontAwesomeIcon icon={faExclamationTriangle}/>
                     cancel
                 </button>
@@ -107,13 +109,13 @@ const MyEvents = () => {
     const isFetch = useRef(false);
     const targetEvent = useRef(null); // use Ref to prevent to many state
     const [showCancelDialog, setShowCancelDialog] = useState(false);
-    // const [showRejectDialog, setShowRejectDialog] = useState(false);
+    const [showInfoDialog, setShowInfoDialog] = useState(false);
+    const [eventId, setEventId] = useState(null);
 
 
-    
     const fetchEvents = () => {
-        setEvents(Array(10).fill(0).map(() => {
-            return {...fakeEvent};
+        setEvents(Array(11).fill(0).map((_, idx) => {
+            return {...fakeEvent, eventId: 1 + idx};
         }))
     }
 
@@ -122,22 +124,10 @@ const MyEvents = () => {
         fetchEvents();
     }
 
-    // const confirmAcceptBand = (bandId) => {
-    //     targetBand.current = bandId;
-    //     setShowAcceptDialog(true);
-    // }
-
     const confirmCancelEvent = (eventId) => {
         targetEvent.current = eventId;
         setShowCancelDialog(true);
     }
-
-    // const acceptBand = (confirmed) => {
-    //     // always hide dialog
-    //     setShowAcceptDialog(false);
-    //     if (!confirmed) return;
-    //     alert("Confirm " + targetBand.current + " success!")
-    // }
 
     const cancelEvent = (confirmed) => {
         // always hide dialog
@@ -145,6 +135,11 @@ const MyEvents = () => {
         if (!confirmed) return;
         alert("cancel " + targetEvent.current + " success!")
     }
+
+    const showEventPopup = (eventId) => {
+        setEventId(eventId);
+        setShowInfoDialog(true);
+    };
     
 
 
@@ -152,14 +147,14 @@ const MyEvents = () => {
         <div className="band-invitations">
             {
                 events.map(event => (
-                    <AppliedEventItem event={event} onCancel={confirmCancelEvent}/>
+                    <AppliedEventItem event={event} onCancel={() => confirmCancelEvent(event.eventId)} onSelectEvent={() => showEventPopup(event.eventId)}/>
                 ))
             }
-            {/* <Dialog isOpen={showAcceptDialog} onClose={() => setShowAcceptDialog(false)}>
-                <ConfirmDialog title="Accept band request" question="Do you want to join this band?" callback={acceptBand}/>
-            </Dialog> */}
             <Dialog isOpen={showCancelDialog} onClose={() => setShowCancelDialog(false)}>
                 <ConfirmDialog title="Cancel Event" question="This will withdraw you from event! this action can't be undone" callback={cancelEvent}/>
+            </Dialog>
+            <Dialog isOpen={showInfoDialog} onClose={() => setShowInfoDialog(false)}>
+                { eventId && <EventInfoDialog eventId={eventId} onClose={() => setShowInfoDialog(false)}/> }
             </Dialog>
         </div>
     )
