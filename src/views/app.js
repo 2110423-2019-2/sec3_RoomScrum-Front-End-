@@ -53,6 +53,9 @@ const App = ({ loginState }) => {
         <Route path='/hirerdashboard'>
           <HirerDashboard />
         </Route>
+        <Route path='/hirer'>
+          <Hirerpages />
+        </Route>
         <Route exact path='/test'>
           <Test />
         </Route>

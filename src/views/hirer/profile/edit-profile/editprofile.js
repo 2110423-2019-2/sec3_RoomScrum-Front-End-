@@ -44,9 +44,9 @@ const EditProfile = () => {
     })
   }
 
-//   const revert () => {
-
-//   }
+  const cancel = () => {
+    alert("Are you sure to discard change?")
+  }
 
   const submit = async () => {
     dispatchMusicianForm({ type: "PRE_SUBMIT" });
@@ -136,7 +136,7 @@ const EditProfile = () => {
         // .catch(err => {
         //   alert("error auto-logging in, please try login manually");
         // });
-    } 
+    }
     catch (err) {
       alert("error");
     }
@@ -172,22 +172,24 @@ const EditProfile = () => {
             />
           </div>
         )} */}
-        <button
-          className="btn btn-`primary` m-4"
-          onClick={submit}
-        >
-          {" "}
-          Save
-          {" "}
-        </button>
-        {/* <button
-          className="btn btn-`primary` m-4"
-          onClick={revert}
-        >
-          {" "}
-          Revert
-          {" "}
-        </button> */}
+        <div className="btn-line">
+          <button
+            className="btn btn-success btn-`primary`"
+            onClick={submit}
+          >
+            {" "}
+            Save
+            {" "}
+          </button>
+          <button
+            className="btn btn-danger btn-`primary`"
+            onClick={cancel}
+          >
+            {" "}
+            Cancel
+            {" "}
+          </button>
+        </div>
       </div>
     </div>
   );
