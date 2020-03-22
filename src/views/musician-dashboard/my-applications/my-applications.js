@@ -25,9 +25,11 @@ const AppliedEventItem = ({
             status: eventStatus,
             district, province,
             userId: hirerId, 
-            // missing fields
             price,
             contractStatus,
+            user: { // hirer
+                firstName, lastName
+            }   
         }
     } = application;
     console.log(application);
@@ -66,7 +68,7 @@ const AppliedEventItem = ({
                 </div>
                 <div className="desc">
                     <div className="label"> Hirer </div>
-                    <div className="value"> # {hirerId || 'hirerName???'}</div>
+                    <div className="value"> { firstName + ' ' + lastName } </div>
                 </div>
             </div>
             <div className="price-tag">
