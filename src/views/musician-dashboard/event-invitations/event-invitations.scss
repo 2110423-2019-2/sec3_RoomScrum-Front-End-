@@ -1,25 +1,25 @@
 @import '../../../styles/color.scss';
 
 // container
-.band-invitations {
+.event-invitations {
     background-color: white;
     min-height: 100%;
     padding: 8px;
 }
 
-.band-invite-item {
+.event-invite-item {
     background-color: white;
     box-shadow: 0px 4px 4px #bababa;
     margin-bottom: 16px;
 
-    .band-image {
+    .event-image {
         float: left;
         width: 160px;
         height: 160px;
         margin: 8px 24px 24px 8px;
     }
 
-    .band-info {
+    .event-info {
         .name {
             color: $dark-navy;
             font-size: 32px;

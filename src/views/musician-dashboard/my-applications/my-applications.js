@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import Dialog from 'src/components/common/dialog';
@@ -24,12 +24,12 @@ const AppliedEventItem = ({
             eventId,
             status: eventStatus,
             district, province,
-            userId: hirerId, 
+            userId: hirerId,
             price,
             contractStatus,
             user: { // hirer
                 firstName, lastName
-            }   
+            }
         }
     } = application;
     console.log(application);
@@ -44,7 +44,7 @@ const AppliedEventItem = ({
                 <div className="event-name" onClick={onSelectEvent}> {eventName} </div>
                 <div className="desc">
                     <div className="label"> Your status </div>
-                    <div className="value"> 
+                    <div className="value">
                         <EventStatusIndicator
                             eventStatus={eventStatus}
                             applicationStatus={applicationStatus}
@@ -53,7 +53,7 @@ const AppliedEventItem = ({
                 </div>
                 <div className="desc">
                     <div className="label"> Contract Status </div>
-                    <div className="value"> 
+                    <div className="value">
                         {/** TODO */}
                         <ContractStatusIndicator contractStatus={"TODO"} />
                     </div>
@@ -68,7 +68,7 @@ const AppliedEventItem = ({
                 </div>
                 <div className="desc">
                     <div className="label"> Hirer </div>
-                    <div className="value"> { firstName + ' ' + lastName } </div>
+                    <div className="value"> {firstName + ' ' + lastName} </div>
                 </div>
             </div>
             <div className="price-tag">
@@ -77,12 +77,17 @@ const AppliedEventItem = ({
             </div>
             <div className="cancel-wrapper">
                 <button onClick={onCancel}>
-                    <FontAwesomeIcon icon={faExclamationTriangle}/>
+                    <FontAwesomeIcon icon={faExclamationTriangle} />
                     cancel
                 </button>
             </div>
         </div>
     )
+}
+
+const sortByTimestampDesc = (app1, app2) => {
+    // you can subtract date directly!
+    return new Date(app2) - new Date(app1);
 }
 
 const MyApplications = () => {
@@ -95,15 +100,18 @@ const MyApplications = () => {
 
 
     const fetchApplications = () => {
-        request.get(config.API_URL + '/application/my-application') // get my applications, with event detail
-        .withCredentials()
-        .then(res => {
-            setApplications(res.body);
-        })
-        .catch(err => {
-            alert("Error getting applied events ");
-            console.error("Error: Fetch applied events");
-        })
+        request.post(config.API_URL + '/application/my-application') // get my applications, with event detail
+            .send({status: []})
+            .withCredentials()
+            .then(res => {
+                const applications = res.body;
+                applications.sort(sortByTimestampDesc)
+                setApplications(applications);
+            })
+            .catch(err => {
+                alert("Error getting applied events ");
+                console.error("Error: Fetch applied events");
+            })
     };
 
     if (!isFetch.current) {
@@ -130,21 +138,21 @@ const MyApplications = () => {
         setApplicationToShow(application);
         setShowInfoDialog(true);
     };
-    
+
 
 
     return (
         <div className="band-invitations">
             {
                 applications.map(application => (
-                    <AppliedEventItem application={application} onCancel={() => confirmCancelApplicationOf(application.eventId)} onSelectEvent={() => showApplicationPopup(application)}/>
+                    <AppliedEventItem application={application} onCancel={() => confirmCancelApplicationOf(application.eventId)} onSelectEvent={() => showApplicationPopup(application)} />
                 ))
             }
             <Dialog isOpen={showCancelDialog} onClose={() => setShowCancelDialog(false)}>
-                <ConfirmDialog title="Cancel Event" question="This will withdraw you from event! this action can't be undone" callback={cancelEvent}/>
+                <ConfirmDialog title="Cancel Event" question="This will withdraw you from event! this action can't be undone" callback={cancelEvent} />
             </Dialog>
             <Dialog isOpen={showInfoDialog} onClose={() => setShowInfoDialog(false)}>
-                { applicationToShow && <ApplicationInfo application={applicationToShow} onClose={() => setShowInfoDialog(false)} onCancel={() => confirmCancelApplicationOf(applicationToShow.eventId)}/> }
+                {applicationToShow && <ApplicationInfo application={applicationToShow} onClose={() => setShowInfoDialog(false)} onCancel={() => confirmCancelApplicationOf(applicationToShow.eventId)} />}
             </Dialog>
         </div>
     )
