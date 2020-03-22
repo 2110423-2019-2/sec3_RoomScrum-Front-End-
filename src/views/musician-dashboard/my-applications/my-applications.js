@@ -119,6 +119,7 @@ const MyApplications = () => {
         fetchApplications();
     }
 
+    // TODO: wait for API
     // set target event id then show dialog
     const confirmCancelApplicationOf = (eventId) => {
         targetEvent.current = eventId;

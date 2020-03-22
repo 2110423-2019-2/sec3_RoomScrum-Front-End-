@@ -7,12 +7,13 @@ import request from 'superagent';
 import { ApplicationStatus } from 'src/enums';
 
 const EventInvitationItem = ({invitation: {
+    // TODO: more fields
     event: {
         eventName,
         description,
-        eventId,
     }
 }, onAccept, onReject}) => {
+    // TODO: wait for design
     return (
         <div className="event-invite-item clearfix">
             <img className="event-image" src="https://i.pravatar.cc/160"/>
@@ -21,8 +22,8 @@ const EventInvitationItem = ({invitation: {
                 <div className="bio"> {description} </div>
             </div>
             <div className="action-btns">
-                <button className="reject" onClick={() => onReject(eventId)}> Reject </button>
-                <button className="accept" onClick={() => onAccept(eventId)}> Accept </button>
+                <button className="reject" onClick={onReject}> Reject </button>
+                <button className="accept" onClick={onAccept}> Accept </button>
             </div>
         </div>
     )
@@ -72,6 +73,8 @@ const EventInvitations = () => {
         setShowRejectDialog(true);
     }
 
+
+    // TODO: wait for API
     const acceptEvent = (confirmed) => {
         // always hide dialog
         setShowAcceptDialog(false);
@@ -79,6 +82,7 @@ const EventInvitations = () => {
         alert("Confirm " + targetInvitation.current + " success!")
     }
 
+    // TODO: wait for API
     const rejectEvent = (confirmed) => {
         // always hide dialog
         setShowRejectDialog(false);
@@ -92,7 +96,10 @@ const EventInvitations = () => {
         <div className="event-invitations">
             {
                 invitations.map(invitation => (
-                    <EventInvitationItem invitation={invitation} onAccept={confirmAcceptInvitation} onReject={confirmRejectInvitation}/>
+                    <EventInvitationItem
+                        invitation={invitation}
+                        onAccept={() => confirmAcceptInvitation(invitation.eventId)}
+                        onReject={() => confirmRejectInvitation(invitation.eventId)}/>
                 ))
             }
             <Dialog isOpen={showAcceptDialog} onClose={() => setShowAcceptDialog(false)}>
