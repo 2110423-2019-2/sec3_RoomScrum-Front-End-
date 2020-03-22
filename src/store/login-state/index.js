@@ -2,6 +2,7 @@ import { decorate, computed, observable } from "mobx";
 
 class LoginState {
   username = null;
+  userId = null;
   get isLoggedIn() {
     return this.username !== null;
   }
@@ -9,6 +10,7 @@ class LoginState {
 
 decorate(LoginState, {
   username: observable,
+  userId: observable,
   isLoggedIn: computed
 });
 
