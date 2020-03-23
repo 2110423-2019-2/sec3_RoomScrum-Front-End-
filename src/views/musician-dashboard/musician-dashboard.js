@@ -3,13 +3,14 @@ import { DashboardContent, DashboardNavigation, DashboardLayout } from 'src/comp
 import Sidebar, {SideNavItemDetail} from 'src/components/common/sidebar';
 import { Navbar } from 'src/components/common';
 import { Switch, useRouteMatch, Route } from 'react-router-dom';
-import BandInvitations from './band-invitations';
+import EventInvitations from './event-invitations';
 import MyEventsPage from './my-applications';
+import MusicianProfile from './musician-profile';
 
 const sidebarItems = [
     SideNavItemDetail("My Profile", "/musician/my-profile"),
-    SideNavItemDetail("My Band", "/musician/my-band"),
-    SideNavItemDetail("Band Invitation", "/musician/band-invitations"),
+    SideNavItemDetail("Calendar", "/musician/calendar"),
+    // SideNavItemDetail("My Band", "/musician/my-band"),
     SideNavItemDetail("Event Invitations", "/musician/event-invitations"),
     SideNavItemDetail("Applied Events", "/musician/my-events"),
     
@@ -28,8 +29,11 @@ const MusicianDashboard = () => {
                 </DashboardNavigation>
                 <DashboardContent>
                     <Switch>
-                        <Route path={url + "/band-invitations"}>
-                            <BandInvitations/>
+                        <Route path={url + "/my-profile"}>
+                            <MusicianProfile/>
+                        </Route>
+                        <Route path={url + "/event-invitations"}>
+                            <EventInvitations/>
                         </Route>
                         <Route path={url + "/my-events"}>
                             <MyEventsPage/>

@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import Dialog from 'src/components/common/dialog';
@@ -10,6 +10,8 @@ import ApplicationInfo from './application-info';
 import request from 'superagent';
 import config from 'src/config';
 import { EventStatusIndicator, ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
+import { sortByTimestampDesc } from '../util';
+import { ApplicationStatus } from 'src/enums';
 
 
 
@@ -24,10 +26,12 @@ const AppliedEventItem = ({
             eventId,
             status: eventStatus,
             district, province,
-            userId: hirerId, 
-            // missing fields
+            userId: hirerId,
             price,
             contractStatus,
+            user: { // hirer
+                firstName, lastName
+            }
         }
     } = application;
     console.log(application);
@@ -42,7 +46,7 @@ const AppliedEventItem = ({
                 <div className="event-name" onClick={onSelectEvent}> {eventName} </div>
                 <div className="desc">
                     <div className="label"> Your status </div>
-                    <div className="value"> 
+                    <div className="value">
                         <EventStatusIndicator
                             eventStatus={eventStatus}
                             applicationStatus={applicationStatus}
@@ -51,7 +55,7 @@ const AppliedEventItem = ({
                 </div>
                 <div className="desc">
                     <div className="label"> Contract Status </div>
-                    <div className="value"> 
+                    <div className="value">
                         {/** TODO */}
                         <ContractStatusIndicator contractStatus={"TODO"} />
                     </div>
@@ -66,7 +70,7 @@ const AppliedEventItem = ({
                 </div>
                 <div className="desc">
                     <div className="label"> Hirer </div>
-                    <div className="value"> # {hirerId || 'hirerName???'}</div>
+                    <div className="value"> {firstName + ' ' + lastName} </div>
                 </div>
             </div>
             <div className="price-tag">
@@ -75,7 +79,7 @@ const AppliedEventItem = ({
             </div>
             <div className="cancel-wrapper">
                 <button onClick={onCancel}>
-                    <FontAwesomeIcon icon={faExclamationTriangle}/>
+                    <FontAwesomeIcon icon={faExclamationTriangle} />
                     cancel
                 </button>
             </div>
@@ -93,15 +97,18 @@ const MyApplications = () => {
 
 
     const fetchApplications = () => {
-        request.get(config.API_URL + '/application/my-application') // get my applications, with event detail
-        .withCredentials()
-        .then(res => {
-            setApplications(res.body);
-        })
-        .catch(err => {
-            alert("Error getting applied events ");
-            console.error("Error: Fetch applied events");
-        })
+        request.post(config.API_URL + '/application/my-application') // get my applications, with event detail
+            .send({status: [ApplicationStatus.APPLICATION_REJECTED, ApplicationStatus.IS_ACCEPTED, ApplicationStatus.IS_APPLIED]})
+            .withCredentials()
+            .then(res => {
+                const applications = res.body;
+                applications.sort(sortByTimestampDesc)
+                setApplications(applications);
+            })
+            .catch(err => {
+                alert("Error getting applied events ");
+                console.error("Error: Fetch applied events");
+            })
     };
 
     if (!isFetch.current) {
@@ -109,6 +116,7 @@ const MyApplications = () => {
         fetchApplications();
     }
 
+    // TODO: wait for API
     // set target event id then show dialog
     const confirmCancelApplicationOf = (eventId) => {
         targetEvent.current = eventId;
@@ -120,7 +128,16 @@ const MyApplications = () => {
         // always hide dialog
         setShowCancelDialog(false);
         if (!confirmed) return;
-        alert("cancel " + targetEvent.current + " success!")
+        request.delete(config.API_URL + `/application/${targetEvent.current}/cancel-my-application`)
+        .withCredentials()
+        .then(res => {
+            // too lazy to optimize API request
+            fetchApplications();
+        })
+        .catch(err => {
+            alert("error canceling application" + err.response.text);
+            console.error("error canceling application" + err.response.body)
+        })
     }
 
     const showApplicationPopup = (application) => {
@@ -128,21 +145,21 @@ const MyApplications = () => {
         setApplicationToShow(application);
         setShowInfoDialog(true);
     };
-    
+
 
 
     return (
         <div className="band-invitations">
             {
                 applications.map(application => (
-                    <AppliedEventItem application={application} onCancel={() => confirmCancelApplicationOf(application.eventId)} onSelectEvent={() => showApplicationPopup(application)}/>
+                    <AppliedEventItem application={application} onCancel={() => confirmCancelApplicationOf(application.eventId)} onSelectEvent={() => showApplicationPopup(application)} />
                 ))
             }
             <Dialog isOpen={showCancelDialog} onClose={() => setShowCancelDialog(false)}>
-                <ConfirmDialog title="Cancel Event" question="This will withdraw you from event! this action can't be undone" callback={cancelEvent}/>
+                <ConfirmDialog title="Cancel Event" question="This will withdraw you from event! this action can't be undone" callback={cancelEvent} />
             </Dialog>
             <Dialog isOpen={showInfoDialog} onClose={() => setShowInfoDialog(false)}>
-                { applicationToShow && <ApplicationInfo application={applicationToShow} onClose={() => setShowInfoDialog(false)} onCancel={() => confirmCancelApplicationOf(applicationToShow.eventId)}/> }
+                {applicationToShow && <ApplicationInfo application={applicationToShow} onClose={() => setShowInfoDialog(false)} onCancel={() => confirmCancelApplicationOf(applicationToShow.eventId)} />}
             </Dialog>
         </div>
     )

@@ -26,9 +26,11 @@ const App = ({ loginState }) => {
       .get(`${config.API_URL}/auth/status`)
       .withCredentials()
       .then(res => {
-        const { username } = JSON.parse(res.text);
+        const { username, userId } = res.body;
+        console.log("logged in data", {username, userId})
         if (username) {
           loginState.username = username;
+          loginState.userId = userId;
           console.log('logged in as', username);
         }
       })

@@ -32,32 +32,10 @@ const ApplicationInfoDialog = ({ application, onClose, onCancel }) => {
         address, subdistrict, district, province, zipcode,
         budget,
         description,
-        userId: hirerId,
+        user: {
+            firstName, lastName,
+        }
     } = event;
-
-    const [hirerData, setHirerData] = useState(null);
-    const isFetch = useRef(false);
-    if (!isFetch.current) {
-        isFetch.current = true;
-        request.get(config.API_URL + '/user/' + hirerId)
-            .withCredentials()
-            .then(res => {
-                setHirerData(res.body);
-            })
-            .catch(err => {
-                alert("error getting hirer's data");
-                console.error("error getting hirer's data", err);
-            })
-    }
-
-    const showHirerName = (hirer) => {
-        if (!hirer) return null;
-        const {
-            firstName, lastName
-        } = hirer;
-        return `${firstName} ${lastName}`;
-    }
-
 
     return (
         <div className="event-info-dialog">
@@ -91,6 +69,7 @@ const ApplicationInfoDialog = ({ application, onClose, onCancel }) => {
                                 <div className="value">
                                     {/** TODO */}
                                     <ContractStatusIndicator contractStatus={"TODO"} />
+                                    <div>TODO view contract</div>
                                 </div>
                             </div>
                             <div className="desc">
@@ -108,7 +87,7 @@ const ApplicationInfoDialog = ({ application, onClose, onCancel }) => {
                             <div className="desc">
                                 <div className="label"> Hirer </div>
                                 <div className="value">
-                                    {showHirerName(hirerData)}
+                                    {firstName + ' ' + lastName}
                                 </div>
                             </div>
                             <div className="desc">
