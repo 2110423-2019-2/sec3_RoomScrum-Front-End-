@@ -10,6 +10,8 @@ import ApplicationInfo from './application-info';
 import request from 'superagent';
 import config from 'src/config';
 import { EventStatusIndicator, ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
+import { sortByTimestampDesc } from '../util';
+import { ApplicationStatus } from 'src/enums';
 
 
 
@@ -83,12 +85,6 @@ const AppliedEventItem = ({
             </div>
         </div>
     )
-}
-
-const sortByTimestampDesc = (app1, app2) => {
-    // you can subtract date directly!
-    // console.log("date diff", new Date(app2) - new Date(app1));
-    return new Date(app2.timestamp) - new Date(app1.timestamp);
 }
 
 const MyApplications = () => {

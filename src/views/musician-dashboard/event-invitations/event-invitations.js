@@ -6,6 +6,7 @@ import config from 'src/config';
 import request from 'superagent';
 import { ApplicationStatus } from 'src/enums';
 import Image from 'react-image';
+import { sortByTimestampDesc } from '../util';
 
 const EventInvitationItem = ({invitation: {
     // TODO: more fields
@@ -57,7 +58,9 @@ const EventInvitations = () => {
         .withCredentials()
         .send({status: [ApplicationStatus.IS_INVITED]})
         .then(res => {
-            setInvitations(res.body);
+            const invitations = res.body;
+            invitations.sort(sortByTimestampDesc);
+            setInvitations(invitations);
         })
         .catch(err => {
             alert("error getting invitations " + err.response.text);
@@ -126,6 +129,11 @@ const EventInvitations = () => {
                         onAccept={() => confirmAcceptInvitation(invitation.eventId)}
                         onReject={() => confirmRejectInvitation(invitation.eventId)}/>
                 ))
+            }
+            {
+                (!invitations || invitations.length == 0) && (
+                    "No invitations"
+                )
             }
             <Dialog isOpen={showAcceptDialog} onClose={() => setShowAcceptDialog(false)}>
                 <ConfirmDialog title="Accept event request" question="Do you want to join this event?" callback={acceptEvent}/>
