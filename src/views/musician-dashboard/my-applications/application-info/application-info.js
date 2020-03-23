@@ -69,6 +69,7 @@ const ApplicationInfoDialog = ({ application, onClose, onCancel }) => {
                                 <div className="value">
                                     {/** TODO */}
                                     <ContractStatusIndicator contractStatus={"TODO"} />
+                                    <div>TODO view contract</div>
                                 </div>
                             </div>
                             <div className="desc">

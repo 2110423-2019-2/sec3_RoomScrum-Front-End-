@@ -5,9 +5,11 @@ import Dialog from 'src/components/common/dialog'
 import config from 'src/config';
 import request from 'superagent';
 import { ApplicationStatus } from 'src/enums';
+import Image from 'react-image';
 
 const EventInvitationItem = ({invitation: {
     // TODO: more fields
+    eventId,
     event: {
         eventName,
         description,
@@ -16,7 +18,12 @@ const EventInvitationItem = ({invitation: {
     // TODO: wait for design
     return (
         <div className="event-invite-item clearfix">
-            <img className="event-image" src="https://i.pravatar.cc/160"/>
+            <Image className="event-image"
+                src={[
+                    config.API_URL + `/events/${eventId}/pic`,
+                    "https://i.pravatar.cc/120",
+                ]}
+            />
             <div className="event-info">
                 <div className="name"> {eventName} </div>
                 <div className="bio"> {description} </div>
@@ -79,7 +86,16 @@ const EventInvitations = () => {
         // always hide dialog
         setShowAcceptDialog(false);
         if (!confirmed) return;
-        alert("Confirm " + targetInvitation.current + " success!")
+        request.post(config.API_URL + `/application/${targetInvitation.current}/accept-invitation`)
+        .withCredentials()
+        .then(res => {
+            // too lazy to optimize API request
+            fetchInvitations();
+        })
+        .catch(err => {
+            alert("error accepting invitation" + err.response.text);
+            console.error("error accepting invitation" + err.response.body)
+        })
     }
 
     // TODO: wait for API
@@ -87,7 +103,16 @@ const EventInvitations = () => {
         // always hide dialog
         setShowRejectDialog(false);
         if (!confirmed) return;
-        alert("Reject " + targetInvitation.current + " success!")
+        request.delete(config.API_URL + `/application/${targetInvitation.current}/cancel-my-application`)
+        .withCredentials()
+        .then(res => {
+            // too lazy to optimize API request
+            fetchInvitations();
+        })
+        .catch(err => {
+            alert("error declining invitation" + err.response.text);
+            console.error("error declining invitation" + err.response.body)
+        })
     }
     
 

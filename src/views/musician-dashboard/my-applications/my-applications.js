@@ -87,7 +87,8 @@ const AppliedEventItem = ({
 
 const sortByTimestampDesc = (app1, app2) => {
     // you can subtract date directly!
-    return new Date(app2) - new Date(app1);
+    // console.log("date diff", new Date(app2) - new Date(app1));
+    return new Date(app2.timestamp) - new Date(app1.timestamp);
 }
 
 const MyApplications = () => {
@@ -131,7 +132,16 @@ const MyApplications = () => {
         // always hide dialog
         setShowCancelDialog(false);
         if (!confirmed) return;
-        alert("cancel " + targetEvent.current + " success!")
+        request.delete(config.API_URL + `/application/${targetEvent.current}/cancel-my-application`)
+        .withCredentials()
+        .then(res => {
+            // too lazy to optimize API request
+            fetchApplications();
+        })
+        .catch(err => {
+            alert("error canceling application" + err.response.text);
+            console.error("error canceling application" + err.response.body)
+        })
     }
 
     const showApplicationPopup = (application) => {
