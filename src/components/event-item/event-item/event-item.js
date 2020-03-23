@@ -31,7 +31,6 @@ const MoreDetailModal = ({
   };
   const formdata = {
     eventId: eventId,
-    timestamp: new Date().toISOString()
   };
   const handleApply = () => {
     request
