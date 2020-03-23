@@ -171,8 +171,8 @@ const _MusicianProfilePage = observer(({ loginState: { userId } }) => {
     const [musicianInfo, setMusicianInfo] = useState(null);
     const lastFetched = useRef(null);
 
-    console.log("render", userId)
-    if (userId && !lastFetched.current != userId) {
+    if (userId && lastFetched.current != userId) {
+        console.log("render", userId)
         lastFetched.current = userId;
         request.get(config.API_URL + '/user/' + userId)
             .withCredentials()
