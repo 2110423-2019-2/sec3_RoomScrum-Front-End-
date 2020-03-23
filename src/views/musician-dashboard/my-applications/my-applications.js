@@ -98,7 +98,7 @@ const MyApplications = () => {
 
     const fetchApplications = () => {
         request.post(config.API_URL + '/application/my-application') // get my applications, with event detail
-            .send({status: []})
+            .send({status: [ApplicationStatus.APPLICATION_REJECTED, ApplicationStatus.IS_ACCEPTED, ApplicationStatus.IS_APPLIED]})
             .withCredentials()
             .then(res => {
                 const applications = res.body;
