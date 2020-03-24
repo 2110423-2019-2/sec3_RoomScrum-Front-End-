@@ -66,7 +66,6 @@ const HirerDashboard = () => {
 
     return (
         <div>
-          <Navbar/>
             {myEventItems}
         </div>
     )

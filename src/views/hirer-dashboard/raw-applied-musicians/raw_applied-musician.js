@@ -60,25 +60,12 @@ const Applicants = ({eventId}) => {
  
     return (
       <div>
-        <button variant='primary' onClick={openModal}>
-          Applicants
-        </button>
-  
-        <Modal  
-        isOpen={isOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Modal"
-        >
-         
- 
+        <p class='font-weight-bold'>
+          Applied Musician
+        </p>
               <div>
                 {appliedMusicianItem};
-              </div>                
-
-          
-        </Modal>
+              </div>                       
       </div>
     );
 };

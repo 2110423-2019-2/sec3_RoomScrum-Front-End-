@@ -1,0 +1,39 @@
+.EventInfo {
+    margin: 0.1rem;
+    // width: 500px;
+    // height: 500px;
+    border: 1px solid blue;
+    margin-left: 20px;
+    margin-right: 40px;
+    // padding-left:10px ;
+    padding-inline: 10px; 
+    
+    .headtext{
+        size: 30px;
+    }
+
+    .SetRight{
+        padding-right: 3px;
+    }
+
+    .responsive {
+            display: block;
+            float: top;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+    }
+}
+    
+
+.AppliedMusician {
+    margin: 0.1rem;
+    // width: 500px;
+    // height: 500px;
+    border: 1px solid blue;
+    background-color: bisque;
+    float:right;
+    margin-right: 10px;
+    margin-left: 10px;
+    
+}
