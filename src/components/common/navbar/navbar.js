@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import LoginDialog from 'src/components/login';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faUserCircle,
+  faCaretDown,
+  faTruckMonster,
+  faBell
+} from '@fortawesome/free-solid-svg-icons';
+import { globalLoginState } from 'src/store/login-state';
+import { observer } from 'mobx-react';
+import classnames from 'classnames';
 import './navbar.scss';
-import { Link as Button } from 'react-router-dom';
-import { LoginDialog } from 'src/components/login';
+import NotificationMenu from 'src/components/notification';
 
 const LoginButtons = () => {
   const [isOpen, setOpen] = useState(false);
@@ -15,37 +26,134 @@ const LoginButtons = () => {
   return (
     <div className='login-buttons'>
       <LoginDialog open={isOpen} onRequestClose={closeDialog} />
-      <Button className='btn btn-primary' onClick={openDialog}>
-        Login
-      </Button>
-      <Button className='btn btn-primary' to='/signup'>
-        Sign up
-      </Button>
+      <Link className='btn btn-secondary' onClick={openDialog}>
+        Login{' '}
+      </Link>
+      <Link className='btn btn-secondary' to='/register'>
+        {' '}
+        Register{' '}
+      </Link>
     </div>
   );
 };
 
-const Navbar = () => {
+const Avatar = observer(({ loginState }) => {
+  const [showDropdown, setDropdown] = useState(false);
+  const [showNotif, setNotif] = useState(false);
+  const toggleDropdown = () => setDropdown(!showDropdown);
+  const toggleNotif = () => setNotif(!showNotif);
+
+  const onLogout = () => {
+    loginState.username = null;
+    document.cookie = 'token=; expires = 01 Jan 1970 00:00:00'; // clear cookie
+    setTimeout(() => {
+      document.location.href = '/';
+    }, 200);
+  };
+
   return (
-    <div className='navbar flex-row'>
-      <div className='navbar-left'>
-        <Button className='title' to='/'>
-          Room scrum
-        </Button>
+    <div className='account-wrapper'>
+      <div className='user-account text-white'>
+        <div>
+          <FontAwesomeIcon icon={faBell} onClick={toggleNotif} />
+        </div>
+        <span> logged in as {loginState.username}</span>
+        <span style={{ fontSize: '32px' }}>
+          <FontAwesomeIcon icon={faUserCircle} onClick={toggleDropdown} />
+        </span>
+        <FontAwesomeIcon icon={faCaretDown} onClick={toggleDropdown} />
+      </div>
+      <NotificationMenu show={showNotif} />
+      {/* dropdown menu */}
+      <div
+        className={classnames({
+          'dropdown-menu dropdown list-group': true,
+          show: showDropdown
+        })}>
+        {/* FIX PATH LATER */}
+        <Link className='dropdown-item' to='/profile/me/application'>
+          {' '}
+          Applications{' '}
+        </Link>
+        <Link className='dropdown-item' to='/profile/me/calendar'>
+          {' '}
+          Calendar{' '}
+        </Link>
+        <div className='dropdown-divider'></div>
+        <Link className='dropdown-item' to='/hirerdashboard'>
+          {' '}
+          My Events{' '}
+        </Link>
+        <Link className='dropdown-item' to='/event/search'>
+          {' '}
+          Find Events{' '}
+        </Link>
+        <Link className='dropdown-item' to='/event/create'>
+          {' '}
+          Create Event{' '}
+        </Link>
+        <div className='dropdown-divider'></div>
+        <Link className='dropdown-item' to='/band/list'>
+          {' '}
+          My Bands{' '}
+        </Link>
+        <Link className='dropdown-item' to='/band/search'>
+          {' '}
+          Find Bands{' '}
+        </Link>
+        <Link className='dropdown-item' to='/band/create'>
+          {' '}
+          Create Band{' '}
+        </Link>
+        <div className='dropdown-divider'></div>
+        <Link className='dropdown-item' to='/profile/me'>
+          {' '}
+          My Profile{' '}
+        </Link>
+        <div className='text-danger dropdown-item' onClick={onLogout}>
+          {' '}
+          Logout{' '}
+        </div>
+      </div>
+    </div>
+  );
+});
+
+const Navbar = observer(({ loginState }) => {
+  return (
+    <div className="navbar flex-row shadow-sm">
+      <div className="navbar-left">
+        <Link className="title text-white" to="/">
+          {" "}
+          Room scrum{" "}
+        </Link>
       </div>
       <div className='navbar-right flex-row'>
-        {/* action buttons, always visible */}
         <div className='link-section flex-row'>
-          <Button to='/find/musician'> Find Musician </Button>
-          <Button to='/find/events'> Find Events </Button>
-          <Button to='/find/bands'> Find Bands </Button>
+          <Link className='text-white' to='/find/musician'>
+            {' '}
+            Find Musician{' '}
+          </Link>
+          <Link className='text-white' to='/find/events'>
+            {' '}
+            Find Events{' '}
+          </Link>
+          <Link className='text-white' to='/find/bands'>
+            {' '}
+            Find Bands{' '}
+          </Link>
+          <Link className='text-white' to='/admin/approve-user'>
+            {' '}
+            Manage{' '}
+          </Link>
         </div>
         <div className='dynamic-section'>
-          <LoginButtons />
+          {!loginState.isLoggedIn && <LoginButtons />}
+          {loginState.isLoggedIn && <Avatar loginState={loginState} />}
         </div>
       </div>
     </div>
   );
-};
+});
 
-export default Navbar;
+export default () => <Navbar loginState={globalLoginState} />;

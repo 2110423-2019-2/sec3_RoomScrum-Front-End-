@@ -1,1 +1,1 @@
-export { default } from './slide-bar';
+export { default } from "./slide-bar";

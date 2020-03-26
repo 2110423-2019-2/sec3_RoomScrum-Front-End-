@@ -1,15 +1,13 @@
 import React from 'react';
 import { Navbar } from 'src/components/common';
 
-
-const Login = () => {
+const EditProfile = () => {
   return (
-    <div>
+    <div className="Editprofile">
       <Navbar/>
-      <h1>Login page </h1>
+      <h1> Profilenamokuy </h1>
     </div>
-    
   );
 }
 
-export default Login;
+export default EditProfile;

@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
+import Modal from 'react-modal';
 import './event-item.scss';
-import Button from 'react-bootstrap/Button';
 import request from 'superagent';
 import config from 'src/config';
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
 
 const MoreDetailModal = ({
   eventId,
@@ -11,18 +21,21 @@ const MoreDetailModal = ({
   startdatetime,
   enddatetime
 }) => {
-  const [show, setShow] = useState(false);
-
-  const formdata = {
-    hireeId: 10,
-    eventId: eventId,
-    timestamp: new Date().toISOString(),
-    status: 2
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
   };
-
+  const afterOpenModal = () => {};
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const formdata = {
+    eventId: eventId,
+  };
   const handleApply = () => {
     request
       .post(`${config.API_URL}/application/apply`)
+      .withCredentials()
       .send(formdata)
       .then(res => {
         console.log(res.text);
@@ -30,34 +43,29 @@ const MoreDetailModal = ({
       .catch(err => {
         alert('err' + err);
       });
-    setShow(false);
+    setIsOpen(false);
   };
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
 
   return (
     <div>
-      <Button variant='primary' onClick={handleShow}>
-        More detail
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <button onClick={openModal}>Open Modal</button>
+      <Modal
+        isOpen={isOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel='Modal'>
+        <div>
           <p>{description}</p>
           <p>{startdatetime}</p>
           <p>{enddatetime}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant='primary' onClick={handleApply}>
+          <button
+            type='button'
+            class='btn btn-primary float-right'
+            onClick={handleApply}>
             Apply
-          </Button>
-        </Modal.Footer>
+          </button>
+        </div>
       </Modal>
     </div>
   );
@@ -75,16 +83,13 @@ const EventItem = ({
     country,
     zipcode,
     startdatetime,
-    enddatetime
+    enddatetime,
+    eventImage
   }
 }) => {
   return (
     <div className='card event-item' style={{ width: 200 }}>
-      <img
-        className='card-img-top'
-        src='https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/HB4AT3D3IMI6TMPTWIZ74WAR54.jpg&w=767'
-        alt='Card image cap'
-      />
+      <img className='card-img-top' src={eventImage} alt='Card image cap' />
       <div className='card-body'>
         <h5 className='card-title'>{eventName} </h5>
         <p className='card-text'>

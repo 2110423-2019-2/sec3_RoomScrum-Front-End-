@@ -1,1 +1,1 @@
-export { default as LoginDialog } from './login-dialog';
+export { default } from "./login-dialog";
