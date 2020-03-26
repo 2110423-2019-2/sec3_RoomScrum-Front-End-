@@ -283,12 +283,12 @@ const MyEventItem = ({ each, onClick }) => {
     </Switch>   */}
 
       <div className='row'>
-        <Edit event={each} />
-        {/* <Applicants eventId={eventId} /> */}
+        {/* <Edit event={each} />
+        <Applicants eventId={eventId} />
         <button variant='secondary' onClick={() => onClick(eventId)}>
           Cancel
         </button>
-        <ContractModal eventId={eventId} status={status} />
+        <ContractModal eventId={eventId} status={status} /> */}
       </div>
     </div>
   );
