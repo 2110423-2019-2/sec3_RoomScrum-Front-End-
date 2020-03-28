@@ -1,6 +1,7 @@
 import React from 'react';
 import {calculateEventColor, calculateEventStatus} from './event-status';
 import styled from 'styled-components';
+import { calculatePaymentColor, calculatePaymentStatus } from './payment-status';
 const toColor = (colorName) => {
     switch (colorName) {
         case "green":
@@ -49,3 +50,9 @@ export const ContractStatusIndicator = ({contractStatus}) => {
     return <StatusIndicator color={"yellow"} text={"NOT IMPLEMENTED"}/>;
 }
 
+export const PaymentStatusIndicator = ({eventStatus}) => {
+    return <StatusIndicator 
+        color={calculatePaymentColor(eventStatus)}
+        text={calculatePaymentStatus(eventStatus)}
+    />;
+}

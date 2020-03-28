@@ -16,6 +16,7 @@ export const EventStatus = {
     HAVE_APPLICANT: "HaveApplicant",
     CANCELLED: "Cancelled",
     CONTRACT_DRAFTING: "ContractDrafting",
+    PAYMENT_PENDING: 'PaymentPending',
     SETTLE: "Settle",
     COMPLETE: "Complete",
 }

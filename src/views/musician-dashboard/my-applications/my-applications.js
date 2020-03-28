@@ -9,7 +9,7 @@ import './my-applications.scss';
 import ApplicationInfo from './application-info';
 import request from 'superagent';
 import config from 'src/config';
-import { EventStatusIndicator, ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
+import { EventStatusIndicator, ContractStatusIndicator, PaymentStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
 import { sortByTimestampDesc } from '../util';
 import { ApplicationStatus } from 'src/enums';
 
@@ -58,6 +58,13 @@ const AppliedEventItem = ({
                     <div className="value">
                         {/** TODO */}
                         <ContractStatusIndicator contractStatus={"TODO"} />
+                    </div>
+                </div>
+                <div className="desc">
+                    <div className="label"> Payment Status </div>
+                    <div className="value">
+                        {/** TODO */}
+                        <PaymentStatusIndicator eventStatus={eventStatus}/>
                     </div>
                 </div>
                 <div className="desc">
