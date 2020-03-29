@@ -1,0 +1,1 @@
+export { default, SideNavItemDetail } from './sidebar';
