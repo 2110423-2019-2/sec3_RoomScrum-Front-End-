@@ -2,13 +2,14 @@ import React from 'react';
 import QRCode from 'qrcode.react';
 import { crc16xmodem } from 'crc';
 import { sprintf } from 'sprintf-js';
+import './payment-qr-dialog.scss';
 
 const encode = (fieldId, data) => {
     const dataStr = data.toString();
     return `${fieldId}${sprintf("%02d", dataStr.length)}${dataStr}`;
 };
 
-const PaymentQRDialog = ({name = "", accountNo = "", amount = ""}) => {
+const PaymentQRDialog = ({name = "", accountNo = "", amount = "", onClose}) => {
 
     // see https://www.blognone.com/node/95133 for more info about promptpay
     let encodedAccountNo, isValid = true;
@@ -28,6 +29,7 @@ const PaymentQRDialog = ({name = "", accountNo = "", amount = ""}) => {
             <div className="title"> Pay via Promptpay </div>
             <div className="name"> {name} </div>
             <div className="account-no"> {accountNo} </div>
+            <div className="amount"> {amount} THB </div>
             {
                 isValid ? (<QRCode
                     value={`${value}${hash.toString(16).toUpperCase().padStart(4, '0')}`}
@@ -38,6 +40,8 @@ const PaymentQRDialog = ({name = "", accountNo = "", amount = ""}) => {
                 )
 
             }
+            <div> After paid, please inform musician to complete the process</div>
+            <div className="close-btn" onClick={onClose}> Pay later </div>
         </div>
     );
 }
