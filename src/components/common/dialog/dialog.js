@@ -5,7 +5,7 @@ import './dialog.scss'
 const Dialog = ({children, isOpen, onClose}) => {
     return (
         <Modal
-            overlayClassName="z-index-999"
+            overlayClassName="dialog-overlay"
             className="default-dialog"
             isOpen={isOpen}
             onRequestClose={onClose}
