@@ -12,7 +12,7 @@ const AppliedEventAction = ({application, onWithdraw, onCancel, onAcceptPayment}
         }
     } = application;
 
-    const canWithdraw = applicationStatus == ApplicationStatus.IS_APPLIED;
+    const canWithdraw = applicationStatus == ApplicationStatus.IS_APPLIED && eventStatus != EventStatus.CANCELLED;
     const canCancel = !(eventStatus == EventStatus.COMPLETE || eventStatus == EventStatus.CANCELLED);
     const canAcceptPayment = eventStatus == EventStatus.PAYMENT_PENDING;
 

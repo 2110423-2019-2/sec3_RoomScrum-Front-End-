@@ -46,11 +46,31 @@ const AppliedEventItem = ({
                 "cancelled": applicationStatus == ApplicationStatus.APPLICATION_REJECTED || eventStatus == EventStatus.CANCELLED
             })
         }>
-            <Image className="event-image" src={[
-                config.API_URL + `/events/${eventId}/pic`,
-                'https://i.pravatar.cc/180',
-            ]} loader={<div className="event-image placeholder"></div>}
-            />
+            <div className="event-image-container">
+                <Image className="event-image" src={[
+                    config.API_URL + `/events/${eventId}/pic`,
+                    'https://i.pravatar.cc/180',
+                ]} loader={<div className="event-image placeholder"></div>}
+                />
+                <div className="banner-container">
+                    <div className={
+                        classNames({
+                            "banner": true,
+                            "show": eventStatus == EventStatus.COMPLETE || 
+                            eventStatus == EventStatus.CANCELLED ||
+                            applicationStatus == ApplicationStatus.APPLICATION_REJECTED,
+                        })
+                    }>
+                        {
+                            (() => {
+                                if (eventStatus == EventStatus.COMPLETE) return "Completed";
+                                if (eventStatus == EventStatus.CANCELLED) return "Cancelled";
+                                if (applicationStatus == ApplicationStatus.APPLICATION_REJECTED) return "Rejected";
+                            })()
+                        }
+                    </div>
+                </div>
+            </div>
             <div className="event-info">
                 <div className="event-name" onClick={onSelectEvent}> {eventName} </div>
                 <div className="desc">
