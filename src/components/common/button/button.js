@@ -3,9 +3,7 @@ import styled from 'styled-components';
 
 const Btn = styled.button`
   min-width: 120px;
-  height: 40px;
-  margin-top:22px;
-  margin-left: 22px;
+  padding: 8px;
   font-size:20px;
   border: none;
   color:white;
@@ -15,10 +13,10 @@ const Btn = styled.button`
     ${props => props.type == 'danger' && 'background-color:#BA2B2B'};
 `;
 
-const Button = ({ name, color, type }) => {
+const Button = ({ name, color, type, onClick }) => {
   return (
     <div>
-      <Btn type={type}>{name}</Btn>
+      <Btn onClick={onClick} type={type}>{name}</Btn>
     </div>
   );
 };
