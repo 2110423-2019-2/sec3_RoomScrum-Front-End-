@@ -1,6 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import Dialog from 'src/components/common/dialog';
 import ConfirmDialog from 'src/components/common/confirm-dialog-v2';
 import Image from 'react-image';
@@ -12,12 +10,17 @@ import config from 'src/config';
 import { EventStatusIndicator, ContractStatusIndicator, PaymentStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
 import { sortByTimestampDesc } from '../util';
 import { ApplicationStatus } from 'src/enums';
+import { AppliedEventAction } from '../components';
 
 
 
 const AppliedEventItem = ({
-    application, onCancel, // when click cancel
+    application, 
     onSelectEvent,
+    // when click action buttons
+    onCancel, 
+    onWithdraw, // withdraw is same as cancel but w/o penalty 
+    onAcceptPayment,
 }) => {
     const {
         status: applicationStatus,
@@ -79,17 +82,23 @@ const AppliedEventItem = ({
                     <div className="label"> Hirer </div>
                     <div className="value"> {firstName + ' ' + lastName} </div>
                 </div>
+                <AppliedEventAction
+                    application={application}
+                    onAcceptPayment={onAcceptPayment}
+                    onCancel={onCancel}
+                    onWithdraw={onWithdraw}
+                />
             </div>
             <div className="price-tag">
                 <div className="price"> {price || 'price ????'}</div>
                 <div className="currency"> baht </div>
             </div>
-            <div className="cancel-wrapper">
+            {/* <div className="cancel-wrapper">
                 <button onClick={onCancel}>
                     <FontAwesomeIcon icon={faExclamationTriangle} />
                     cancel
                 </button>
-            </div>
+            </div> */}
         </div>
     )
 }
@@ -99,6 +108,7 @@ const MyApplications = () => {
     const isFetch = useRef(false);
     const targetEvent = useRef(null); // use Ref to prevent to many state
     const [showCancelDialog, setShowCancelDialog] = useState(false);
+    const [showAcceptPaymentDialog, setShowAcceptPaymentDialog] = useState(false);
     const [showInfoDialog, setShowInfoDialog] = useState(false);
     const [applicationToShow, setApplicationToShow] = useState(null);
 
@@ -123,11 +133,15 @@ const MyApplications = () => {
         fetchApplications();
     }
 
-    // TODO: wait for API
     // set target event id then show dialog
     const confirmCancelApplicationOf = (eventId) => {
         targetEvent.current = eventId;
         setShowCancelDialog(true);
+    }
+
+    const confirmAcceptPaymentOf = (eventId) => {
+        targetEvent.current = eventId;
+        setShowAcceptPaymentDialog(true);
     }
 
     // cancel application of specified event
@@ -147,6 +161,12 @@ const MyApplications = () => {
         })
     }
 
+    const acceptPayment = (confirmed) => {
+        setShowAcceptPaymentDialog(false);
+        if (!confirmed) return;
+        alert("Fake accept payment " + targetEvent.current + " success");
+    }
+
     const showApplicationPopup = (application) => {
         console.log("show application", application);
         setApplicationToShow(application);
@@ -159,11 +179,20 @@ const MyApplications = () => {
         <div className="band-invitations">
             {
                 applications.map(application => (
-                    <AppliedEventItem application={application} onCancel={() => confirmCancelApplicationOf(application.eventId)} onSelectEvent={() => showApplicationPopup(application)} />
+                    <AppliedEventItem
+                        application={application}
+                        onCancel={() => confirmCancelApplicationOf(application.eventId)}
+                        onSelectEvent={() => showApplicationPopup(application)}
+                        onWithdraw={() => confirmCancelApplicationOf(application.eventId)/* TODO: this should we different API but whatever */}
+                        onAcceptPayment={() => confirmAcceptPaymentOf(application.eventId)}
+                    />
                 ))
             }
             <Dialog isOpen={showCancelDialog} onClose={() => setShowCancelDialog(false)}>
                 <ConfirmDialog title="Cancel Event" question="This will withdraw you from event! this action can't be undone" callback={cancelEvent} />
+            </Dialog>
+            <Dialog isOpen={showAcceptPaymentDialog} onClose={() => setShowAcceptPaymentDialog(false)}>
+                <ConfirmDialog title="Accept Payment" question="Confirm that hirer has paid you event fee?" callback={acceptPayment}/>
             </Dialog>
             <Dialog isOpen={showInfoDialog} onClose={() => setShowInfoDialog(false)}>
                 {applicationToShow && <ApplicationInfo application={applicationToShow} onClose={() => setShowInfoDialog(false)} onCancel={() => confirmCancelApplicationOf(applicationToShow.eventId)} />}
