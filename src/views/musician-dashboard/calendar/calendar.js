@@ -7,7 +7,7 @@ import config from 'src/config';
 
 import './calendar.scss';
 import { ApplicationStatus, EventStatus } from 'src/enums';
-import { calculateEventColor, calculateEventStatus } from 'src/components/event-item/status-indicator/event-status';
+import { calculateHireeEventColor, calculateHireeEventStatus } from 'src/components/event-item/status-indicator/event-status';
 import styled from 'styled-components';
 import Dialog from 'src/components/common/dialog';
 import ApplicationInfoDialog from '../my-applications/application-info';
@@ -59,10 +59,10 @@ const CalendarPage = () => {
                     }
                 } = appl;
                 return {
-                    title: `[${calculateEventStatus(eventStatus, applicationStatus)}] ${title}`,
+                    title: `[${calculateHireeEventStatus(eventStatus, applicationStatus)}] ${title}`,
                     start,
                     end,
-                    backgroundColor: calculateEventColor(eventStatus, applicationStatus),
+                    backgroundColor: calculateHireeEventColor(eventStatus, applicationStatus),
                     textColor: 'white',
                     extendedProps: {
                         data: appl,

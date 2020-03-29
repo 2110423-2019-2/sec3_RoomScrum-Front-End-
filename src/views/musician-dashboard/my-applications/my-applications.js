@@ -2,14 +2,15 @@ import React, { useState, useRef } from 'react';
 import Dialog from 'src/components/common/dialog';
 import ConfirmDialog from 'src/components/common/confirm-dialog-v2';
 import Image from 'react-image';
+import classNames from 'classnames';
 
 import './my-applications.scss';
 import ApplicationInfo from './application-info';
 import request from 'superagent';
 import config from 'src/config';
-import { EventStatusIndicator, ContractStatusIndicator, PaymentStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
+import { HireeEventStatusIndicator, PaymentStatusIndicator, ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
 import { sortByTimestampDesc } from '../util';
-import { ApplicationStatus } from 'src/enums';
+import { ApplicationStatus, EventStatus } from 'src/enums';
 import { AppliedEventAction } from '../components';
 
 
@@ -39,7 +40,12 @@ const AppliedEventItem = ({
     } = application;
     console.log(application);
     return (
-        <div className="applied-event-item clearfix">
+        <div className={
+            classNames({
+                "applied-event-item clearfix": true,
+                "cancelled": applicationStatus == ApplicationStatus.APPLICATION_REJECTED || eventStatus == EventStatus.CANCELLED
+            })
+        }>
             <Image className="event-image" src={[
                 config.API_URL + `/events/${eventId}/pic`,
                 'https://i.pravatar.cc/180',
@@ -50,7 +56,7 @@ const AppliedEventItem = ({
                 <div className="desc">
                     <div className="label"> Your status </div>
                     <div className="value">
-                        <EventStatusIndicator
+                        <HireeEventStatusIndicator
                             eventStatus={eventStatus}
                             applicationStatus={applicationStatus}
                         />

@@ -1,17 +1,25 @@
 import React from 'react';
-import {calculateEventColor, calculateEventStatus} from './event-status';
+import {
+    calculateHireeEventColor, 
+    calculateHireeEventStatus, 
+    calculateHirerEventStatus, 
+    calculateHirerEventColor
+} from './event-status';
 import styled from 'styled-components';
 import { calculatePaymentColor, calculatePaymentStatus } from './payment-status';
+import { calculateContractColor, calculateContractStatus } from './contract-status';
 const toColor = (colorName) => {
     switch (colorName) {
         case "green":
-            return "#569D66";
+            return "#28A745";
         case "yellow":
-            return "#ECBF4D";
+            return "#FFC107";
         case "grey":
-            return "#DDDDDD";
+            return "#6C757D";
         case "red": 
-            return "#E022222";
+            return "#DC3545";
+        case "blue": 
+            return "#007BFF";
         default:
             return colorName;
     }
@@ -39,15 +47,25 @@ const StatusIndicator = ({color, text}) => {
 }
 
 
-export const EventStatusIndicator = ({eventStatus, applicationStatus}) => {
+export const HireeEventStatusIndicator = ({eventStatus, applicationStatus}) => {
     return <StatusIndicator
-        color={calculateEventColor(eventStatus, applicationStatus)}
-        text={calculateEventStatus(eventStatus, applicationStatus)}
+        color={calculateHireeEventColor(eventStatus, applicationStatus)}
+        text={calculateHireeEventStatus(eventStatus, applicationStatus)}
     />;
 }
 
+export const HirerEventStatusIndicator = ({eventStatus, applicationStatus}) => {
+    return <StatusIndicator
+        color={calculateHirerEventColor(eventStatus, applicationStatus)}
+        text={calculateHirerEventStatus(eventStatus, applicationStatus)}
+    />
+}
+
 export const ContractStatusIndicator = ({contractStatus}) => {
-    return <StatusIndicator color={"yellow"} text={"NOT IMPLEMENTED"}/>;
+    return <StatusIndicator
+        color={calculateContractColor(contractStatus)}
+        text={calculateContractStatus(contractStatus)}
+    />
 }
 
 export const PaymentStatusIndicator = ({eventStatus}) => {

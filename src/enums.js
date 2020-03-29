@@ -27,3 +27,11 @@ export const ApplicationStatus = {
     APPLICATION_REJECTED: "applicationRejected",
     IS_ACCEPTED: "isAccepted",
 };
+
+export const ContractStatus = {
+    DRAFTING: "Drafting",
+    REVIEW_PENDING: "Sent", // i want it to make more sense
+    ACCEPTED: "Accpeted",
+    REJECTED: "Rejected",
+    CANCELLED: "Cancelled",
+}
