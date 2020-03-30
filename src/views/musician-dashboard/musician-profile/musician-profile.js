@@ -89,6 +89,9 @@ const MusicianProfile = ({
                 <FontAwesomeIcon icon={faEdit} />
                 Edit my profile
             </button>
+            <Dialog isOpen={true}>
+                <EditProfileDialog userId={userId} />
+            </Dialog>
         </div>
     )
 }
