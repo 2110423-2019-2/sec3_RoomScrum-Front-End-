@@ -1,0 +1,21 @@
+component ที่เอาไปใช้ได้คือ
+
+1. hiree-contract
+2. hirer-contract
+
+วิธีใช้ก็คือ
+
+import { HireeContract } from 'src/components/contract';
+<HireeContract />
+
+หรือ
+
+import { HirerContract } from 'src/components/contract';
+<HirerContract />
+
+ปล. ถ้าอันไหนออยแอบไปเพิ่มในไฟล์ใคร จะใส่ comment ประมาณนี้ไว้
+//oil-ออยแอบเพิ่ม-start
+//oil-ออยแอบเพิ่ม-end
+
+{/**oil-ออยแอบเพิ่ม-start*/}
+{/**oil-ออยแอบเพิ่ม-end*/}

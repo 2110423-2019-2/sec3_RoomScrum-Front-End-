@@ -8,7 +8,11 @@ import Edit from 'src/views/hirer-dashboard/raw-edit-event';
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Navbar } from 'src/components/common';
-import MyEventInfo from 'src/components/my-events-item/my-event-info'
+import MyEventInfo from 'src/components/my-events-item/my-event-info';
+//oil-ออยแอบเพิ่ม-start
+import { HirerContract } from 'src/components/contract';
+//oil-ออยแอบเพิ่ม-end
+
 // const EventInfoModal = ({
 //   eventName,
 //   description,
@@ -55,11 +59,6 @@ import MyEventInfo from 'src/components/my-events-item/my-event-info'
 //     </div>
 //   );
 // };
-
-
-
-
-
 
 // const ContractModal = ({ eventId }) => {
 //   // alert(eventId);
@@ -252,17 +251,21 @@ const MyEventItem = ({ each, onClick }) => {
     userId
   } = each;
   return (
-    <div  className='my-event-item' >
+    <div className='my-event-item'>
       <img className='responsive' src={eventImage} alt='Card image cap' />
-      <div >
-        <MyEventInfo event = {each} />
+      <div>
+        <MyEventInfo event={each} />
         <div>
           <p1 className='card-body'> {district} </p1>
         </div>
         <div>
           <p1 className='card-body'> {province} </p1>
         </div>
-         {/* <EventInfoModal
+        {/**oil-ออยแอบเพิ่ม-start*/}
+        <HirerContract />
+        {/**oil-ออยแอบเพิ่ม-end*/}
+
+        {/* <EventInfoModal
           eventName={eventName}
           description={description}
           address={address}
@@ -275,8 +278,8 @@ const MyEventItem = ({ each, onClick }) => {
           enddatetime={enddatetime}
           status={status}
         /> */}
-     </div>
-     {/* <Switch>
+      </div>
+      {/* <Switch>
       <Route exact path="/hirer/event/eventinfo">
         <MyEventInfo event = {each} />
       </Route>
