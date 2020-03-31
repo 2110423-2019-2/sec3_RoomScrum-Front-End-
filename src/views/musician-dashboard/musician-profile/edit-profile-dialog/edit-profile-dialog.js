@@ -11,7 +11,7 @@ import { Button, ConfirmDialog } from 'src/components/common';
 import { hasError, getFormData } from 'src/components/common/form/util';
 import Dialog from 'src/components/common/dialog';
 
-const EditProfileDialog = ({userId, onClose}) => {
+const EditProfileDialog = ({userId, onClose, changeCallback}) => {
     const [formData, dispatchForm] = formStateBuilder(editProfileFormDef)();
     const hasFetch = useRef(false);
     const [newProfileImage, setNewProfileImage] = useState(null);
@@ -62,6 +62,7 @@ const EditProfileDialog = ({userId, onClose}) => {
         .send(newProfileData)
         .then(() => {
             alert("Profile Updated")
+            changeCallback();
             onClose();
         })
         .catch(err => {

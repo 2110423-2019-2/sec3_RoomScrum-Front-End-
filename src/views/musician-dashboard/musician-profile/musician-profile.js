@@ -47,7 +47,8 @@ const MusicianProfile = ({
         gender,
         email,
         phoneNumber,
-    }
+    },
+    onProfileUpdate,
 }) => {
     const formDef = [
         formField(
@@ -92,7 +93,7 @@ const MusicianProfile = ({
                 Edit my profile
             </button>
             <Dialog isOpen={showEditDialog} onClose={() => setShowEditDialog(false)}>
-                <EditProfileDialog userId={userId} onClose={() => setShowEditDialog(false)}/>
+                <EditProfileDialog userId={userId} onClose={() => setShowEditDialog(false)} changeCallback={onProfileUpdate}/>
             </Dialog>
         </div>
     )
@@ -198,9 +199,7 @@ const _MusicianProfilePage = observer(({ loginState: { userId } }) => {
     const [musicianInfo, setMusicianInfo] = useState(null);
     const lastFetched = useRef(null);
 
-    if (userId && lastFetched.current != userId) {
-        console.log("render", userId)
-        lastFetched.current = userId;
+    const fetchMusicianInfo = () => {
         request.get(config.API_URL + '/user/' + userId)
             .withCredentials()
             .then(res => {
@@ -213,9 +212,15 @@ const _MusicianProfilePage = observer(({ loginState: { userId } }) => {
             })
     }
 
+    if (userId && lastFetched.current != userId) {
+        console.log("render", userId)
+        lastFetched.current = userId;
+        fetchMusicianInfo();
+    }
+
     return (
         <div className="musician-profile-page">
-            {musicianInfo && <MusicianProfile musician={musicianInfo} />}
+            {musicianInfo && <MusicianProfile musician={musicianInfo} onProfileUpdate={fetchMusicianInfo}/>}
             <div className="navy-bg">
                 { musicianInfo && <MusicianVideo musician={musicianInfo} />}
                 { <UserReviews userId={userId}/>}
