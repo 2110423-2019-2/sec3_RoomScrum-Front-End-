@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Navbar } from 'src/components/common';
 import MyEventInfo from 'src/components/my-events-item/my-event-info'
+import CreatReview from 'src/views/review'
+import CreateReview from 'src/views/review';
 // const EventInfoModal = ({
 //   eventName,
 //   description,
@@ -289,6 +291,7 @@ const MyEventItem = ({ each, onClick }) => {
           Cancel
         </button>
         <ContractModal eventId={eventId} status={status} /> */}
+        <CreateReview/>
       </div>
     </div>
   );
