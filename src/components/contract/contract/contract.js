@@ -1,46 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-// import { useRouteMatch, Switch, Route, Link } from 'react-router-dom';
-// import {
-//   Button,
-//   BackBotton,
-//   Navbar,
-//   DashboardLayout,
-//   DashboardNavigation,
-//   DashboardContent
-// } from 'src/components/common';
-// import SideNavigation from 'src/components/common/sidebar';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faPenSquare, faEdit } from '@fortawesome/free-solid-svg-icons';
-
-// const FadeBackground = styled.div`
-//   background-color: hsla(224, 46%, 11%, 0.65);
-//   height: 97vh;
-//   padding-top: 3%;
-//   color: #303e61;
-//   font-size: 20px;
-//   h1 {
-//     text-align: center;
-//     font-weight: bold;
-//     font-size: 40px;
-//     color: #364d9b;
-//   }
-//   .label {
-//     font-weight: bold;
-//     color: #303e61;
-//   }
-//   .status-color {
-//     width: 15px;
-//     height: 11px;
-//     background-color: #ecbf4d;
-//     display: inline-block;
-//     margin-right: 10px;
-//   }
-// `;
+import request from 'superagent';
+import config from 'src/config';
 
 const ContractModal = styled.div`
   background-color: #fcfcfc;
-  /* height: 90%; */
   overflow: scroll;
   padding: 50px;
   h1 {
@@ -57,8 +21,7 @@ const ContractModal = styled.div`
   }
 `;
 
-const Contract = () => {
-  // const match = useRouteMatch();
+const Contract = ({ eventId }) => {
   const status = 'in review';
   const eventName = 'SE night miniconcert';
   const hirer = 'John Minian';
@@ -70,6 +33,26 @@ const Contract = () => {
   // const edit = () => {
   //   alert('edit');
   // };
+  const [eventInfo, setEventInfo] = useState();
+  const [isFetch, setIsFetch] = useState(false);
+
+  const getEvents = () => {
+    request
+      .get(`${config.API_URL}/events/${eventId}`)
+      .then(res => {
+        setIsFetch(true);
+        setEventInfo(res.body);
+        console.log(res.body);
+      })
+      .catch(err => {
+        alert(err);
+      });
+  };
+  if (!isFetch) {
+    getEvents();
+    // console.log(eventInfo);
+    console.log('end');
+  }
 
   return (
     <div>

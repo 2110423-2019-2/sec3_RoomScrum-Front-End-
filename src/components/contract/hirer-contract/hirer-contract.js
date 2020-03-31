@@ -33,7 +33,7 @@ const ContractModal = styled.div`
   }
 `;
 
-const HirerContract = ({}) => {
+const HirerContract = ({ eventId }) => {
   const [showContractDialog, setShowContractDialog] = useState(false);
 
   const viewContract = ({}) => {
@@ -52,7 +52,7 @@ const HirerContract = ({}) => {
       <Dialog
         isOpen={showContractDialog}
         onClose={() => setShowContractDialog(false)}>
-        <Contract></Contract>
+        <Contract eventId={eventId}></Contract>
         <ContractModal>
           <div className='d-flex flex-row-reverse'>
             <Button className='mr-auto' name='accept' type='primary'></Button>

@@ -262,7 +262,7 @@ const MyEventItem = ({ each, onClick }) => {
           <p1 className='card-body'> {province} </p1>
         </div>
         {/**oil-ออยแอบเพิ่ม-start*/}
-        <HirerContract />
+        <HirerContract eventId={eventId} />
         {/**oil-ออยแอบเพิ่ม-end*/}
 
         {/* <EventInfoModal

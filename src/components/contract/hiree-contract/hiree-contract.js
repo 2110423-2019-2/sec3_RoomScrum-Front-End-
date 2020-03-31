@@ -30,15 +30,15 @@ const ContractModal = styled.div`
   }
 `;
 
-const HireeContract = ({}) => {
+const HireeContract = ({ eventId }) => {
   const [showContractDialog, setShowContractDialog] = useState(false);
   const viewContract = ({}) => {
-    // alert('viewContract');
     setShowContractDialog(true);
     return <div></div>;
   };
   const edit = () => {
-    alert('edit');
+    alert('edit' + eventId);
+    console.log(eventId);
   };
   return (
     <div>
@@ -46,7 +46,7 @@ const HireeContract = ({}) => {
       <Dialog
         isOpen={showContractDialog}
         onClose={() => setShowContractDialog(false)}>
-        <Contract></Contract>
+        <Contract eventId={eventId}></Contract>
         <ContractModal>
           <div className='row '>
             <div className='label col-3'></div>

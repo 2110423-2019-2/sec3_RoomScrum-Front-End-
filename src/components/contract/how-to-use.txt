@@ -1,17 +1,17 @@
 component ที่เอาไปใช้ได้คือ
 
-1. hiree-contract
+1. hiree-contract 
 2. hirer-contract
 
 วิธีใช้ก็คือ
 
 import { HireeContract } from 'src/components/contract';
-<HireeContract />
+<HireeContract eventId={eventId} />
 
 หรือ
 
 import { HirerContract } from 'src/components/contract';
-<HirerContract />
+<HirerContract eventId={eventId} />
 
 ปล. ถ้าอันไหนออยแอบไปเพิ่มในไฟล์ใคร จะใส่ comment ประมาณนี้ไว้
 //oil-ออยแอบเพิ่ม-start
@@ -19,3 +19,15 @@ import { HirerContract } from 'src/components/contract';
 
 {/**oil-ออยแอบเพิ่ม-start*/}
 {/**oil-ออยแอบเพิ่ม-end*/}
+
+---------------------------------------------------
+ตอนนี้ที่เอา component ไปใช้คือ
+---------------------------------------------------
+hiree -> src/components/my-events-item/my-events-item/my-events-item.js 
+hirer -> src/views/musician-dashboard/my-application/my-application.js โรจ
+
+
+
+ข้อมูลที่ต้องการใน contract คือ
+contract status --> หาจากไหนหว่า
+อยากได้ api ที่ส่ง event id เข้าไป
