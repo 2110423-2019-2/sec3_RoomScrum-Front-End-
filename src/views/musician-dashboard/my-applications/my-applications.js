@@ -72,7 +72,7 @@ const AppliedEventItem = ({
             {/** TODO */}
             <ContractStatusIndicator contractStatus={'TODO'} />
             {/**oil-ออยแอบเพิ่มไว้นะ แก้ได้-start*/}
-            <HireeContract />
+            <HireeContract eventId={eventId} />
             {/**oil-ออยแอบเพิ่มไว้นะ แก้ได้-end*/}
           </div>
         </div>
