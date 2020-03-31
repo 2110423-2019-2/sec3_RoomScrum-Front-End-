@@ -37,21 +37,27 @@ const Contract = ({ eventId }) => {
   const [isFetch, setIsFetch] = useState(false);
 
   const getEvents = () => {
-    request
-      .get(`${config.API_URL}/events/${eventId}`)
-      .then(res => {
-        setIsFetch(true);
-        setEventInfo(res.body);
-        console.log(res.body);
-      })
-      .catch(err => {
-        alert(err);
-      });
+    return new Promise((resolve, reject) => {
+      request
+        .get(`${config.API_URL}/events/${eventId}`)
+        .then(res => {
+          setIsFetch(true);
+          setEventInfo(res.body);
+          console.log(res.body);
+          resolve();
+        })
+        .catch(err => {
+          alert(err);
+          resolve(eventInfo);
+        });
+    });
   };
   if (!isFetch) {
-    getEvents();
-    // console.log(eventInfo);
-    console.log('end');
+    getEvents().then(() => {
+      //assign ค่า
+
+      console.log('end');
+    });
   }
 
   return (
