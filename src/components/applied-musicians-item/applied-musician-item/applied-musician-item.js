@@ -8,6 +8,7 @@ import { ConfirmDialog } from "src/components/common";
 
 const AppliedMusicianItem = ({
   each: {
+    hireeName,
     eventId,
     hireeId,
     timestamp,
@@ -41,28 +42,26 @@ const handleAccept = () => {
 };
   
   return (
-    <div className='card event-item' style={{ width: 300 }}>
+    <div className='applied-musician-item' >
       <img
-        className='card-img-top'
+        className='responsive'
         src='https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/HB4AT3D3IMI6TMPTWIZ74WAR54.jpg&w=767'
         alt='Card image cap'
       />
-      <div className='card-body'>
+      <div className='row'>
 
         <p className='card-text'>
-          {eventId}
+          My name is not in API
         </p>
-        <p className='card-text'>
-          {timestamp}
-        </p>
+
         {/* <MoreDetailModal
           eventId={eventId}
           description={description}
           startdatetime={startdatetime}
           enddatetime={enddatetime}
         /> */}
-        <button variant='secondary' onClick={handleClose}>
-            Reject
+        <button variant='secondary' onClick={handleClose} className='button'>
+            Reject 
         </button>
         <Modal className="center-popup" isOpen={showAlert}>
                 <ConfirmDialog
@@ -80,6 +79,7 @@ const handleAccept = () => {
               </Modal>
     
               <button
+                className='button'
                 variant='secondary'
                 onClick={() => {
                   setAlert(true);
