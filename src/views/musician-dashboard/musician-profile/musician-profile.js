@@ -66,6 +66,8 @@ const MusicianProfile = ({
         formField("Phone Number", phoneNumber),
     ];
 
+    const [showEditDialog, setShowEditDialog] = useState(false);
+
     return (
         <div className="musician-profile">
             <div className="title"> {firstName + ' ' + lastName} </div>
@@ -85,16 +87,17 @@ const MusicianProfile = ({
                     )
                 })
             }      
-            <button className="edit-profile-button">
+            <button className="edit-profile-button" onClick={() => setShowEditDialog(true)}>
                 <FontAwesomeIcon icon={faEdit} />
                 Edit my profile
             </button>
-            <Dialog isOpen={true}>
-                <EditProfileDialog userId={userId} />
+            <Dialog isOpen={showEditDialog} onClose={() => setShowEditDialog(false)}>
+                <EditProfileDialog userId={userId} onClose={() => setShowEditDialog(false)}/>
             </Dialog>
         </div>
     )
-}
+};
+
 
 // musician videos (youtube)
 const MusicianVideo = ({ musician }) => {

@@ -18,7 +18,7 @@ const Required = msg => value => {
 
 
 // copied from register form
-export const userFormDef = {
+export const editProfileFormDef = {
     username: {
         type: "text",
         label: "Username",
@@ -31,7 +31,8 @@ export const userFormDef = {
                 if (!usernameRegex.test(value))
                     return "Must contain only A-Z a-z 0-9 _ -";
             }
-        ]
+        ],
+        readonly: "yep",
     },
     // password: {
     //     type: "password",
@@ -156,9 +157,6 @@ export const userFormDef = {
     //     ],
     //     width: "sm-6"
     // },
-};
-
-export const musicianFormDef = {
     bio: {
         type: "textarea",
         label: "Bio"

@@ -1,3 +1,5 @@
+@import '../../../../styles/color.scss';
+
 .edit-profile-dialog {
     position: relative;
     width: 100vw;
@@ -6,4 +8,16 @@
     max-width: 768px;
     padding: 32px;
     overflow: auto;
+
+    .title {
+        font-size: 32px;
+        font-weight: bold;
+        color: $navy;
+        text-align: center;
+        margin-bottom: 0.5em;
+    }
+
+    .buttons {
+        margin-top: 16px;
+    }
 }
