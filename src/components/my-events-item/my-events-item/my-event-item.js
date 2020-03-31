@@ -8,9 +8,12 @@ import Edit from 'src/views/hirer-dashboard/raw-edit-event';
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Navbar } from 'src/components/common';
-import MyEventInfo from 'src/components/my-events-item/my-event-info'
-import CreatReview from 'src/views/review'
+import MyEventInfo from 'src/components/my-events-item/my-event-info';
+import CreatReview from 'src/views/review';
 import CreateReview from 'src/views/review';
+//oil-ออยแอบเพิ่ม-start
+import { HirerContract } from 'src/components/contract';
+//oil-ออยแอบเพิ่ม-end
 // const EventInfoModal = ({
 //   eventName,
 //   description,
@@ -57,11 +60,6 @@ import CreateReview from 'src/views/review';
 //     </div>
 //   );
 // };
-
-
-
-
-
 
 // const ContractModal = ({ eventId }) => {
 //   // alert(eventId);
@@ -254,17 +252,17 @@ const MyEventItem = ({ each, onClick }) => {
     userId
   } = each;
   return (
-    <div  className='my-event-item' >
+    <div className='my-event-item'>
       <img className='responsive' src={eventImage} alt='Card image cap' />
-      <div >
-        <MyEventInfo event = {each} />
+      <div>
+        <MyEventInfo event={each} />
         <div>
           <p1 className='card-body'> {district} </p1>
         </div>
         <div>
           <p1 className='card-body'> {province} </p1>
         </div>
-         {/* <EventInfoModal
+        {/* <EventInfoModal
           eventName={eventName}
           description={description}
           address={address}
@@ -277,13 +275,13 @@ const MyEventItem = ({ each, onClick }) => {
           enddatetime={enddatetime}
           status={status}
         /> */}
-     </div>
-     {/* <Switch>
+      </div>
+      {/* <Switch>
       <Route exact path="/hirer/event/eventinfo">
         <MyEventInfo event = {each} />
       </Route>
     </Switch>   */}
-
+      <HirerContract eventId={eventId} />
       <div className='row'>
         {/* <Edit event={each} />
         <Applicants eventId={eventId} />
@@ -291,7 +289,7 @@ const MyEventItem = ({ each, onClick }) => {
           Cancel
         </button>
         <ContractModal eventId={eventId} status={status} /> */}
-        <CreateReview/>
+        <CreateReview />
       </div>
     </div>
   );

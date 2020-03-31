@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import Contract from 'src/components/contract/contract';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { Button } from 'src/components/common';
 
 const ContractModal = styled.div`
   background-color: #fcfcfc;
@@ -53,6 +54,11 @@ const HireeContract = ({ eventId }) => {
             <div className='col-9 grey' onClick={edit}>
               <FontAwesomeIcon icon={faEdit} /> Edit my Contract
             </div>
+          </div>
+        </ContractModal>
+        <ContractModal>
+          <div className='d-flex flex-row-reverse'>
+            <Button className='mr-auto' name='Send' type='primary'></Button>
           </div>
         </ContractModal>
       </Dialog>
