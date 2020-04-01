@@ -8,7 +8,7 @@ import FormV2 from "src/components/common/form/form-v2";
 import { formStateBuilder } from "src/components/common/form/form-state";
 import ImageUploader from "src/components/common/image-upload/image-upload";
 import { setForm } from 'src/components/common/form/fields'
-
+import { Link } from 'react-router-dom';
 const EditProfile = () => {
 
   const [userForm, dispatchUserForm] = formStateBuilder(userFormDef)();
@@ -19,12 +19,6 @@ const EditProfile = () => {
   const [nationalCardImage, setNationalCardImage] = useState(null);
   const [accepted, setAccepted] = useState(false);
   const [user, setUser] = useState({});
-
-  // const handleCheck = evt => {
-  //   console.log(evt.target.checked);
-  //   setAccepted(evt.target.checked);
-  // };
-
   const isFetch = useRef(false);
   if (!isFetch.current) {
     isFetch.current = true;
@@ -44,9 +38,9 @@ const EditProfile = () => {
     })
   }
 
-//   const revert () => {
-
-//   }
+  const cancel = () => {
+    alert("Are you sure to discard change?")
+  }
 
   const submit = async () => {
     dispatchMusicianForm({ type: "PRE_SUBMIT" });
@@ -63,133 +57,47 @@ const EditProfile = () => {
       alert("Please enter all details");
       return;
     }
-    
-    // const profileImageName = await request
-    //   .post(`${config.API_URL}/user/temp-profile-pic`)
-    //   .attach("image", profileImage)
-    //   .then(res => {
-    //     const { imageName } = JSON.parse(res.text);
-    //     return imageName;
-    //   })
-    //   .catch(err => {
-    //     alert("profile upload err");
-    //     console.log(err);
-    //     return null;
-    //   });
-    // if (!profileImageName) return;
-
-    // let nationalCardImageName;
-    // if (userForm["userType"].value == "M") {
-    //   nationalCardImageName = await request
-    //     .post(`${config.API_URL}/user/temp-id-pic`)
-    //     .attach("image", nationalCardImage)
-    //     .then(res => {
-    //       const { imageName } = JSON.parse(res.text);
-    //       return imageName;
-    //     })
-    //     .catch(err => {
-    //       alert("national card upload err");
-    //       console.log(err);
-    //       return null;
-    //     });
-    //   if (!nationalCardImageName) return;
-    // }
-    // alert("upload files success");
-
     const sendData = user;
     for (let key in userForm)
       if (!userFormDef[key].ignore) sendData[key] = userForm[key].value;
-
-    // for (let key in musicianForm)
-    //   if (!musicianFormDef[key].ignore) sendData[key] = musicianForm[key].value;
-
-    // hack
     sendData.gender = +userForm.gender.value;
-    // Object.assign(sendData, {
-    //   profileImage: profileImageName,
-    //   nationalCardImage: nationalCardImageName
-    // });
-
     try {
-      // await 
       request.post(`${config.API_URL}/user/update/${user.userId}`).send(user)
       .withCredentials()
       .then(() => {
         alert("Profile Updated")
         window.location.href = './me'
       })
-        // request
-        // .post(`${config.API_URL}/auth/login`)
-        // .send({
-        //   username: userForm.username.value,
-        //   password: userForm.password.value
-        // })
-        // .then(res => {
-        //   const { token, username } = JSON.parse(res.text);
-        //   if (token) {
-        //     document.cookie = `token=${token}`;
-        //     document.location = "/";
-        //   } else {
-        //     alert("invalid response from server");
-        //   }
-        // })
-        // .catch(err => {
-        //   alert("error auto-logging in, please try login manually");
-        // });
-    } 
+    }
     catch (err) {
       alert("error");
     }
   };
 
   return (
-    <div className="edit-profile bg-info">
-      <div className="container rounded-top rounded-lg shadow">
-        <h1>Edit Profile</h1>
-        {/* <div className="row justify-content-center m-4">
-          <ImageUploader
-            setImageFile={setProfileImage}
-            title="Upload Profile"
-          />
-        </div> */}
-        <FormV2
-          formData={userForm}
-          dispatch={dispatchUserForm}
-          formDef={userFormDef}
-        />
-        {/* {userForm["userType"].value == "M" && ( // show only for musician
-          <FormV2
-            formData={musicianForm}
-            dispatch={dispatchMusicianForm}
-            formDef={musicianFormDef}
-          />
-        )}
-        {userForm["userType"].value == "M" && ( // show only for musician
-          <div className="row justify-content-center mt-4">
-            <ImageUploader
-              setImageFile={setNationalCardImage}
-              title="Upload National Card"
-            />
-          </div>
-        )} */}
-        <button
-          className="btn btn-`primary` m-4"
-          onClick={submit}
-        >
-          {" "}
-          Save
-          {" "}
-        </button>
-        {/* <button
-          className="btn btn-`primary` m-4"
-          onClick={revert}
-        >
-          {" "}
-          Revert
-          {" "}
-        </button> */}
-      </div>
-    </div>
+     <div className="edit-profile bg-info">
+       <div className="container rounded-top rounded-lg shadow">
+         <h1>Edit Profile</h1>
+         <FormV2
+           formData={userForm}
+           dispatch={dispatchUserForm}
+           formDef={userFormDef}
+         />
+         <div className="btn-line">
+          
+
+           <Link className="text-muted " onClick={cancel}>
+            Discard
+          </Link>
+          <body>     </body>
+           <Link className="text-blue " onClick={submit}>
+            Save
+          </Link>
+          
+
+         </div>
+       </div>
+     </div>
   );
 };
 
