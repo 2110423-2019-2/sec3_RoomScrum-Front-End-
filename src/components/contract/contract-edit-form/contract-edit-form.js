@@ -8,6 +8,7 @@ const ContractModal = styled.div`
   background-color: #fcfcfc;
   overflow: scroll;
   padding: 50px;
+  min-width: 900px;
   h1 {
     text-align: center;
     color: #364d9b;
@@ -20,6 +21,16 @@ const ContractModal = styled.div`
   .grey:hover {
     cursor: pointer;
   }
+  textarea {
+    /* min-width: 900px; */
+    /* width: 100%;
+    max-width: 500px; */
+    min-height: 400px;
+    /* font-family: Arial, sans-serif; */
+    /* font-size: 16px; */
+    overflow: hidden;
+    /* line-height: 1.4; */
+  }
 `;
 const ContractEditForm = ({ eventId }) => {
   //oil-ข้อมูลที่ได้จากการเอา eventId มา get contract todo-start
@@ -28,7 +39,7 @@ const ContractEditForm = ({ eventId }) => {
     eventName: 'SE night miniconcert',
     hirer: 'John Minian',
     hiree: 'Little dog',
-    budget: '20,500 baht',
+    budget: '20500',
     descritpion:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenasvitae justo faucibus, faucibus erat ut, tempor arcu. Vestibulum inenim augue. Nam in ante ex. Proin viverra feugiat facilisis. Aliquamrutrum egestas fringilla. Curabitur eget arcu luctus, malesuada enimmaximus, rhoncus odio. Sed consectetur leo sagittis tempor tempus.Etiam tempus. Lorem ipsum dolor sit amet, consectetur adipiscingelit. Maecenas vitae justo faucibus, faucibus erat ut, tempor arcu.Vestibulum in enim augue. Nam in ante ex. Proin viverra feugiatfacilisis. Aliquam rutrum egestas fringilla. Curabitur eget arculuctus, malesuada enim maximus, rhoncus odio. Sed consectetur leosagittis tempor tempus. Etiam tempus. Lorem ipsum dolor sit amet,consectetur adipiscing elit. Maecenas vitae justo faucibus, faucibuserat ut, tempor arcu.'
   };
@@ -69,7 +80,10 @@ const ContractEditForm = ({ eventId }) => {
       console.log('end');
     });
   }
-
+  //
+  const budgetInput = useRef();
+  const detailInput = useRef();
+  //
   return (
     <div>
       <ContractModal className='container-sm position-relative'>
@@ -95,11 +109,22 @@ const ContractEditForm = ({ eventId }) => {
         </div>
         <div className='row'>
           <div className='label col-3'>Budget</div>
-          <div className='col-9'>{budget}</div>
+          <div className='col-9'>
+            <input className='form-control' type='text' value={budget} />
+          </div>
         </div>
         <div className='row '>
           <div className='label col-3'>Detail</div>
-          <div className='col-9'>{descritpion}</div>
+          {/**
+            <div className='col-9'>{descritpion}</div>
+         */}
+          <div className='col-9'>
+            <textarea
+              className='form-control'
+              type='text'
+              value={descritpion}
+            />
+          </div>
         </div>
       </ContractModal>
       <ContractModal>
