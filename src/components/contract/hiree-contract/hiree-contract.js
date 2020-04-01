@@ -58,7 +58,7 @@ const HireeContract = ({ eventId, application }) => {
   const ViewContractButton = () => {
     //
     //
-    console.log(application.event.contractStatus);
+    // console.log(application.event.contractStatus);
     const button =
       application.status == 'NotActive' ? (
         <></>

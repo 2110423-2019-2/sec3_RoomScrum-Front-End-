@@ -7,6 +7,7 @@ const ContractModal = styled.div`
   background-color: #fcfcfc;
   overflow: scroll;
   padding: 50px;
+  min-width: 900px;
   h1 {
     text-align: center;
     color: #364d9b;
@@ -22,50 +23,46 @@ const ContractModal = styled.div`
 `;
 
 const Contract = ({ eventId }) => {
-  //oil-ข้อมูลที่ได้จากการเอา eventId มา get contract todo-start
-  const contract = {
-    status: 'in review',
-    eventName: 'SE night miniconcert',
-    hirer: 'John Minian',
-    hiree: 'Little dog',
-    budget: '20,500 baht',
-    descritpion:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenasvitae justo faucibus, faucibus erat ut, tempor arcu. Vestibulum inenim augue. Nam in ante ex. Proin viverra feugiat facilisis. Aliquamrutrum egestas fringilla. Curabitur eget arcu luctus, malesuada enimmaximus, rhoncus odio. Sed consectetur leo sagittis tempor tempus.Etiam tempus. Lorem ipsum dolor sit amet, consectetur adipiscingelit. Maecenas vitae justo faucibus, faucibus erat ut, tempor arcu.Vestibulum in enim augue. Nam in ante ex. Proin viverra feugiatfacilisis. Aliquam rutrum egestas fringilla. Curabitur eget arculuctus, malesuada enim maximus, rhoncus odio. Sed consectetur leosagittis tempor tempus. Etiam tempus. Lorem ipsum dolor sit amet,consectetur adipiscing elit. Maecenas vitae justo faucibus, faucibuserat ut, tempor arcu.'
-  };
-  //oil-ข้อมูลที่ได้จากการเอา eventId มา get contract todo-end
-
-  //oil-flatten contract ที่ get มา todo-start
-  const { status, eventName, hirer, hiree, budget, descritpion } = contract;
-  //oil-flatten contract ที่ get มา todo-end
-
-  //
-  // useEffect(() => {
-  //   let val = callbackContractFunction(contract);
-  // }, [callbackContractFunction]);
-  //
-
-  const [eventInfo, setEventInfo] = useState();
+  const [contractInfo, setContractInfo] = useState();
   const [isFetch, setIsFetch] = useState(false);
+
+  const [status, setStatus] = useState('Drafting');
+  const [eventName, setEventName] = useState('SE night miniconcert');
+  const [hirer, setHirer] = useState('John Minian');
+  const [hiree, setHiree] = useState('-');
+  const [budget, setBudget] = useState(20500);
+  const [description, setDescription] = useState(
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenasvitae justo faucibus, faucibus erat ut, tempor arcu. Vestibulum inenim augue. Nam in ante ex. Proin viverra feugiat facilisis. Aliquamrutrum egestas fringilla. Curabitur eget arcu luctus, malesuada enimmaximus, rhoncus odio. Sed consectetur leo sagittis tempor tempus.Etiam tempus. Lorem ipsum dolor sit amet, consectetur adipiscingelit. Maecenas vitae justo faucibus, faucibus erat ut, tempor arcu.Vestibulum in enim augue. Nam in ante ex. Proin viverra feugiatfacilisis. Aliquam rutrum egestas fringilla. Curabitur eget arculuctus, malesuada enim maximus, rhoncus odio. Sed consectetur leosagittis tempor tempus. Etiam tempus. Lorem ipsum dolor sit amet,consectetur adipiscing elit. Maecenas vitae justo faucibus, faucibuserat ut, tempor arcu.'
+  );
 
   const getEvents = () => {
     return new Promise((resolve, reject) => {
       request
-        .get(`${config.API_URL}/events/${eventId}`)
+        .get(`${config.API_URL}/contract/${eventId}`)
         .then(res => {
           setIsFetch(true);
-          setEventInfo(res.body);
+          setContractInfo(res.body);
+
           console.log(res.body);
-          resolve();
+          resolve(res.body);
         })
         .catch(err => {
           alert(err);
-          resolve(eventInfo);
+          resolve(contractInfo);
         });
     });
   };
+
   if (!isFetch) {
-    getEvents().then(() => {
-      //assign ค่า
+    getEvents().then(contract => {
+      setStatus(contract.status);
+      setEventName(contract.event.eventName);
+      setHirer(contract.hirer.firstName + ' ' + contract.hirer.lastName);
+      try {
+        setHiree(contract.hiree.firstName + ' ' + contract.hiree.lastName);
+      } catch (error) {}
+      setBudget(contract.price);
+      setDescription(contract.description);
       console.log('end');
     });
   }
@@ -99,7 +96,7 @@ const Contract = ({ eventId }) => {
         </div>
         <div className='row '>
           <div className='label col-3'>Detail</div>
-          <div className='col-9'>{descritpion}</div>
+          <div className='col-9'>{description}</div>
         </div>
       </ContractModal>
     </div>

@@ -4,10 +4,11 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
 const Btn = styled.button`
-  margin-top: 30px;
+  margin-top: 32px;
   font-size: 16px;
   border: none;
   color: #939393;
+  padding: 0px;
   .btn:hover {
     color: #ba2b2b;
   }
