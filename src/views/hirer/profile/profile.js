@@ -63,7 +63,7 @@ export default () => {
             
             <div className="row pt-4">
               <div className="col-sm-12 text-center">
-                <img src = {profileImageFile} class="img-circle" width="250" height="250"/>
+                <img src = {profileImageFile} class="img-circle" width="250" height="250"/> 
               </div>
             </div>
             
@@ -104,7 +104,14 @@ export default () => {
               Review
             </div>
             <div className="row pt-4 pl-5 text-dark">
-              {/* waiting for review process */}
+
+            <div class="card">
+              <div class="card-body">
+                <h4>Nonthakorn K.</h4>
+                <div>Awesome!</div>
+
+              </div>
+            </div>
             </div>
           </div>
         </div>
