@@ -11,6 +11,22 @@ import { ConfirmDialog } from "src/components/common";
 
 import { formReview } from "./form-def";
 
+const customStyles = {
+    content : {
+        // top                   : '50%',
+        // left                  : '50%',
+        // right                 : 'auto',
+        // bottom                : 'auto',
+      marginRight           : 'auto',
+      marginLeft            : 'auto',
+      marginTop             : 'auto',
+      marginBottom          : 'auto',
+    //   transform             : 'translate(-50%, -50%)',
+      width           : '60%',
+      height          : '40%'
+    }
+  };
+
 const CreateReview = () => {
     const formReviewData = useRef();
     const [showAlert, setAlert] = useState(false);
@@ -47,9 +63,11 @@ const CreateReview = () => {
         isOpen={isOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        contentLabel="Modal">
-          <div >
-                <div >
+        contentLabel="Modal"
+        style={customStyles}
+        >
+          <div  >
+                <div  >
                     <h1> Review </h1>
                     <Form formDef={formReview} ref={formReviewData} />
                     <Modal className="center-popup" isOpen={showAlert}>
