@@ -8,6 +8,8 @@ import moment from 'moment';
 import './musician-profile.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import Dialog from 'src/components/common/dialog';
+import EditProfileDialog from './edit-profile-dialog';
 
 moment.locale('en', {
     relativeTime: {
@@ -27,6 +29,10 @@ moment.locale('en', {
     }
 });
 
+
+// constructor for form field
+const formField = (name, value) => ({name, value});
+
 // muscian profile component
 const MusicianProfile = ({
     musician: {
@@ -35,9 +41,34 @@ const MusicianProfile = ({
         userId,
         birthdate,
         address, subdistrict, district, cityState, zipcode, country,
-        bio
-    }
+        bio,
+        // added field by HRH's order
+        nationalId,
+        gender,
+        email,
+        phoneNumber,
+    },
+    onProfileUpdate,
 }) => {
+    const formDef = [
+        formField(
+            "Birthdate", 
+            moment(birthdate).format('MMM DD, YYYY') + ' ' + 
+            `( ${moment(birthdate).fromNow()} years old )`
+        ),
+        formField("Gender", gender),
+        formField("About", bio),
+        formField("National ID", nationalId),
+        formField(
+            "Address", 
+            [address, subdistrict, district, cityState, country, zipcode].join(" ")
+        ),
+        formField("Email", email),
+        formField("Phone Number", phoneNumber),
+    ];
+
+    const [showEditDialog, setShowEditDialog] = useState(false);
+
     return (
         <div className="musician-profile">
             <div className="title"> {firstName + ' ' + lastName} </div>
@@ -46,31 +77,28 @@ const MusicianProfile = ({
                 config.API_URL + `/user/profile-pic/${userId}`,
                 "https://i.pravatar.cc/180",
             ]} />
-            <div className="desc">
-                <div className="label"> Birthdate </div>
-                <div className="value">
-                    {moment(birthdate).format('MMM DD, YYYY')} {" "}
-                    ( {moment(birthdate).fromNow()} years old )  </div>
-            </div>
-            <div className="desc">
-                <div className="label"> Location </div>
-                <div className="value">
-                    {address}, {subdistrict}, {district}, {cityState}, {zipcode}, {country}
-                </div>
-            </div>
-            <div className="desc">
-                <div className="label"> About </div>
-                <div className="value">
-                    {bio}
-                </div>
-            </div>
-            <button className="edit-profile-button">
+            {
+                formDef.map(({name, value}) => {
+                    console.log({name, value});
+                    return (
+                        <div className="desc">
+                            <div className="label"> {name}</div>
+                            <div className="value"> {value}</div>
+                        </div>
+                    )
+                })
+            }      
+            <button className="edit-profile-button" onClick={() => setShowEditDialog(true)}>
                 <FontAwesomeIcon icon={faEdit} />
                 Edit my profile
             </button>
+            <Dialog isOpen={showEditDialog} onClose={() => setShowEditDialog(false)}>
+                <EditProfileDialog userId={userId} onClose={() => setShowEditDialog(false)} changeCallback={onProfileUpdate}/>
+            </Dialog>
         </div>
     )
-}
+};
+
 
 // musician videos (youtube)
 const MusicianVideo = ({ musician }) => {
@@ -171,9 +199,7 @@ const _MusicianProfilePage = observer(({ loginState: { userId } }) => {
     const [musicianInfo, setMusicianInfo] = useState(null);
     const lastFetched = useRef(null);
 
-    if (userId && lastFetched.current != userId) {
-        console.log("render", userId)
-        lastFetched.current = userId;
+    const fetchMusicianInfo = () => {
         request.get(config.API_URL + '/user/' + userId)
             .withCredentials()
             .then(res => {
@@ -186,9 +212,15 @@ const _MusicianProfilePage = observer(({ loginState: { userId } }) => {
             })
     }
 
+    if (userId && lastFetched.current != userId) {
+        console.log("render", userId)
+        lastFetched.current = userId;
+        fetchMusicianInfo();
+    }
+
     return (
         <div className="musician-profile-page">
-            {musicianInfo && <MusicianProfile musician={musicianInfo} />}
+            {musicianInfo && <MusicianProfile musician={musicianInfo} onProfileUpdate={fetchMusicianInfo}/>}
             <div className="navy-bg">
                 { musicianInfo && <MusicianVideo musician={musicianInfo} />}
                 { <UserReviews userId={userId}/>}
