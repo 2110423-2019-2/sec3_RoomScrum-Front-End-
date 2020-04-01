@@ -44,7 +44,7 @@ const MyReviews = (hirerID) => {
     const myReviewsItems = myReviewsList.map(each => {
         return (
           <div>
-            <MyReviewsItem each={each} />
+            <MyReviewsItem each={each}  />
           </div>
         );
     });
