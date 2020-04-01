@@ -3,11 +3,14 @@
 //2 ส่วน popup ของ hiree-contract จะมีส่วนของ
 //----------contract ปกติ
 //----------ปุ่ม edit contract
+//3 ส่วน popup ของ edit-contract
+
 import React, { useState, useRef, useCallback } from 'react';
 import './hiree-contract.scss';
 import Dialog from 'src/components/common/dialog';
 import styled from 'styled-components';
 import Contract from 'src/components/contract/contract';
+import ContractEditForm from 'src/components/contract/contract-edit-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'src/components/common';
@@ -31,35 +34,38 @@ const ContractModal = styled.div`
   }
 `;
 
-const HireeContract = ({ eventId }) => {
+const HireeContract = ({ eventId, application }) => {
   const [showContractDialog, setShowContractDialog] = useState(false);
-  //รับข้อมูล contract
-  const [contract, setContract] = useState();
-  const callbackContractFunction = useCallback(contract => {
-    console.log(contract, 'callback called');
-    setContract(contract);
-    return contract;
-  }, []);
-  const viewContractButton = <></>;
-  if (contract != undefined) {
-    const { status, eventName, hirer, hiree, budget, descritpion } = contract;
-    viewContractButton =
-      status == 'in review' ? (
-        <></>
-      ) : (
-        <button onClick={viewContract}>view contract</button>
-      );
-  }
-  console.log('oil', contract);
-  //
+  const [showContractEditFormDialog, setShowContractEditFormDialog] = useState(
+    false
+  );
 
   const viewContract = ({}) => {
     setShowContractDialog(true);
     return <div></div>;
   };
+
+  const viewEditContract = ({}) => {
+    setShowContractEditFormDialog(true);
+  };
+
   const edit = () => {
-    alert('edit' + eventId);
-    console.log(eventId);
+    //alert('edit' + eventId);
+    setShowContractDialog(false);
+    setShowContractEditFormDialog(true);
+    // console.log(eventId);
+  };
+  const ViewContractButton = () => {
+    //
+    //
+    console.log(application.event.contractStatus);
+    const button =
+      application.status == 'NotActive' ? (
+        <></>
+      ) : (
+        <button onClick={viewContract}>view contract</button>
+      );
+    return button;
   };
 
   return (
@@ -67,17 +73,15 @@ const HireeContract = ({ eventId }) => {
       {/**
         <button onClick={viewContract}>view contract</button>
       */}
-      {viewContractButton}
+      <ViewContractButton />
       <Dialog
         isOpen={showContractDialog}
         onClose={() => setShowContractDialog(false)}>
-        <Contract
-          eventId={eventId}
-          callbackContractFunction={callbackContractFunction}></Contract>
+        <Contract eventId={eventId}></Contract>
         <ContractModal>
           <div className='row '>
             <div className='label col-3'></div>
-            <div className='col-9 grey' onClick={edit}>
+            <div className='col-9 grey' onClick={edit} onClick={edit}>
               <FontAwesomeIcon icon={faEdit} /> Edit my Contract
             </div>
           </div>
@@ -87,6 +91,11 @@ const HireeContract = ({ eventId }) => {
             <Button className='mr-auto' name='Send' type='primary'></Button>
           </div>
         </ContractModal>
+      </Dialog>
+      <Dialog
+        isOpen={showContractEditFormDialog}
+        onClose={() => setShowContractEditFormDialog(false)}>
+        <ContractEditForm></ContractEditForm>
       </Dialog>
     </div>
   );

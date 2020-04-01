@@ -21,7 +21,7 @@ const ContractModal = styled.div`
   }
 `;
 
-const Contract = ({ eventId, callbackContractFunction }) => {
+const Contract = ({ eventId }) => {
   //oil-ข้อมูลที่ได้จากการเอา eventId มา get contract todo-start
   const contract = {
     status: 'in review',
@@ -39,9 +39,9 @@ const Contract = ({ eventId, callbackContractFunction }) => {
   //oil-flatten contract ที่ get มา todo-end
 
   //
-  useEffect(() => {
-    let val = callbackContractFunction(contract);
-  }, [callbackContractFunction]);
+  // useEffect(() => {
+  //   let val = callbackContractFunction(contract);
+  // }, [callbackContractFunction]);
   //
 
   const [eventInfo, setEventInfo] = useState();
