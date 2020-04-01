@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import request from 'superagent';
 import config from 'src/config';
 import { Button } from 'src/components/common';
+import cancelContractButton from '../cancel-contract-button';
 
 const InputField = React.forwardRef(
   ({ name, type, place, isTextarea }, ref) => {
@@ -160,6 +161,7 @@ const ContractEditForm = ({ eventId }) => {
         <div className='d-flex flex-row-reverse'>
           <Button className='mr-auto' name='Save' type='primary'></Button>
           <Button className='mr-auto' name='Discard' type='secondary'></Button>
+          <cancelContractButton />
         </div>
       </ContractModal>
     </div>

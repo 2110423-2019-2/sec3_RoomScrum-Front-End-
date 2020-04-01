@@ -14,7 +14,7 @@ import ContractEditForm from 'src/components/contract/contract-edit-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'src/components/common';
-
+import CancelContractButton from 'src/components/contract/cancel-contract-button';
 const ContractModal = styled.div`
   background-color: #fcfcfc;
   overflow: scroll;
@@ -87,8 +87,15 @@ const HireeContract = ({ eventId, application }) => {
           </div>
         </ContractModal>
         <ContractModal>
-          <div className='d-flex flex-row-reverse'>
-            <Button className='mr-auto' name='Send' type='primary'></Button>
+          <div className='row '>
+            <div className='label col-3'>
+              <CancelContractButton eventId={application.event.eventId} />
+            </div>
+            <div className='col-9 grey' onClick={edit} onClick={edit}>
+              <div className='d-flex flex-row-reverse'>
+                <Button className='mr-auto' name='Send' type='primary'></Button>
+              </div>
+            </div>
           </div>
         </ContractModal>
       </Dialog>
