@@ -11,8 +11,25 @@ import { ConfirmDialog } from "src/components/common";
 
 import { formReview } from "./form-def";
 
-const CreateReview = () => {
+const customStyles = {
+    content : {
+        // top                   : '50%',
+        // left                  : '50%',
+        // right                 : 'auto',
+        // bottom                : 'auto',
+      marginRight           : 'auto',
+      marginLeft            : 'auto',
+      marginTop             : 'auto',
+      marginBottom          : 'auto',
+    //   transform             : 'translate(-50%, -50%)',
+      width           : '60%',
+      height          : '40%'
+    }
+  };
+
+const CreateReview = ({eventId}) => {
     const formReviewData = useRef();
+    const [show, setShow] = useState(false);
     const [showAlert, setAlert] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const openModal = () => {
@@ -23,17 +40,23 @@ const CreateReview = () => {
     const closeModal = () => {
       setIsOpen(false);
     };
+    const handleClose = () => setIsOpen(false);
 
     const postData = () => {
         const data = {};
         for (let key in formReviewData.current) {
             data[key] = formReviewData.current[key].value;
         }
+        data["eventId"] = eventId;
         request
-        .post(`${config.API_URL}/events`)
+        .post(`${config.API_URL}/review`)
         .withCredentials()
         .send(data)
+        .then(() => {
+          window.location.href = "/hirer/event";
+        })
         .catch(err => console.log(err));
+        alert('foo')
     };
     
     return (
@@ -47,9 +70,11 @@ const CreateReview = () => {
         isOpen={isOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        contentLabel="Modal">
-          <div >
-                <div >
+        contentLabel="Modal"
+        style={customStyles}
+        >
+          <div  >
+                <div  >
                     <h1> Review </h1>
                     <Form formDef={formReview} ref={formReviewData} />
                     <Modal className="center-popup" isOpen={showAlert}>
@@ -61,6 +86,7 @@ const CreateReview = () => {
                                 if (confirm) {
                     // callbackAction.current();
                                     postData();
+                                    handleClose();
                                 }
                             }}/>
                     </Modal>

@@ -1,5 +1,5 @@
 .view-profile {
-
+    height: 100%;
     .pic {
         height: 150px;
     }
@@ -7,6 +7,11 @@
         position: absolute;
         right:45px;
         bottom:30px;
+    }
+    .posit2{
+        position: absolute;
+        right:45px;
+        bottom:70px;
     }
 
     .address{
@@ -18,8 +23,17 @@
     }
 
     .img {
-        height: 125px;
+        height: 150px;
         weight: 125px;
     }
-
+    .high{    
+        height: 100%;
+    }
+    .size{
+        font-size:28px;
+    }
+    .textcolor{
+        color:darkblue;
+        word-wrap: break-word;
+    }
 }

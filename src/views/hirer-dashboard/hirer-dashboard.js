@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-//import "./register.scss";
+// import "./hirer-dashboard.scss";
 import { Navbar, Form } from "src/components/common";
 import request from "superagent";
 import config from "src/config";
@@ -42,17 +42,21 @@ const HirerDashboard = () => {
       });
     }
 
-    const deleteItem =(eventId) => {
+    const deleteItem = (eventId) => {
         for(let i = 0; i < myEventList.length; i++){
             if (myEventList[i].eventId == eventId){
-              delete myEventList[i];
+              myEventList.splice(i,1);
             }
         }
         request
-          .post(`${config.API_URL}/events`)
+          .get(`${config.API_URL}/events/cancel/${eventId}`)
           .withCredentials()
           .send(eventId)
-          .catch(err => console.log(err));
+          .then(() => {
+            window.location.href = "/hirer/event";
+          })
+          .catch(err => console.log(err));  
+          alert('Foo')  
      }
 
     const myEventItems = myEventList.map(each => {
@@ -65,7 +69,7 @@ const HirerDashboard = () => {
 
 
     return (
-        <div>
+        <div > 
             {myEventItems}
         </div>
     )

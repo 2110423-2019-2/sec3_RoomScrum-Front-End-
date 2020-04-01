@@ -1,8 +1,8 @@
 export const formReview = {
-    review: {
-        type: "text",
+    description: {
+        type: "textarea",
         label: "",
-        width: "sm-4",
+        width: "12",
         // default: "write a review",
         validator: [
           value => {

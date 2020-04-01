@@ -9,11 +9,11 @@ import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Navbar } from 'src/components/common';
 import MyEventInfo from 'src/components/my-events-item/my-event-info';
-import CreatReview from 'src/views/review';
-import CreateReview from 'src/views/review';
+import CreateReview from 'src/views/review/create-reviews';
 //oil-ออยแอบเพิ่ม-start
 import { HirerContract } from 'src/components/contract';
 //oil-ออยแอบเพิ่ม-end
+
 // const EventInfoModal = ({
 //   eventName,
 //   description,
@@ -262,7 +262,9 @@ const MyEventItem = ({ each, onClick }) => {
         <div>
           <p1 className='card-body'> {province} </p1>
         </div>
-        {/* <EventInfoModal
+        <div className='row'>
+          <button onClick={() => onClick(eventId)}> Cancel </button>
+          {/* <EventInfoModal
           eventName={eventName}
           description={description}
           address={address}
@@ -275,21 +277,22 @@ const MyEventItem = ({ each, onClick }) => {
           enddatetime={enddatetime}
           status={status}
         /> */}
-      </div>
-      {/* <Switch>
+        </div>
+        {/* <Switch>
       <Route exact path="/hirer/event/eventinfo">
         <MyEventInfo event = {each} />
       </Route>
     </Switch>   */}
-      <HirerContract eventId={eventId} />
-      <div className='row'>
-        {/* <Edit event={each} />
+
+        <div className='float-right margin-right-2'>
+          {/* <Edit event={each} />
         <Applicants eventId={eventId} />
         <button variant='secondary' onClick={() => onClick(eventId)}>
           Cancel
         </button>
         <ContractModal eventId={eventId} status={status} /> */}
-        <CreateReview />
+          <CreateReview eventId={eventId} />
+        </div>
       </div>
     </div>
   );

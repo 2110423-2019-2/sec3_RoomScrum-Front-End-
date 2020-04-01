@@ -80,7 +80,7 @@ const Avatar = observer(({ loginState }) => {
           Calendar{' '}
         </Link>
         <div className='dropdown-divider'></div>
-        <Link className='dropdown-item' to='/hirerdashboard'>
+        <Link className='dropdown-item' to='/hirer/event'>
           {' '}
           My Events{' '}
         </Link>
