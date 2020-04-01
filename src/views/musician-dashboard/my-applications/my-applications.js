@@ -12,6 +12,7 @@ import { HireeEventStatusIndicator, PaymentStatusIndicator, ContractStatusIndica
 import { sortByTimestampDesc } from '../util';
 import { ApplicationStatus, EventStatus } from 'src/enums';
 import { AppliedEventAction } from '../components';
+import PaymentQRDialog from 'src/components/payment';
 
 
 
@@ -22,6 +23,7 @@ const AppliedEventItem = ({
     onCancel, 
     onWithdraw, // withdraw is same as cancel but w/o penalty 
     onAcceptPayment,
+    onClickPay,
 }) => {
     const {
         status: applicationStatus,
@@ -113,21 +115,18 @@ const AppliedEventItem = ({
                     onAcceptPayment={onAcceptPayment}
                     onCancel={onCancel}
                     onWithdraw={onWithdraw}
+                    onClickPay={onClickPay}
                 />
             </div>
             <div className="price-tag">
                 <div className="price"> {price || 'price ????'}</div>
                 <div className="currency"> baht </div>
             </div>
-            {/* <div className="cancel-wrapper">
-                <button onClick={onCancel}>
-                    <FontAwesomeIcon icon={faExclamationTriangle} />
-                    cancel
-                </button>
-            </div> */}
         </div>
     )
 }
+
+const fakePaymentInfo = {accountNo: "1234567890123", amount: "123.33", name: "road"};
 
 const MyApplications = () => {
     const [applications, setApplications] = useState([]);
@@ -137,6 +136,13 @@ const MyApplications = () => {
     const [showAcceptPaymentDialog, setShowAcceptPaymentDialog] = useState(false);
     const [showInfoDialog, setShowInfoDialog] = useState(false);
     const [applicationToShow, setApplicationToShow] = useState(null);
+    
+    const [showQRDialog, setShowQRDialog] = useState(false);
+    const [qrData, setQrData] = useState({});
+
+    const {
+        accountNo, amount, name
+    } = qrData;
 
 
     const fetchApplications = () => {
@@ -199,6 +205,12 @@ const MyApplications = () => {
         setShowInfoDialog(true);
     };
 
+    // show and set data
+    const showPromptPayDialog = (paymentInfo) => {
+        setShowQRDialog(true);
+        setQrData(paymentInfo);
+    }
+
 
 
     return (
@@ -211,6 +223,7 @@ const MyApplications = () => {
                         onSelectEvent={() => showApplicationPopup(application)}
                         onWithdraw={() => confirmCancelApplicationOf(application.eventId)/* TODO: this should we different API but whatever */}
                         onAcceptPayment={() => confirmAcceptPaymentOf(application.eventId)}
+                        onClickPay={() => showPromptPayDialog(fakePaymentInfo)}
                     />
                 ))
             }
@@ -222,6 +235,14 @@ const MyApplications = () => {
             </Dialog>
             <Dialog isOpen={showInfoDialog} onClose={() => setShowInfoDialog(false)}>
                 {applicationToShow && <ApplicationInfo application={applicationToShow} onClose={() => setShowInfoDialog(false)} onCancel={() => confirmCancelApplicationOf(applicationToShow.eventId)} />}
+            </Dialog>
+            <Dialog isOpen={showQRDialog} onClose={() => setShowQRDialog(false)}>
+                <PaymentQRDialog
+                    accountNo={accountNo}
+                    amount={amount}
+                    name={name}
+                    onClose={() => setShowQRDialog(false)}
+                />
             </Dialog>
         </div>
     )

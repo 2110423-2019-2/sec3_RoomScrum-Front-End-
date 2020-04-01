@@ -4,7 +4,7 @@ import { Button } from 'src/components/common';
 import './applied-event-action.scss';
 
 // Hiree side
-const AppliedEventAction = ({application, onWithdraw, onCancel, onAcceptPayment}) => {
+const AppliedEventAction = ({application, onWithdraw, onCancel, onAcceptPayment, onClickPay}) => {
     const {
         status: applicationStatus,
         event: {
@@ -21,6 +21,10 @@ const AppliedEventAction = ({application, onWithdraw, onCancel, onAcceptPayment}
             {canAcceptPayment && <Button type="primary" name="Accept Payment" onClick={onAcceptPayment}/>}
             {canWithdraw && <Button type="danger" name="Withdraw" onClick={onWithdraw}/>}
             {canCancel && !canWithdraw && <Button type="danger" name="Cancel" onClick={onCancel}/>}
+            {
+                // test Hirer event action
+                <Button type="primary" name="[test] Pay" onClick={onClickPay}/>
+            }
         </div>
     )
 };
