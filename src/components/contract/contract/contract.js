@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import request from 'superagent';
 import config from 'src/config';
@@ -21,7 +21,7 @@ const ContractModal = styled.div`
   }
 `;
 
-const Contract = ({ eventId }) => {
+const Contract = ({ eventId, callbackContractFunction }) => {
   //oil-ข้อมูลที่ได้จากการเอา eventId มา get contract todo-start
   const contract = {
     status: 'in review',
@@ -37,6 +37,12 @@ const Contract = ({ eventId }) => {
   //oil-flatten contract ที่ get มา todo-start
   const { status, eventName, hirer, hiree, budget, descritpion } = contract;
   //oil-flatten contract ที่ get มา todo-end
+
+  //
+  useEffect(() => {
+    let val = callbackContractFunction(contract);
+  }, [callbackContractFunction]);
+  //
 
   const [eventInfo, setEventInfo] = useState();
   const [isFetch, setIsFetch] = useState(false);
@@ -60,7 +66,6 @@ const Contract = ({ eventId }) => {
   if (!isFetch) {
     getEvents().then(() => {
       //assign ค่า
-
       console.log('end');
     });
   }

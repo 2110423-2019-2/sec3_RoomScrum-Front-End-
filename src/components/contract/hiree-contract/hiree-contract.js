@@ -3,7 +3,7 @@
 //2 ส่วน popup ของ hiree-contract จะมีส่วนของ
 //----------contract ปกติ
 //----------ปุ่ม edit contract
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import './hiree-contract.scss';
 import Dialog from 'src/components/common/dialog';
 import styled from 'styled-components';
@@ -33,6 +33,26 @@ const ContractModal = styled.div`
 
 const HireeContract = ({ eventId }) => {
   const [showContractDialog, setShowContractDialog] = useState(false);
+  //รับข้อมูล contract
+  const [contract, setContract] = useState();
+  const callbackContractFunction = useCallback(contract => {
+    console.log(contract, 'callback called');
+    setContract(contract);
+    return contract;
+  }, []);
+  const viewContractButton = <></>;
+  if (contract != undefined) {
+    const { status, eventName, hirer, hiree, budget, descritpion } = contract;
+    viewContractButton =
+      status == 'in review' ? (
+        <></>
+      ) : (
+        <button onClick={viewContract}>view contract</button>
+      );
+  }
+  console.log('oil', contract);
+  //
+
   const viewContract = ({}) => {
     setShowContractDialog(true);
     return <div></div>;
@@ -41,13 +61,19 @@ const HireeContract = ({ eventId }) => {
     alert('edit' + eventId);
     console.log(eventId);
   };
+
   return (
     <div>
-      <button onClick={viewContract}>view contract</button>
+      {/**
+        <button onClick={viewContract}>view contract</button>
+      */}
+      {viewContractButton}
       <Dialog
         isOpen={showContractDialog}
         onClose={() => setShowContractDialog(false)}>
-        <Contract eventId={eventId}></Contract>
+        <Contract
+          eventId={eventId}
+          callbackContractFunction={callbackContractFunction}></Contract>
         <ContractModal>
           <div className='row '>
             <div className='label col-3'></div>
