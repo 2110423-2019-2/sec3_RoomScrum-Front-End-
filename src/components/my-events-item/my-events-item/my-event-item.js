@@ -284,7 +284,7 @@ const MyEventItem = ({ each, onClick }) => {
       </Route>
     </Switch>   */}
 
-      <div className='row'>
+      <div className='float-right margin-right-2'>
         {/* <Edit event={each} />
         <Applicants eventId={eventId} />
         <button variant='secondary' onClick={() => onClick(eventId)}>
