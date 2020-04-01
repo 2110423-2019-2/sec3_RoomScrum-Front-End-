@@ -25,3 +25,6 @@ const MyReviewsItem = ({ each }) => {
   };
   
   export default MyReviewsItem;
+
+  //to be mapped with Review List
+  //Get Review List by GET: /review/of-user/${hirerID}
