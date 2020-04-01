@@ -4,6 +4,48 @@ import request from 'superagent';
 import config from 'src/config';
 import { Button } from 'src/components/common';
 
+const InputField = React.forwardRef(
+  ({ name, type, place, isTextarea }, ref) => {
+    const [value, setValue] = useState(place);
+    const handleChange = event => {
+      setValue(event.target.value);
+    };
+
+    if (ref) {
+      ref.current = value;
+    }
+
+    if (isTextarea) {
+      return (
+        <div className='form-group row'>
+          <div className='col-sm-12'>
+            <textarea
+              type={type}
+              value={value}
+              onChange={handleChange}
+              className={'form-control '}
+              id={name}
+            />
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className='form-group row'>
+        <div className='col-sm-12'>
+          <input
+            type={type}
+            value={value}
+            onChange={handleChange}
+            className={'form-control '}
+            id={name}
+          />
+        </div>
+      </div>
+    );
+  }
+);
+
 const ContractModal = styled.div`
   background-color: #fcfcfc;
   overflow: scroll;
@@ -22,14 +64,8 @@ const ContractModal = styled.div`
     cursor: pointer;
   }
   textarea {
-    /* min-width: 900px; */
-    /* width: 100%;
-    max-width: 500px; */
     min-height: 400px;
-    /* font-family: Arial, sans-serif; */
-    /* font-size: 16px; */
     overflow: hidden;
-    /* line-height: 1.4; */
   }
 `;
 const ContractEditForm = ({ eventId }) => {
@@ -48,12 +84,6 @@ const ContractEditForm = ({ eventId }) => {
   //oil-flatten contract ที่ get มา todo-start
   const { status, eventName, hirer, hiree, budget, descritpion } = contract;
   //oil-flatten contract ที่ get มา todo-end
-
-  //
-  // useEffect(() => {
-  //   let val = callbackContractFunction(contract);
-  // }, [callbackContractFunction]);
-  //
 
   const [eventInfo, setEventInfo] = useState();
   const [isFetch, setIsFetch] = useState(false);
@@ -83,6 +113,7 @@ const ContractEditForm = ({ eventId }) => {
   //
   const budgetInput = useRef();
   const detailInput = useRef();
+
   //
   return (
     <div>
@@ -110,19 +141,17 @@ const ContractEditForm = ({ eventId }) => {
         <div className='row'>
           <div className='label col-3'>Budget</div>
           <div className='col-9'>
-            <input className='form-control' type='text' value={budget} />
+            <InputField name='budget' text={budget} place={budget} />
           </div>
         </div>
         <div className='row '>
           <div className='label col-3'>Detail</div>
-          {/**
-            <div className='col-9'>{descritpion}</div>
-         */}
           <div className='col-9'>
-            <textarea
-              className='form-control'
-              type='text'
-              value={descritpion}
+            <InputField
+              name='detail'
+              text={budget}
+              place={descritpion}
+              isTextarea
             />
           </div>
         </div>
