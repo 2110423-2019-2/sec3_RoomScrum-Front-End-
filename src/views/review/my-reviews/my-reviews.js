@@ -5,7 +5,7 @@ import request from "superagent";
 import config from "src/config";
 import {MyReviewsItem} from "src/components/my-reviews-item";
 
-const MyReviews = () => {
+const MyReviews = (hirerID) => {
 
     const [isFetch, setIsFetch] = useState(false);
     const [myReviewsList, setMyReviewsList] = useState([]);
@@ -27,7 +27,7 @@ const MyReviews = () => {
   
     if (!isFetch) {
       request
-      .post(`${config.API_URL}/events/find-my-event`)
+      .post(`${config.API_URL}/review/of-user/${hirerID}`)
       .withCredentials()
       .then(res => {
         setIsFetch(true);

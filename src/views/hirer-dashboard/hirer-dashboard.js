@@ -50,7 +50,7 @@ const HirerDashboard = () => {
         }
         request
           .post(`${config.API_URL}/events/cancel/${eventId}`)
-          // .withCredentials()
+          .withCredentials()
           .send(eventId)
           .then(() => {
             window.location.href = "/hirer/event";
