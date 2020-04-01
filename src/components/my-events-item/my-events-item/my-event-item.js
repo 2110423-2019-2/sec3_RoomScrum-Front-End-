@@ -263,6 +263,7 @@ const MyEventItem = ({ each, onClick }) => {
         <div>
           <p1 className='card-body'> {province} </p1>
         </div>
+        <div className='row'>
         <button onClick={() => onClick(eventId)}> Cancel </button>
          {/* <EventInfoModal
           eventName={eventName}
@@ -293,6 +294,8 @@ const MyEventItem = ({ each, onClick }) => {
         <ContractModal eventId={eventId} status={status} /> */}
         <CreateReview/>
       </div>
+        </div>
+        
     </div>
   );
 };
