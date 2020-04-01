@@ -257,13 +257,14 @@ const MyEventItem = ({ each, onClick }) => {
     <div  className='my-event-item' >
       <img className='responsive' src={eventImage} alt='Card image cap' />
       <div >
-        <MyEventInfo event = {each} />
+        <MyEventInfo event = {each}  />
         <div>
           <p1 className='card-body'> {district} </p1>
         </div>
         <div>
           <p1 className='card-body'> {province} </p1>
         </div>
+        <button onClick={() => onClick(eventId)}> Cancel </button>
          {/* <EventInfoModal
           eventName={eventName}
           description={description}

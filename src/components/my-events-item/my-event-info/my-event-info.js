@@ -10,7 +10,7 @@ import { Navbar } from 'src/components/common';
 import { ConfirmDialog } from 'src/components/common';
 import './my-event-info.scss';
 
-const MyEventInfo = ({ event }) => {
+const MyEventInfo = ({ event , doDelete}) => {
   const {
     eventId,
     eventName,
@@ -57,7 +57,7 @@ const MyEventInfo = ({ event }) => {
               alt='Card image cap'
             />
             <h6>Time</h6>
-            <p1>{event.startdatetime}</p1>
+            <p1>{event.startdatetime.substr(11,8)} {event.startdatetime.substr(0,10)} to {event.enddatetime.substr(11,8)} {event.enddatetime.substr(0,10)}</p1>
             <h6>Location</h6>
             <p1>
               {event.subdistrict} {event.district} {event.province}
@@ -65,6 +65,7 @@ const MyEventInfo = ({ event }) => {
             <h6>About</h6>
             <p1>{event.description}</p1>
             <Edit event={event} />
+            {/* <button onClick={() => doDelete(event.eventId)} > Cancel </button> */}
           </div>
           <div className='AppliedMusician col-5'>
             <Applicants eventId={event.eventId} />

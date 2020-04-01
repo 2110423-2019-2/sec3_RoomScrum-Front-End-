@@ -42,10 +42,10 @@ const HirerDashboard = () => {
       });
     }
 
-    const deleteItem =(eventId) => {
+    const deleteItem = (eventId) => {
         for(let i = 0; i < myEventList.length; i++){
             if (myEventList[i].eventId == eventId){
-              delete myEventList[i];
+              myEventList.splice(i,1);
             }
         }
         request
