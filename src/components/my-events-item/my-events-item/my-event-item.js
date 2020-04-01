@@ -292,7 +292,7 @@ const MyEventItem = ({ each, onClick }) => {
           Cancel
         </button>
         <ContractModal eventId={eventId} status={status} /> */}
-        <CreateReview hirerID = {userID}/>
+        <CreateReview eventId = {eventId}/>
       </div>
         </div>
         

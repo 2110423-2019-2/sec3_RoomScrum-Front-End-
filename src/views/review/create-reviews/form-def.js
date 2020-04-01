@@ -1,5 +1,5 @@
 export const formReview = {
-    review: {
+    description: {
         type: "textarea",
         label: "",
         width: "12",

@@ -27,8 +27,9 @@ const customStyles = {
     }
   };
 
-const CreateReview = () => {
+const CreateReview = ({eventId}) => {
     const formReviewData = useRef();
+    const [show, setShow] = useState(false);
     const [showAlert, setAlert] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const openModal = () => {
@@ -39,17 +40,23 @@ const CreateReview = () => {
     const closeModal = () => {
       setIsOpen(false);
     };
+    const handleClose = () => setIsOpen(false);
 
     const postData = () => {
         const data = {};
         for (let key in formReviewData.current) {
             data[key] = formReviewData.current[key].value;
         }
+        data["eventId"] = eventId;
         request
-        .post(`${config.API_URL}/events`)
+        .post(`${config.API_URL}/review`)
         .withCredentials()
         .send(data)
+        .then(() => {
+          window.location.href = "/hirer/event";
+        })
         .catch(err => console.log(err));
+        alert('foo')
     };
     
     return (
@@ -79,6 +86,7 @@ const CreateReview = () => {
                                 if (confirm) {
                     // callbackAction.current();
                                     postData();
+                                    handleClose();
                                 }
                             }}/>
                     </Modal>

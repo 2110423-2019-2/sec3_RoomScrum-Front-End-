@@ -49,7 +49,7 @@ const HirerDashboard = () => {
             }
         }
         request
-          .post(`${config.API_URL}/events/cancel/${eventId}`)
+          .get(`${config.API_URL}/events/cancel/${eventId}`)
           .withCredentials()
           .send(eventId)
           .then(() => {
