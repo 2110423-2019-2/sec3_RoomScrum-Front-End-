@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
-const Btn = styled.button`
+const BtnCancel = styled.button`
   margin-top: 32px;
   font-size: 16px;
   border: none;
@@ -15,14 +15,15 @@ const Btn = styled.button`
 `;
 
 const CancelContractButton = eventId => {
-  const onCancel = () => {
+  const cancelContract = () => {
     //cancel by event Id
+    alert(eventId);
   };
   return (
     <div>
-      <Btn className='btn' onclick={onCancel()}>
+      <BtnCancel className='btn'>
         <FontAwesomeIcon icon={faExclamationTriangle} /> cancel
-      </Btn>
+      </BtnCancel>
     </div>
   );
 };

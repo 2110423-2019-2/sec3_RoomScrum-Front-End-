@@ -14,6 +14,7 @@ import ContractEditForm from 'src/components/contract/contract-edit-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'src/components/common';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import CancelContractButton from 'src/components/contract/cancel-contract-button';
 import request from 'superagent';
 import config from 'src/config';
@@ -30,6 +31,17 @@ const Btn = styled.button`
     ${props => props.type == 'primary' && 'background-color:#559BE3'}
     ${props => props.type == 'secondary' && 'background-color:#939393'}
     ${props => props.type == 'danger' && 'background-color:#BA2B2B'};
+`;
+
+const BtnCancel = styled.button`
+  margin-top: 32px;
+  font-size: 16px;
+  border: none;
+  color: #939393;
+  padding: 0px;
+  .btn:hover {
+    color: #ba2b2b;
+  }
 `;
 
 const ContractModal = styled.div`
@@ -88,6 +100,7 @@ const HireeContract = ({ eventId, application }) => {
   const send = () => {
     request
       .get(`${config.API_URL}/contract/send/${eventId}`)
+      .withCredentials()
       .then(res => {
         console.log(res);
         alert('send complete');
@@ -98,6 +111,20 @@ const HireeContract = ({ eventId, application }) => {
       });
 
     // alert('send');
+  };
+
+  const cancelContract = () => {
+    request
+      .get(`${config.API_URL}/contract/cancel/${eventId}`)
+      .withCredentials()
+      .then(res => {
+        console.log(res);
+        alert('cancel complete');
+        setShowContractDialog(false);
+      })
+      .catch(err => {
+        alert(err);
+      });
   };
 
   return (
@@ -123,7 +150,9 @@ const HireeContract = ({ eventId, application }) => {
         <ContractModal>
           <div className='row '>
             <div className='label col-3'>
-              <CancelContractButton eventId={application.event.eventId} />
+              <BtnCancel className='btn' onClick={cancelContract}>
+                <FontAwesomeIcon icon={faExclamationTriangle} /> cancel
+              </BtnCancel>
             </div>
             <div className='col-9 grey'>
               <div className='d-flex flex-row-reverse'>

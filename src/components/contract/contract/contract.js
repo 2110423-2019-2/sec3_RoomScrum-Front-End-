@@ -39,6 +39,7 @@ const Contract = ({ eventId }) => {
     return new Promise((resolve, reject) => {
       request
         .get(`${config.API_URL}/contract/${eventId}`)
+        .withCredentials()
         .then(res => {
           setIsFetch(true);
           setContractInfo(res.body);
