@@ -15,6 +15,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'src/components/common';
 import CancelContractButton from 'src/components/contract/cancel-contract-button';
+import request from 'superagent';
+import config from 'src/config';
+
+const Btn = styled.button`
+  min-width: 120px;
+  height: 40px;
+  margin-top:22px;
+  margin-left: 22px;
+  font-size:20px;
+  border: none;
+  color:white;
+  background-color: #559be3;
+    ${props => props.type == 'primary' && 'background-color:#559BE3'}
+    ${props => props.type == 'secondary' && 'background-color:#939393'}
+    ${props => props.type == 'danger' && 'background-color:#BA2B2B'};
+`;
+
 const ContractModal = styled.div`
   background-color: #fcfcfc;
   overflow: scroll;
@@ -68,6 +85,21 @@ const HireeContract = ({ eventId, application }) => {
     return button;
   };
 
+  const send = () => {
+    request
+      .get(`${config.API_URL}/contract/${eventId}`)
+      .then(res => {
+        console.log(res);
+        alert('send complete');
+        setShowContractDialog(false);
+      })
+      .catch(err => {
+        alert(err);
+      });
+    console.log('send');
+    // alert('send');
+  };
+
   return (
     <div>
       {/**
@@ -81,8 +113,10 @@ const HireeContract = ({ eventId, application }) => {
         <ContractModal>
           <div className='row '>
             <div className='label col-3'></div>
-            <div className='col-9 grey' onClick={edit} onClick={edit}>
-              <FontAwesomeIcon icon={faEdit} /> Edit my Contract
+            <div className='col-9 grey'>
+              <div onClick={edit}>
+                <FontAwesomeIcon icon={faEdit} /> Edit my Contract
+              </div>
             </div>
           </div>
         </ContractModal>
@@ -91,9 +125,11 @@ const HireeContract = ({ eventId, application }) => {
             <div className='label col-3'>
               <CancelContractButton eventId={application.event.eventId} />
             </div>
-            <div className='col-9 grey' onClick={edit} onClick={edit}>
+            <div className='col-9 grey'>
               <div className='d-flex flex-row-reverse'>
-                <Button className='mr-auto' name='Send' type='primary'></Button>
+                <Btn type='primary' onClick={send}>
+                  send
+                </Btn>
               </div>
             </div>
           </div>
