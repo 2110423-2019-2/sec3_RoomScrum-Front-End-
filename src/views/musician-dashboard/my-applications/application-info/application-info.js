@@ -7,7 +7,8 @@ import moment from 'moment';
 import Image from 'react-image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { EventStatusIndicator, ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
+import { HireeEventStatusIndicator, ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
+import { AppliedEventAction } from '../../components';
 
 const TimeDisplay = ({ start, end }) => {
     return (
@@ -58,7 +59,7 @@ const ApplicationInfoDialog = ({ application, onClose, onCancel }) => {
                             <div className="desc">
                                 <div className="label"> Your status </div>
                                 <div className="value">
-                                    <EventStatusIndicator
+                                    <HireeEventStatusIndicator
                                         eventStatus={eventStatus}
                                         applicationStatus={applicationStatus}
                                     />
@@ -94,6 +95,9 @@ const ApplicationInfoDialog = ({ application, onClose, onCancel }) => {
                                 <div className="label"> About </div>
                                 <div className="value"> {description}</div>
                             </div>
+                            <AppliedEventAction
+                                application={application}
+                            />
                         </div>
                     );
                 })()

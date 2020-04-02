@@ -4,8 +4,10 @@ import { faArrowAltCircleUp } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import "./image-uploader.scss";
 
-const ImageUploader = ({ setImageFile, title }) => {
-  const [image, setImage] = useState(null);
+
+// setImageFile callback
+const ImageUploader = ({setImageFile, title, initialImage = null}) => {
+  const [image, setImage] = useState(initialImage);
   const uploadFileBtn = useRef();
 
   const clickUpload = () => {
