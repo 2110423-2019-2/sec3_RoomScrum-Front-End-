@@ -137,7 +137,7 @@ const fakeReview = {
 
 const UserReviewItem = ({review}) => {
     const {
-        reviewer: {firstName, lastName},
+        reviewers: {firstName, lastName},
         message,
         star,
     } = review;
@@ -155,16 +155,23 @@ const UserReviewItem = ({review}) => {
 // user's review ()
 const UserReviews = ({userId}) => {
     const [reviews, setReviews] = useState(null);
-    const isFetch = useRef(false);
+    const lastFetch = useRef(null);
 
     const fetchReviews = () => {
-        setReviews(Array(10).fill(0).map(() => {
-           return {...fakeReview};
-        }));
+        request.get(config.API_URL + `/review/of-user/${userId}`)
+        .withCredentials()
+        .then(res => {
+            console.log("Reviews ->", res.body);
+            setReviews(res.body);
+        })
+        .catch(err => {
+            alert("Error getting reviews", err.message);
+            console.error("Error getting review", err)
+        })
     }
 
-    if (!isFetch.current) {
-        isFetch.current = true;
+    if (userId && lastFetch.current != userId) {
+        lastFetch.current = userId;
         fetchReviews();
     }
 
