@@ -10,6 +10,8 @@ import Contract from 'src/components/contract/contract';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'src/components/common';
+import request from 'superagent';
+import config from 'src/config';
 
 const ContractModal = styled.div`
   background-color: #fcfcfc;
@@ -32,6 +34,19 @@ const ContractModal = styled.div`
     cursor: pointer;
   }
 `;
+const Btn = styled.button`
+  min-width: 120px;
+  height: 40px;
+  margin-top:22px;
+  margin-left: 22px;
+  font-size:20px;
+  border: none;
+  color:white;
+  background-color: #559be3;
+    ${props => props.type == 'primary' && 'background-color:#559BE3'}
+    ${props => props.type == 'secondary' && 'background-color:#939393'}
+    ${props => props.type == 'danger' && 'background-color:#BA2B2B'};
+`;
 
 const HirerContract = ({ eventId }) => {
   const [showContractDialog, setShowContractDialog] = useState(false);
@@ -42,8 +57,37 @@ const HirerContract = ({ eventId }) => {
     return <div></div>;
   };
 
-  const edit = () => {
-    alert('edit');
+  // const edit = () => {
+  //   alert('edit');
+  // };
+
+  const accept = () => {
+    request
+      .get(`${config.API_URL}/contract/accept/${eventId}`)
+      .then(res => {
+        console.log(res);
+        alert('accept complete');
+        setShowContractDialog(false);
+      })
+      .catch(err => {
+        alert(err);
+      });
+
+    alert('accept');
+  };
+  const reject = () => {
+    request
+      .get(`${config.API_URL}/contract/reject/${eventId}`)
+      .then(res => {
+        console.log(res);
+        alert('reject complete');
+        setShowContractDialog(false);
+      })
+      .catch(err => {
+        alert(err);
+      });
+
+    alert('reject');
   };
 
   return (
@@ -55,8 +99,12 @@ const HirerContract = ({ eventId }) => {
         <Contract eventId={eventId}></Contract>
         <ContractModal>
           <div className='d-flex flex-row-reverse'>
-            <Button className='mr-auto' name='accept' type='primary'></Button>
-            <Button name='reject' type='danger'></Button>
+            <Btn type='primary' onClick={accept}>
+              accept
+            </Btn>
+            <Btn type='danger' onClick={reject}>
+              reject
+            </Btn>
           </div>
         </ContractModal>
       </Dialog>
@@ -65,3 +113,5 @@ const HirerContract = ({ eventId }) => {
 };
 
 export default HirerContract;
+// <Button className='mr-auto' name='accept' type='primary'></Button>
+// <Button name='reject' type='danger'></Button>

@@ -17,6 +17,9 @@ import { HirerContract } from 'src/components/contract';
 //oil-ออยแอบเพิ่ม-end
 
 {/**oil-ออยแอบเพิ่ม-start*/}
+    <HirerContract
+          eventId={eventId}
+        </HirerContract>
 {/**oil-ออยแอบเพิ่ม-end*/}
 
 ---------------------------------------------------
@@ -54,4 +57,4 @@ import Contract from 'src/components/contract/contract';
 
         <Contract
           eventId={eventId}
-          callbackContractFunction={callbackContractFunction}></Contract>
+        </Contract>

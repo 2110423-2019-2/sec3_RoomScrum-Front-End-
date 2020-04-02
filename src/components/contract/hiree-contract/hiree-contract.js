@@ -87,7 +87,7 @@ const HireeContract = ({ eventId, application }) => {
 
   const send = () => {
     request
-      .get(`${config.API_URL}/contract/${eventId}`)
+      .get(`${config.API_URL}/contract/send/${eventId}`)
       .then(res => {
         console.log(res);
         alert('send complete');
@@ -96,7 +96,7 @@ const HireeContract = ({ eventId, application }) => {
       .catch(err => {
         alert(err);
       });
-    console.log('send');
+
     // alert('send');
   };
 

@@ -264,6 +264,10 @@ const MyEventItem = ({ each, onClick }) => {
         </div>
         <div className='row'>
           <button onClick={() => onClick(eventId)}> Cancel </button>
+          {/**oil-ออยแอบเพิ่ม-start*/}
+          <HirerContract eventId={eventId} />
+
+          {/**oil-ออยแอบเพิ่ม-end*/}
           {/* <EventInfoModal
           eventName={eventName}
           description={description}
