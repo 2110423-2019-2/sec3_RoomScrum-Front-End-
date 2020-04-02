@@ -5,53 +5,61 @@ import request from 'superagent';
 import config from 'src/config';
 import Applicants from 'src/views/hirer-dashboard/raw-applied-musicians';
 import Edit from 'src/views/hirer-dashboard/raw-edit-event';
+import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Navbar } from 'src/components/common';
+import MyEventInfo from 'src/components/my-events-item/my-event-info';
+import CreateReview from 'src/views/review/create-reviews';
+//oil-ออยแอบเพิ่ม-start
+import { HirerContract } from 'src/components/contract';
+//oil-ออยแอบเพิ่ม-end
 
-const EventInfoModal = ({
-  eventName,
-  description,
-  address,
-  subdistrict,
-  district,
-  province,
-  country,
-  zipcode,
-  startdatetime,
-  enddatetime,
-  status
-}) => {
-  const [show, setShow] = useState(false);
+// const EventInfoModal = ({
+//   eventName,
+//   description,
+//   address,
+//   subdistrict,
+//   district,
+//   province,
+//   country,
+//   zipcode,
+//   startdatetime,
+//   enddatetime,
+//   status
+// }) => {
+//   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+//   const handleClose = () => setShow(false);
 
-  const handleShow = () => setShow(true);
+//   const handleShow = () => setShow(true);
 
-  return (
-    <div>
-      <Modal show={handleShow} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Event Info</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>{eventName}</p>
-          <p>{description}</p>
-          <p>{address}</p>
-          <p>{subdistrict}</p>
-          <p>{district}</p>
-          <p>{province}</p>
-          <p>{country}</p>
-          <p>{zipcode}</p>
-          <p>{startdatetime}</p>
-          <p>{enddatetime}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <button variant='secondary' onClick={handleClose}>
-            Close
-          </button>
-        </Modal.Footer>
-      </Modal>
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <Modal show={handleShow} onHide={handleClose}>
+//         <Modal.Header closeButton>
+//           <Modal.Title>Event Info</Modal.Title>
+//         </Modal.Header>
+//         <Modal.Body>
+//           <p>{eventName}</p>
+//           <p>{description}</p>
+//           <p>{address}</p>
+//           <p>{subdistrict}</p>
+//           <p>{district}</p>
+//           <p>{province}</p>
+//           <p>{country}</p>
+//           <p>{zipcode}</p>
+//           <p>{startdatetime}</p>
+//           <p>{enddatetime}</p>
+//         </Modal.Body>
+//         <Modal.Footer>
+//           <button variant='secondary' onClick={handleClose}>
+//             Close
+//           </button>
+//         </Modal.Footer>
+//       </Modal>
+//     </div>
+//   );
+// };
 
 // const ContractModal = ({ eventId }) => {
 //   // alert(eventId);
@@ -244,14 +252,23 @@ const MyEventItem = ({ each, onClick }) => {
     userId
   } = each;
   return (
-    <div className='card event-item' style={{ width: 250 }}>
-      <img className='card-img-top' src={eventImage} alt='Card image cap' />
-      <div className='card-body'>
-        <h5 className='card-title' onClick={EventInfoModal}>
-          {eventName}{' '}
-        </h5>
+    <div className='my-event-item'>
+      <img className='responsive' src={eventImage} alt='Card image cap' />
+      <div>
+        <MyEventInfo event={each} />
+        <div>
+          <p1 className='card-body'> {district} </p1>
+        </div>
+        <div>
+          <p1 className='card-body'> {province} </p1>
+        </div>
+        <div className='row'>
+          <button onClick={() => onClick(eventId)}> Cancel </button>
+          {/**oil-ออยแอบเพิ่ม-start*/}
+          <HirerContract eventId={eventId} />
 
-        <EventInfoModal
+          {/**oil-ออยแอบเพิ่ม-end*/}
+          {/* <EventInfoModal
           eventName={eventName}
           description={description}
           address={address}
@@ -263,15 +280,23 @@ const MyEventItem = ({ each, onClick }) => {
           startdatetime={startdatetime}
           enddatetime={enddatetime}
           status={status}
-        />
-      </div>
-      <div className='row'>
-        <Edit event={each} />
+        /> */}
+        </div>
+        {/* <Switch>
+      <Route exact path="/hirer/event/eventinfo">
+        <MyEventInfo event = {each} />
+      </Route>
+    </Switch>   */}
+
+        <div className='float-right margin-right-2'>
+          {/* <Edit event={each} />
         <Applicants eventId={eventId} />
         <button variant='secondary' onClick={() => onClick(eventId)}>
           Cancel
         </button>
-        <ContractModal eventId={eventId} status={status} />
+        <ContractModal eventId={eventId} status={status} /> */}
+          <CreateReview eventId={eventId} />
+        </div>
       </div>
     </div>
   );

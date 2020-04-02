@@ -3,6 +3,7 @@ import { useRouteMatch } from "react-router-dom";
 import "./event.scss";
 import request from "superagent";
 import config from "src/config";
+import HirerDashboard from "src/views/hirer-dashboard/hirer-dashboard"
 
 export default () => {
   // const match = useRouteMatch();
@@ -31,6 +32,7 @@ export default () => {
   // };
   return (
     <div> 
+      <HirerDashboard/>
     </div>
   );
 };

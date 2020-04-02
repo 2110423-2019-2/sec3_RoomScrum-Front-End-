@@ -1,9 +1,26 @@
-.event-item {
-    margin: 0.1rem;
+.applied-musician-item { 
+        margin-top: 10px;
+        width: 500px;
+        height: 100px;
+        border: 1px solid blue;
+        padding: 5px;
+        background-color: darkgray;
+        float: right;
+    
 
     .card-text {
         font-size: 1rem;
         line-height: 70%;
+        padding: 5px;
+    }
+    .responsive {
+        padding: 0 6px;
+        float: left;
+        width: 25%;
+    }
+    .button {
+        margin-left: 30px;
+        // float: right;
     }
 
 }

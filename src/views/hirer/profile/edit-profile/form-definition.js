@@ -15,38 +15,6 @@ const Required = msg => value => {
 };
 
 export const userFormDef = {
-  // username: {
-  //   type: "text",
-  //   label: "Username",
-  //   validator: [
-  //     value => {
-  //       const usernameRegex = /^[a-z0-9_-]{3,15}$/;
-  //       if (!value) return "Enter Username";
-  //       if (value.length < 3) return "Must be at least 3 characters";
-  //       if (value.length > 15) return "Must be at most 15 characters";
-  //       if (!usernameRegex.test(value))
-  //         return "Must contain only A-Z a-z 0-9 _ -";
-  //     }
-  //   ]
-  // },
-  // password: {
-  //   type: "password",
-  //   label: "Password",
-  //   width: "sm-6",
-  //   validator: [MinLength(8)]
-  // },
-  // confirmPassword: {
-  //   type: "password",
-  //   label: "Confirm Password",
-  //   width: "sm-6",
-  //   ignore: true,
-  //   validator: [
-  //     (value, form) => {
-  //       if (form["password"].value !== value) return "must match password";
-  //       else if (!value) return " ";
-  //     }
-  //   ]
-  // },
   firstName: {
     type: "text",
     label: "First Name",
@@ -141,16 +109,6 @@ export const userFormDef = {
     width: "sm-4",
     validator: [MatchRegex(/^[0-9]{5}$/)]
   },
-  // userType: {
-  //   type: "options",
-  //   label: "I'm Regsitering as ...",
-  //   default: "H",
-  //   choice: [
-  //     { display: "Hiree", value: "H" },
-  //     { display: "Musician", value: "M" }
-  //   ],
-  //   width: "sm-6"
-  // }
 };
 
 export const musicianFormDef = {

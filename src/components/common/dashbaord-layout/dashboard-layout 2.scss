@@ -1,0 +1,19 @@
+.dashboard-layout {
+    position: relative;
+    height: 100%;
+    max-height: 100%;
+    overflow: auto;
+
+    .left-nav {
+        position: relative;
+        align-self: flex-start;
+        width: 304px;
+    }
+    
+    .stretch {
+        max-height: 100%;
+        overflow: auto;
+        position: relative;
+        align-self: stretch;
+    }
+}

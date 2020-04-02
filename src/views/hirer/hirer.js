@@ -39,8 +39,7 @@ export default () => {
       <Navbar />
       <DashboardLayout>
         <DashboardNavigation>
-          <SideNavigation
-          />
+          <SideNavigation />
         </DashboardNavigation>
         <DashboardContent>
           <Switch>
