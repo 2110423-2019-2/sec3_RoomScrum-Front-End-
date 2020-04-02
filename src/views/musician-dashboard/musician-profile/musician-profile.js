@@ -119,26 +119,6 @@ const MusicianVideo = ({ musician: {videoUrl} }) => {
                         ></iframe>
                     </div>
                 </div>
-                {/* <div className="yt-wrapper">
-                    <div className="yt-container">
-                        <iframe
-                            src="https://www.youtube.com/embed/KU4qOebhkfs"
-                            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                            className="yt-vid"
-                        ></iframe>
-                    </div>
-                </div>
-                <div className="yt-wrapper">
-                    <div className="yt-container">
-                        <iframe
-                            src="https://www.youtube.com/embed/KU4qOebhkfs"
-                            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                            className="yt-vid"
-                        ></iframe>
-                    </div>
-                </div> */}
             </div>
         </div>
     )

@@ -57,7 +57,7 @@ const EditProfileDialog = ({userId, onClose, changeCallback}) => {
             })
         }
 
-        await request.post(config.API_URL + `/user/update/${userId}`)
+        await request.post(config.API_URL + `/user/update`)
         .withCredentials()
         .send(newProfileData)
         .then(() => {

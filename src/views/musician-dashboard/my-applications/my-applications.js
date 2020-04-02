@@ -196,7 +196,16 @@ const MyApplications = () => {
     const acceptPayment = (confirmed) => {
         setShowAcceptPaymentDialog(false);
         if (!confirmed) return;
-        alert("Fake accept payment " + targetEvent.current + " success");
+        request.get(config.API_URL + '/events/receive-payment/' + targetEvent.current)
+        .withCredentials()
+        .then(res => {
+            alert("Receive payment OK");
+            fetchApplications();
+        })
+        .catch(err => {
+            alert("Receive payment Error");
+            console.error("Receive payment Error", err);
+        })
     }
 
     const showApplicationPopup = (application) => {
