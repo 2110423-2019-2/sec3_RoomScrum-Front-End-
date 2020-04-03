@@ -11,6 +11,7 @@ import { calculateHireeEventColor, calculateHireeEventStatus } from 'src/compone
 import styled from 'styled-components';
 import Dialog from 'src/components/common/dialog';
 import ApplicationInfoDialog from '../my-applications/application-info';
+import { calculateEventEmoji, calculateEventColor } from './colors';
 
 
 const LegendBlock = styled.div`
@@ -21,11 +22,22 @@ const LegendBlock = styled.div`
     background-color: ${props => props.color}
 `
 
+// should match calendar.scss color !
+const colorMap = {
+    red: "#ea9999",
+    yellow: "#ffd966",
+    orange: "#f6b26b",
+    green: "#b6d7a8",
+    blue: "#9fc5e8",
+    grey: "#b7b7b7",
+};
+
+
 const LegendEntry = ({color, label}) => {
     return (
         <div className="legend-entry">
-            <LegendBlock color={color}/>
-            <span className="label"> {label} </span>
+            <LegendBlock color={colorMap[color] || color}/>
+            <span className="label event-"> {label} </span>
         </div>
     )
 }
@@ -33,6 +45,13 @@ const LegendEntry = ({color, label}) => {
 const OverlayDiv = () => {
     return <div style="color: red;"> Overlay div </div>
 }
+
+const LEGENDS = {
+    "orange": "Waiting for your action",
+    "yellow": "Waiting for hirer's action",
+    "green": "Completed",
+    "red": "Cancelled",
+};
 
 
 const CalendarPage = () => {
@@ -59,11 +78,11 @@ const CalendarPage = () => {
                     }
                 } = appl;
                 return {
-                    title: `[${calculateHireeEventStatus(eventStatus, applicationStatus)}] ${title}`,
+                    title: `[${calculateEventEmoji(eventStatus, applicationStatus, "<contractStatus>")}] ${title}`,
                     start,
                     end,
-                    backgroundColor: calculateHireeEventColor(eventStatus, applicationStatus),
-                    textColor: 'white',
+                    textColor: 'black',
+                    borderColor: 'transparent',
                     extendedProps: {
                         data: appl,
                     }
@@ -95,7 +114,19 @@ const CalendarPage = () => {
                     events={events}
                     eventRender={({el, event}) => {
                         console.log("render", {el, event});
-                        el.classList.add("hover-pointer")
+                        el.classList.add("event-item")
+
+
+                        // destructure both statuses
+                        const {
+                            status: applicationStatus,
+                            event: {
+                                status: eventStatus,
+                            }
+                        } = event.extendedProps.data;
+                        el.classList.add("event-" + calculateEventColor(eventStatus, applicationStatus, "<contractStatus>"));
+                        console.log("color is", calculateEventColor(eventStatus, applicationStatus, "<contractStatus>"));
+                        console.dir(el);
                         el.onclick = () => {
                             setShowEventDialog(true);
                             setShownEvent(event.extendedProps.data);
@@ -104,11 +135,12 @@ const CalendarPage = () => {
                 />
             </div>
             <div className="legends">
-                <div className="title"> legends </div>
-                <LegendEntry color="#affa00" label="test"/>
-                <LegendEntry color="#affa00"  label="test"/>
-                <LegendEntry color="#affa00" label="test"/>
-                <LegendEntry color="#affa00" label="test"/>
+                <div className="title"> Legends </div>
+                {
+                    Object.keys(LEGENDS).map(color => {
+                        return <LegendEntry color={color} label={LEGENDS[color]}/>
+                    })
+                }
             </div>
             <Dialog isOpen={showEventDialog} onClose={closeEventDialog}>
                 {
