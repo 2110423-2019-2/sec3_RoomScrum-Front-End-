@@ -1,9 +1,27 @@
 .my-event-item {
     margin: 0.1rem;
+    width: 1000px;
+    height: 200px;
+    border: 1px solid blue;
 
-    .card-text {
-        font-size: 1rem;
-        line-height: 70%;
+    .card-title{
+        font-size: 30px;
+        padding-left: 230px;
     }
 
+    .card-body{
+        font-size: 15px;
+        text-align: left;
+        line-height: 30px;
+    }
+
+    .responsive {
+        padding: 0 6px;
+        float: left;
+        width: 20%;
+    }
+
+.my-event-info {
+    background-color: white;
+}
 }

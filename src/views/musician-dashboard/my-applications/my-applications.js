@@ -13,6 +13,7 @@ import { sortByTimestampDesc } from '../util';
 import { ApplicationStatus, EventStatus } from 'src/enums';
 import { AppliedEventAction } from '../components';
 import PaymentQRDialog from 'src/components/payment';
+import { HireeContract } from 'src/components/contract';
 
 
 
@@ -88,7 +89,8 @@ const AppliedEventItem = ({
                     <div className="label"> Contract Status </div>
                     <div className="value">
                         {/** TODO */}
-                        <ContractStatusIndicator contractStatus={"TODO"} />
+                        <HireeContract eventId={eventId} application={application} />
+                          <ContractStatusIndicator contractStatus={"TODO"} />
                     </div>
                 </div>
                 <div className="desc">
@@ -123,8 +125,8 @@ const AppliedEventItem = ({
                 <div className="currency"> baht </div>
             </div>
         </div>
-    )
-}
+  );
+};
 
 const fakePaymentInfo = {accountNo: "1234567890123", amount: "123.33", name: "road"};
 
@@ -144,21 +146,32 @@ const MyApplications = () => {
         accountNo, amount, name
     } = qrData;
 
+  const fetchApplications = () => {
+    request
+      .post(config.API_URL + '/application/my-application') // get my applications, with event detail
+      .send({
+        status: [
+          ApplicationStatus.APPLICATION_REJECTED,
+          ApplicationStatus.IS_ACCEPTED,
+          ApplicationStatus.IS_APPLIED
+        ]
+      })
+      .withCredentials()
+      .then(res => {
+        const applications = res.body;
+        applications.sort(sortByTimestampDesc);
+        setApplications(applications);
+      })
+      .catch(err => {
+        alert('Error getting applied events ');
+        console.error('Error: Fetch applied events');
+      });
+  };
 
-    const fetchApplications = () => {
-        request.post(config.API_URL + '/application/my-application') // get my applications, with event detail
-            .send({status: [ApplicationStatus.APPLICATION_REJECTED, ApplicationStatus.IS_ACCEPTED, ApplicationStatus.IS_APPLIED]})
-            .withCredentials()
-            .then(res => {
-                const applications = res.body;
-                applications.sort(sortByTimestampDesc)
-                setApplications(applications);
-            })
-            .catch(err => {
-                alert("Error getting applied events ");
-                console.error("Error: Fetch applied events");
-            })
-    };
+  if (!isFetch.current) {
+    isFetch.current = true;
+    fetchApplications();
+  }
 
     if (!isFetch.current) {
         isFetch.current = true;
@@ -219,8 +232,6 @@ const MyApplications = () => {
         setShowQRDialog(true);
         setQrData(paymentInfo);
     }
-
-
 
     return (
         <div className="band-invitations">

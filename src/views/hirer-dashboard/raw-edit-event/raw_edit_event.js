@@ -1,5 +1,5 @@
 import React, { useRef, useState, useReducer } from "react";
-// import "./create-event.scss";
+import "./raw_edit_event.scss";
 import { Navbar, Form } from "src/components/common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleUp } from "@fortawesome/free-solid-svg-icons";
@@ -77,7 +77,7 @@ const Edit = ({ event }) => {
 
   return (
     <div>
-      <button variant="primary" onClick={openModal}>
+      <button classname='button' variant="primary" onClick={openModal}>
         Edit
       </button>
 

@@ -4,12 +4,13 @@ import "./profile.scss";
 import request from "superagent";
 import config from "src/config";
 import { userFormDef } from "src/views/register/form-definition";
-
+import Modal from "react-modal";
+import { Link } from 'react-router-dom';
 export default () => {
   const isFetch = useRef(false);
   const [user, setUser] = useState({});
   const [profileImageFile, setProfileImageFile] = useState({});
-
+  const report = async () => {};
   if (!isFetch.current) {
     isFetch.current = true;
     
@@ -33,9 +34,9 @@ export default () => {
       console.error(err);
     })
   }
-  let {username, firstName, lastName, email, phoneNumber, gender, birthdate, address, subdistrict, district, cityState, country, zipcode,profileImage } = user;
+  let {username, firstName, lastName, email, phoneNumber, gender, birthdate, address, subdistrict, district, cityState, country, zipcode,profileImage,bio} = user;
   console.log({profileImageFile})
-
+  
   if(gender==1) {
     gender = "Male"
   } else if(gender==2) {
@@ -44,108 +45,71 @@ export default () => {
     gender="Other"
   }
   return (
-    <div className="container view-profile">
-      <div className="row pt-4 pl-5">
-        <div className="col-sm-6">
-          <div className="row pb-4">
-            <div className="col-sm-3">
-              Username
-        </div>
-            <div className="col-sm-8 border">
-              {username}
-        </div>
-            <div className="col-sm-1">
-            </div>
-          </div>
-          <div className="row pb-4">
-            <div className="col-sm-3">
-              First Name
-        </div>
-            <div className="col-sm-8 border">
-              {firstName}
-        </div>
-            <div className="col-sm-1">
-            </div>
-          </div>
-          <div className="row pb-4">
-            <div className="col-sm-3">
-              Last Name
-        </div>
-            <div className="col-sm-8 border">
-              {lastName}
-        </div>
-            <div className="col-sm-1">
-            </div>
-          </div>
-          <div className="row pb-4">
-            <div className="col-sm-3">
-              Email
-        </div>
-            <div className="col-sm-8 border">
-              {email}
-        </div>
-            <div className="col-sm-1">
-            </div>
-          </div>
-          <div className="row pb-4">
-            <div className="col-sm-3">
-              Phone Number
-        </div>
-            <div className="col-sm-8 border">
-              {phoneNumber}
-        </div>
-            <div className="col-sm-1">
-            </div>
-          </div>
-          <div className="row pb-4">
-            <div className="col-sm-3">
-              Gender
-        </div>
-            <div className="col-sm-8 border">
-             {gender}
-        </div>
-            <div className="col-sm-1">
-            </div>
-          </div>
-          <div className="row pb-4">
-            <div className="col-sm-3">
-              Birth of Date
-        </div>
-            <div className="col-sm-8 border">
-              {birthdate}
-        </div>
-            <div className="col-sm-1">
-            </div>
-          </div>
-        </div>
+      <div className="container view-profile">
+        <div className="row high">
+          <div className="col-md-6">
 
-        <div className="col-sm-6">
-          <div className="row pic pb-4">
-            <div className="col-sm-5"></div>
-            <div className="img col-sm-3 border">
-              <img src = {profileImageFile}/>
-            </div>
-            <div className="col-sm-4"></div>
-          </div>
-          <div className="row">
-            <div className="col-sm-3">
-              Address
-        </div>
-            <div className="col-sm-8">
-              <div className="address">
-                {address + ", " + subdistrict + ", " + district + ", " + cityState + ", " + country + ", " + zipcode}
+            <div className="row">
+              <div className="col-md-12 text-primary text-center pt-3 size font-weight-bold">
+                {firstName+" "+lastName}
               </div>
             </div>
-            <div className="col-sm-1 ">
+
+            <div className="row">
+              <div className="col-md-12 text-primary text-center pt-3">
+                 {"@"+username}
+              </div>
             </div>
+            
+            <div className="row pt-4">
+              <div className="col-sm-12 text-center">
+                <img src = {profileImageFile} class="img-circle" width="250" height="250"/>
+              </div>
+            </div>
+            
+            <div className="row pt-4 font-weight-bold pl-5 textcolor">
+              Birthdate
+            </div>
+            
+            <div className="row pt-2 pl-5 textcolor">
+              {birthdate}
+            </div>
+
+            <div className="row pt-2 font-weight-bold pl-5 textcolor">
+              Location
+            </div>
+            
+            <div className="row pt-2 pl-5 textcolor">
+              {subdistrict+","+district+","+cityState+","+country}
+            </div>
+
+            <div className="row pt-2 font-weight-bold pl-5 textcolor">
+              About
+            </div>
+            
+            <div className="row pt-2 pl-5 pr-5 textcolor">
+              {bio}
+            </div>
+
+            <div className="row pt-2 pl-5 textcolor">
+              <Link className='text-blue' onClick={()=>{window.location.href = './edit'}}>
+                Edit my profile
+              </Link>
+            </div> 
           </div>
 
+
+          <div className="col-md-6 bg-info">
+            <div className="row pt-4 pl-5 text-dark">
+              Review
+            </div>
+            <div className="row pt-4 pl-5 text-dark">
+              {/* waiting for review process */}
+            </div>
+          </div>
         </div>
       </div>
-      <button className='posit'
-      onClick={()=>{window.location.href = './edit'}}>
-          Edit
-        </button>
-    </div>
+
   );
 };
+
