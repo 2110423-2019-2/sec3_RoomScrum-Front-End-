@@ -124,17 +124,6 @@ const MusicianVideo = ({ musician: {videoUrl} }) => {
     )
 }
 
-
-const fakeReview = {
-    reviewer: {
-        firstName: "John",
-        lastName: "Doge",
-    },
-    message: "lorem ipsum asdjwqkejfeal",
-    star: 5,
-};
-
-
 const UserReviewItem = ({review}) => {
     const {
         reviewers: {firstName, lastName},
