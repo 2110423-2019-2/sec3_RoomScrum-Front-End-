@@ -2,6 +2,7 @@ import React from 'react';
 import { EventStatus, ApplicationStatus } from 'src/enums';
 import { Button } from 'src/components/common';
 import './applied-event-action.scss';
+import { CompleteEventButton } from 'src/components/action-buttons';
 
 // Hiree side
 const AppliedEventAction = ({application, onWithdraw, onCancel, onAcceptPayment, onClickPay}) => {
@@ -25,6 +26,12 @@ const AppliedEventAction = ({application, onWithdraw, onCancel, onAcceptPayment,
                 // test Hirer event action
                 <Button type="primary" name="[test] Pay" onClick={onClickPay}/>
             }
+            <CompleteEventButton
+                className="parent"
+                eventId={application.eventId}
+                onFail={() => alert("Extra fail")}
+                onSuccess={() => alert("Extra success")}
+            />
         </div>
     )
 };

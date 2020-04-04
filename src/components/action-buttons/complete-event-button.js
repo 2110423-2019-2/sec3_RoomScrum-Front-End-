@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ConfirmButton } from './base/confirm-button';
 import request from 'superagent';
 import config from 'src/config';
+import { Button } from 'src/components/common';
 
 // logic wrapper for complete event, you need to supply the children
 
@@ -26,7 +27,7 @@ const CompleteEventButton = ({children, className, eventId, onSuccess, onFail}) 
     }
     
     return <ConfirmButton
-        children={children}
+        children={children || <Button name="Complete Event" type="primary"/>} // default button
         action={completeEvent}
         className={className}
         title={"Confirmation"}

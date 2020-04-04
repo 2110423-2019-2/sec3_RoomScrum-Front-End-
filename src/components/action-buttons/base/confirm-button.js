@@ -17,11 +17,11 @@ export const ConfirmButton = ({
 
     return (
         <>
-            <div className={className} onClick={(evt) => {
+            <span className={className} onClick={(evt) => {
                 setShowDialog(true);
             }}>
                 {children}
-            </div>
+            </span>
             <Dialog isOpen={showDialog} onClose={() => setShowDialog(false)}>
                 <ConfirmDialog
                     callback={dialogCallback}

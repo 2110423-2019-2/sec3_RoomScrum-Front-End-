@@ -248,14 +248,6 @@ const MyApplications = () => {
                             onAcceptPayment={() => confirmAcceptPaymentOf(application.eventId)}
                             onClickPay={() => showPromptPayDialog(fakePaymentInfo)}
                         />
-                        <CompleteEventButton
-                             className="parent"
-                             eventId={application.eventId}
-                             onFail={() => alert("Extra fail")}
-                             onSuccess={() => alert("Extra success")}
-                        >
-                            <div className="child" key="foo"> alert </div>
-                        </CompleteEventButton>
                     </>
                 ))
             }
