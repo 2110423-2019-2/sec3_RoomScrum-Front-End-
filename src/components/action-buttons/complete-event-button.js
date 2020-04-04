@@ -13,7 +13,7 @@ const CompleteEventButton = ({children, className, eventId, onSuccess, onFail}) 
             .withCredentials()
             .then(res => {
                 alert("Completed Event OK");
-                onSuccess(res);
+                onSuccess && onSuccess(res);
             })
             .catch(err => {
                 alert("Error: Completing Event");
@@ -22,12 +22,12 @@ const CompleteEventButton = ({children, className, eventId, onSuccess, onFail}) 
                 console.error(err);
                 console.groupEnd();
 
-                onFail(err);
+                onFail && onFail(err);
             })
     }
     
     return <ConfirmButton
-        children={children || <Button name="Complete Event" type="primary"/>} // default button
+        children={children || <Button type="primary" name="Complete Event"/>} // default button
         action={completeEvent}
         className={className}
         title={"Confirmation"}
