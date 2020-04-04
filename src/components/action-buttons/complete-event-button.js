@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ConfirmButton } from './base/confirm-button';
 import request from 'superagent';
 import config from 'src/config';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Dialog from 'src/components/common/dialog';
 import ConfirmDialog from 'src/components/common/confirm-dialog-v2';
 
@@ -7,25 +7,28 @@ export const ConfirmButton = ({
         className, children,
         question, title, action,
 }) => {
-    // dialog state
-    const [isOpen, setOpen] = useState(false);
+    const [showDialog, setShowDialog] = useState(false);
 
     const dialogCallback = (isConfirmed) => {
-        setOpen(false);
+        setShowDialog(false);
         if (!isConfirmed) return;
         action();
     } 
 
     return (
-        <div className={className} onClick={() => setOpen(true)}>
-            {children} 
-            <Dialog isOpen={isOpen} onClose={() => setOpen(false)}>
+        <>
+            <div className={className} onClick={(evt) => {
+                setShowDialog(true);
+            }}>
+                {children}
+            </div>
+            <Dialog isOpen={showDialog} onClose={() => setShowDialog(false)}>
                 <ConfirmDialog
                     callback={dialogCallback}
                     question={question}
                     title={title}
                 />
             </Dialog>
-        </div>
+        </>
     )
 }

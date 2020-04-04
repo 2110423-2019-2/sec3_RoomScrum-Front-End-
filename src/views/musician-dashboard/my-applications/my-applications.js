@@ -14,6 +14,8 @@ import { ApplicationStatus, EventStatus } from 'src/enums';
 import { AppliedEventAction } from '../components';
 import PaymentQRDialog from 'src/components/payment';
 import { HireeContract } from 'src/components/contract';
+import { ConfirmButton } from 'src/components/action-buttons/base/confirm-button';
+import { CompleteEventButton } from 'src/components/action-buttons';
 
 
 
@@ -237,14 +239,24 @@ const MyApplications = () => {
         <div className="band-invitations">
             {
                 applications.map(application => (
-                    <AppliedEventItem
-                        application={application}
-                        onCancel={() => confirmCancelApplicationOf(application.eventId)}
-                        onSelectEvent={() => showApplicationPopup(application)}
-                        onWithdraw={() => confirmCancelApplicationOf(application.eventId)/* TODO: this should we different API but whatever */}
-                        onAcceptPayment={() => confirmAcceptPaymentOf(application.eventId)}
-                        onClickPay={() => showPromptPayDialog(fakePaymentInfo)}
-                    />
+                    <>
+                        <AppliedEventItem
+                            application={application}
+                            onCancel={() => confirmCancelApplicationOf(application.eventId)}
+                            onSelectEvent={() => showApplicationPopup(application)}
+                            onWithdraw={() => confirmCancelApplicationOf(application.eventId)/* TODO: this should we different API but whatever */}
+                            onAcceptPayment={() => confirmAcceptPaymentOf(application.eventId)}
+                            onClickPay={() => showPromptPayDialog(fakePaymentInfo)}
+                        />
+                        <CompleteEventButton
+                             className="parent"
+                             eventId={application.eventId}
+                             onFail={() => alert("Extra fail")}
+                             onSuccess={() => alert("Extra success")}
+                        >
+                            <div className="child" key="foo"> alert </div>
+                        </CompleteEventButton>
+                    </>
                 ))
             }
             <Dialog isOpen={showCancelDialog} onClose={() => setShowCancelDialog(false)}>
