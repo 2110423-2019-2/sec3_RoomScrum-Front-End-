@@ -1,1 +1,1 @@
-export { default as AppliedEventAction } from './applied-event-action';
+export { default as AppliedEventAction } from './musician-event-action';

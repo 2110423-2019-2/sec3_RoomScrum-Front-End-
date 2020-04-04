@@ -1,11 +1,11 @@
 import React from 'react';
 import { EventStatus, ApplicationStatus } from 'src/enums';
 import { Button } from 'src/components/common';
-import './applied-event-action.scss';
+import './musician-event-action.scss';
 import { CompleteEventButton } from 'src/components/action-buttons';
 
 // Hiree side
-const AppliedEventAction = ({application, onWithdraw, onCancel, onAcceptPayment, onClickPay}) => {
+const MusicianEventAction = ({application, onWithdraw, onCancel, onAcceptPayment, onClickPay}) => {
     const {
         status: applicationStatus,
         event: {
@@ -18,7 +18,7 @@ const AppliedEventAction = ({application, onWithdraw, onCancel, onAcceptPayment,
     const canAcceptPayment = eventStatus == EventStatus.PAYMENT_PENDING;
 
     return (
-        <div className="applied-event-actions">
+        <div className="musician-event-actions">
             {canAcceptPayment && <Button type="primary" name="Accept Payment" onClick={onAcceptPayment}/>}
             {canWithdraw && <Button type="danger" name="Withdraw" onClick={onWithdraw}/>}
             {canCancel && !canWithdraw && <Button type="danger" name="Cancel" onClick={onCancel}/>}
@@ -36,4 +36,4 @@ const AppliedEventAction = ({application, onWithdraw, onCancel, onAcceptPayment,
     )
 };
 
-export default AppliedEventAction;
+export default MusicianEventAction;
