@@ -16,12 +16,7 @@ import { ViewEventInfoButton } from 'src/components/action-buttons/view-event-in
 
 const AppliedEventItem = ({
     application, 
-    onSelectEvent,
-    // when click action buttons
-    onCancel, 
-    onWithdraw, // withdraw is same as cancel but w/o penalty 
-    onAcceptPayment,
-    onClickPay,
+    refreshCallback,    
 }) => {
     const {
         status: applicationStatus,
@@ -38,7 +33,6 @@ const AppliedEventItem = ({
             }
         }
     } = application;
-    console.log(application);
     return (
         <div className={
             classNames({
@@ -73,7 +67,7 @@ const AppliedEventItem = ({
             </div>
             <div className="event-info">
                 <ViewEventInfoButton application={application}>
-                    <div className="event-name" onClick={onSelectEvent}> {eventName} </div>
+                    <div className="event-name"> {eventName} </div>
                 </ViewEventInfoButton>
                 <div className="desc">
                     <div className="label"> Your status </div>
@@ -113,10 +107,8 @@ const AppliedEventItem = ({
                 </div>
                 <AppliedEventAction
                     application={application}
-                    onAcceptPayment={onAcceptPayment}
-                    onCancel={onCancel}
-                    onWithdraw={onWithdraw}
-                    onClickPay={onClickPay}
+                    debug={true}
+                    refreshCallback={refreshCallback}
                 />
             </div>
             <div className="price-tag">
@@ -127,20 +119,9 @@ const AppliedEventItem = ({
   );
 };
 
-const fakePaymentInfo = {accountNo: "1234567890123", amount: "123.33", name: "road"};
-
 const MyApplications = () => {
     const [applications, setApplications] = useState([]);
     const isFetch = useRef(false);
-    const [showInfoDialog, setShowInfoDialog] = useState(false);
-    const [applicationToShow, setApplicationToShow] = useState(null);
-    
-    const [showQRDialog, setShowQRDialog] = useState(false);
-    const [qrData, setQrData] = useState({});
-
-    const {
-        accountNo, amount, name
-    } = qrData;
 
   const fetchApplications = () => {
     request
@@ -169,18 +150,6 @@ const MyApplications = () => {
         fetchApplications();
     }
 
-    const showApplicationPopup = (application) => {
-        console.log("show application", application);
-        setApplicationToShow(application);
-        setShowInfoDialog(true);
-    };
-
-    // show and set data
-    const showPromptPayDialog = (paymentInfo) => {
-        setShowQRDialog(true);
-        setQrData(paymentInfo);
-    }
-
     return (
         <div className="band-invitations">
             {
@@ -188,6 +157,7 @@ const MyApplications = () => {
                     <>
                         <AppliedEventItem
                             application={application}
+                            refreshCallback={fetchApplications} // on success -> fetch appl.
                         />
                     </>
                 ))
