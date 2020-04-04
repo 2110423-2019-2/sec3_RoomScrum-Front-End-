@@ -7,7 +7,6 @@ import config from 'src/config';
 
 import './calendar.scss';
 import { ApplicationStatus, EventStatus } from 'src/enums';
-import { calculateHireeEventColor, calculateHireeEventStatus } from 'src/components/event-item/status-indicator/event-status';
 import styled from 'styled-components';
 import Dialog from 'src/components/common/dialog';
 import ApplicationInfoDialog from '../my-applications/application-info';
@@ -24,12 +23,12 @@ const LegendBlock = styled.div`
 
 // should match calendar.scss color !
 const colorMap = {
-    red: "#ea9999",
-    yellow: "#ffd966",
-    orange: "#f6b26b",
-    green: "#b6d7a8",
-    blue: "#9fc5e8",
-    grey: "#b7b7b7",
+    red: "#f0c7c7",
+    yellow: "#fce4a8",
+    orange: "#fce4a8",
+    green: "#d7e6bf",
+    blue: "#dff1f7",
+    grey: "#d7d7d7",
 };
 
 

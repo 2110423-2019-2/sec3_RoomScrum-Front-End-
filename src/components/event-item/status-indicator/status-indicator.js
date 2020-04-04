@@ -11,15 +11,15 @@ import { calculateContractColor, calculateContractStatus } from './contract-stat
 const toColor = (colorName) => {
     switch (colorName) {
         case "green":
-            return "#28A745";
+            return "#94bc53";
         case "yellow":
-            return "#FFC107";
+            return "#ecbf4d";
         case "grey":
-            return "#6C757D";
+            return "#adadad";
         case "red": 
-            return "#DC3545";
+            return "#c62727";
         case "blue": 
-            return "#007BFF";
+            return "#69bed9";
         default:
             return colorName;
     }
