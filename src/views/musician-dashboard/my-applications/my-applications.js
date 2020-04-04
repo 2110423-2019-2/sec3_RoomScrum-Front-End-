@@ -1,30 +1,22 @@
 import React, { useState, useRef } from 'react';
-import Dialog from 'src/components/common/dialog';
-import ConfirmDialog from 'src/components/common/confirm-dialog-v2';
 import Image from 'react-image';
 import classNames from 'classnames';
 
 import './my-applications.scss';
-import ApplicationInfo from './application-info';
 import request from 'superagent';
 import config from 'src/config';
 import { HireeEventStatusIndicator, PaymentStatusIndicator, ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
 import { sortByTimestampDesc } from '../util';
 import { ApplicationStatus, EventStatus } from 'src/enums';
 import { AppliedEventAction } from '../components';
-import PaymentQRDialog from 'src/components/payment';
 import { HireeContract } from 'src/components/contract';
+import { ViewEventInfoButton } from 'src/components/action-buttons/view-event-info-button';
 
 
 
 const AppliedEventItem = ({
     application, 
-    onSelectEvent,
-    // when click action buttons
-    onCancel, 
-    onWithdraw, // withdraw is same as cancel but w/o penalty 
-    onAcceptPayment,
-    onClickPay,
+    refreshCallback,    
 }) => {
     const {
         status: applicationStatus,
@@ -41,7 +33,6 @@ const AppliedEventItem = ({
             }
         }
     } = application;
-    console.log(application);
     return (
         <div className={
             classNames({
@@ -75,7 +66,9 @@ const AppliedEventItem = ({
                 </div>
             </div>
             <div className="event-info">
-                <div className="event-name" onClick={onSelectEvent}> {eventName} </div>
+                <ViewEventInfoButton application={application}>
+                    <div className="event-name"> {eventName} </div>
+                </ViewEventInfoButton>
                 <div className="desc">
                     <div className="label"> Your status </div>
                     <div className="value">
@@ -114,10 +107,8 @@ const AppliedEventItem = ({
                 </div>
                 <AppliedEventAction
                     application={application}
-                    onAcceptPayment={onAcceptPayment}
-                    onCancel={onCancel}
-                    onWithdraw={onWithdraw}
-                    onClickPay={onClickPay}
+                    debug={true}
+                    refreshCallback={refreshCallback}
                 />
             </div>
             <div className="price-tag">
@@ -128,23 +119,9 @@ const AppliedEventItem = ({
   );
 };
 
-const fakePaymentInfo = {accountNo: "1234567890123", amount: "123.33", name: "road"};
-
 const MyApplications = () => {
     const [applications, setApplications] = useState([]);
     const isFetch = useRef(false);
-    const targetEvent = useRef(null); // use Ref to prevent to many state
-    const [showCancelDialog, setShowCancelDialog] = useState(false);
-    const [showAcceptPaymentDialog, setShowAcceptPaymentDialog] = useState(false);
-    const [showInfoDialog, setShowInfoDialog] = useState(false);
-    const [applicationToShow, setApplicationToShow] = useState(null);
-    
-    const [showQRDialog, setShowQRDialog] = useState(false);
-    const [qrData, setQrData] = useState({});
-
-    const {
-        accountNo, amount, name
-    } = qrData;
 
   const fetchApplications = () => {
     request
@@ -168,102 +145,23 @@ const MyApplications = () => {
       });
   };
 
-  if (!isFetch.current) {
-    isFetch.current = true;
-    fetchApplications();
-  }
-
     if (!isFetch.current) {
         isFetch.current = true;
         fetchApplications();
-    }
-
-    // set target event id then show dialog
-    const confirmCancelApplicationOf = (eventId) => {
-        targetEvent.current = eventId;
-        setShowCancelDialog(true);
-    }
-
-    const confirmAcceptPaymentOf = (eventId) => {
-        targetEvent.current = eventId;
-        setShowAcceptPaymentDialog(true);
-    }
-
-    // cancel application of specified event
-    const cancelEvent = (confirmed) => {
-        // always hide dialog
-        setShowCancelDialog(false);
-        if (!confirmed) return;
-        request.delete(config.API_URL + `/application/${targetEvent.current}/cancel-my-application`)
-        .withCredentials()
-        .then(res => {
-            // too lazy to optimize API request
-            fetchApplications();
-        })
-        .catch(err => {
-            alert("error canceling application" + err.response.text);
-            console.error("error canceling application" + err.response.body)
-        })
-    }
-
-    const acceptPayment = (confirmed) => {
-        setShowAcceptPaymentDialog(false);
-        if (!confirmed) return;
-        request.get(config.API_URL + '/events/receive-payment/' + targetEvent.current)
-        .withCredentials()
-        .then(res => {
-            alert("Receive payment OK");
-            fetchApplications();
-        })
-        .catch(err => {
-            alert("Receive payment Error");
-            console.error("Receive payment Error", err);
-        })
-    }
-
-    const showApplicationPopup = (application) => {
-        console.log("show application", application);
-        setApplicationToShow(application);
-        setShowInfoDialog(true);
-    };
-
-    // show and set data
-    const showPromptPayDialog = (paymentInfo) => {
-        setShowQRDialog(true);
-        setQrData(paymentInfo);
     }
 
     return (
         <div className="band-invitations">
             {
                 applications.map(application => (
-                    <AppliedEventItem
-                        application={application}
-                        onCancel={() => confirmCancelApplicationOf(application.eventId)}
-                        onSelectEvent={() => showApplicationPopup(application)}
-                        onWithdraw={() => confirmCancelApplicationOf(application.eventId)/* TODO: this should we different API but whatever */}
-                        onAcceptPayment={() => confirmAcceptPaymentOf(application.eventId)}
-                        onClickPay={() => showPromptPayDialog(fakePaymentInfo)}
-                    />
+                    <>
+                        <AppliedEventItem
+                            application={application}
+                            refreshCallback={fetchApplications} // on success -> fetch appl.
+                        />
+                    </>
                 ))
             }
-            <Dialog isOpen={showCancelDialog} onClose={() => setShowCancelDialog(false)}>
-                <ConfirmDialog title="Cancel Event" question="This will withdraw you from event! this action can't be undone" callback={cancelEvent} />
-            </Dialog>
-            <Dialog isOpen={showAcceptPaymentDialog} onClose={() => setShowAcceptPaymentDialog(false)}>
-                <ConfirmDialog title="Accept Payment" question="Confirm that hirer has paid you event fee?" callback={acceptPayment}/>
-            </Dialog>
-            <Dialog isOpen={showInfoDialog} onClose={() => setShowInfoDialog(false)}>
-                {applicationToShow && <ApplicationInfo application={applicationToShow} onClose={() => setShowInfoDialog(false)} onCancel={() => confirmCancelApplicationOf(applicationToShow.eventId)} />}
-            </Dialog>
-            <Dialog isOpen={showQRDialog} onClose={() => setShowQRDialog(false)}>
-                <PaymentQRDialog
-                    accountNo={accountNo}
-                    amount={amount}
-                    name={name}
-                    onClose={() => setShowQRDialog(false)}
-                />
-            </Dialog>
         </div>
     )
 }
