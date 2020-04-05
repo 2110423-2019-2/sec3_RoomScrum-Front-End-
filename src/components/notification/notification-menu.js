@@ -5,6 +5,7 @@ import request from 'superagent';
 import config from 'src/config';
 import { getImageURLFromNotif, getTextFormat } from './util';
 import { TextFormatter } from './text-formatter';
+import Modal from 'react-modal';
 
 moment.locale('en', {
     relativeTime: {
@@ -41,7 +42,7 @@ const NotificationItem = ({notif}) => {
 }
 
 
-const NotificationMenu = ({show}) => {
+const NotificationMenu = ({show, onClose}) => {
 
     const hasInit = useRef(false);
     const [notifications, setNotifications] = useState(null);
@@ -56,8 +57,7 @@ const NotificationMenu = ({show}) => {
             setNotifications(result);
             console.log('fetch notif', result)
 
-            
-
+    
         })
         .catch(err => {
             console.error("error fetching notifications", err);
@@ -66,20 +66,24 @@ const NotificationMenu = ({show}) => {
     
 
     return (
-        show &&
-        <div className="notif-menu-container">
-            <div className="notif-triangle"></div>
-            <div className="notif-menu">
-                <div className="header"> Notification </div>
-                <div className="notif-list">
-                    {
-                        notifications.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()).map(notif => (
-                            <NotificationItem notif={notif}/>
-                        ))
-                    }
+        <Modal isOpen={show} onRequestClose={onClose}
+            className="just-an-invalid-class"
+            overlayClassName="notif-modal-overlay"
+        >
+            <div className="notif-menu-container">
+                <div className="notif-triangle"></div>
+                <div className="notif-menu">
+                    <div className="header"> Notification </div>
+                    <div className="notif-list">
+                        {
+                            notifications && notifications.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()).map(notif => (
+                                <NotificationItem notif={notif}/>
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
+        </Modal>
     )
 }
 

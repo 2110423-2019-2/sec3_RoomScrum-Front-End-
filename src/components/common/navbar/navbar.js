@@ -63,7 +63,7 @@ const Avatar = observer(({ loginState }) => {
         </span>
         <FontAwesomeIcon icon={faCaretDown} onClick={toggleDropdown} />
       </div>
-      <NotificationMenu show={showNotif} />
+      <NotificationMenu show={showNotif} onClose={() => setNotif(false)}/>
       {/* dropdown menu */}
       <div
         className={classnames({
