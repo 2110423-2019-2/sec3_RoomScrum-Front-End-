@@ -10,7 +10,7 @@ import { Navbar } from 'src/components/common';
 import { ConfirmDialog } from 'src/components/common';
 import './my-event-info.scss';
 
-const MyEventInfo = ({ event , doDelete}) => {
+const MyEventInfo = ( {each} ) => {
   const {
     eventId,
     eventName,
@@ -28,7 +28,7 @@ const MyEventInfo = ({ event , doDelete}) => {
     isCancelled,
     eventImage,
     userId
-  } = event;
+  } = each;
 
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
@@ -42,33 +42,36 @@ const MyEventInfo = ({ event , doDelete}) => {
 
   return (
     <div>
-      <h1 onClick={openModal}>{event.eventName}</h1>
+      <h1 onClick = {openModal} className='head-text'>
+        {each.eventName}
+      </h1>
+
+
       <Modal
-        isOpen={isOpen}
+        isOpen = {isOpen}
         onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        contentLabel='Modal'>
+        onRequestClose={closeModal}>
         <div className='row'>
           <div className='EventInfo col-6'>
-            <h1 className='text-center font-weight-bold'>{event.eventName}</h1>
+            <h1 className='text-center font-weight-bold'>{each.eventName}</h1>
             <img
               className='responsive'
-              src={event.eventImage}
+              src={each.eventImage}
               alt='Card image cap'
             />
             <h6>Time</h6>
-            <p1>{event.startdatetime.substr(11,8)} {event.startdatetime.substr(0,10)} to {event.enddatetime.substr(11,8)} {event.enddatetime.substr(0,10)}</p1>
+            <p1>{each.startdatetime.substr(11,8)} {each.startdatetime.substr(0,10)} to {each.enddatetime.substr(11,8)} {each.enddatetime.substr(0,10)}</p1>
             <h6>Location</h6>
             <p1>
-              {event.subdistrict} {event.district} {event.province}
+              {each.subdistrict} {each.district} {each.province}
             </p1>
             <h6>About</h6>
-            <p1>{event.description}</p1>
-            <Edit event={event} />
+            <p1>{each.description}</p1>
+            <Edit event={each} />
             {/* <button onClick={() => doDelete(event.eventId)} > Cancel </button> */}
           </div>
           <div className='AppliedMusician col-5'>
-            <Applicants eventId={event.eventId} />
+            <Applicants eventId={each.eventId} />
           </div>
         </div>
       </Modal>

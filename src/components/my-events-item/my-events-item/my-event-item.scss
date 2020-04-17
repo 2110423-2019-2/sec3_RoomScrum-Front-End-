@@ -1,8 +1,9 @@
 .my-event-item {
-    margin: 0.1rem;
-    width: 1000px;
-    height: 200px;
-    border: 1px solid blue;
+    background-color: white;
+    box-shadow: 0px 4px 4px #bababa;
+    margin-bottom: 16px;
+    // display: flex;
+    flex-flow: row wrap;
 
     .card-title{
         font-size: 30px;
@@ -15,12 +16,31 @@
         line-height: 30px;
     }
 
-    .responsive {
-        padding: 0 6px;
-        float: left;
-        width: 20%;
-    }
+    .event-image {
+        flex: 0 0 auto;
+        width: 160px;
+        height: 160px;
+        margin: 8px 24px 0px 8px;
 
+
+        &.place-holder {
+            background-color: #bababa;
+        }
+    }
+    .cancel-wrapper  {
+        flex: 0 0 100%;
+        text-align: right;
+
+        button {
+            border: none;
+            background-color: transparent;
+            // color: $grey;
+
+            &:hover {
+                color: red;
+            }
+        }
+    }
 .my-event-info {
     background-color: white;
 }

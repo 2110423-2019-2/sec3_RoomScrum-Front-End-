@@ -10,6 +10,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Navbar } from 'src/components/common';
 import MyEventInfo from 'src/components/my-events-item/my-event-info'
 import CreateReview from 'src/views/review/create-reviews';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 // const EventInfoModal = ({
 //   eventName,
 //   description,
@@ -253,18 +255,26 @@ const MyEventItem = ({ each, onClick }) => {
     userId
   } = each;
   return (
-    <div  className='my-event-item' >
-      <img className='responsive' src={eventImage} alt='Card image cap' />
+    <div  className='my-event-item clearfix' >
+      <img className='event-image' 
+      src={[
+          config.API_URL + `/events/${eventId}/pic`,
+          'https://i.pravatar.cc/180'
+        ]} alt='Card image cap' />
       <div >
-        <MyEventInfo event = {each}  />
+        <MyEventInfo each = {each}/>
+        {/* <MyEventInfo event = {each}  /> */}
         <div>
           <p1 className='card-body'> {district} </p1>
         </div>
         <div>
           <p1 className='card-body'> {province} </p1>
         </div>
-        <div className='row'>
-        <button onClick={() => onClick(eventId)}> Cancel </button>
+        <div className='cancel-wrapper'>
+          <button onClick={() => onClick(eventId)}>
+            <FontAwesomeIcon icon={faExclamationTriangle} />
+              cancel 
+          </button>
          {/* <EventInfoModal
           eventName={eventName}
           description={description}
@@ -278,7 +288,7 @@ const MyEventItem = ({ each, onClick }) => {
           enddatetime={enddatetime}
           status={status}
         /> */}
-     </div>
+        </div>
      {/* <Switch>
       <Route exact path="/hirer/event/eventinfo">
         <MyEventInfo event = {each} />
