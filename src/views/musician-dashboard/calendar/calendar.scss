@@ -1,0 +1,82 @@
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '../../../styles/color.scss';
+
+.calendar-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 32px;
+
+    .title {
+        font-size: 32px;
+        font-weight: bold;
+        color: $dark-navy;
+        margin-bottom: 0.5em;
+    }
+    
+    > .container {
+        width: 100%;
+        max-width: 768px;    
+        display: inline-block;
+    }
+}
+
+.legends {
+    align-self: flex-start;
+    padding-left: 32px;
+    padding-top: 16px;
+    display: flex;
+    flex-flow: row wrap;
+    
+
+    .title {
+        color: $dark-navy;
+        font-size: 16px;
+        font-weight: bold;
+        width: 100%;
+    }
+
+    .legend-entry {
+        margin-right: 32px;
+        .label {
+            color: $navy;
+            font-size: 16px;
+        }
+    }
+}
+
+.event-item {
+    cursor: pointer;
+    padding: 2px;
+}
+
+// custom event color
+.fc-event-container > .fc-day-grid-event {
+    
+    &.event-red {
+        background-color: #f0c7c7;
+    }
+
+    &.event-yellow {
+        background-color: #fce4a8;
+    }
+
+    &.event-orange {
+        background-color: #fce4a8;
+    }
+
+    &.event-green {
+        background-color: #d7e6bf;
+    }
+
+    &.event-blue {
+        background-color: #dff1f7;
+    }
+
+    &.event-grey {
+        background-color: #d7d7d7;
+    }
+}

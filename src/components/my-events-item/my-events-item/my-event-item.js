@@ -8,10 +8,12 @@ import Edit from 'src/views/hirer-dashboard/raw-edit-event';
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Navbar } from 'src/components/common';
-import MyEventInfo from 'src/components/my-events-item/my-event-info'
+import MyEventInfo from 'src/components/my-events-item/my-event-info';
 import CreateReview from 'src/views/review/create-reviews';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+//oil-ออยแอบเพิ่ม-start
+import { HirerContract } from 'src/components/contract';
+//oil-ออยแอบเพิ่ม-end
+
 // const EventInfoModal = ({
 //   eventName,
 //   description,
@@ -58,11 +60,6 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 //     </div>
 //   );
 // };
-
-
-
-
-
 
 // const ContractModal = ({ eventId }) => {
 //   // alert(eventId);
@@ -255,27 +252,23 @@ const MyEventItem = ({ each, onClick }) => {
     userId
   } = each;
   return (
-    <div  className='my-event-item clearfix' >
-      <img className='event-image' 
-      src={[
-          config.API_URL + `/events/${eventId}/pic`,
-          'https://i.pravatar.cc/180'
-        ]} alt='Card image cap' />
-      <div >
-        <MyEventInfo each = {each}/>
-        {/* <MyEventInfo event = {each}  /> */}
+    <div className='my-event-item'>
+      <img className='responsive' src={eventImage} alt='Card image cap' />
+      <div>
+        <MyEventInfo event={each} />
         <div>
           <p1 className='card-body'> {district} </p1>
         </div>
         <div>
           <p1 className='card-body'> {province} </p1>
         </div>
-        <div className='cancel-wrapper'>
-          <button onClick={() => onClick(eventId)}>
-            <FontAwesomeIcon icon={faExclamationTriangle} />
-              cancel 
-          </button>
-         {/* <EventInfoModal
+        <div className='row'>
+          <button onClick={() => onClick(eventId)}> Cancel </button>
+          {/**oil-ออยแอบเพิ่ม-start*/}
+          <HirerContract eventId={eventId} />
+
+          {/**oil-ออยแอบเพิ่ม-end*/}
+          {/* <EventInfoModal
           eventName={eventName}
           description={description}
           address={address}
@@ -289,23 +282,22 @@ const MyEventItem = ({ each, onClick }) => {
           status={status}
         /> */}
         </div>
-     {/* <Switch>
+        {/* <Switch>
       <Route exact path="/hirer/event/eventinfo">
         <MyEventInfo event = {each} />
       </Route>
     </Switch>   */}
 
-      <div className='float-right margin-right-2'>
-        {/* <Edit event={each} />
+        <div className='float-right margin-right-2'>
+          {/* <Edit event={each} />
         <Applicants eventId={eventId} />
         <button variant='secondary' onClick={() => onClick(eventId)}>
           Cancel
         </button>
         <ContractModal eventId={eventId} status={status} /> */}
-        <CreateReview eventId = {eventId}/>
-      </div>
+          <CreateReview eventId={eventId} />
         </div>
-        
+      </div>
     </div>
   );
 };

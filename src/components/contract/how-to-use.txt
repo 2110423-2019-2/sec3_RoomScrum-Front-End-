@@ -4,7 +4,6 @@ component ที่เอาไปใช้ได้คือ
 2. hirer-contract
 
 วิธีใช้ก็คือ
-
 import { HireeContract } from 'src/components/contract';
 <HireeContract eventId={eventId} />
 
@@ -18,12 +17,15 @@ import { HirerContract } from 'src/components/contract';
 //oil-ออยแอบเพิ่ม-end
 
 {/**oil-ออยแอบเพิ่ม-start*/}
+    <HirerContract
+          eventId={eventId}
+        </HirerContract>
 {/**oil-ออยแอบเพิ่ม-end*/}
 
 ---------------------------------------------------
 ตอนนี้ที่เอา component ไปใช้คือ
 ---------------------------------------------------
-hiree -> src/components/my-events-item/my-events-item/my-events-item.js 
+hiree -> src/components/my-events-item/my-events-item/my-events-item.js world
 hirer -> src/views/musician-dashboard/my-application/my-application.js โรจ
 
 
@@ -31,3 +33,28 @@ hirer -> src/views/musician-dashboard/my-application/my-application.js โรจ
 ข้อมูลที่ต้องการใน contract คือ
 contract status --> หาจากไหนหว่า
 อยากได้ api ที่ส่ง event id เข้าไป
+
+
+
+
+//---------------------------------------
+การใช้งาน contract.js
+
+import React, { useState, useRef, useCallback } from 'react';
+import Contract from 'src/components/contract/contract';
+
+//รับข้อมูล contract
+  const [contract, setContract] = useState();
+  const callbackContractFunction = useCallback(contract => {
+    console.log(contract, 'callback called');
+    setContract(contract);
+    return contract;
+  }, []);
+  if (contract != undefined) {
+    const { status, eventName, hirer, hiree, budget, descritpion } = contract;
+  }
+//
+
+        <Contract
+          eventId={eventId}
+        </Contract>
