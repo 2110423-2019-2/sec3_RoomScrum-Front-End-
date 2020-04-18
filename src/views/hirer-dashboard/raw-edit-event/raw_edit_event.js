@@ -53,7 +53,7 @@ const Edit = ({ event }) => {
     event
   )();
 
-  const save = () => {
+  const save = async () => {
     const sendData = {};
     for (let key in formUpper) sendData[key] = formUpper[key].value;
     sendData["startdatetime"] =
@@ -68,11 +68,24 @@ const Edit = ({ event }) => {
       ":00.000Z";
   
     for (let key in formBelow) sendData[key] = formBelow[key].value;
-        try {
-      request.post(`${config.API_URL}/events/update/${event.eventId}`).send(sendData);
-    } catch (err) {
-      alert("error");
-    }
+        await request.post(`${config.API_URL}/events/update/${event.eventId}`)
+                      .withCredentials()
+                      .send(sendData)
+            //   .then(() => {
+            //     alert("Event Updated")
+            //     // changeCallback();
+            //     // handleClose();
+            // })
+            .then(() => {
+              alert("Event Updated")
+              // changeCallback();
+              handleClose();
+          })
+          .catch(err => {
+              alert("update Event error");
+              console.error("Error updating event", err);
+          })
+
   }
 
   return (

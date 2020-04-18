@@ -8,7 +8,7 @@ import request from "superagent";
 import config from "src/config";
 import Modal from "react-modal";
 import { ConfirmDialog } from "src/components/common";
-
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { formReview } from "./form-def";
 
 const customStyles = {
@@ -61,10 +61,15 @@ const CreateReview = ({eventId}) => {
     
     return (
         // style from admin
-        <div >
-        <button onClick = {openModal} className='float-right'>
-          Archieve
-        </button>
+        <div classname = 'review'>
+          <div className='archieve-button'>
+
+            <button onClick={openModal}>
+                Archieve
+            </button>
+
+          </div>
+       
 
         <Modal  
         isOpen={isOpen}

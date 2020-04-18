@@ -17,6 +17,7 @@ import { SideNavigation } from "src/components/common/sidebar-hirer/sidebar-hire
 import Event from 'src/views/hirer/event'
 import Contract from "./contract";
 import EditProfile from "./profile/edit-profile"
+import MyEventInfo from "src/components/my-events-item/my-event-info"
 
 const ListItem = ({ url, text }) => {
   return (

@@ -60,11 +60,19 @@ const HirerDashboard = () => {
      }
 
     const myEventItems = myEventList.map(each => {
-        return (
-          <div>
-            <MyEventItem each={each} onClick={deleteItem} />
-          </div>
-        );
+        if (myEventList.length == 0){
+          return (
+            <div>
+              <p> You have no event </p>
+            </div>
+          );
+        } else {
+          return (
+            <div>
+              <MyEventItem each={each} onClick={deleteItem} />
+            </div>
+          );
+        }
     });
 
 
