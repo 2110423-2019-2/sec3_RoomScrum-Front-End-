@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import LoginDialog from 'src/components/login';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faUserCircle,
   faCaretDown,
-  faTruckMonster,
-  faBell
+  faBell,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { globalLoginState } from 'src/store/login-state';
 import { observer } from 'mobx-react';
@@ -100,6 +99,12 @@ const Navbar = observer(({ loginState }) => {
           <RoleGuard role="Admin">
             <Link className='text-white' to='/admin/approve-user'>
               Manage
+            </Link>
+          </RoleGuard>
+          <RoleGuard role="Hirer">
+            <Link className='text-white' to='/event/create'>
+              <FontAwesomeIcon icon={faPlus} className="mr-2"/>
+              New Event
             </Link>
           </RoleGuard>
         </div>

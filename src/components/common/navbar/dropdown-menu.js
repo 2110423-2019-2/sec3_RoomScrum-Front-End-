@@ -33,6 +33,12 @@ const DropdownMenu = ({ show, onClose, onLogout }) => {
                         Edit My Profile
                     </Link>
                 </RoleGuard>
+                <RoleGuard role={Roles.Hirer}>
+                    <div className='dropdown-divider'></div>
+                    <Link className='dropdown-item' to='/event/create'>
+                        Create Event
+                    </Link>
+                </RoleGuard>
                 <div className='dropdown-divider'></div>
                 <div className='text-danger dropdown-item' onClick={onLogout}>
                     Logout
