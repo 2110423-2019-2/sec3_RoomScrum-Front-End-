@@ -9,6 +9,7 @@ $arrow-size: 16px;
     height: 80vh;
     max-height: 600px;
     z-index: 5;
+    color: black; // reset color due to being children of navbar
 
 
     .notif-triangle {
@@ -34,8 +35,6 @@ $arrow-size: 16px;
         background-color: #ffffff;
         display: flex;
         flex-direction: column;
-        // padding: 2px;
-        // box-sizing: border-box;
 
         .header {
             position: sticky;
@@ -54,6 +53,19 @@ $arrow-size: 16px;
         .notif-list {
             overflow: auto;
             padding: 16px;
+
+            &.empty {
+                min-height: 300px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+            }
+
+            .no-notification {
+                text-align: center;
+            }
         }
     }
 }

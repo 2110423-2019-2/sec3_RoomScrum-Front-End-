@@ -6,6 +6,10 @@ import config from 'src/config';
 import { getImageURLFromNotif, getTextFormat } from './util';
 import { TextFormatter } from './text-formatter';
 import Modal from 'react-modal';
+import { sortByTimestampDesc } from 'src/views/musician-dashboard/util';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBellSlash } from '@fortawesome/free-regular-svg-icons';
+import classNames from 'classnames';
 
 moment.locale('en', {
     relativeTime: {
@@ -62,6 +66,9 @@ const NotificationMenu = () => {
         })
     }
 
+    const sortedNotifs = notifications && notifications.length > 0 && 
+        notifications.sort(sortByTimestampDesc); // notification has .timestamp (same as application) so can use it's sorting
+
     return (
         // <Modal isOpen={show} onRequestClose={onClose}
         //     parentSelector={parentSelectorFunc}
@@ -72,11 +79,23 @@ const NotificationMenu = () => {
                 <div className="notif-triangle"></div>
                 <div className="notif-menu">
                     <div className="header"> Notification </div>
-                    <div className="notif-list">
+                    <div className={
+                        classNames({
+                            "notif-list": true,
+                            empty: true || !sortedNotifs,
+                        })
+                    }>
                         {
-                            notifications && notifications.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()).map(notif => (
-                                <NotificationItem notif={notif}/>
-                            ))
+                            false && sortedNotifs ? (
+                                sortedNotifs.map(notif => (
+                                    <NotificationItem notif={notif}/>
+                                ))
+                            ) : (
+                                <div className="no-notification">
+                                    <FontAwesomeIcon icon={faBellSlash}/><br/>
+                                    No Notifications
+                                </div>
+                            )
                         }
                     </div>
                 </div>
