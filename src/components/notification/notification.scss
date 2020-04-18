@@ -1,54 +1,60 @@
 
 $header-height: 48px;
-$notif-menu-height: 360px;
 $arrow-size: 16px;
 
 
 .notif-menu-container {
     position: relative;
-    width: 400px;
-    height: $notif-menu-height;
-    max-height: $notif-menu-height;
+    width: 420px;
+    height: 80vh;
+    max-height: 600px;
     z-index: 5;
-}
 
-.notif-triangle {
-    position: absolute;
-    width: 0;
-    height: 0;
-    top: 0;
-    right: 7px;
-    z-index: 99;
-    // float: right;
-    border-left: 16px solid transparent;
-    border-right: 16px solid transparent;
-    border-bottom: 16px solid #364D9B;
-}
 
-.notif-menu {
-    position: relative;
-    top: 16px;
-    border-radius: 8px;
-    height: 100%;
-    max-height: 100%;
-    box-shadow: 0px 0px 4px 3px #ffffff88;
-    background-color: white;
-
-    .header {
-        height: $header-height;
-        background-color: #364D9B;
-        border-radius: 8px 8px 0 0;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        line-height: $header-height;
-        vertical-align: middle;
-        text-align: center;
+    .notif-triangle {
+        position: absolute;
+        width: 0;
+        height: 0;
+        top: 0;
+        right: 7px;
+        z-index: 99;
+        // float: right;
+        border-left: 16px solid transparent;
+        border-right: 16px solid transparent;
+        border-bottom: 16px solid #364D9B;
     }
 
-    .notif-list {
-        height: $notif-menu-height - $header-height;
+    .notif-menu {
+        position: relative;
+        top: 16px;
+        border-radius: 8px;
+        max-height: 100%;
+        box-shadow: 0 12px 28px 0 #00000088;
         overflow: auto;
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        // padding: 2px;
+        // box-sizing: border-box;
+
+        .header {
+            position: sticky;
+            top: 0;
+            height: $header-height;
+            background-color: #364D9B;
+            border-radius: 8px 8px 0 0;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: $header-height;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .notif-list {
+            overflow: auto;
+            padding: 16px;
+        }
     }
 }
 
@@ -62,13 +68,13 @@ $arrow-size: 16px;
         padding: 8px;
 
         > img {
-            width: 22px;
-            height: 22px;
+            width: 32px;
+            height: 32px;
         }
     }
 
     .notif-text {
-        font-size: 12px;
+        font-size: 13px;
         padding: 8px;
         color: black;
         

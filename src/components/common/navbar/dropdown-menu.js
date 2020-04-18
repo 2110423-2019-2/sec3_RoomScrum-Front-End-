@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Modal from 'react-modal';
+import {RoleGuard, Roles, LoginGuard} from 'src/components/common/guard';
 
 const DropdownMenu = ({ show, onClose, onLogout }) => {
     return (
@@ -8,49 +8,34 @@ const DropdownMenu = ({ show, onClose, onLogout }) => {
             <div className="dropdown-triangle"></div>
             <div
                 className={'dropdown-menu dropdown list-group'}>
-                {/* FIX PATH LATER */}
-                <Link className='dropdown-item' to='/profile/me/application'>
-                    {' '}
-        Applications{' '}
-                </Link>
-                <Link className='dropdown-item' to='/profile/me/calendar'>
-                    {' '}
-        Calendar{' '}
-                </Link>
+                <RoleGuard role={Roles.Musician}>
+                    <Link className='dropdown-item' to='/musician/my-profile'>
+                        My profile
+                    </Link>
+                    <Link className='dropdown-item' to='/musician/calendar'>
+                        Calendar
+                    </Link>
+                    <Link className='dropdown-item' to='/musician/event-invitations'>
+                        My Applications
+                    </Link>
+                    <Link className='dropdown-item' to='/musician/my-events'>
+                        Invitations
+                    </Link>
+                </RoleGuard>
+                <RoleGuard role={Roles.Hirer}>
+                    <Link className='dropdown-item' to='/hirer/profile/me'>
+                        My profile
+                    </Link>
+                    <Link className='dropdown-item' to='/hirer/event'>
+                        My Events
+                    </Link>
+                    <Link className='dropdown-item' to='/hirer/profile/edit'>
+                        Edit My Profile
+                    </Link>
+                </RoleGuard>
                 <div className='dropdown-divider'></div>
-                <Link className='dropdown-item' to='/hirer/event'>
-                    {' '}
-        My Events{' '}
-                </Link>
-                <Link className='dropdown-item' to='/event/search'>
-                    {' '}
-        Find Events{' '}
-                </Link>
-                <Link className='dropdown-item' to='/event/create'>
-                    {' '}
-        Create Event{' '}
-                </Link>
-                <div className='dropdown-divider'></div>
-                <Link className='dropdown-item' to='/band/list'>
-                    {' '}
-        My Bands{' '}
-                </Link>
-                <Link className='dropdown-item' to='/band/search'>
-                    {' '}
-        Find Bands{' '}
-                </Link>
-                <Link className='dropdown-item' to='/band/create'>
-                    {' '}
-        Create Band{' '}
-                </Link>
-                <div className='dropdown-divider'></div>
-                <Link className='dropdown-item' to='/profile/me'>
-                    {' '}
-        My Profile{' '}
-                </Link>
                 <div className='text-danger dropdown-item' onClick={onLogout}>
-                    {' '}
-            Logout{' '}
+                    Logout
                 </div>
             </div>
         </div>

@@ -16,6 +16,7 @@ import DropdownMenu from './dropdown-menu';
 import NavIcon from './components/nav-icon';
 import config from 'src/config';
 import Image from 'react-image';
+import { RoleGuard } from '../guard';
 
 const LoginButtons = () => {
   const [isOpen, setOpen] = useState(false);
@@ -30,11 +31,11 @@ const LoginButtons = () => {
     <div className='login-buttons'>
       <LoginDialog open={isOpen} onRequestClose={closeDialog} />
       <Link className='btn btn-secondary' onClick={openDialog}>
-        Login{' '}
+        Login
       </Link>
       <Link className='btn btn-secondary' to='/register'>
-        {' '}
-        Register{' '}
+        
+        Register
       </Link>
     </div>
   );
@@ -82,28 +83,25 @@ const Navbar = observer(({ loginState }) => {
     <div className="navbar flex-row shadow-sm">
       <div className="navbar-left">
         <Link className="title text-white" to="/">
-          {" "}
-          Room scrum{" "}
+          Room scrum
         </Link>
       </div>
       <div className='navbar-right flex-row'>
         <div className='link-section flex-row'>
           <Link className='text-white' to='/find/musician'>
-            {' '}
-            Find Musician{' '}
+            Find Musician
           </Link>
           <Link className='text-white' to='/find/events'>
-            {' '}
-            Find Events{' '}
+            Find Events
           </Link>
           <Link className='text-white' to='/find/bands'>
-            {' '}
-            Find Bands{' '}
+            Find Bands
           </Link>
-          <Link className='text-white' to='/admin/approve-user'>
-            {' '}
-            Manage{' '}
-          </Link>
+          <RoleGuard role="Admin">
+            <Link className='text-white' to='/admin/approve-user'>
+              Manage
+            </Link>
+          </RoleGuard>
         </div>
         <div className='dynamic-section'>
           {!loginState.isLoggedIn && <LoginButtons />}

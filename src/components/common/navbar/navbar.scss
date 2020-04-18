@@ -84,6 +84,8 @@ $nav-height: 60px;
     .avatar {
       width: $nav-height * 0.8;
       height: $nav-height * 0.8;
+      border-radius: 50%;
+      border: 2px solid #aaaaaa;
       object-fit: cover;
     }
   }
