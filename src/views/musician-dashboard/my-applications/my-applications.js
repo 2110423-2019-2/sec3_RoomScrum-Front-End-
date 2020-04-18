@@ -11,6 +11,10 @@ import { ApplicationStatus, EventStatus } from 'src/enums';
 import { AppliedEventAction } from '../components';
 import { HireeContract } from 'src/components/contract';
 import { ViewEventInfoButton } from 'src/components/action-buttons/view-event-info-button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import EmptyMessage from 'src/components/common/empty-message';
+import { Link } from 'react-router-dom';
 
 
 
@@ -150,17 +154,29 @@ const MyApplications = () => {
         fetchApplications();
     }
 
+
     return (
-        <div className="band-invitations">
+        <div className="my-applications">
+            <div className="title"> Applied Events </div>
             {
-                applications.map(application => (
-                    <>
-                        <AppliedEventItem
-                            application={application}
-                            refreshCallback={fetchApplications} // on success -> fetch appl.
-                        />
-                    </>
-                ))
+                (applications && applications.length > 0) ? (
+                    applications.map(application => (
+                        <>
+                            <AppliedEventItem
+                                application={application}
+                                refreshCallback={fetchApplications} // on success -> fetch appl.
+                            />
+                        </>
+                    ))
+                ) : (
+                    <EmptyMessage>
+                        <div className="no-application">
+                            <FontAwesomeIcon icon={faTimes} className="icon"/>
+                            <div> You have not applied to any events </div>
+                            <Link to="/find/events"> Find event to apply </Link>
+                        </div>
+                    </EmptyMessage>
+                )
             }
         </div>
     )
