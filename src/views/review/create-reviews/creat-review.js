@@ -65,7 +65,6 @@ const CreateReview = ({eventId}) => {
           <div className='archieve-button'>
 
             <button onClick={openModal}>
-              <FontAwesomeIcon icon={faExclamationTriangle} />
                 Archieve
             </button>
 

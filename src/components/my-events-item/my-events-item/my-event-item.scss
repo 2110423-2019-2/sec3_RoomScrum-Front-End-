@@ -30,6 +30,7 @@
     .cancel-wrapper  {
         flex: 0 0 100%;
         text-align: right;
+        padding: 12px 0;
 
         button {
             border: none;
@@ -40,6 +41,10 @@
                 color: red;
             }
         }
+    }
+    .HirerAction{
+        padding: 12px 0;
+        width: 100%;
     }
 .my-event-info {
     background-color: white;

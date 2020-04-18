@@ -13,6 +13,7 @@ import CreateReview from 'src/views/review/create-reviews';
 //oil-ออยแอบเพิ่ม-start
 import { HirerContract } from 'src/components/contract';
 //oil-ออยแอบเพิ่ม-end
+import { Button } from 'src/components/common';
 
 // const EventInfoModal = ({
 //   eventName,
@@ -255,18 +256,18 @@ const MyEventItem = ({ each, onClick }) => {
     <div className='my-event-item'>
       <img className='responsive' src={eventImage} alt='Card image cap' />
       <div>
-        <MyEventInfo event={each} />
+        <MyEventInfo each={each} />
         <div>
           <p1 className='card-body'> {district} </p1>
         </div>
         <div>
           <p1 className='card-body'> {province} </p1>
         </div>
-        <div className='row'>
-          <button onClick={() => onClick(eventId)}> Cancel </button>
+        <div className='HirerAction' >
+          <Button type='danger' name='Cancel' onClick={() => onClick(eventId)}> Cancel </Button>
           {/**oil-ออยแอบเพิ่ม-start*/}
           <HirerContract eventId={eventId} />
-
+          <CreateReview eventId={eventId} />
           {/**oil-ออยแอบเพิ่ม-end*/}
           {/* <EventInfoModal
           eventName={eventName}
@@ -288,15 +289,6 @@ const MyEventItem = ({ each, onClick }) => {
       </Route>
     </Switch>   */}
 
-        <div className='float-right margin-right-2'>
-          {/* <Edit event={each} />
-        <Applicants eventId={eventId} />
-        <button variant='secondary' onClick={() => onClick(eventId)}>
-          Cancel
-        </button>
-        <ContractModal eventId={eventId} status={status} /> */}
-          <CreateReview eventId={eventId} />
-        </div>
       </div>
     </div>
   );
