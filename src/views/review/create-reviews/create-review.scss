@@ -1,10 +1,35 @@
-.ReviewModal {
-    width: 300px;
-    height: 500px;
-    background-color: cadetblue;
-    border-color: darkblue;
+.review {
+    
+    .archieve-button {
+
+        flex: 0 0 100%;
+            text-align: right;
+    
+            button {
+                border: none;
+                background-color: transparent;
+                // color: $grey;
+    
+                &:hover {
+                    color: red;
+                }
+            }
+        }
+    
+        .ReviewModal {
+            width: 300px;
+            height: 500px;
+            background-color: cadetblue;
+            border-color: darkblue;
+        }
+        
+        .header{
+            text-align: center;
+        }
+
 }
 
-.header{
-    text-align: center;
-}
+
+
+
+
