@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Navbar } from 'src/components/common';
 import { ConfirmDialog } from 'src/components/common';
 import './my-event-info.scss';
+import Image from 'react-image';
 
 const MyEventInfo = ( {each} ) => {
   const {
@@ -42,9 +43,9 @@ const MyEventInfo = ( {each} ) => {
 
   return (
     <div>
-      <h1 onClick = {openModal} className='head-text'>
+      <div onClick = {openModal} className='head-text'>
         {each.eventName}
-      </h1>
+      </div>
 
 
       <Modal
@@ -54,11 +55,8 @@ const MyEventInfo = ( {each} ) => {
         <div className='row'>
           <div className='EventInfo col-6'>
             <h1 className='text-center font-weight-bold'>{each.eventName}</h1>
-            <img
-              className='responsive'
-              src={each.eventImage}
-              alt='Card image cap'
-            />
+            <Image className='event-image' src={[
+                config.API_URL + `/events/${each.eventId}/pic`]}  />
             <h6>Time</h6>
             <p1>{each.startdatetime.substr(11,8)} {each.startdatetime.substr(0,10)} to {each.enddatetime.substr(11,8)} {each.enddatetime.substr(0,10)}</p1>
             <h6>Location</h6>
@@ -67,7 +65,9 @@ const MyEventInfo = ( {each} ) => {
             </p1>
             <h6>About</h6>
             <p1>{each.description}</p1>
-            <Edit event={each} />
+            <div className='edit'>
+              <Edit  event={each} />
+            </div>
             {/* <button onClick={() => doDelete(event.eventId)} > Cancel </button> */}
           </div>
           <div className='AppliedMusician col-5'>

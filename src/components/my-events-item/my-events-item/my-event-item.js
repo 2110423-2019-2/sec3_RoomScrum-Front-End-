@@ -14,7 +14,7 @@ import CreateReview from 'src/views/review/create-reviews';
 import { HirerContract } from 'src/components/contract';
 //oil-ออยแอบเพิ่ม-end
 import { Button } from 'src/components/common';
-
+import Image from 'react-image';
 // const EventInfoModal = ({
 //   eventName,
 //   description,
@@ -254,16 +254,19 @@ const MyEventItem = ({ each, onClick }) => {
   } = each;
   return (
     <div className='my-event-item'>
-      <img className='responsive' src={eventImage} alt='Card image cap' />
-      <div>
-        <MyEventInfo each={each} />
+      <div className='row box1'>
+      <Image className='event-image' src={[
+                config.API_URL + `/events/${eventId}/pic`]}  />
+        <div className='event-name'>
+          <MyEventInfo each={each} />
         <div>
-          <p1 className='card-body'> {district} </p1>
+          <p1 className='text'> {district} </p1>
         </div>
         <div>
-          <p1 className='card-body'> {province} </p1>
+          <p1 className='text'> {province} </p1>
         </div>
-        <div className='HirerAction' >
+        </div>
+        <div className='row HirerAction' >
           <Button type='danger' name='Cancel' onClick={() => onClick(eventId)}> Cancel </Button>
           {/**oil-ออยแอบเพิ่ม-start*/}
           <HirerContract eventId={eventId} />

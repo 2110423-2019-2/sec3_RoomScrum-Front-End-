@@ -1,9 +1,11 @@
 .head-text{
-
     font-size: 32px;
     font-weight: bold;
-            // color: $dark-navy;
-    display: flex;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .EventInfo {
@@ -15,23 +17,25 @@
     margin-left: 20px;
     margin-right: 40px;
     // padding-left:10px ;
-    padding-inline: 10px; 
+    padding-bottom: 12px;
 
     
-    .headtext{
-        size: 30px;
-    }
+   
 
     .SetRight{
         padding-right: 3px;
     }
 
-    .responsive {
+    .event-image {
             display: block;
             float: top;
             width: 50%;
             margin-left: auto;
             margin-right: auto;
+            margin-bottom: 20px;
+    }
+    .edit{
+        margin-top: 20px;
     }
 }
     
