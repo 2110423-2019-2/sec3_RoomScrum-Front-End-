@@ -42,7 +42,7 @@ const NotificationItem = ({notif}) => {
 }
 
 
-const NotificationMenu = ({show, onClose}) => {
+const NotificationMenu = () => {
 
     const hasInit = useRef(false);
     const [notifications, setNotifications] = useState(null);
@@ -55,21 +55,19 @@ const NotificationMenu = ({show, onClose}) => {
         .then(res => {
             const result = JSON.parse(res.text);
             setNotifications(result);
-            console.log('fetch notif', result)
-
-    
+            console.log('fetch notif', result)    
         })
         .catch(err => {
             console.error("error fetching notifications", err);
         })
     }
-    
 
     return (
-        <Modal isOpen={show} onRequestClose={onClose}
-            className="just-an-invalid-class"
-            overlayClassName="notif-modal-overlay"
-        >
+        // <Modal isOpen={show} onRequestClose={onClose}
+        //     parentSelector={parentSelectorFunc}
+        //     className="just-an-invalid-class"
+        //     overlayClassName="notif-modal-overlay"
+        // >
             <div className="notif-menu-container">
                 <div className="notif-triangle"></div>
                 <div className="notif-menu">
@@ -83,7 +81,7 @@ const NotificationMenu = ({show, onClose}) => {
                     </div>
                 </div>
             </div>
-        </Modal>
+        // </Modal>
     )
 }
 
