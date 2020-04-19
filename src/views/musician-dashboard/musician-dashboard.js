@@ -7,6 +7,8 @@ import EventInvitations from './event-invitations';
 import MyEventsPage from './my-applications';
 import MusicianProfile from './musician-profile';
 import CalendarPage from './calendar';
+import PageRoleGuard from '../role-guard';
+import { Roles } from 'src/components/common/guard';
 
 const sidebarItems = [
     SideNavItemDetail("My Profile", "/musician/my-profile"),
@@ -22,34 +24,36 @@ const MusicianDashboard = () => {
     const { url } = useRouteMatch();
 
     return (
-        <div className="full-height">
-            <Navbar/>
-            <DashboardLayout>
-                <DashboardNavigation>
-                    <Sidebar items={sidebarItems}/>
-                </DashboardNavigation>
-                <DashboardContent>
-                    <Switch>
-                        <Route path={url + "/my-profile"}>
-                            <MusicianProfile/>
-                        </Route>
-                        <Route path={url + "/calendar"}>
-                            <CalendarPage/>
-                        </Route>
-                        <Route path={url + "/event-invitations"}>
-                            <EventInvitations/>
-                        </Route>
-                        <Route path={url + "/my-events"}>
-                            <MyEventsPage/>
-                        </Route>
-                        <Route path="/">
-                            404 musician dashbaord
-                        </Route>
-                    </Switch>
-                </DashboardContent>
-            </DashboardLayout>
-        </div>
-    )
+        // <PageRoleGuard role={Roles.Musician}>
+            <div className="full-height">
+                <Navbar/>
+                <DashboardLayout>
+                    <DashboardNavigation>
+                        <Sidebar items={sidebarItems}/>
+                    </DashboardNavigation>
+                    <DashboardContent>
+                        <Switch>
+                            <Route path={url + "/my-profile"}>
+                                <MusicianProfile/>
+                            </Route>
+                            <Route path={url + "/calendar"}>
+                                <CalendarPage/>
+                            </Route>
+                            <Route path={url + "/event-invitations"}>
+                                <EventInvitations/>
+                            </Route>
+                            <Route path={url + "/my-events"}>
+                                <MyEventsPage/>
+                            </Route>
+                            <Route path="/">
+                                404 musician dashbaord
+                            </Route>
+                        </Switch>
+                    </DashboardContent>
+                </DashboardLayout>
+            </div>
+        // </PageRoleGuard>
+    );
 }
 
 export default MusicianDashboard;

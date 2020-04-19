@@ -96,17 +96,17 @@ const Navbar = observer(({ loginState }) => {
           <Link className='text-white' to='/find/bands'>
             Find Bands
           </Link>
-          <RoleGuard role="Admin">
+          {/* <RoleGuard role="Admin"> */}
             <Link className='text-white' to='/admin/approve-user'>
               Manage
             </Link>
-          </RoleGuard>
-          <RoleGuard role="Hirer">
+          {/* </RoleGuard> */}
+          {/* <RoleGuard role="Hirer"> */}
             <Link className='text-white' to='/event/create'>
               <FontAwesomeIcon icon={faPlus} className="mr-2"/>
               New Event
             </Link>
-          </RoleGuard>
+          {/* </RoleGuard> */}
         </div>
         <div className='dynamic-section'>
           {!loginState.isLoggedIn && <LoginButtons />}
