@@ -6,14 +6,6 @@ import request from "superagent";
 import config from "src/config";
 
 
-
-
-
-
-
-
-
-
 export const formUpper = {
   eventName: {
     type: "text",
