@@ -5,6 +5,7 @@ import request from 'superagent';
 import config from 'src/config';
 // import {Modal} from 'react-bootstrap';
 import Modal from "react-modal";
+import './raw_applied_musician.scss';
 
 const Applicants = ({eventId}) => {
     const [show, setShow] = useState(false);
@@ -60,7 +61,7 @@ const Applicants = ({eventId}) => {
  
     return (
       <div>
-        <p class='font-weight-bold'>
+        <p class='applied-musician'>
           Applied Musician
         </p>
               <div>

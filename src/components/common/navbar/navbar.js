@@ -10,9 +10,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { globalLoginState } from 'src/store/login-state';
 import { observer } from 'mobx-react';
-import classnames from 'classnames';
 import './navbar.scss';
 import NotificationMenu from 'src/components/notification';
+import DropdownMenu from './dropdown-menu';
+import NavIcon from './components/nav-icon';
+import config from 'src/config';
+import Image from 'react-image';
+import { RoleGuard } from '../guard';
 
 const LoginButtons = () => {
   const [isOpen, setOpen] = useState(false);
@@ -37,11 +41,6 @@ const LoginButtons = () => {
 };
 
 const Avatar = observer(({ loginState }) => {
-  const [showDropdown, setDropdown] = useState(false);
-  const [showNotif, setNotif] = useState(false);
-  const toggleDropdown = () => setDropdown(!showDropdown);
-  const toggleNotif = () => setNotif(!showNotif);
-
   const onLogout = () => {
     loginState.username = null;
     document.cookie = 'token=; expires = 01 Jan 1970 00:00:00'; // clear cookie
@@ -53,56 +52,26 @@ const Avatar = observer(({ loginState }) => {
   return (
     <div className='account-wrapper'>
       <div className='user-account text-white'>
-        <div>
-          <FontAwesomeIcon icon={faBell} onClick={toggleNotif} />
-        </div>
-        <span> logged in as {loginState.username}</span>
-        <span style={{ fontSize: '32px' }}>
-          <FontAwesomeIcon icon={faUserCircle} onClick={toggleDropdown} />
+        <span> {loginState.username}</span>
+        <span className='avatar-container'>
+          {// defer load until we have login state
+          loginState.userId && (
+            <Image
+              className='avatar'
+              src={[
+                `${config.API_URL}/user/profile-pic/${loginState.userId}`,
+                'https://i.pravatar.cc/64',
+              ]}
+              loader={() => <div className='avatar'></div>}
+            />
+          )}
         </span>
-        <FontAwesomeIcon icon={faCaretDown} onClick={toggleDropdown} />
-      </div>
-      <NotificationMenu show={showNotif} />
-      {/* dropdown menu */}
-      <div
-        className={classnames({
-          'dropdown-menu dropdown list-group': true,
-          show: showDropdown,
-        })}>
-        {/* FIX PATH LATER */}
-        <Link className='dropdown-item' to='/profile/me/application'>
-          Applications
-        </Link>
-        <Link className='dropdown-item' to='/profile/me/calendar'>
-          Calendar
-        </Link>
-        <div className='dropdown-divider'></div>
-        <Link className='dropdown-item' to='/hirer/event'>
-          My Events
-        </Link>
-        <Link className='dropdown-item' to='/event/search'>
-          Find Events
-        </Link>
-        <Link className='dropdown-item' to='/event/create'>
-          Create Event
-        </Link>
-        <div className='dropdown-divider'></div>
-        <Link className='dropdown-item' to='/band/list'>
-          My Bands
-        </Link>
-        <Link className='dropdown-item' to='/band/search'>
-          Find Bands
-        </Link>
-        <Link className='dropdown-item' to='/band/create'>
-          Create Band
-        </Link>
-        <div className='dropdown-divider'></div>
-        <Link className='dropdown-item' to='/profile/me'>
-          My Profile
-        </Link>
-        <div className='text-danger dropdown-item' onClick={onLogout}>
-          Logout
-        </div>
+        <NavIcon icon={faBell} id='notification-icon'>
+          <NotificationMenu show={true} />
+        </NavIcon>
+        <NavIcon icon={faCaretDown} id='notification-icon'>
+          <DropdownMenu onLogout={onLogout} />
+        </NavIcon>
       </div>
     </div>
   );
@@ -127,9 +96,11 @@ const Navbar = observer(({ loginState }) => {
           <Link className='text-white' to='/find/bands'>
             Find Bands
           </Link>
-          <Link className='text-white' to='/admin/approve-user'>
-            Manage
-          </Link>
+          <RoleGuard role='Admin'>
+            <Link className='text-white' to='/admin/approve-user'>
+              Manage
+            </Link>
+          </RoleGuard>
         </div>
         <div className='dynamic-section'>
           {!loginState.isLoggedIn && <LoginButtons />}

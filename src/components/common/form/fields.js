@@ -86,6 +86,7 @@ export const InputField = ({
                 onBlur={onBlur(name)}
                 rows="4"
                 placeholder={placeholder}
+                {...otherProps}
               />
             );
           case "options":
@@ -96,6 +97,7 @@ export const InputField = ({
                 className={makeClassName(noValidHack(errors))}
                 onChange={onChange(name)}
                 onBlur={onBlur(name)}
+                {...otherProps}
               >
                 {choice.map(({ display, value }) => (
                   <option value={value}> {display}</option>
@@ -111,6 +113,7 @@ export const InputField = ({
                 onChange={onChange(name)}
                 onBlur={onBlur(name)}
                 placeholder={placeholder}
+                {...otherProps}
               />
             );
         }

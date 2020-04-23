@@ -1,28 +1,22 @@
 import React, { useState, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import Dialog from 'src/components/common/dialog';
-import ConfirmDialog from 'src/components/common/confirm-dialog-v2';
 import Image from 'react-image';
+import classNames from 'classnames';
 
 import './my-applications.scss';
-import ApplicationInfo from './application-info';
 import request from 'superagent';
 import config from 'src/config';
 import {
-  EventStatusIndicator,
+  HireeEventStatusIndicator,
+  PaymentStatusIndicator,
   ContractStatusIndicator,
 } from 'src/components/event-item/status-indicator/status-indicator';
 import { sortByTimestampDesc } from '../util';
-import { ApplicationStatus } from 'src/enums';
-//oil-ออยแอบเพิ่ม-start
+import { ApplicationStatus, EventStatus } from 'src/enums';
+import { AppliedEventAction } from '../components';
 import { HireeContract } from 'src/components/contract';
-//oil-ออยแอบเพิ่ม-end
-const AppliedEventItem = ({
-  application,
-  onCancel, // when click cancel
-  onSelectEvent,
-}) => {
+import { ViewEventInfoButton } from 'src/components/action-buttons/view-event-info-button';
+
+const AppliedEventItem = ({ application, refreshCallback }) => {
   const {
     status: applicationStatus,
     event: {
@@ -41,26 +35,49 @@ const AppliedEventItem = ({
       },
     },
   } = application;
-  console.log(application);
   return (
-    <div className='applied-event-item clearfix'>
-      <Image
-        className='event-image'
-        src={[
-          config.API_URL + `/events/${eventId}/pic`,
-          'https://i.pravatar.cc/180',
-        ]}
-        loader={<div className='event-image placeholder'></div>}
-      />
-      <div className='event-info'>
-        <div className='event-name' onClick={onSelectEvent}>
-          {' '}
-          {eventName}{' '}
+    <div
+      className={classNames({
+        'applied-event-item clearfix': true,
+        cancelled:
+          applicationStatus == ApplicationStatus.APPLICATION_REJECTED ||
+          eventStatus == EventStatus.CANCELLED,
+      })}>
+      <div className='event-image-container'>
+        <Image
+          className='event-image'
+          src={[
+            config.API_URL + `/events/${eventId}/pic`,
+            'https://i.pravatar.cc/180',
+          ]}
+          loader={<div className='event-image placeholder'></div>}
+        />
+        <div className='banner-container'>
+          <div
+            className={classNames({
+              banner: true,
+              show:
+                eventStatus == EventStatus.COMPLETE ||
+                eventStatus == EventStatus.CANCELLED ||
+                applicationStatus == ApplicationStatus.APPLICATION_REJECTED,
+            })}>
+            {(() => {
+              if (eventStatus == EventStatus.COMPLETE) return 'Completed';
+              if (eventStatus == EventStatus.CANCELLED) return 'Cancelled';
+              if (applicationStatus == ApplicationStatus.APPLICATION_REJECTED)
+                return 'Rejected';
+            })()}
+          </div>
         </div>
+      </div>
+      <div className='event-info'>
+        <ViewEventInfoButton application={application}>
+          <div className='event-name'> {eventName} </div>
+        </ViewEventInfoButton>
         <div className='desc'>
           <div className='label'> Your status </div>
           <div className='value'>
-            <EventStatusIndicator
+            <HireeEventStatusIndicator
               eventStatus={eventStatus}
               applicationStatus={applicationStatus}
             />
@@ -70,10 +87,15 @@ const AppliedEventItem = ({
           <div className='label'> Contract Status </div>
           <div className='value'>
             {/** TODO */}
-            <ContractStatusIndicator contractStatus={'TODO'} />
-            {/**oil-ออยแอบเพิ่มไว้นะ แก้ได้-start*/}
             <HireeContract eventId={eventId} application={application} />
-            {/**oil-ออยแอบเพิ่มไว้นะ แก้ได้-end*/}
+            <ContractStatusIndicator contractStatus={'TODO'} />
+          </div>
+        </div>
+        <div className='desc'>
+          <div className='label'> Payment Status </div>
+          <div className='value'>
+            {/** TODO */}
+            <PaymentStatusIndicator eventStatus={eventStatus} />
           </div>
         </div>
         <div className='desc'>
@@ -88,16 +110,15 @@ const AppliedEventItem = ({
           <div className='label'> Hirer </div>
           <div className='value'> {firstName + ' ' + lastName} </div>
         </div>
+        <AppliedEventAction
+          application={application}
+          debug={true}
+          refreshCallback={refreshCallback}
+        />
       </div>
       <div className='price-tag'>
         <div className='price'> {price || 'price ????'}</div>
         <div className='currency'> baht </div>
-      </div>
-      <div className='cancel-wrapper'>
-        <button onClick={onCancel}>
-          <FontAwesomeIcon icon={faExclamationTriangle} />
-          cancel
-        </button>
       </div>
     </div>
   );
@@ -106,10 +127,6 @@ const AppliedEventItem = ({
 const MyApplications = () => {
   const [applications, setApplications] = useState([]);
   const isFetch = useRef(false);
-  const targetEvent = useRef(null); // use Ref to prevent to many state
-  const [showCancelDialog, setShowCancelDialog] = useState(false);
-  const [showInfoDialog, setShowInfoDialog] = useState(false);
-  const [applicationToShow, setApplicationToShow] = useState(null);
 
   const fetchApplications = () => {
     request
@@ -138,69 +155,16 @@ const MyApplications = () => {
     fetchApplications();
   }
 
-  // TODO: wait for API
-  // set target event id then show dialog
-  const confirmCancelApplicationOf = (eventId) => {
-    targetEvent.current = eventId;
-    setShowCancelDialog(true);
-  };
-
-  // cancel application of specified event
-  const cancelEvent = (confirmed) => {
-    // always hide dialog
-    setShowCancelDialog(false);
-    if (!confirmed) return;
-    request
-      .delete(
-        config.API_URL +
-          `/application/${targetEvent.current}/cancel-my-application`
-      )
-      .withCredentials()
-      .then((res) => {
-        // too lazy to optimize API request
-        fetchApplications();
-      })
-      .catch((err) => {
-        alert('error canceling application' + err.response.text);
-        console.error('error canceling application' + err.response.body);
-      });
-  };
-
-  const showApplicationPopup = (application) => {
-    console.log('show application', application);
-    setApplicationToShow(application);
-    setShowInfoDialog(true);
-  };
-
   return (
     <div className='band-invitations'>
       {applications.map((application) => (
-        <AppliedEventItem
-          application={application}
-          onCancel={() => confirmCancelApplicationOf(application.eventId)}
-          onSelectEvent={() => showApplicationPopup(application)}
-        />
-      ))}
-      <Dialog
-        isOpen={showCancelDialog}
-        onClose={() => setShowCancelDialog(false)}>
-        <ConfirmDialog
-          title='Cancel Event'
-          question="This will withdraw you from event! this action can't be undone"
-          callback={cancelEvent}
-        />
-      </Dialog>
-      <Dialog isOpen={showInfoDialog} onClose={() => setShowInfoDialog(false)}>
-        {applicationToShow && (
-          <ApplicationInfo
-            application={applicationToShow}
-            onClose={() => setShowInfoDialog(false)}
-            onCancel={() =>
-              confirmCancelApplicationOf(applicationToShow.eventId)
-            }
+        <>
+          <AppliedEventItem
+            application={application}
+            refreshCallback={fetchApplications} // on success -> fetch appl.
           />
-        )}
-      </Dialog>
+        </>
+      ))}
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { Switch, useRouteMatch, Route } from 'react-router-dom';
 import EventInvitations from './event-invitations';
 import MyEventsPage from './my-applications';
 import MusicianProfile from './musician-profile';
+import CalendarPage from './calendar';
 
 const sidebarItems = [
   SideNavItemDetail('My Profile', '/musician/my-profile'),
@@ -34,6 +35,9 @@ const MusicianDashboard = () => {
           <Switch>
             <Route path={url + '/my-profile'}>
               <MusicianProfile />
+            </Route>
+            <Route path={url + '/calendar'}>
+              <CalendarPage />
             </Route>
             <Route path={url + '/event-invitations'}>
               <EventInvitations />

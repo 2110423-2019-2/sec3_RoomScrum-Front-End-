@@ -1,6 +1,6 @@
 import { ApplicationStatus, EventStatus } from 'src/enums';
 
-export const calculateEventStatus = (eventStatus, applicationStatus) => {
+export const calculateHireeEventStatus = (eventStatus, applicationStatus) => {
     if (eventStatus == EventStatus.CANCELLED) return "Cancelled";
     switch (applicationStatus) {
         case ApplicationStatus.IS_INVITED:
@@ -13,7 +13,7 @@ export const calculateEventStatus = (eventStatus, applicationStatus) => {
             return "Rejected";
     }
 }
-export const calculateEventColor = (eventStatus, applicationStatus) => {
+export const calculateHireeEventColor = (eventStatus, applicationStatus) => {
     if (eventStatus == EventStatus.CANCELLED) return "red";
     switch (applicationStatus) {
         // 3 status พวกนี้รู้แน่ชัดว่าควรแสดงว่าไร
@@ -25,5 +25,42 @@ export const calculateEventColor = (eventStatus, applicationStatus) => {
             return "green";
         case ApplicationStatus.APPLICATION_REJECTED:
             return "red";
+    }
+}
+
+export const calculateHirerEventStatus = (eventStatus, applicationStatus) => {
+    switch (eventStatus) {
+        case EventStatus.CREATED:
+            return "Created";
+        case EventStatus.HAVE_APPLICANT:
+            return "Have hiree(s)";
+        case EventStatus.CONTRACT_DRAFTING:
+            return "In Contract Process";
+        case EventStatus.PAYMENT_PENDING:
+            return "Payment Pending";
+        case EventStatus.SETTLE:
+            return "Settle";
+        case EventStatus.COMPLETE:
+            return "Settle";
+        case EventStatus.CANCELLED:
+            return "Cancelled";
+    }
+}
+export const calculateHirerEventColor = (eventStatus, applicationStatus) => {
+    switch (eventStatus) {
+        case EventStatus.CREATED:
+            return "Created";
+        case EventStatus.HAVE_APPLICANT:
+            return "Have hiree(s)";
+        case EventStatus.CONTRACT_DRAFTING:
+            return "In Contract Process";
+        case EventStatus.PAYMENT_PENDING:
+            return "Payment Pending";
+        case EventStatus.SETTLE:
+            return "Settle";
+        case EventStatus.COMPLETE:
+            return "Settle";
+        case EventStatus.CANCELLED:
+            return "Cancelled";
     }
 }

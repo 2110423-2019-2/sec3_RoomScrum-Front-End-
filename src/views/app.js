@@ -25,11 +25,12 @@ const App = ({ loginState }) => {
       .get(`${config.API_URL}/auth/status`)
       .withCredentials()
       .then((res) => {
-        const { username, userId } = res.body;
-        console.log('logged in data', { username, userId });
+        const { username, userId, userType } = res.body;
+        console.log('logged in data', res.body);
         if (username) {
           loginState.username = username;
           loginState.userId = userId;
+          loginState.userType = userType;
           console.log('logged in as', username);
         }
       })
