@@ -6,7 +6,7 @@ import {
   faUserCircle,
   faCaretDown,
   faTruckMonster,
-  faBell
+  faBell,
 } from '@fortawesome/free-solid-svg-icons';
 import { globalLoginState } from 'src/store/login-state';
 import { observer } from 'mobx-react';
@@ -27,11 +27,10 @@ const LoginButtons = () => {
     <div className='login-buttons'>
       <LoginDialog open={isOpen} onRequestClose={closeDialog} />
       <Link className='btn btn-secondary' onClick={openDialog}>
-        Login{' '}
+        Login
       </Link>
       <Link className='btn btn-secondary' to='/register'>
-        {' '}
-        Register{' '}
+        Register
       </Link>
     </div>
   );
@@ -68,51 +67,41 @@ const Avatar = observer(({ loginState }) => {
       <div
         className={classnames({
           'dropdown-menu dropdown list-group': true,
-          show: showDropdown
+          show: showDropdown,
         })}>
         {/* FIX PATH LATER */}
         <Link className='dropdown-item' to='/profile/me/application'>
-          {' '}
-          Applications{' '}
+          Applications
         </Link>
         <Link className='dropdown-item' to='/profile/me/calendar'>
-          {' '}
-          Calendar{' '}
+          Calendar
         </Link>
         <div className='dropdown-divider'></div>
         <Link className='dropdown-item' to='/hirer/event'>
-          {' '}
-          My Events{' '}
+          My Events
         </Link>
         <Link className='dropdown-item' to='/event/search'>
-          {' '}
-          Find Events{' '}
+          Find Events
         </Link>
         <Link className='dropdown-item' to='/event/create'>
-          {' '}
-          Create Event{' '}
+          Create Event
         </Link>
         <div className='dropdown-divider'></div>
         <Link className='dropdown-item' to='/band/list'>
-          {' '}
-          My Bands{' '}
+          My Bands
         </Link>
         <Link className='dropdown-item' to='/band/search'>
-          {' '}
-          Find Bands{' '}
+          Find Bands
         </Link>
         <Link className='dropdown-item' to='/band/create'>
-          {' '}
-          Create Band{' '}
+          Create Band
         </Link>
         <div className='dropdown-divider'></div>
         <Link className='dropdown-item' to='/profile/me'>
-          {' '}
-          My Profile{' '}
+          My Profile
         </Link>
         <div className='text-danger dropdown-item' onClick={onLogout}>
-          {' '}
-          Logout{' '}
+          Logout
         </div>
       </div>
     </div>
@@ -121,30 +110,25 @@ const Avatar = observer(({ loginState }) => {
 
 const Navbar = observer(({ loginState }) => {
   return (
-    <div className="navbar flex-row shadow-sm">
-      <div className="navbar-left">
-        <Link className="title text-white" to="/">
-          {" "}
-          Room scrum{" "}
+    <div className='navbar flex-row shadow-sm'>
+      <div className='navbar-left'>
+        <Link className='title text-white' to='/'>
+          Room scrum
         </Link>
       </div>
       <div className='navbar-right flex-row'>
         <div className='link-section flex-row'>
           <Link className='text-white' to='/find/musician'>
-            {' '}
-            Find Musician{' '}
+            Find Musician
           </Link>
           <Link className='text-white' to='/find/events'>
-            {' '}
-            Find Events{' '}
+            Find Events
           </Link>
           <Link className='text-white' to='/find/bands'>
-            {' '}
-            Find Bands{' '}
+            Find Bands
           </Link>
           <Link className='text-white' to='/admin/approve-user'>
-            {' '}
-            Manage{' '}
+            Manage
           </Link>
         </div>
         <div className='dynamic-section'>
