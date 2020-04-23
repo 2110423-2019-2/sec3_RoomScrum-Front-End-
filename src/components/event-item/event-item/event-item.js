@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import './event-item.scss';
 import request from 'superagent';
 import config from 'src/config';
+import Image from 'react-image';
 
 const customStyles = {
   content: {
@@ -11,15 +12,15 @@ const customStyles = {
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
-  }
+    transform: 'translate(-50%, -50%)',
+  },
 };
 
 const MoreDetailModal = ({
   eventId,
   description,
   startdatetime,
-  enddatetime
+  enddatetime,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
@@ -37,10 +38,10 @@ const MoreDetailModal = ({
       .post(`${config.API_URL}/application/apply`)
       .withCredentials()
       .send(formdata)
-      .then(res => {
+      .then((res) => {
         console.log(res.text);
       })
-      .catch(err => {
+      .catch((err) => {
         alert('err' + err);
       });
     setIsOpen(false);
@@ -84,12 +85,19 @@ const EventItem = ({
     zipcode,
     startdatetime,
     enddatetime,
-    eventImage
-  }
+    eventImage,
+  },
 }) => {
   return (
     <div className='card event-item' style={{ width: 200 }}>
-      <img className='card-img-top' src={eventImage} alt='Card image cap' />
+      <Image
+        className='card-img-top'
+        src={[
+          config.API_URL + `/events/${eventId}/pic`,
+          'https://i.pravatar.cc/180',
+        ]}
+        loader={<div className='event-image placeholder'></div>}
+      />
       <div className='card-body'>
         <h5 className='card-title'>{eventName} </h5>
         <p className='card-text'>

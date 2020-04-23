@@ -14,12 +14,12 @@ const FindEvents = () => {
   const getEvents = () => {
     request
       .get(`${config.API_URL}/events`)
-      .then(res => {
+      .then((res) => {
         setIsFetch(true);
         setEventList(res.body);
         console.log(res.body);
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   };
@@ -33,17 +33,17 @@ const FindEvents = () => {
       .post(`${config.API_URL}/events/search`)
       .send({
         searchType: searchInput.current.value,
-        value: keywordInput.current.value
+        value: keywordInput.current.value,
       })
-      .then(res => {
+      .then((res) => {
         setEventList(res.body);
       })
-      .catch(err => {
+      .catch((err) => {
         getEvents();
       });
   };
 
-  const eventItems = eventList.map(each => {
+  const eventItems = eventList.map((each) => {
     return (
       <div>
         <EventItem each={each} />
@@ -69,7 +69,7 @@ const FindEvents = () => {
             <option value='location'>search by location</option>
           </select>
           <button className='col-2' onClick={advanceSearch}>
-            submitka
+            submit
           </button>
         </div>
       </div>

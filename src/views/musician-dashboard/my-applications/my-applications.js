@@ -11,7 +11,7 @@ import request from 'superagent';
 import config from 'src/config';
 import {
   EventStatusIndicator,
-  ContractStatusIndicator
+  ContractStatusIndicator,
 } from 'src/components/event-item/status-indicator/status-indicator';
 import { sortByTimestampDesc } from '../util';
 import { ApplicationStatus } from 'src/enums';
@@ -21,7 +21,7 @@ import { HireeContract } from 'src/components/contract';
 const AppliedEventItem = ({
   application,
   onCancel, // when click cancel
-  onSelectEvent
+  onSelectEvent,
 }) => {
   const {
     status: applicationStatus,
@@ -37,9 +37,9 @@ const AppliedEventItem = ({
       user: {
         // hirer
         firstName,
-        lastName
-      }
-    }
+        lastName,
+      },
+    },
   } = application;
   console.log(application);
   return (
@@ -48,7 +48,7 @@ const AppliedEventItem = ({
         className='event-image'
         src={[
           config.API_URL + `/events/${eventId}/pic`,
-          'https://i.pravatar.cc/180'
+          'https://i.pravatar.cc/180',
         ]}
         loader={<div className='event-image placeholder'></div>}
       />
@@ -118,16 +118,16 @@ const MyApplications = () => {
         status: [
           ApplicationStatus.APPLICATION_REJECTED,
           ApplicationStatus.IS_ACCEPTED,
-          ApplicationStatus.IS_APPLIED
-        ]
+          ApplicationStatus.IS_APPLIED,
+        ],
       })
       .withCredentials()
-      .then(res => {
+      .then((res) => {
         const applications = res.body;
         applications.sort(sortByTimestampDesc);
         setApplications(applications);
       })
-      .catch(err => {
+      .catch((err) => {
         alert('Error getting applied events ');
         console.error('Error: Fetch applied events');
       });
@@ -140,13 +140,13 @@ const MyApplications = () => {
 
   // TODO: wait for API
   // set target event id then show dialog
-  const confirmCancelApplicationOf = eventId => {
+  const confirmCancelApplicationOf = (eventId) => {
     targetEvent.current = eventId;
     setShowCancelDialog(true);
   };
 
   // cancel application of specified event
-  const cancelEvent = confirmed => {
+  const cancelEvent = (confirmed) => {
     // always hide dialog
     setShowCancelDialog(false);
     if (!confirmed) return;
@@ -156,17 +156,17 @@ const MyApplications = () => {
           `/application/${targetEvent.current}/cancel-my-application`
       )
       .withCredentials()
-      .then(res => {
+      .then((res) => {
         // too lazy to optimize API request
         fetchApplications();
       })
-      .catch(err => {
+      .catch((err) => {
         alert('error canceling application' + err.response.text);
         console.error('error canceling application' + err.response.body);
       });
   };
 
-  const showApplicationPopup = application => {
+  const showApplicationPopup = (application) => {
     console.log('show application', application);
     setApplicationToShow(application);
     setShowInfoDialog(true);
@@ -174,7 +174,7 @@ const MyApplications = () => {
 
   return (
     <div className='band-invitations'>
-      {applications.map(application => (
+      {applications.map((application) => (
         <AppliedEventItem
           application={application}
           onCancel={() => confirmCancelApplicationOf(application.eventId)}
