@@ -20,7 +20,7 @@ jobs:
       env:
         KEY: ${{ secrets.EC2_PRIVATE_KEY }}
       run: |
-        echo $KEY >> private-key.cer
+        echo "$KEY" >> private-key.cer
         chmod 600 private-key.cer
 
     - name: deployment
