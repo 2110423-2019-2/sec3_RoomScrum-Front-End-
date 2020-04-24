@@ -16,21 +16,20 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
 
-    - name: prepare environment
+    - name: prepare key
       env:
         KEY: ${{ secrets.EC2_PRIVATE_KEY }}
-        ADDRESS: ${{ secrets.EC2_CONNECTION_STRING }}
-
       run: |
-        export ADDRESS=$ADDRESS
-        export BRANCH=${GITHUB_REF/refs\/heads\//}
-        export PROJECT_DIR=~/Projects/se-frontend-$BRANCH
-        
         echo $KEY >> private-key.cer
         chmod 600 private-key.cer
 
     - name: deployment
+      env:
+        ADDRESS: ${{ secrets.EC2_CONNECTION_STRING }}
       run: |
+        export BRANCH=${GITHUB_REF/refs\/heads\//}
+        export PROJECT_DIR=~/Projects/se-frontend-$BRANCH
+        
         ssh -oStrictHostKeyChecking=no -i private-key.cer $ADDRESS "
           
           bash --login -i -c '
