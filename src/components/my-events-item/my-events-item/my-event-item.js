@@ -137,7 +137,7 @@ const ContractModal = ({ eventId, status }) => {
 };
 
 
-const MusicianInvitation = () => {
+const MusicianInvitation = ({eventId}) => {
   
   const [musicianChoice, setMusicianChoice] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -166,6 +166,7 @@ const MusicianInvitation = () => {
       .send({username: query})
       .then(res => {
           const musicians = JSON.parse(res.text);
+          console.log(musicians);
           setMusicianChoice(musicians);
           setLoading(false);
       })
@@ -176,8 +177,8 @@ const MusicianInvitation = () => {
 
   const handleSelection = (selection) => {
       if (!selection || selection.length == 0) return;
-      const [{username}] = selection;
-      setSelectedMusician(username);
+      const [{userId}] = selection;
+      setSelectedMusician(userId);
       setOpenInvitationDialog(true);
   }
 
@@ -185,8 +186,9 @@ const MusicianInvitation = () => {
       setOpenInvitationDialog(false);
       if (!confirm) return;
       if (selectedMusician) {
-          request.post(config.API_URL + '/admin/user/ban') // to change
-          .send({username: selectedMusician, banDuration: 7}) // to change
+          request.post(config.API_URL + '/application/invite-musician') // to change
+          .withCredentials()
+          .send({hireeId: selectedMusician, eventId}) // to change
           .then(res => {
               setOpenInvitationDialog(false);
               handleClose();
@@ -235,7 +237,7 @@ const MusicianInvitation = () => {
         <Dialog isOpen={openInvitationDialog} onClose={() => setOpenInvitationDialog(false)}>
             <ConfirmDialog
                 callback={handleInvite}
-                question={`Are you sure you want to invite @${selectedMusician}\
+                question={`Are you sure you want to invite him/her \
                 ? this cannot be undone!`}
                 title="Invite Musician to this event"
             />
@@ -436,7 +438,7 @@ const MyEventItem = ({ each, onClick }) => {
             <Button type='danger' name='Cancel' onClick={() => onClick(eventId)}> Cancel </Button>         
             <HirerContract eventId={eventId} />          
             <CreateReview eventId={eventId}  />
-            <MusicianInvitation />
+            <MusicianInvitation eventId={eventId} />
 
           </div> 
         </div>   
