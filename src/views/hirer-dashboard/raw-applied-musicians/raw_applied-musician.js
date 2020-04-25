@@ -1,75 +1,72 @@
-import React, { useState } from 'react';
-import { Navbar } from 'src/components/common';
+import React, { useState } from "react";
+import { Navbar } from "src/components/common";
 import { AppliedMusicianItem } from 'src/components/applied-musicians-item';
-import request from 'superagent';
-import config from 'src/config';
+import request from "superagent";
+import config from "src/config";
 // import {Modal} from 'react-bootstrap';
-import Modal from "react-modal";
-import './raw_applied_musician.scss';
+import "./raw_applied_musician.scss";
+import Image from 'react-image';
 
-const Applicants = ({eventId}) => {
-    const [show, setShow] = useState(false);
-    const [isFetch, setIsFetch] = useState(false);
-    const [applicantsList, setApplicantsList] = useState([]);
-    // const handleShow = () => setShow(true);
-    // const handleClose = () => setShow(false);
-    const customStyles = {
-      content: {
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)"
-      }
-    };
+// const AppliedMusicianItem = ({ applicant }) => {
+//   const {
+//     eventId: eventId,
+//     hiree: { firstName, lastName, username },
+//     hireeId: hireeId,
+//   } = applicant;
+//   return (
+//     <div className="AppliedMusicianItem">
+//       <div className="MusicianImageContainer">
+//         <Image
+//           className="MusicianImage"
+//           src={[config.API_URL + `/user/profile-pic/${hireeId}`]}
+//         />
+//       </div>
+//       <div className="MusicianInfo">
+//         <div className="Description">
+//           <div className="Label">
+//             {firstName} {lastName}
+//           </div>
+//           <div className="Value">{username}</div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
+const Applicants = ({ eventId }) => {
+  const [isFetch, setIsFetch] = useState(false);
+  const [applicantsList, setApplicantsList] = useState([]);
+  // const handleShow = () => setShow(true);
+  // const handleClose = () => setShow(false);
+  if (!isFetch) {
+    request
+      .get(`${config.API_URL}/application/event/${eventId}`)
+      .withCredentials()
+      .then((res) => {
+        setIsFetch(true);
+        setApplicantsList(res.body);
+        console.log(res.body);
+      })
 
-    if (!isFetch) {
-        request
-          .get(`${config.API_URL}/application/event/${eventId}`)
-          .withCredentials()
-          .then(res => {
-            setIsFetch(true);
-            setApplicantsList(res.body);
-            console.log(res.body);
-          })
-          
-          .catch(err => {
-            alert(err);
-          });
-    }
+      .catch((err) => {
+        alert(err);
+      });
+  }
 
-    const appliedMusicianItem = applicantsList.map(each => {
-        return (
-          <div>
-            <AppliedMusicianItem each={each} />
-          </div>
-        );
-    });
-
-    const [isOpen, setIsOpen] = useState(false);
-    const openModal = () => {
-      setIsOpen(true);
-      console.log('openModal')
-    };
-    const afterOpenModal = () => {};
-    const closeModal = () => {
-      setIsOpen(false);
-    };
-
- 
+  const appliedMusicianItem = applicantsList.map((each) => {
     return (
       <div>
-        <p class='applied-musician'>
-          Applied Musician
-        </p>
-              <div>
-                {appliedMusicianItem};
-              </div>                       
+        <AppliedMusicianItem each={each} />
       </div>
     );
-};
+  });
 
+  return (
+    <div>
+      <p class="applied-musician">Applied Musician</p>
+      <div>{appliedMusicianItem};</div>
+    </div>
+  );
+};
 
 export default Applicants;
