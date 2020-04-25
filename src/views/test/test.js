@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useRouteMatch, Switch, Route, Link } from 'react-router-dom';
 import {
@@ -7,12 +7,15 @@ import {
   Navbar,
   DashboardLayout,
   DashboardNavigation,
-  DashboardContent
+  DashboardContent,
 } from 'src/components/common';
 import SideNavigation from 'src/components/common/sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenSquare, faEdit } from '@fortawesome/free-solid-svg-icons';
-
+import request from 'superagent';
+import config from 'src/config';
+import { sortByTimestampDesc } from '../musician-dashboard/util';
+import { ApplicationStatus, EventStatus } from 'src/enums';
 const FadeBackground = styled.div`
   background-color: hsla(224, 46%, 11%, 0.65);
   height: 97vh;
@@ -70,6 +73,36 @@ const Test = () => {
   const edit = () => {
     alert('edit');
   };
+  const [applications, setApplications] = useState([]);
+
+  const fetch = () => {
+    request
+      .post(config.API_URL + '/application/my-application') // get my applications, with event detail
+      .send({
+        status: [
+          // ApplicationStatus.APPLICATION_REJECTED,
+          // ApplicationStatus.IS_ACCEPTED,
+          // ApplicationStatus.IS_APPLIED,
+          'applicationRejected',
+          'isAccepted',
+          'isApplied',
+        ],
+      })
+      .withCredentials()
+      .then((res) => {
+        // console.log(res.body);
+        const applications = res.body;
+        applications.sort(sortByTimestampDesc);
+        setApplications(applications);
+        //OILstart
+        console.log(res.body);
+        //OILend
+      })
+      .catch((err) => {
+        alert('Error getting applied events ');
+        console.error('Error: Fetch applied events');
+      });
+  };
 
   return (
     <div>
@@ -114,6 +147,7 @@ const Test = () => {
           <Button className='mr-auto' name='accept' type='primary'></Button>
   </div>*/}
       </ContractModal>
+      <button onClick={fetch}>test2</button>
     </div>
   );
 };

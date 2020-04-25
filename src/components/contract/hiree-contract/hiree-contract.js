@@ -28,9 +28,9 @@ const Btn = styled.button`
   border: none;
   color:white;
   background-color: #559be3;
-    ${props => props.type == 'primary' && 'background-color:#559BE3'}
-    ${props => props.type == 'secondary' && 'background-color:#939393'}
-    ${props => props.type == 'danger' && 'background-color:#BA2B2B'};
+    ${(props) => props.type == 'primary' && 'background-color:#559BE3'}
+    ${(props) => props.type == 'secondary' && 'background-color:#939393'}
+    ${(props) => props.type == 'danger' && 'background-color:#BA2B2B'};
 `;
 
 const BtnCancel = styled.button`
@@ -96,17 +96,18 @@ const HireeContract = ({ eventId, application }) => {
       );
     return button;
   };
+  console.log(application.a);
 
   const send = () => {
     request
       .get(`${config.API_URL}/contract/send/${eventId}`)
       .withCredentials()
-      .then(res => {
+      .then((res) => {
         console.log(res);
         alert('send complete');
         setShowContractDialog(false);
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
 
@@ -117,12 +118,12 @@ const HireeContract = ({ eventId, application }) => {
     request
       .get(`${config.API_URL}/contract/cancel/${eventId}`)
       .withCredentials()
-      .then(res => {
+      .then((res) => {
         console.log(res);
         alert('cancel complete');
         setShowContractDialog(false);
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   };

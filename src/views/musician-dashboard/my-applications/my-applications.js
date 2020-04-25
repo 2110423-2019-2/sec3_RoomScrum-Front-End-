@@ -27,7 +27,7 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
       province,
       userId: hirerId,
       price,
-      contractStatus,
+      // status: contractStatus,
       user: {
         // hirer
         firstName,
@@ -35,6 +35,10 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
       },
     },
   } = application;
+
+  const contractStatus = application.event.contract
+    ? application.event.contract.status
+    : 'NotActive';
   return (
     <div
       className={classNames({
@@ -86,9 +90,15 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
         <div className='desc'>
           <div className='label'> Contract Status </div>
           <div className='value'>
-            {/** TODO */}
-            <HireeContract eventId={eventId} application={application} />
-            <ContractStatusIndicator contractStatus={'TODO'} />
+            {/** TODO
+              <ContractStatusIndicator contractStatus={'TODO'} />
+             */}
+            <ContractStatusIndicator contractStatus={contractStatus} />
+            {(() => {
+              return contractStatus == 'NotActive' ? null : (
+                <HireeContract eventId={eventId} application={application} />
+              );
+            })()}
           </div>
         </div>
         <div className='desc'>
@@ -143,6 +153,9 @@ const MyApplications = () => {
         const applications = res.body;
         applications.sort(sortByTimestampDesc);
         setApplications(applications);
+        //OIL
+        // console.log(res.body);
+        //OIL
       })
       .catch((err) => {
         alert('Error getting applied events ');
