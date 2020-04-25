@@ -367,9 +367,8 @@ const MyEventItem = ({ each, onClick }) => {
                 {province}
             </div>
           </div>
-          <div className='row HirerAction' >
+          <div className='HirerAction' >
             <Button type='danger' name='Cancel' onClick={() => onClick(eventId)}> Cancel </Button>
-          {/**oil-ออยแอบเพิ่ม-start*/}
             <HirerContract eventId={eventId} />
             <CreateReview eventId={eventId} />
             <Button type='danger' name='Invite' onClick={MusicianInvitation}> Invite </Button>
