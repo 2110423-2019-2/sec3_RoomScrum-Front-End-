@@ -87,7 +87,11 @@ const MyEventInfo = ({ each }) => {
             {/* <button onClick={() => doDelete(event.eventId)} > Cancel </button> */}
           </div>
           <div className="AppliedMusician col-5">
-            <Applicants eventId={each.eventId} />
+            {(() => {
+              return status == "Created" ? null : (
+                <Applicants eventId={each.eventId} />
+              );
+            })()}
           </div>
         </div>
       </Modal>

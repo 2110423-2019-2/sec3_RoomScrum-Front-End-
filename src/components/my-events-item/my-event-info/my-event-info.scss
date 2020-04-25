@@ -78,10 +78,18 @@
     max-width: 50%;
     background-color: $dark-navy;
     // box-shadow: 0px 4px 4px #bababa;
-    float: right;
     margin-right: auto;
     margin-left: auto;
     // margin-left: 10px;
     display: inline-block;
+    float:right;
+
+
   }
+  .NoApplicant{
+    background-color: white;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
 }
