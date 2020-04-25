@@ -1,4 +1,5 @@
-.my-event-item {
+@import 'src/styles/color.scss';
+.MyEventItem {
     background-color: white;
     box-shadow: 0px 4px 4px #bababa;
     margin-bottom: 16px;
@@ -6,12 +7,12 @@
     // display: flex;
     flex-flow: row wrap;
 
-    .box1{
-        padding-left: 20px;
-        padding-top: 12px;
+    .EventImageContainer{
+        position: relative;
+        align-self: flex-start;
     }
 
-    .event-image{
+    .EventImage{
         flex: 0 0 auto;
         width: 160px;
         height: 160px;
@@ -21,6 +22,80 @@
             background-color: #bababa;
         }
     }
+
+    .EventInfoContainer{
+        flex:1;
+        .EventName{
+            font-size: 32px;
+            font-weight: bold;
+            color: $dark-navy;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .Describtion{
+            display: flex;
+            flex-flow: row nowrap;
+
+            > * {
+                font-size: 14px;
+                color: $dark-navy;
+            }
+
+            > .Label {
+                flex: 0 0 180px;
+                font-weight: bold;
+            }
+
+            > .Value {
+                flex: 1 0 0;
+                word-wrap: break-word;
+            }
+
+        }
+    }
+
+    .PriceTag{
+        flex: 0 0 auto;
+        color: $dark-navy;
+        text-align: right;
+        padding-right: 16px;
+        .Price{
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 32px; // reduce spacing
+        }
+        .currency{
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    .box1{
+        padding-left: 20px;
+        padding-top: 12px;
+        // margin-bottom: 30px;
+        .price-tag {
+            flex: 0 0 auto;
+            text-align: right;
+            padding-right: 16px;
+    
+            .price {
+                font-size: 32px;
+                font-weight: bold;
+                line-height: 32px; // reduce spacing
+            }
+            
+            .currency {
+                font-size: 20px;
+                font-weight: bold;
+            }
+        }
+    }
+
+    
 
     .event-name{
         margin-left: 20px;
@@ -45,7 +120,7 @@
     .cancel-wrapper  {
         flex: 0 0 100%;
         text-align: right;
-        padding: 12px 0;
+        padding: 20px 0;
 
         button {
             border: none;
@@ -58,10 +133,14 @@
         }
     }
     .HirerAction{
-        padding: 12px 0;
+        padding: 20px 0;
         width: 100%;
-        margin-left: 12px;
+        margin-left: 30px;
+        margin-right: 50px;
     }
+
+   
+
 .my-event-info {
     background-color: white;
 }

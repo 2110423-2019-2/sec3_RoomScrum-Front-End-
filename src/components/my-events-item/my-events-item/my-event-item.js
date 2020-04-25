@@ -15,6 +15,9 @@ import { HirerContract } from 'src/components/contract';
 //oil-ออยแอบเพิ่ม-end
 import { Button } from 'src/components/common';
 import Image from 'react-image';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+import Dialog from 'src/components/common/dialog';
+import ConfirmDialog from 'src/views/admin/user-report/confirm-dialog';
 // const EventInfoModal = ({
 //   eventName,
 //   description,
@@ -230,6 +233,92 @@ const ContractModal = ({ eventId, status }) => {
   );
 };
 
+
+const MusicianInvitation = () => {
+  
+  const [musicianChoice, setMusicianChoice] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  
+  const [openInvitationDialog, setOpenInvitationDialog] = useState(false);
+  const [selectedMusician, setSelectedMusician] = useState(null);
+  
+
+  
+  const fetchChoice = (query) => {
+      setLoading(true);
+      request.post(config.API_URL + '/user/find-by-username') // to change
+      .withCredentials()
+      .send({username: query})
+      .then(res => {
+          const musicians = JSON.parse(res.text);
+          setMusicianChoice(musicians);
+          setLoading(false);
+      })
+      .catch(err => {
+          console.error("error fetching musician selection", err)
+      });
+  }
+
+  const handleSelection = (selection) => {
+      if (!selection || selection.length == 0) return;
+      const [{username}] = selection;
+      setSelectedMusician(username);
+      setOpenInvitationDialog(true);
+  }
+
+  const handleInvite = (confirm) => {
+      setOpenInvitationDialog(false);
+      if (!confirm) return;
+      if (selectedMusician) {
+          request.post(config.API_URL + '/admin/user/ban') // to change
+          .send({username: selectedMusician, banDuration: 7}) // to change
+          .then(res => {
+              setOpenInvitationDialog(false);
+              alert("Invite musician success");
+          })
+          .catch(err => {
+              alert("Invite musician error");
+              console.error("Invite musician error", err);
+          });
+      }
+  }
+
+  return (
+    <div className="invitation-musician-page">
+        <Dialog isOpen={openInvitationDialog} onClose={() => setOpenInvitationDialog(false)}>
+            <ConfirmDialog
+                callback={handleInvite}
+                question={`Are you sure you want to invite @${selectedMusician}\
+                ? this cannot be undone!`}
+                title="Invite Musician to this event"
+            />
+        </Dialog>
+        <div className="container p-0">
+            <div className="centered header">
+                <div className="label"> Enter username to invite</div>
+                <AsyncTypeahead
+                    options={musicianChoice}
+                    isLoading={isLoading}
+                    id="async-example"
+                    labelKey="username"
+                    multiple={false}
+                    minLength={3}
+                    onSearch={fetchChoice}
+                    placeholder="enter username to invite"
+                    onChange={handleSelection}
+                    renderMenuItemChildren={(option, props) => {
+                        const {firstName, lastName, username} = option;
+                        return <div> {`${firstName} ${lastName} (@${username})`}</div>;
+                    }}
+                />
+            </div>
+        </div>
+    </div>
+  )
+
+
+}
+
 const MyEventItem = ({ each, onClick }) => {
   const showContract = () => {
     alert(eventId);
@@ -253,46 +342,43 @@ const MyEventItem = ({ each, onClick }) => {
     userId
   } = each;
   return (
-    <div className='my-event-item'>
-      <div className='row box1'>
-      <Image className='event-image' src={[
+    <div className='MyEventItem clearfix'>
+        <div className = 'EventImageContainer'>
+            <Image className='EventImage' src={[
                 config.API_URL + `/events/${eventId}/pic`]}  />
-        <div className='event-name'>
-          <MyEventInfo each={each} />
-        <div>
-          <p1 className='text'> {district} </p1>
         </div>
-        <div>
-          <p1 className='text'> {province} </p1>
-        </div>
-        </div>
-        <div className='row HirerAction' >
-          <Button type='danger' name='Cancel' onClick={() => onClick(eventId)}> Cancel </Button>
+        <div className='EventInfoContainer'>
+          <div className='EventName'>
+            <MyEventInfo each={each} />
+          </div>
+          <div className='Describtion'>
+            <div className = 'Label'>
+                District
+            </div>
+            <div className = 'Value'>
+                {district}
+            </div>
+          </div>
+          <div className='Describtion'>
+            <div className = 'Label'>
+                Province
+            </div>
+            <div className = 'Value'>
+                {province}
+            </div>
+          </div>
+          <div className='row HirerAction' >
+            <Button type='danger' name='Cancel' onClick={() => onClick(eventId)}> Cancel </Button>
           {/**oil-ออยแอบเพิ่ม-start*/}
-          <HirerContract eventId={eventId} />
-          <CreateReview eventId={eventId} />
-          {/**oil-ออยแอบเพิ่ม-end*/}
-          {/* <EventInfoModal
-          eventName={eventName}
-          description={description}
-          address={address}
-          subdistrict={subdistrict}
-          district={district}
-          province={province}
-          country={country}
-          zipcode={zipcode}
-          startdatetime={startdatetime}
-          enddatetime={enddatetime}
-          status={status}
-        /> */}
+            <HirerContract eventId={eventId} />
+            <CreateReview eventId={eventId} />
+            <Button type='danger' name='Invite' onClick={MusicianInvitation}> Invite </Button>
+          </div> 
+        </div>   
+        <div className='PriceTag'>
+          <div className='Price'> price ????'</div>
+          <div className='Currency'> baht </div>
         </div>
-        {/* <Switch>
-      <Route exact path="/hirer/event/eventinfo">
-        <MyEventInfo event = {each} />
-      </Route>
-    </Switch>   */}
-
-      </div>
     </div>
   );
 };
