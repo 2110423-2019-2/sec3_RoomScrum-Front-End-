@@ -104,7 +104,7 @@ const HireeContract = ({ eventId, application }) => {
     return button;
   };
 
-  console.log(application.contract);
+  // console.log(application.contract);
 
   const send = () => {
     request
@@ -145,7 +145,7 @@ const HireeContract = ({ eventId, application }) => {
       <Dialog
         isOpen={showContractDialog}
         onClose={() => setShowContractDialog(false)}>
-        <Contract eventId={eventId}></Contract>
+        <Contract eventId={eventId} application={application}></Contract>
         <ContractModal>
           <div className='row'>
             <div className='label col-3 '></div>

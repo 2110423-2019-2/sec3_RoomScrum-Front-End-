@@ -36,7 +36,6 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
       province,
       userId: hirerId,
       price,
-      // status: contractStatus,
       user: {
         // hirer
         firstName,
@@ -55,7 +54,7 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
 
   // const contractStatus = application.contract.status;
 
-  console.log(application);
+  // console.log(application);
 
   return (
     <div
@@ -113,10 +112,18 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
              */}
             <ContractStatusIndicator contractStatus={contractStatus} />
             {(() => {
-              console.log(contractStatus);
+              // console.log(contractStatus);
               return contractStatus == 'NotActive' ? null : (
                 <HireeContract eventId={eventId} application={application} />
               );
+              // applications.map((application) => (
+              //   <>
+              //     <HireeContract
+              //       eventId={eventId}
+              //       application={application}
+              //     />
+              //   </>
+              // ));
             })()}
           </div>
         </div>
