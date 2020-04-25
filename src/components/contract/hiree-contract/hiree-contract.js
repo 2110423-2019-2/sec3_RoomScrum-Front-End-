@@ -54,6 +54,8 @@ const ContractModal = styled.div`
   overflow: scroll;
   padding: 50px;
   padding-top: 0px;
+  /* border: 30px solid pink; */
+  border: none;
   h1 {
     text-align: center;
     color: #364d9b;
@@ -101,9 +103,8 @@ const HireeContract = ({ eventId, application }) => {
       );
     return button;
   };
-  const { contract } = application;
-  console.log(application);
-  console.log(Object.keys(application));
+
+  console.log(application.contract);
 
   const send = () => {
     request
@@ -146,8 +147,8 @@ const HireeContract = ({ eventId, application }) => {
         onClose={() => setShowContractDialog(false)}>
         <Contract eventId={eventId}></Contract>
         <ContractModal>
-          <div className='row '>
-            <div className='label col-3'></div>
+          <div className='row'>
+            <div className='label col-3 '></div>
             <div className='col-9 grey'>
               <div onClick={edit}>
                 <FontAwesomeIcon icon={faEdit} /> Edit my Contract

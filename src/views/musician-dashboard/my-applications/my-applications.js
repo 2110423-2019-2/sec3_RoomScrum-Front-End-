@@ -17,8 +17,17 @@ import { HireeContract } from 'src/components/contract';
 import { ViewEventInfoButton } from 'src/components/action-buttons/view-event-info-button';
 
 const AppliedEventItem = ({ application, refreshCallback }) => {
+  application.contract = application.event.contract
+    ? application.event.contract
+    : { status: 'NotActive' };
+
+  application.event.price = application.event.price
+    ? application.event.price
+    : 10000;
+
   const {
     status: applicationStatus,
+    contract: { status: contractStatus },
     event: {
       eventName,
       eventId,
@@ -36,9 +45,18 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
     },
   } = application;
 
-  const contractStatus = application.event.contract
-    ? application.event.contract.status
-    : 'NotActive';
+  // application.contract = application.event.contract
+  //   ? application.event.contract
+  //   : { status: 'NotActive' };
+
+  // application.event.price = application.event.price
+  //   ? application.event.price
+  //   : 10000;
+
+  // const contractStatus = application.contract.status;
+
+  console.log(application);
+
   return (
     <div
       className={classNames({
@@ -95,6 +113,7 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
              */}
             <ContractStatusIndicator contractStatus={contractStatus} />
             {(() => {
+              console.log(contractStatus);
               return contractStatus == 'NotActive' ? null : (
                 <HireeContract eventId={eventId} application={application} />
               );
@@ -127,7 +146,7 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
         />
       </div>
       <div className='price-tag'>
-        <div className='price'> {price || 'price ????'}</div>
+        <div className='price'> {price.toLocaleString()}</div>
         <div className='currency'> baht </div>
       </div>
     </div>
