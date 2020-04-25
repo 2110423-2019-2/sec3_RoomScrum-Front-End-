@@ -18,6 +18,11 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import CancelContractButton from 'src/components/contract/cancel-contract-button';
 import request from 'superagent';
 import config from 'src/config';
+import {
+  HireeEventStatusIndicator,
+  PaymentStatusIndicator,
+  ContractStatusIndicator,
+} from 'src/components/event-item/status-indicator/status-indicator';
 
 const Btn = styled.button`
   min-width: 120px;
@@ -96,7 +101,9 @@ const HireeContract = ({ eventId, application }) => {
       );
     return button;
   };
-  console.log(application.a);
+  const { contract } = application;
+  console.log(application);
+  console.log(Object.keys(application));
 
   const send = () => {
     request
