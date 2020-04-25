@@ -143,6 +143,7 @@ const MyApplications = () => {
         const applications = res.body;
         applications.sort(sortByTimestampDesc);
         setApplications(applications);
+        console.log(res.body);
       })
       .catch((err) => {
         alert('Error getting applied events ');

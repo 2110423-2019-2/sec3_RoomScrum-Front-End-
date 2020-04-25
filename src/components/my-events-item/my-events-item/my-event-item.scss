@@ -1,78 +1,105 @@
-@import 'src/styles/color.scss';
+@import "src/styles/color.scss";
 .MyEventItem {
-    background-color: white;
-    box-shadow: 0px 4px 4px #bababa;
-    margin-bottom: 16px;
-    display: flex;
-    flex-flow: row wrap;
+  background-color: white;
+  box-shadow: 0px 4px 4px #bababa;
+  margin-bottom: 16px;
+  display: flex;
+  flex-flow: row wrap;
 
-    .EventImageContainer{
-        position: relative;
-        align-self: flex-start;
+  .EventImageContainer {
+    position: relative;
+    align-self: flex-start;
+  }
+
+  .EventImage {
+    flex: 0 0 auto;
+    width: 160px;
+    height: 160px;
+    margin: 8px 24px 0px 8px;
+
+    &.place-holder {
+      background-color: #bababa;
     }
+  }
 
-    .EventImage{
-        flex: 0 0 auto;
-        width: 160px;
-        height: 160px;
-        margin: 8px 24px 0px 8px;
-        
-        &.place-holder {
-            background-color: #bababa;
-        }
+  .EventInfoContainer {
+    flex: 1;
+    .EventName {
+      font-size: 32px;
+      font-weight: bold;
+      color: $dark-navy;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
+    .Describtion {
+      display: flex;
+      flex-flow: row nowrap;
 
-    .EventInfoContainer{
-        flex:1;
-        .EventName{
-            font-size: 32px;
-            font-weight: bold;
-            color: $dark-navy;
-            cursor: pointer;
-
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-        .Describtion{
-            display: flex;
-            flex-flow: row nowrap;
-
-            > * {
-                font-size: 14px;
-                color: $dark-navy;
-            }
-
-            > .Label {
-                flex: 0 0 180px;
-                font-weight: bold;
-            }
-
-            > .Value {
-                flex: 1 0 0;
-                word-wrap: break-word;
-            }
-
-        }
-    }
-
-    .PriceTag{
-        flex: 0 0 auto;
+      > * {
+        font-size: 14px;
         color: $dark-navy;
-        text-align: right;
-        padding-right: 16px;
-        .Price{
-            font-size: 32px;
-            font-weight: bold;
-            line-height: 32px; // reduce spacing
-        }
-        .currency{
-            font-size: 20px;
-            font-weight: bold;
-        }
+      }
+
+      > .Label {
+        flex: 0 0 180px;
+        font-weight: bold;
+      }
+
+      > .Value {
+        flex: 1 0 0;
+        word-wrap: break-word;
+      }
     }
-    .HirerAction{
-        padding: 20px 0;
-        width: 100%;
+  }
+
+  .PriceTag {
+    flex: 0 0 auto;
+    color: $dark-navy;
+    text-align: right;
+    padding-right: 16px;
+    .Price {
+      font-size: 32px;
+      font-weight: bold;
+      line-height: 32px; // reduce spacing
     }
+    .currency {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+  .HirerAction {
+    padding: 20px 0;
+    width: 100%;
+  }
+}
+
+.ArchieveButton {
+  min-width: 120px;
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  color: white;
+  background-color: #559be3;
+  margin: 0 1em 0 0;
+  cursor: pointer;
+  .ArchieveButtonTitle {
+    text-align: center;
+  }
+}
+
+.InviteButton {
+  min-width: 120px;
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  color: white;
+  background-color: #559be3;
+  margin: 0 1em 0 0;
+  cursor: pointer;
+  .InviteButtonTitle {
+    text-align: center;
+  }
 }
