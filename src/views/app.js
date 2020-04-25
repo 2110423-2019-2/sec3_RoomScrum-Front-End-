@@ -2,18 +2,17 @@ import React, { useRef } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import request from 'superagent';
 
+import { globalLoginState } from 'src/store';
 
-import { globalLoginState } from "src/store";
-
-import NotFoundPage from "./not-found";
-import Home from "./home";
-import Register from "./register";
-import EventPages from "./event";
-import Hirerpages from "./hirer";
-import AdminPages from "./admin";
-import config from "src/config";
-import FindEvents from "./event/find-events";
-import HirerDashboard from "./hirer-dashboard";
+import NotFoundPage from './not-found';
+import Home from './home';
+import Register from './register';
+import EventPages from './event';
+import Hirerpages from './hirer';
+import AdminPages from './admin';
+import config from 'src/config';
+import FindEvents from './event/find-events';
+import HirerDashboard from './hirer-dashboard';
 import MusicianDashboard from './musician-dashboard';
 import Test from 'src/views/test';
 
@@ -25,20 +24,18 @@ const App = ({ loginState }) => {
     request
       .get(`${config.API_URL}/auth/status`)
       .withCredentials()
-      .then(res => {
-        const { username, userId } = res.body;
-        console.log("logged in data", {username, userId})
+      .then((res) => {
+        const { username, userId, userType } = res.body;
+        console.log('logged in data', res.body);
         if (username) {
           loginState.username = username;
           loginState.userId = userId;
+          loginState.userType = userType;
           console.log('logged in as', username);
         }
       })
-      .catch(err => {});
+      .catch((err) => {});
   }
-
-
-
 
   return (
     <Router>
@@ -53,7 +50,7 @@ const App = ({ loginState }) => {
           <AdminPages />
         </Route>
         <Route path='/musician'>
-          <MusicianDashboard/>
+          <MusicianDashboard />
         </Route>
         <Route path='/register'>
           <Register />

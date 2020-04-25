@@ -6,14 +6,17 @@ import {
   faUserCircle,
   faCaretDown,
   faTruckMonster,
-  faBell
+  faBell,
 } from '@fortawesome/free-solid-svg-icons';
 import { globalLoginState } from 'src/store/login-state';
 import { observer } from 'mobx-react';
-import classnames from 'classnames';
 import './navbar.scss';
 import NotificationMenu from 'src/components/notification';
 import DropdownMenu from './dropdown-menu';
+import NavIcon from './components/nav-icon';
+import config from 'src/config';
+import Image from 'react-image';
+import { RoleGuard } from '../guard';
 
 const LoginButtons = () => {
   const [isOpen, setOpen] = useState(false);
@@ -28,22 +31,16 @@ const LoginButtons = () => {
     <div className='login-buttons'>
       <LoginDialog open={isOpen} onRequestClose={closeDialog} />
       <Link className='btn btn-secondary' onClick={openDialog}>
-        Login{' '}
+        Login
       </Link>
       <Link className='btn btn-secondary' to='/register'>
-        {' '}
-        Register{' '}
+        Register
       </Link>
     </div>
   );
 };
 
 const Avatar = observer(({ loginState }) => {
-  const [showDropdown, setDropdown] = useState(false);
-  const [showNotif, setNotif] = useState(false);
-  const toggleDropdown = () => setDropdown(!showDropdown);
-  const toggleNotif = () => setNotif(!showNotif);
-
   const onLogout = () => {
     loginState.username = null;
     document.cookie = 'token=; expires = 01 Jan 1970 00:00:00'; // clear cookie
@@ -55,49 +52,55 @@ const Avatar = observer(({ loginState }) => {
   return (
     <div className='account-wrapper'>
       <div className='user-account text-white'>
-        <div>
-          <FontAwesomeIcon icon={faBell} onClick={toggleNotif} />
-        </div>
-        <span> logged in as {loginState.username}</span>
-        <span style={{ fontSize: '32px' }}>
-          <FontAwesomeIcon icon={faUserCircle} onClick={toggleDropdown} />
+        <span> {loginState.username}</span>
+        <span className='avatar-container'>
+          {// defer load until we have login state
+          loginState.userId && (
+            <Image
+              className='avatar'
+              src={[
+                `${config.API_URL}/user/profile-pic/${loginState.userId}`,
+                'https://i.pravatar.cc/64',
+              ]}
+              loader={() => <div className='avatar'></div>}
+            />
+          )}
         </span>
-        <FontAwesomeIcon icon={faCaretDown} onClick={toggleDropdown} />
+        <NavIcon icon={faBell} id='notification-icon'>
+          <NotificationMenu show={true} />
+        </NavIcon>
+        <NavIcon icon={faCaretDown} id='notification-icon'>
+          <DropdownMenu onLogout={onLogout} />
+        </NavIcon>
       </div>
-      <NotificationMenu show={showNotif} onClose={() => setNotif(false)}/>
-      {/* dropdown menu */}
-      <DropdownMenu show={showDropdown} onClose={() => setDropdown(false)}/>
     </div>
   );
 });
 
 const Navbar = observer(({ loginState }) => {
   return (
-    <div className="navbar flex-row shadow-sm">
-      <div className="navbar-left">
-        <Link className="title text-white" to="/">
-          {" "}
-          Room scrum{" "}
+    <div className='navbar flex-row shadow-sm'>
+      <div className='navbar-left'>
+        <Link className='title text-white' to='/'>
+          Room scrum
         </Link>
       </div>
       <div className='navbar-right flex-row'>
         <div className='link-section flex-row'>
           <Link className='text-white' to='/find/musician'>
-            {' '}
-            Find Musician{' '}
+            Find Musician
           </Link>
           <Link className='text-white' to='/find/events'>
-            {' '}
-            Find Events{' '}
+            Find Events
           </Link>
           <Link className='text-white' to='/find/bands'>
-            {' '}
-            Find Bands{' '}
+            Find Bands
           </Link>
-          <Link className='text-white' to='/admin/approve-user'>
-            {' '}
-            Manage{' '}
-          </Link>
+          <RoleGuard role='Admin'>
+            <Link className='text-white' to='/admin/approve-user'>
+              Manage
+            </Link>
+          </RoleGuard>
         </div>
         <div className='dynamic-section'>
           {!loginState.isLoggedIn && <LoginButtons />}

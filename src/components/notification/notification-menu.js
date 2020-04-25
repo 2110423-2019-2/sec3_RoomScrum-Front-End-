@@ -6,6 +6,10 @@ import config from 'src/config';
 import { getImageURLFromNotif, getTextFormat } from './util';
 import { TextFormatter } from './text-formatter';
 import Modal from 'react-modal';
+import { sortByTimestampDesc } from 'src/views/musician-dashboard/util';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBellSlash } from '@fortawesome/free-regular-svg-icons';
+import classNames from 'classnames';
 
 moment.locale('en', {
     relativeTime: {
@@ -42,7 +46,7 @@ const NotificationItem = ({notif}) => {
 }
 
 
-const NotificationMenu = ({show, onClose}) => {
+const NotificationMenu = () => {
 
     const hasInit = useRef(false);
     const [notifications, setNotifications] = useState(null);
@@ -55,35 +59,48 @@ const NotificationMenu = ({show, onClose}) => {
         .then(res => {
             const result = JSON.parse(res.text);
             setNotifications(result);
-            console.log('fetch notif', result)
-
-    
+            console.log('fetch notif', result)    
         })
         .catch(err => {
             console.error("error fetching notifications", err);
         })
     }
-    
+
+    const sortedNotifs = notifications && notifications.length > 0 && 
+        notifications.sort(sortByTimestampDesc); // notification has .timestamp (same as application) so can use it's sorting
 
     return (
-        <Modal isOpen={show} onRequestClose={onClose}
-            className="just-an-invalid-class"
-            overlayClassName="notif-modal-overlay"
-        >
+        // <Modal isOpen={show} onRequestClose={onClose}
+        //     parentSelector={parentSelectorFunc}
+        //     className="just-an-invalid-class"
+        //     overlayClassName="notif-modal-overlay"
+        // >
             <div className="notif-menu-container">
                 <div className="notif-triangle"></div>
                 <div className="notif-menu">
                     <div className="header"> Notification </div>
-                    <div className="notif-list">
+                    <div className={
+                        classNames({
+                            "notif-list": true,
+                            empty: true || !sortedNotifs,
+                        })
+                    }>
                         {
-                            notifications && notifications.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()).map(notif => (
-                                <NotificationItem notif={notif}/>
-                            ))
+                            false && sortedNotifs ? (
+                                sortedNotifs.map(notif => (
+                                    <NotificationItem notif={notif}/>
+                                ))
+                            ) : (
+                                <div className="no-notification">
+                                    <FontAwesomeIcon icon={faBellSlash}/><br/>
+                                    No Notifications
+                                </div>
+                            )
                         }
                     </div>
                 </div>
             </div>
-        </Modal>
+        // </Modal>
     )
 }
 

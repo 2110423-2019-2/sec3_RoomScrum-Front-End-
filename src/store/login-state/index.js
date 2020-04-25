@@ -11,6 +11,7 @@ class LoginState {
 decorate(LoginState, {
   username: observable,
   userId: observable,
+  userType: observable,
   isLoggedIn: computed
 });
 
