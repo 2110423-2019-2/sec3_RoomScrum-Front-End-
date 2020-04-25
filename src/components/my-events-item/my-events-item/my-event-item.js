@@ -416,11 +416,9 @@ const MyEventItem = ({ each, onClick }) => {
         <div className="Describtion">
           <div className="Label">Event Status</div>
           <div className="Value">
-            to do
-            {/* <HirerEventStatusIndicator
-              eventStatus = {eventStatus}
-              applicationStatus = {applicationStatus}
-            /> */}
+            <HirerEventStatusIndicator
+              eventStatus = {status}             
+            />
           </div>
         </div>
         <div className="Describtion">

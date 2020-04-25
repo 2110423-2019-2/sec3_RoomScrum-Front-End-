@@ -54,10 +54,10 @@ export const HireeEventStatusIndicator = ({eventStatus, applicationStatus}) => {
     />;
 }
 
-export const HirerEventStatusIndicator = ({eventStatus, applicationStatus}) => {
+export const HirerEventStatusIndicator = ({eventStatus}) => {
     return <StatusIndicator
-        color={calculateHirerEventColor(eventStatus, applicationStatus)}
-        text={calculateHirerEventStatus(eventStatus, applicationStatus)}
+        color={calculateHirerEventColor(eventStatus)}
+        text={calculateHirerEventStatus(eventStatus)}
     />
 }
 
