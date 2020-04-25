@@ -4,11 +4,17 @@ import request from 'superagent';
 import config from 'src/config';
 import { Button } from 'src/components/common';
 import cancelContractButton from '../cancel-contract-button';
+import {
+  HireeEventStatusIndicator,
+  PaymentStatusIndicator,
+  ContractStatusIndicator,
+  ContractStatusColorIndicator,
+} from 'src/components/event-item/status-indicator/status-indicator';
 
 const InputField = React.forwardRef(
   ({ name, type, place, isTextarea }, ref) => {
     const [value, setValue] = useState(place);
-    const handleChange = event => {
+    const handleChange = (event) => {
       setValue(event.target.value);
     };
 
@@ -69,51 +75,53 @@ const ContractModal = styled.div`
     overflow: hidden;
   }
 `;
-const ContractEditForm = ({ eventId }) => {
+const ContractEditForm = ({ application }) => {
   //oil-ข้อมูลที่ได้จากการเอา eventId มา get contract todo-start
-  const contract = {
-    status: 'in review',
-    eventName: 'SE night miniconcert',
-    hirer: 'John Minian',
-    hiree: 'Little dog',
-    budget: '20500',
-    descritpion:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenasvitae justo faucibus, faucibus erat ut, tempor arcu. Vestibulum inenim augue. Nam in ante ex. Proin viverra feugiat facilisis. Aliquamrutrum egestas fringilla. Curabitur eget arcu luctus, malesuada enimmaximus, rhoncus odio. Sed consectetur leo sagittis tempor tempus.Etiam tempus. Lorem ipsum dolor sit amet, consectetur adipiscingelit. Maecenas vitae justo faucibus, faucibus erat ut, tempor arcu.Vestibulum in enim augue. Nam in ante ex. Proin viverra feugiatfacilisis. Aliquam rutrum egestas fringilla. Curabitur eget arculuctus, malesuada enim maximus, rhoncus odio. Sed consectetur leosagittis tempor tempus. Etiam tempus. Lorem ipsum dolor sit amet,consectetur adipiscing elit. Maecenas vitae justo faucibus, faucibuserat ut, tempor arcu.'
-  };
+  const [hiree, setHiree] = useState('-');
+  const {
+    contract: contract,
+    event: {
+      eventName,
+      eventId,
+      district,
+      province,
+      userId: hirerId,
+      price,
+      user: {
+        // hirer
+        firstName: hirerFirstName,
+        lastName: hirerLastName,
+      },
+    },
+  } = application;
+
   //oil-ข้อมูลที่ได้จากการเอา eventId มา get contract todo-end
 
-  //oil-flatten contract ที่ get มา todo-start
-  const { status, eventName, hirer, hiree, budget, descritpion } = contract;
-  //oil-flatten contract ที่ get มา todo-end
-
   const [eventInfo, setEventInfo] = useState();
-  const [isFetch, setIsFetch] = useState(false);
-
-  const getEvents = () => {
-    return new Promise((resolve, reject) => {
-      request
-        .get(`${config.API_URL}/events/${eventId}`)
-        .then(res => {
-          setIsFetch(true);
-          setEventInfo(res.body);
-          console.log(res.body);
-          resolve();
-        })
-        .catch(err => {
-          alert(err);
-          resolve(eventInfo);
-        });
-    });
-  };
-  if (!isFetch) {
-    getEvents().then(() => {
-      //assign ค่า
-      console.log('end');
-    });
-  }
-  //
   const budgetInput = useRef();
   const detailInput = useRef();
+  const saveEditContract = () => {
+    request
+      .post(`${config.API_URL}/contract/6`) // get my applications, with event detail
+      .send({
+        eventId: 6,
+        price: 1001,
+        description: 'Hello world 5555',
+      })
+      .withCredentials()
+      .then((res) => {
+        // const applications = res.body;
+        // applications.sort(sortByTimestampDesc);
+        // setApplications(applications);
+        //OIL
+        console.log(res.body);
+        //OIL
+      })
+      .catch((err) => {
+        alert('Error getting applied events ');
+        console.error('Error: Fetch applied events');
+      });
+  };
 
   //
   return (
@@ -124,7 +132,7 @@ const ContractEditForm = ({ eventId }) => {
         <div className='row'>
           <div className='label col-3'>Contract status</div>
           <div className='col-9'>
-            <div className='status-color'>{status}</div>
+            <ContractStatusIndicator contractStatus={contract.status} />
           </div>
         </div>
         <div className='row'>
@@ -133,7 +141,9 @@ const ContractEditForm = ({ eventId }) => {
         </div>
         <div className='row'>
           <div className='label col-3'>Hirrer</div>
-          <div className='col-9'>{hirer}</div>
+          <div className='col-9'>
+            {hirerFirstName} {hirerLastName}
+          </div>
         </div>
         <div className='row'>
           <div className='label col-3'>Hiree</div>
@@ -142,7 +152,7 @@ const ContractEditForm = ({ eventId }) => {
         <div className='row'>
           <div className='label col-3'>Budget</div>
           <div className='col-9'>
-            <InputField name='budget' text={budget} place={budget} />
+            <InputField name='budget' text={price} place={price} />
           </div>
         </div>
         <div className='row '>
@@ -150,8 +160,8 @@ const ContractEditForm = ({ eventId }) => {
           <div className='col-9'>
             <InputField
               name='detail'
-              text={budget}
-              place={descritpion}
+              text={price}
+              place={contract.description || '-'}
               isTextarea
             />
           </div>
@@ -159,7 +169,11 @@ const ContractEditForm = ({ eventId }) => {
       </ContractModal>
       <ContractModal>
         <div className='d-flex flex-row-reverse'>
-          <Button className='mr-auto' name='Save' type='primary'></Button>
+          <Button
+            className='mr-auto'
+            name='Save'
+            type='primary'
+            onClick={saveEditContract}></Button>
           <Button className='mr-auto' name='Discard' type='secondary'></Button>
           <cancelContractButton />
         </div>

@@ -176,7 +176,7 @@ const HireeContract = ({ eventId, application }) => {
       <Dialog
         isOpen={showContractEditFormDialog}
         onClose={() => setShowContractEditFormDialog(false)}>
-        <ContractEditForm eventId={eventId}></ContractEditForm>
+        <ContractEditForm application={application}></ContractEditForm>
       </Dialog>
     </div>
   );
