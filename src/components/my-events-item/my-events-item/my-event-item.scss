@@ -3,8 +3,7 @@
     background-color: white;
     box-shadow: 0px 4px 4px #bababa;
     margin-bottom: 16px;
-    margin-top: 5px;
-    // display: flex;
+    display: flex;
     flex-flow: row wrap;
 
     .EventImageContainer{
@@ -75,7 +74,5 @@
     .HirerAction{
         padding: 20px 0;
         width: 100%;
-        margin-left: 30px;
-        margin-right: 50px;
     }
 }

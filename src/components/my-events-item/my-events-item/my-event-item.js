@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useRef } from 'react';
 import Modal from 'react-modal';
 import './my-event-item.scss';
 import request from 'superagent';
@@ -7,9 +7,9 @@ import Applicants from 'src/views/hirer-dashboard/raw-applied-musicians';
 import Edit from 'src/views/hirer-dashboard/raw-edit-event';
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Navbar } from 'src/components/common';
+import { Form } from 'src/components/common';
 import MyEventInfo from 'src/components/my-events-item/my-event-info';
-import CreateReview from 'src/views/review/create-reviews';
+// import CreateReview from 'src/views/review/create-reviews';
 //oil-ออยแอบเพิ่ม-start
 import { HirerContract } from 'src/components/contract';
 //oil-ออยแอบเพิ่ม-end
@@ -18,104 +18,7 @@ import Image from 'react-image';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import Dialog from 'src/components/common/dialog';
 import ConfirmDialog from 'src/views/admin/user-report/confirm-dialog';
-// const EventInfoModal = ({
-//   eventName,
-//   description,
-//   address,
-//   subdistrict,
-//   district,
-//   province,
-//   country,
-//   zipcode,
-//   startdatetime,
-//   enddatetime,
-//   status
-// }) => {
-//   const [show, setShow] = useState(false);
-
-//   const handleClose = () => setShow(false);
-
-//   const handleShow = () => setShow(true);
-
-//   return (
-//     <div>
-//       <Modal show={handleShow} onHide={handleClose}>
-//         <Modal.Header closeButton>
-//           <Modal.Title>Event Info</Modal.Title>
-//         </Modal.Header>
-//         <Modal.Body>
-//           <p>{eventName}</p>
-//           <p>{description}</p>
-//           <p>{address}</p>
-//           <p>{subdistrict}</p>
-//           <p>{district}</p>
-//           <p>{province}</p>
-//           <p>{country}</p>
-//           <p>{zipcode}</p>
-//           <p>{startdatetime}</p>
-//           <p>{enddatetime}</p>
-//         </Modal.Body>
-//         <Modal.Footer>
-//           <button variant='secondary' onClick={handleClose}>
-//             Close
-//           </button>
-//         </Modal.Footer>
-//       </Modal>
-//     </div>
-//   );
-// };
-
-// const ContractModal = ({ eventId }) => {
-//   // alert(eventId);
-//   console.log(eventId);
-//   var description = '';
-//   var price = 0;
-//   const [isOpen, setIsOpen] = useState(false);
-//   const openModal = () => {
-//     setIsOpen(true);
-//   };
-//   const afterOpenModal = () => {};
-//   const closeModal = () => {
-//     setIsOpen(false);
-//   };
-//   const handleViewContract = () => {
-//     // alert('handleViewContract');
-//     console.log(eventId);
-//     request
-//       .get(`${config.API_URL}/contract/${eventId}`)
-//       .withCredentials()
-//       .then(res => {
-//         console.log(res.text);
-//         alert('complete ?');
-//       })
-//       .catch(err => {
-//         alert('err' + err);
-//       });
-//     setIsOpen(false);
-//   };
-
-//   return (
-//     <div>
-//       <button onClick={handleViewContract}>view contract</button>
-//       <Modal
-//         isOpen={isOpen}
-//         onAfterOpen={afterOpenModal}
-//         onRequestClose={closeModal}
-//         contentLabel='Modal'>
-//         <div>
-//           <p>{description}</p>
-//           <p>{price}</p>
-//           <button
-//             type='button'
-//             class='btn btn-primary float-right'
-//             onClick={handleViewContract}>
-//             view contract
-//           </button>
-//         </div>
-//       </Modal>
-//     </div>
-//   );
-// };
+// import { ConfirmDialog } from "src/components/common";
 
 const customStyles = {
   content: {
@@ -241,6 +144,18 @@ const MusicianInvitation = () => {
   
   const [openInvitationDialog, setOpenInvitationDialog] = useState(false);
   const [selectedMusician, setSelectedMusician] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+    console.log('openModal')
+  };
+  const afterOpenModal = () => {};
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const handleClose = () => setIsOpen(false);
+  
   
 
   
@@ -274,6 +189,7 @@ const MusicianInvitation = () => {
           .send({username: selectedMusician, banDuration: 7}) // to change
           .then(res => {
               setOpenInvitationDialog(false);
+              handleClose();
               alert("Invite musician success");
           })
           .catch(err => {
@@ -283,8 +199,39 @@ const MusicianInvitation = () => {
       }
   }
 
+  const customStyles = {
+    content : {
+      // top                   : '50%',
+      // left                  : '50%',
+      // right                 : 'auto',
+      // bottom                : 'auto',
+    marginRight           : 'auto',
+    marginLeft            : 'auto',
+    marginTop             : 'auto',
+    marginBottom          : 'auto',
+  //   transform             : 'translate(-50%, -50%)',
+    width           : '40%',
+    height          : '20%'
+    }
+  };
+
+
+
   return (
     <div className="invitation-musician-page">
+      <div className='InviteButton'>
+          <button onClick={openModal}>
+              Invite
+          </button>
+      </div>
+
+      <Modal  
+      isOpen={isOpen}
+      onAfterOpen={afterOpenModal}
+      onRequestClose={closeModal}
+      contentLabel="Modal"
+      style={customStyles}
+      >
         <Dialog isOpen={openInvitationDialog} onClose={() => setOpenInvitationDialog(false)}>
             <ConfirmDialog
                 callback={handleInvite}
@@ -313,11 +260,129 @@ const MusicianInvitation = () => {
                 />
             </div>
         </div>
+      </Modal>
     </div>
   )
 
 
 }
+
+const CreateReview = ({eventId }) => {
+  const formReviewData = useRef();
+  const [show, setShow] = useState(false);
+  const [showAlert, setAlert] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+    console.log('openModal')
+  };
+  const afterOpenModal = () => {};
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const handleClose = () => setIsOpen(false);
+  
+  const customStyles = {
+    content : {
+      // top                   : '50%',
+      // left                  : '50%',
+      // right                 : 'auto',
+      // bottom                : 'auto',
+    marginRight           : 'auto',
+    marginLeft            : 'auto',
+    marginTop             : 'auto',
+    marginBottom          : 'auto',
+  //   transform             : 'translate(-50%, -50%)',
+    width           : '60%',
+    height          : '40%'
+    }
+  };
+
+  const postData = () => {
+      const data = {};
+      for (let key in formReviewData.current) {
+          data[key] = formReviewData.current[key].value;
+      }
+      data["eventId"] = eventId;
+      request
+      .post(`${config.API_URL}/review`)
+      .withCredentials()
+      .send(data)
+      .then(() => {
+        window.location.href = "/hirer/event";
+      })
+      .catch(err => console.log(err));
+      alert('foo')
+  };
+
+  const formReview = {
+    description: {
+        type: "textarea",
+        label: "",
+        width: "12",
+        // default: "write a review",
+        validator: [
+          value => {
+            if (value) return false;
+            return " ";
+          }
+        ]
+      }
+  };
+  
+  return (
+      // style from admin
+      <div classname = 'review'>
+        <div className='archieve-button'>
+
+          <button onClick={openModal}>
+              Archieve
+          </button>
+
+        </div>
+     
+
+      <Modal  
+      isOpen={isOpen}
+      onAfterOpen={afterOpenModal}
+      onRequestClose={closeModal}
+      contentLabel="Modal"
+      style={customStyles}
+      >
+        <div  >
+              <div  >
+                  <h1> Review </h1>
+                  <Form formDef={formReview} ref={formReviewData} />
+                  <Modal className="center-popup" isOpen={showAlert}>
+                      <ConfirmDialog
+                          title="Confirm?"
+                          question="Do you want to create review"
+                          callback={confirm => {
+                              setAlert(false);
+                              if (confirm) {
+                  // callbackAction.current();
+                                  postData();
+                                  handleClose();
+                              }
+                          }}/>
+                  </Modal>
+                  <button
+                      className="btn btn-primary mt-4"
+                          onClick={() => {
+                              setAlert(true);
+                          }}>
+                      {" "}
+                      Submit{" "}
+                  </button>
+              </div>
+        </div>
+       
+             
+      </Modal>
+    </div> 
+    );
+}
+
 
 const MyEventItem = ({ each, onClick }) => {
   const showContract = () => {
@@ -367,11 +432,12 @@ const MyEventItem = ({ each, onClick }) => {
                 {province}
             </div>
           </div>
-          <div className='HirerAction' >
-            <Button type='danger' name='Cancel' onClick={() => onClick(eventId)}> Cancel </Button>
-            <HirerContract eventId={eventId} />
-            <CreateReview eventId={eventId} />
-            <Button type='danger' name='Invite' onClick={MusicianInvitation}> Invite </Button>
+          <div className=' row HirerAction' >
+            <Button type='danger' name='Cancel' onClick={() => onClick(eventId)}> Cancel </Button>         
+            <HirerContract eventId={eventId} />          
+            <CreateReview eventId={eventId}  />
+            <MusicianInvitation />
+
           </div> 
         </div>   
         <div className='PriceTag'>
