@@ -75,7 +75,7 @@ const Edit = ({ event }) => {
     sendData["eventId"] = event.eventId;
     sendData["userId"] = event.userId;
     sendData["eventImage"] = 
-       `/events/${event.eventId}`;
+      config.API_URL + `/events/${event.eventId}/pic`;
     
     for (let key in userFormBelow) {
       sendData[key] = userFormBelow[key].value;
