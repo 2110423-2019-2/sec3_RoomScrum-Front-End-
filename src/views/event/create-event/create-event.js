@@ -64,7 +64,7 @@ const CreateEventPage = () => {
       .withCredentials()
       .send(data)
       .then(() => {
-        window.location.href = "/event/info";
+        window.location.href = "/hirer/event";
       })
       .catch(err => console.log(err));
   };
