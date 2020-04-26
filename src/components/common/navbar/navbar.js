@@ -86,9 +86,9 @@ const Navbar = observer(({ loginState }) => {
       </div>
       <div className="navbar-right flex-row">
         <div className="link-section flex-row">
-          <Link className='text-white' to='/find/musician'>
+          {/* <Link className='text-white' to='/find/musician'>
             Find Musician
-          </Link>
+          </Link> */}
           <Link className="text-white" to="/find/events">
             Find Events
           </Link>
@@ -105,12 +105,12 @@ const Navbar = observer(({ loginState }) => {
               Manage
             </Link>
           </RoleGuard>
-          <RoleGuard role="Hirer">
+          {/* <RoleGuard role="Hirer">
             <Link className='text-white' to='/event/create'>
               <FontAwesomeIcon icon={faPlus} className="mr-2"/>
               New Event
             </Link>
-          </RoleGuard>
+          </RoleGuard> */}
         </div>
         <div className="dynamic-section">
           {!loginState.isLoggedIn && <LoginButtons />}
