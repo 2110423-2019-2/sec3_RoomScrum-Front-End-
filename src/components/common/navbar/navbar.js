@@ -29,9 +29,9 @@ const LoginButtons = () => {
   return (
     <div className="login-buttons">
       <LoginDialog open={isOpen} onRequestClose={closeDialog} />
-      <Link className="btn btn-secondary" onClick={openDialog}>
+      <div className="btn btn-secondary" onClick={openDialog}>
         Login
-      </Link>
+      </div>
       <Link className="btn btn-secondary" to="/register">
         Register
       </Link>
