@@ -41,7 +41,7 @@ export const calculateHirerEventStatus = (eventStatus) => {
         case EventStatus.SETTLE:
             return "Settle";
         case EventStatus.COMPLETE:
-            return "Settle";
+            return "Complete";
         case EventStatus.CANCELLED:
             return "Cancelled";
     }
