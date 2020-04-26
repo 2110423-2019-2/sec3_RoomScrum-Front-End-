@@ -30,8 +30,8 @@ const AppliedMusicianItem = ({
       .post(`${config.API_URL}/application/accept`)
       .send(formdata)
       .withCredentials()
-      .then((res) => {
-        console.log(res.text);
+      .then(() => {
+        window.location.href = "/hirer/event";
       })
       .catch((err) => {
         alert("err" + err);
