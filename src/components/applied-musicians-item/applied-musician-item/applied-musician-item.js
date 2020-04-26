@@ -27,7 +27,7 @@ const AppliedMusicianItem = ({
 
   const handleAccept = () => {
     request
-      .post(`${config.API_URL}/application/accept`)
+      .post(`${config.API_URL}/application/accept-applied-musician`)
       .send(formdata)
       .withCredentials()
       .then(() => {
@@ -56,9 +56,6 @@ const AppliedMusicianItem = ({
           <div className="Value">@{username}</div>
         </div>
         <div className='ActionContainer'>
-          <div onClick={() => onClick(hireeId)} className="Reject">
-            Reject
-          </div>
           <Modal className="center-popup" isOpen={showAlert}>
             <ConfirmDialog
               title="Confirm?"

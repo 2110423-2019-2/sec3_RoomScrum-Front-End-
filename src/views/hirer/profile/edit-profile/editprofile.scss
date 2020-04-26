@@ -1,10 +1,25 @@
-
+@import "src/styles/color.scss";
 
  .edit-profile {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     min-height: 100vh;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    max-width: 768px;
+    padding: 32px;
+    overflow: auto;
+
+    .Title{
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: $dark-navy;
+        font-size: 30px;
+    }
+
+    .buttons {
+        margin-top: 16px;
+    }
 
      > .container {
          margin-top: 64px;

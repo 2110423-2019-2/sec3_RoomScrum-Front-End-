@@ -14,7 +14,11 @@ const FindEvents = () => {
 
   const getEvents = () => {
     request
-      .get(`${config.API_URL}/events`)
+      .post(`${config.API_URL}/events/search`)
+      .send({
+        searchType: 'default',
+        value: '',
+      })
       .then((res) => {
         setIsFetch(true);
         setEventList(res.body);

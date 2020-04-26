@@ -83,6 +83,15 @@ const MyEventInfo = ({ each, status, application }) => {
               <div className='Label'>About</div>
               <div className='Value'>{each.description}</div>
             </div>
+            {(() => {
+              if (status == 'Created' || status == 'HaveApplicant') {
+                return (
+                  <div className='edit'>
+                    <Edit event={each} />
+                  </div>
+                );
+              }
+            })()}
 
             <div className='edit'>
               <Edit event={each} />

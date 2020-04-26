@@ -40,6 +40,7 @@ const HirerDashboard = () => {
       });
   }
 
+
   const deleteItem = (eventId) => {
     for (let i = 0; i < myEventList.length; i++) {
       if (myEventList[i].eventId == eventId) {

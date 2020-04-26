@@ -64,7 +64,7 @@ const CreateEventPage = () => {
       .withCredentials()
       .send(data)
       .then(() => {
-        window.location.href = "/event/info";
+        window.location.href = "/hirer/event";
       })
       .catch(err => console.log(err));
   };
@@ -75,7 +75,7 @@ const CreateEventPage = () => {
     if (!upload.files || !upload.files[0]) throw new Error("No file uploaded");
     form.append("image", uploadedFile.current.files[0]);
     return request
-      .post(`${config.API_URL}/events/pic`)
+      // .post(`${config.API_URL}/events/event-pic/${event.eventId}`)
       .withCredentials()
       .send(form)
       .then(res => {
