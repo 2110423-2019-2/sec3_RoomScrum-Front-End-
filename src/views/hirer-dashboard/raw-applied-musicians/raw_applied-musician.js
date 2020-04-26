@@ -53,10 +53,21 @@ const Applicants = ({ eventId }) => {
       });
   }
 
+  const handleReject = (hireeId) => {
+    for (let i = 0; i < applicantsList.length; i++) {
+      if (applicantsList[i].hireeId == hireeId) {
+        applicantsList.splice(i, 1);
+      }
+    }
+    alert('foo')
+    window.location.href = "/hirer/event";
+    //to work with API
+  }
+
   const appliedMusicianItem = applicantsList.map((each) => {
     return (
       <div>
-        <AppliedMusicianItem each={each} />
+        <AppliedMusicianItem each={each} onClick={handleReject} />
       </div>
     );
   });

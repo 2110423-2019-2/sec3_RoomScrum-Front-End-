@@ -54,7 +54,6 @@ const HirerDashboard = () => {
         window.location.href = "/hirer/event";
       })
       .catch((err) => console.log(err));
-    alert("Foo");
   };
 
   const myEventItems = myEventList.map((each) => {
