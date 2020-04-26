@@ -19,6 +19,8 @@ import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import Dialog from 'src/components/common/dialog';
 import ConfirmDialog from 'src/views/admin/user-report/confirm-dialog';
 import { HirerEventStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
+import { PayByQRButton } from 'src/components/action-buttons/pay-by-qr-button';
+
 // import { ConfirmDialog } from "src/components/common";
 
 const customStyles = {
@@ -502,6 +504,18 @@ const MyEventItem = ({ each, onClick }) => {
             return (
               !hideFor.includes(status) && (
                 <MusicianInvitation eventId={eventId} />
+              )
+            );
+          })()}
+          {(() => {
+            const showFor = ['PaymentPending'];
+            return (
+              showFor.includes(status) && (
+                <PayByQRButton
+                  accountNo='1234567890123'
+                  amount={application.contract.price}
+                  displayName='Rodchananat K.'
+                />
               )
             );
           })()}

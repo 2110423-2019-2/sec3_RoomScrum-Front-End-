@@ -51,18 +51,6 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
     },
   } = application;
 
-  // application.contract = application.event.contract
-  //   ? application.event.contract
-  //   : { status: 'NotActive' };
-
-  // application.event.price = application.event.price
-  //   ? application.event.price
-  //   : 10000;
-
-  // const contractStatus = application.contract.status;
-
-  // console.log(application);
-
   return (
     <div
       className={classNames({
@@ -114,24 +102,11 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
         <div className='desc'>
           <div className='label'> Contract Status </div>
           <div className='value'>
-            {/** TODO
-              <ContractStatusIndicator contractStatus={'TODO'} />
-             */
-            console.log(contractStatus)}
             <ContractStatusIndicator contractStatus={contractStatus} />
             {(() => {
-              // console.log(contractStatus);
-              return contractStatus == 'NotActive' ? null : (
-                <HireeContract eventId={eventId} application={application} />
-              );
-              // applications.map((application) => (
-              //   <>
-              //     <HireeContract
-              //       eventId={eventId}
-              //       application={application}
-              //     />
-              //   </>
-              // ));
+              // return contractStatus == 'NotActive' ? null : (
+              //   <HireeContract eventId={eventId} application={application} />
+              // );
             })()}
           </div>
         </div>
@@ -154,6 +129,7 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
           <div className='label'> Hirer </div>
           <div className='value'> {firstName + ' ' + lastName} </div>
         </div>
+
         <AppliedEventAction
           application={application}
           // debug={true}

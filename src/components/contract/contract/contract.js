@@ -34,18 +34,16 @@ const ContractModal = styled.div`
   }
 `;
 
-const Contract = ({ eventId, application }) => {
+const Contract = ({ application }) => {
   // const [contractInfo, setContractInfo] = useState();
   // const [isFetch, setIsFetch] = useState(false);
   console.log(application);
-
-  const [hiree, setHiree] = useState();
 
   const {
     contract: contract,
     event: {
       eventName,
-      // eventId,
+      eventId,
       district,
       province,
       userId: hirerId,
@@ -56,9 +54,6 @@ const Contract = ({ eventId, application }) => {
       },
     },
   } = application;
-  // const price = 100;
-  // const hirerFirstName = 'oil';
-  // const hirerLastName = 'lastname';
 
   console.log(application.event.user);
 

@@ -105,8 +105,9 @@ const HirerContract = ({ eventId, application }) => {
         <Contract eventId={eventId} application={application}></Contract>
         {(() => {
           const status = application.contract.status;
+          const hideFor = ['Accepted', 'WaitForStartDrafting'];
           return (
-            !(status == 'Accepted') && (
+            !hideFor.includes(status) && (
               <ContractModal>
                 <div className='d-flex flex-row-reverse'>
                   <Btn type='primary' onClick={accept}>

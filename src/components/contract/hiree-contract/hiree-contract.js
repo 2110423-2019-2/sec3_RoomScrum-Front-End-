@@ -14,6 +14,7 @@ import ContractEditForm from 'src/components/contract/contract-edit-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'src/components/common';
+import { ConfirmButton } from 'src/components/action-buttons/base/confirm-button';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import CancelContractButton from 'src/components/contract/cancel-contract-button';
 import request from 'superagent';
@@ -99,7 +100,7 @@ const HireeContract = ({ eventId, application }) => {
       application.status == 'NotActive' ? (
         <></>
       ) : (
-        <button onClick={viewContract}>view contract</button>
+        <Button onClick={viewContract} name='view contract' />
       );
     return button;
   };
