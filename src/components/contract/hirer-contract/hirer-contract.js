@@ -65,6 +65,7 @@ const HirerContract = ({ eventId, application }) => {
   const accept = () => {
     request
       .get(`${config.API_URL}/contract/accept/${eventId}`)
+      .withCredentials()
       .then((res) => {
         console.log(res);
         alert('accept complete');
@@ -78,6 +79,7 @@ const HirerContract = ({ eventId, application }) => {
   };
   const reject = () => {
     request
+      .withCredentials()
       .get(`${config.API_URL}/contract/reject/${eventId}`)
       .then((res) => {
         console.log(res);

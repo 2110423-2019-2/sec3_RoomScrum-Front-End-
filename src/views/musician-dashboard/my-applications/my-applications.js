@@ -20,6 +20,9 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
   application.contract = application.event.contract
     ? application.event.contract
     : { status: 'NotActive' };
+  application.contract = application.event.contract
+    ? application.event.contract
+    : { status: 'NotActive' };
 
   application.event.price = application.contract.price
     ? application.contract.price
@@ -109,7 +112,8 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
           <div className='value'>
             {/** TODO
               <ContractStatusIndicator contractStatus={'TODO'} />
-             */}
+             */
+            console.log(contractStatus)}
             <ContractStatusIndicator contractStatus={contractStatus} />
             {(() => {
               // console.log(contractStatus);
@@ -180,7 +184,7 @@ const MyApplications = () => {
         applications.sort(sortByTimestampDesc);
         setApplications(applications);
         //OIL
-        // console.log(res.body);
+        console.log(res.body);
         //OIL
       })
       .catch((err) => {
