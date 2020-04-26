@@ -38,7 +38,7 @@ const Home = () => {
             </div>
             <div className="features"> 
               <FontAwesomeIcon icon={faCheckCircle}/>
-              <span> Find musicians or band </span>
+              <span> Hire best musician  </span>
             </div>
             <div className="cta-buttons">
               <button onClick={goRegister}> Register </button>
