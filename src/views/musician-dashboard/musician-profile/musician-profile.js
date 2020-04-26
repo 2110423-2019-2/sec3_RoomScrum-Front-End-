@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Dialog from 'src/components/common/dialog';
 import EditProfileDialog from './edit-profile-dialog';
+import Profile from 'src/components/profile';
 
 moment.locale('en', {
     relativeTime: {
@@ -28,76 +29,6 @@ moment.locale('en', {
         yy: "%d"
     }
 });
-
-
-// constructor for form field
-const formField = (name, value) => ({name, value});
-
-// muscian profile component
-const MusicianProfile = ({
-    musician: {
-        firstName, lastName,
-        username,
-        userId,
-        birthdate,
-        address, subdistrict, district, cityState, zipcode, country,
-        bio,
-        // added field by HRH's order
-        nationalId,
-        gender,
-        email,
-        phoneNumber,
-    },
-    onProfileUpdate,
-}) => {
-    const formDef = [
-        formField(
-            "Birthdate", 
-            moment(birthdate).format('MMM DD, YYYY') + ' ' + 
-            `( ${moment(birthdate).fromNow()} years old )`
-        ),
-        formField("Gender", gender),
-        formField("About", bio),
-        formField("National ID", nationalId),
-        formField(
-            "Address", 
-            [address, subdistrict, district, cityState, country, zipcode].join(" ")
-        ),
-        formField("Email", email),
-        formField("Phone Number", phoneNumber),
-    ];
-
-    const [showEditDialog, setShowEditDialog] = useState(false);
-
-    return (
-        <div className="musician-profile">
-            <div className="title"> {firstName + ' ' + lastName} </div>
-            <div className="alias"> @{username} </div>
-            <Image className="profile-image" src={[
-                config.API_URL + `/user/profile-pic/${userId}`,
-                "https://i.pravatar.cc/180",
-            ]} />
-            {
-                formDef.map(({name, value}) => {
-                    console.log({name, value});
-                    return (
-                        <div className="desc">
-                            <div className="label"> {name}</div>
-                            <div className="value"> {value}</div>
-                        </div>
-                    )
-                })
-            }      
-            <button className="edit-profile-button" onClick={() => setShowEditDialog(true)}>
-                <FontAwesomeIcon icon={faEdit} />
-                Edit my profile
-            </button>
-            <Dialog isOpen={showEditDialog} onClose={() => setShowEditDialog(false)}>
-                <EditProfileDialog userId={userId} onClose={() => setShowEditDialog(false)} changeCallback={onProfileUpdate}/>
-            </Dialog>
-        </div>
-    )
-};
 
 
 // musician videos (youtube)
@@ -196,7 +127,7 @@ const _MusicianProfilePage = observer(({ loginState: { userId } }) => {
 
     return (
         <div className="musician-profile-page">
-            {musicianInfo && <MusicianProfile musician={musicianInfo} onProfileUpdate={fetchMusicianInfo}/>}
+            {musicianInfo && <Profile user={musicianInfo} onProfileUpdate={fetchMusicianInfo} EditProfileDialog={EditProfileDialog}/>}
             <div className="navy-bg">
                 { musicianInfo && <MusicianVideo musician={musicianInfo} />}
                 { <UserReviews userId={userId}/>}
