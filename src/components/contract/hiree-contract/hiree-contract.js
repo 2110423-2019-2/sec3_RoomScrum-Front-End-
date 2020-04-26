@@ -150,18 +150,29 @@ const HireeContract = ({ eventId, application }) => {
           <div className='row'>
             <div className='label col-3 '></div>
             <div className='col-9 grey'>
-              <div onClick={edit}>
-                <FontAwesomeIcon icon={faEdit} /> Edit my Contract
-              </div>
+              {(() => {
+                return application.contract.status == 'WaitForStartDrafting' ||
+                  application.contract.status == 'Drafting' ||
+                  application.contract.status == 'Rejected' ? (
+                  <div onClick={edit}>
+                    <FontAwesomeIcon icon={faEdit} /> Edit my Contract
+                  </div>
+                ) : null;
+              })()}
             </div>
           </div>
         </ContractModal>
         <ContractModal>
           <div className='row '>
             <div className='label col-3'>
-              <BtnCancel className='btn' onClick={cancelContract}>
-                <FontAwesomeIcon icon={faExclamationTriangle} /> cancel
-              </BtnCancel>
+              {(() => {
+                return application.event.contract.status ==
+                  'Accepted' ? null : (
+                  <BtnCancel className='btn' onClick={cancelContract}>
+                    <FontAwesomeIcon icon={faExclamationTriangle} /> cancel
+                  </BtnCancel>
+                );
+              })()}
             </div>
             <div className='col-9 grey'>
               <div className='d-flex flex-row-reverse'>
@@ -176,10 +187,21 @@ const HireeContract = ({ eventId, application }) => {
       <Dialog
         isOpen={showContractEditFormDialog}
         onClose={() => setShowContractEditFormDialog(false)}>
-        <ContractEditForm application={application}></ContractEditForm>
+        <ContractEditForm
+          application={application}
+          show={
+            application.event.contract.status == 'WaitForStartDrafting' ||
+            application.event.contract.status == 'Drafting'
+          }></ContractEditForm>
       </Dialog>
     </div>
   );
 };
 
 export default HireeContract;
+// {
+//   (() => {
+//     console.log(show);
+//     return show ? <cancelContractButton /> : null;
+//   })();
+// }
