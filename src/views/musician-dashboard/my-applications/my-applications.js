@@ -21,9 +21,9 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
     ? application.event.contract
     : { status: 'NotActive' };
 
-  application.event.price = application.event.price
-    ? application.event.price
-    : 10000;
+  application.event.price = application.contract.price
+    ? application.contract.price
+    : '-';
 
   const {
     status: applicationStatus,
