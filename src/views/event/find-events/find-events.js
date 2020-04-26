@@ -76,8 +76,8 @@ const FindEvents = () => {
           </div>
         </div>
       </div>
-      <div className="row no-gutters">
-        <div className="col-sm border border-primary d-flex flex-wrap justify-content-between">
+      <div className="row ">
+        <div className="EventItemContainer col-sm d-flex flex-wrap justify-content-between">
           {eventItems}
         </div>
       </div>
