@@ -126,7 +126,7 @@ const MusicianVideo = ({ musician: {videoUrl} }) => {
 
 const UserReviewItem = ({review}) => {
     const {
-        reviewers: {firstName, lastName},
+        reviewer: {firstName, lastName},
         description,
     } = review;
     
