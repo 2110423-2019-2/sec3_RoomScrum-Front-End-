@@ -44,8 +44,6 @@ jobs:
         "
 
         
-        ssh -oStrictHostKeyChecking=no -i private-key.cer $ADDRESS "
-          bash --login -i -c '$CMD';
-        "
+        ssh -oStrictHostKeyChecking=no -i private-key.cer $ADDRESS "$CMD"
       
 
