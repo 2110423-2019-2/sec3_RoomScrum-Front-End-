@@ -93,14 +93,6 @@ const Navbar = observer(({ loginState }) => {
           <Link className="text-white" to="/find/events">
             Find Events
           </Link>
-          {/* <Link className='text-white' to='/find/bands'>
-            Find Bands
-          </Link> */}
-          <RoleGuard role="Hirer">
-            <Link className="text-white" to="/event/create">
-              Create Event
-            </Link>
-          </RoleGuard>
           <RoleGuard role="Admin">
             <Link className="text-white" to="/admin/approve-user">
               Manage
