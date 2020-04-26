@@ -20,4 +20,4 @@ services:
 networks: 
   default:
     external: 
-      name: se-network
+      name: ${RS_NETWORK:-se-network}
