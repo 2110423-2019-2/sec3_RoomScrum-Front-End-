@@ -82,7 +82,7 @@ const Navbar = observer(({ loginState }) => {
     <div className="navbar flex-row shadow-sm">
       <div className="navbar-left">
         <Link className="title text-white" to="/">
-          Room scrum
+          Finmus
         </Link>
       </div>
       <div className="navbar-right flex-row">
