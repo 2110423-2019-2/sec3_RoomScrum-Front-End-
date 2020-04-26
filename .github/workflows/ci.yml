@@ -42,8 +42,7 @@ jobs:
           (docker network create \$RS_NETWORK || true) &&
           docker-compose up -d
         "
-`
         
         ssh -oStrictHostKeyChecking=no -i private-key.cer $ADDRESS "
           bash --login -i -c '$CMD';
-        "
+        "=
