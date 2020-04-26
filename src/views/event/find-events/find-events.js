@@ -81,7 +81,7 @@ const FindEvents = () => {
         </div>
       </div>
       <div className="row ">
-        <div className="EventItemContainer col-sm d-flex flex-wrap justify-content-between">
+        <div className="EventItemContainer col-sm justify-content-between">
           {eventItems}
         </div>
       </div>
@@ -90,3 +90,4 @@ const FindEvents = () => {
 };
 
 export default FindEvents;
+{/* <div className="EventItemContainer col-sm d-flex flex-wrap justify-content-between"></div> */}
