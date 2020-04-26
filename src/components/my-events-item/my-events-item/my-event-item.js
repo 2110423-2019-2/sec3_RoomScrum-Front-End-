@@ -476,7 +476,7 @@ const MyEventItem = ({ each, onClick }) => {
       </div>
       <div className='EventInfoContainer'>
         <div className='EventName'>
-          <MyEventInfo each={each} status={status} />
+          <MyEventInfo each={each} status={status} application={application} />
         </div>
         <div className='Describtion'>
           <div className='Label'>Event Status</div>
