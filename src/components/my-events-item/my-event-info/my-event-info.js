@@ -34,11 +34,12 @@ const MyEventInfo = ({ each, status }) => {
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(true);
-    console.log("openModal");
+  
   };
   const afterOpenModal = () => {};
   const closeModal = () => {
     setIsOpen(false);
+
   };
 
   return (
@@ -93,10 +94,8 @@ const MyEventInfo = ({ each, status }) => {
                 return <div className="NoApllicant">You have no applicant</div>;
               }
               if (status == "HaveApplicant") {
-                return (
-                  
+                return (               
                     <Applicants eventId={each.eventId} />
- 
                 );
               }
             })()}
