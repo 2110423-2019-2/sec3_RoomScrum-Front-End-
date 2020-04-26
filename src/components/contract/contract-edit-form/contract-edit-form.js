@@ -4,18 +4,14 @@ import request from 'superagent';
 import config from 'src/config';
 import { Button } from 'src/components/common';
 import cancelContractButton from '../cancel-contract-button';
-import {
-  HireeEventStatusIndicator,
-  PaymentStatusIndicator,
-  ContractStatusIndicator,
-  ContractStatusColorIndicator,
-} from 'src/components/event-item/status-indicator/status-indicator';
+import { ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
 
 const InputField = React.forwardRef(
-  ({ name, type, place, isTextarea }, ref) => {
+  ({ name, type, place, isTextarea, callback }, ref) => {
     const [value, setValue] = useState(place);
     const handleChange = (event) => {
       setValue(event.target.value);
+      callback(event.target.value);
     };
 
     if (ref) {
@@ -98,32 +94,64 @@ const ContractEditForm = ({ application }) => {
   //oil-ข้อมูลที่ได้จากการเอา eventId มา get contract todo-end
 
   const [eventInfo, setEventInfo] = useState();
-  const budgetInput = useRef();
-  const detailInput = useRef();
+  // const budgetInput = useRef();
+  // const detailInput = useRef();
+  const [budgetInput, setBudgetInput] = useState(0);
+  const [detailInput, setDetailInput] = useState('-');
+
+  const updateBudget = (value) => {
+    setBudgetInput(Number(value));
+    // console.log(`update budget:${value}`);
+  };
+
+  const updateDetail = (value) => {
+    setDetailInput(value);
+    // console.log(`updescription:${value}`);
+  };
+  // const sendContract = () => {
+  //   request
+  //     .get(`${config.API_URL}/contract/send/${eventId}`) // get my applications, with event detail
+  //     .withCredentials()
+  //     .then((res) => {
+  //       console.log('sendComplete');
+  //     })
+  //     .catch((err) => {
+  //       alert('Error getting when send events ');
+  //       console.error('Error: Fetch applied events');
+  //     });
+  // };
+  // console.log(typeof setBudgetInput);
+
   const saveEditContract = () => {
+    console.log(`budget:${budgetInput}`);
+    console.log(`detail:${detailInput}`);
     request
-      .post(`${config.API_URL}/contract/6`) // get my applications, with event detail
+      .post(`${config.API_URL}/contract/${eventId}`) // get my applications, with event detail
       .send({
-        eventId: 6,
-        price: 1001,
-        description: 'Hello world 5555',
+        eventId: eventId,
+        price: budgetInput,
+        description: detailInput,
       })
       .withCredentials()
       .then((res) => {
-        // const applications = res.body;
-        // applications.sort(sortByTimestampDesc);
-        // setApplications(applications);
-        //OIL
-        console.log(res.body);
-        //OIL
+        console.log('save contract complete');
+        request
+          .get(`${config.API_URL}/contract/send/${eventId}`) // get my applications, with event detail
+          .withCredentials()
+          .then((res) => {
+            console.log('sendComplete');
+          })
+          .catch((err) => {
+            alert('Error getting applied events when send');
+            console.error('Error: Fetch applied events');
+          });
       })
       .catch((err) => {
-        alert('Error getting applied events ');
+        alert('Error getting applied events when save ');
         console.error('Error: Fetch applied events');
       });
   };
 
-  //
   return (
     <div>
       <ContractModal className='container-sm position-relative'>
@@ -152,7 +180,12 @@ const ContractEditForm = ({ application }) => {
         <div className='row'>
           <div className='label col-3'>Budget</div>
           <div className='col-9'>
-            <InputField name='budget' text={price} place={price} />
+            <InputField
+              name='budget'
+              text={price}
+              place={price}
+              callback={updateBudget}
+            />
           </div>
         </div>
         <div className='row '>
@@ -163,6 +196,7 @@ const ContractEditForm = ({ application }) => {
               text={price}
               place={contract.description || '-'}
               isTextarea
+              callback={updateDetail}
             />
           </div>
         </div>
@@ -171,7 +205,7 @@ const ContractEditForm = ({ application }) => {
         <div className='d-flex flex-row-reverse'>
           <Button
             className='mr-auto'
-            name='Save'
+            name='Save & Send'
             type='primary'
             onClick={saveEditContract}></Button>
           <Button className='mr-auto' name='Discard' type='secondary'></Button>
