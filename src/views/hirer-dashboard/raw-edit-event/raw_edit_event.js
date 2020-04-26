@@ -13,6 +13,7 @@ import FormV2 from "src/components/common/form/form-v2";
 import { formBelow, formUpper } from "./form-definition";
 import { setForm } from "src/components/common/form/fields";
 import moment from "moment";
+import { getFormData } from 'src/components/common/form/util';
 
 const Edit = ({ event }) => {
   const [show, setShow] = useState(false);
@@ -55,36 +56,48 @@ const Edit = ({ event }) => {
 
   const save = async () => {
     const sendData = {};
-    for (let key in formUpper) sendData[key] = formUpper[key].value;
+    for (let key in userFormUpper) {
+        if (key != "startDate" && key != "startTime" && key != "endDate" && key != "endTime" ){
+            sendData[key] = userFormUpper[key].value;
+        }      
+    }
     sendData["startdatetime"] =
-      formUpper["startDate"].value +
+      userFormUpper["startDate"].value +
       "T" +
-      formUpper["startTime"].value +
+      userFormUpper["startTime"].value +
       ":00.000Z";
     sendData["enddatetime"] =
-      formUpper["endDate"].value +
+      userFormUpper["endDate"].value +
       "T" +
-      formUpper["endTime"].value +
+      userFormUpper["endTime"].value +
       ":00.000Z";
-  
-    for (let key in formBelow) sendData[key] = formBelow[key].value;
-        await request.post(`${config.API_URL}/events/update/${event.eventId}`)
-                      .withCredentials()
-                      .send(sendData)
+
+    sendData["eventId"] = event.eventId;
+    sendData["userId"] = event.userId;
+    sendData["eventImage"] = 
+      config.API_URL + `/events/${event.eventId}/pic`;
+    
+    for (let key in userFormBelow) {
+      sendData[key] = userFormBelow[key].value;
+    }
+    
+    await request.post(`${config.API_URL}/events/update/${event.eventId}`)
+                  .withCredentials()
+                  .send(sendData)
             //   .then(() => {
             //     alert("Event Updated")
             //     // changeCallback();
             //     // handleClose();
             // })
-            .then(() => {
-              alert("Event Updated")
+                  .then(() => {
+                      alert("Event Updated")
               // changeCallback();
-              handleClose();
-          })
-          .catch(err => {
-              alert("update Event error");
-              console.error("Error updating event", err);
-          })
+                      closeModal();
+                  })
+                  .catch(err => {
+                      alert("update Event error");
+                      console.error("Error updating event", err);
+                  })
 
   }
 

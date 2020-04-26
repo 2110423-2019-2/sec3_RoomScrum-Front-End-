@@ -27,7 +27,7 @@ const customStyles = {
     }
   };
 
-const CreateReview = ({eventId}) => {
+const CreateReview = ({eventId }) => {
     const formReviewData = useRef();
     const [show, setShow] = useState(false);
     const [showAlert, setAlert] = useState(false);
