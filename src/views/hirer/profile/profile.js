@@ -66,7 +66,7 @@ export default () => {
   return (
     <div className="container view-profile">
       <div className="row high">
-        <div className="col-md-6">
+        <div className="col-md-7">
           <div className="row">
             <div className="col-md-12 text-primary text-center pt-3 size font-weight-bold">
               {firstName + " " + lastName}
@@ -118,7 +118,7 @@ export default () => {
           </div>
         </div>
 
-        <div className="col-md-6  ReviewContainer">
+        <div className="col-md-5  ReviewContainer">
           <div className="row  ReviewTitle">Review</div>
           <div className="row pt-4 pl-5 text-dark">
             {/* waiting for review process */}
