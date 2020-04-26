@@ -31,24 +31,7 @@
       flex: 1 0 0;
       word-wrap: break-word;
     }
-    .EventInfoContainer {
-      .EventInfoLabel {
-        flex-flow: row nowrap;
-        margin-bottom: 0.5em;
-        flex: 0 0 180px;
-        font-weight: bold;
-        font-size: 14px;
-        color: $dark-navy;
-      }
-      .EventInfoValue{
-        flex-flow: row nowrap;
-        margin-bottom: 0.5em;
-        flex: 1 0 0;
-        word-wrap: break-word;
-        font-size: 14px;
-        color: $dark-navy;
-      }
-    }
+    
   }
 
   .card-text {
