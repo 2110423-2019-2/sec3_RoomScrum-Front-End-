@@ -1,8 +1,12 @@
+@import "src/styles/color.scss";
 .register {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    background-color: $dark-navy;
+    // background-image: image('bg-1.png');
+    // background-size: cover;
 
     > .container {
         margin-top: 64px;
