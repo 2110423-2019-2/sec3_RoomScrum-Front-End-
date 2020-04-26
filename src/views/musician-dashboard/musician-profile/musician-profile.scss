@@ -17,66 +17,6 @@
     }
 }
 
-
-.musician-profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-    min-height: 100%;
-
-    .title {
-        color: $navy;
-        font-size: 40px;
-        text-align: center;
-        font-weight: bold;
-    }
-
-
-    .profile-image {
-        width: 300px;
-        min-height: 300px;
-        max-height: 300px;
-        object-fit: cover;
-        // display: inline-block;
-        border-radius: 50%;
-        margin: 32px 0;
-    }
-
-    .alias {
-        text-align: center;
-        color: $navy;
-        font-size: 24px;
-    }
-
-    .desc {
-        margin-bottom: 0.5em;
-        align-self: stretch;
-        color: $dark-navy;
-        
-        .label {
-            margin-bottom: -4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .value {
-            font-size: 16px;
-        }
-    
-    }
-
-    .edit-profile-button {
-        color: $dark-navy;
-        margin-top: 32px;
-        align-self: flex-start;
-        border: 0;
-        background-color: transparent;
-    }
-}
-
-
-
 .musician-video {
     word-wrap: break-word;
 

@@ -11,6 +11,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Dialog from 'src/components/common/dialog';
 import EditProfileDialog from './edit-profile-dialog';
 import Profile from 'src/components/profile';
+import Reviews from 'src/components/reviews'
 
 moment.locale('en', {
     relativeTime: {
@@ -130,7 +131,7 @@ const _MusicianProfilePage = observer(({ loginState: { userId } }) => {
             {musicianInfo && <Profile user={musicianInfo} onProfileUpdate={fetchMusicianInfo} EditProfileDialog={EditProfileDialog}/>}
             <div className="navy-bg">
                 { musicianInfo && <MusicianVideo musician={musicianInfo} />}
-                { <UserReviews userId={userId}/>}
+                { <Reviews userId={userId}/>}
             </div>
         </div>
     )

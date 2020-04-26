@@ -1,0 +1,32 @@
+@import '../../styles/color.scss';
+.user-review {
+    padding: 32px;
+    
+    .title {
+        font-size: 32px;
+        padding: 0.5em 1em;
+        color: white;
+    }
+}
+
+.user-review-item {
+    background-color: white;
+    margin-bottom: 8px;
+    padding: 8px;
+        
+    .divider {
+        width: 100%;
+        margin: 8px 0; 
+        height: 1px;
+        background-color: $grey;
+        // box-sizing: border-box;
+    }
+
+    .reviewer {
+        font-weight: bold;
+    }
+
+    .message {
+        
+    }
+}

@@ -6,6 +6,7 @@ import config from "src/config";
 import { userFormDef } from "src/views/register/form-definition";
 import Modal from "react-modal";
 import { Link } from 'react-router-dom';
+
 export default () => {
   const isFetch = useRef(false);
   const [user, setUser] = useState({});
