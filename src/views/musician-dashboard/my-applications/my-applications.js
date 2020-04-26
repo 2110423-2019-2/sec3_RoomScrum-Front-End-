@@ -152,7 +152,7 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
         </div>
         <AppliedEventAction
           application={application}
-          debug={true}
+          // debug={true}
           refreshCallback={refreshCallback}
         />
       </div>

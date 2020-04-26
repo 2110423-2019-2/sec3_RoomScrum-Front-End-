@@ -1,45 +1,34 @@
 import React, { useRef, useState } from 'react';
-// import "./hirer-dashboard.scss";
 import { Navbar, Form } from 'src/components/common';
 import request from 'superagent';
 import config from 'src/config';
 import { MyEventItem } from 'src/components/my-events-item';
-
+import { sortByTimestampDesc } from 'src/views/musician-dashboard/util';
 const HirerDashboard = () => {
   const [show, setShow] = useState(false);
   const [isFetch, setIsFetch] = useState(false);
   const [myEventList, setMyEventList] = useState([]);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  // const hirerId = () => {
-  //   request
-  //   .get(`${config.API_URL}/events`)
-  //   .then(res => {
-  //     setIsFetch(true);
-  //     setMyEventList(res.body);
-  //     console.log(res.body);
-  //   })
-  //   .catch(err => {
-  //     alert(err);
-  //   });
 
-  // }
-
-  if (!isFetch) {
+  const getEvents = () => {
     request
       .post(`${config.API_URL}/events/find-my-event`)
       .withCredentials()
       .then((res) => {
+        const lists = res.body;
+        lists.sort(sortByTimestampDesc);
+        setMyEventList(lists);
         setIsFetch(true);
-        console.log(res.body);
-        setMyEventList(res.body);
-        // setMyEventList('res.body');
       })
       .catch((err) => {
         alert(err);
       });
-  }
+  };
 
+  if (!isFetch) {
+    getEvents();
+  }
 
   const deleteItem = (eventId) => {
     for (let i = 0; i < myEventList.length; i++) {

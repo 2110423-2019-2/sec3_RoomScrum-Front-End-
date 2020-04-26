@@ -381,17 +381,11 @@ const CreateReview = ({ eventId, status }) => {
 };
 
 const MyEventItem = ({ each, onClick }) => {
-  const [fetch, setFetch] = useState(false);
-  const showContract = () => {
-    alert(eventId);
-  };
-  const [contract, setContract] = useState();
-  const [app, setApp] = useState();
+  //each ได้มาจาก res.body ของ .post(`${config.API_URL}/events/find-my-event`)
+
   const {
     eventId,
     eventName,
-    status,
-    hirerId,
     description,
     address,
     subdistrict,
@@ -401,58 +395,35 @@ const MyEventItem = ({ each, onClick }) => {
     zipcode,
     startdatetime,
     enddatetime,
-    isCancelled,
+    status,
     eventImage,
     userId,
+    hirerId,
+    timestamp,
+    isCancelled,
+    user: {
+      //hirer
+      firstName: hirerFirstName,
+      lastName: hirerLastName,
+    },
+    contract,
   } = each;
 
   const application = {
-    contract: {},
+    contract: contract,
     event: {
       eventName: eventName,
+      eventId: eventId,
       district: district,
       province: province,
-      eventId: eventId,
-      user: {},
+      userId: hirerId,
+      user: {
+        // hirer
+        firstName: hirerFirstName,
+        lastName: hirerLastName,
+      },
     },
   };
-
-  if (!fetch) {
-    request
-      .get(`${config.API_URL}/contract/${eventId}`)
-      .withCredentials()
-      .then((res) => {
-        // console.log(res.body);
-        each.contract = res.body;
-        // console.log(each.contract);
-        // setApplication(each);
-        application.contract = res.body;
-        application.contract.price = application.contract.price
-          ? application.contract.price
-          : '-';
-        application.event.price = application.contract.price;
-        console.log(application);
-
-        request
-          .get(`${config.API_URL}/user/${userId}`)
-          .then((res) => {
-            console.log(res.body.firstName);
-            application.event.user.firstName = res.body.firstName;
-            application.event.user.lastName = res.body.lastName;
-            console.log(application);
-            setApp(application);
-            setFetch(true);
-            // console.log(each.contract);
-            // setApplication(each);
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
-  }
-
-  // };
-
-  // getContract
 
   const [showCancelAlert, setCancelAlert] = useState(false);
 
@@ -509,16 +480,37 @@ const MyEventItem = ({ each, onClick }) => {
               );
           })()}
           {(() => {
-            console.log(application.contract);
+            const hideFor = ['Created', 'Cancelled', 'HaveApplicant'];
+            console.log(`${eventName}: ${status}`);
+            return (
+              !hideFor.includes(status) && (
+                <HirerContract eventId={eventId} application={application} />
+              )
+            );
           })()}
-          <HirerContract eventId={eventId} application={application} />
-          {console.log(application)}
+
           <CreateReview eventId={eventId} status={status} />
-          <MusicianInvitation eventId={eventId} />
+          {(() => {
+            const hideFor = [
+              'ContractDrafting',
+              'PaymentPending',
+              'HaveApplicant',
+              'Complete',
+              'Drafting',
+            ];
+            // console.log(`${eventName}: ${status}`);
+            return (
+              !hideFor.includes(status) && (
+                <MusicianInvitation eventId={eventId} />
+              )
+            );
+          })()}
         </div>
       </div>
       <div className='PriceTag'>
-        <div className='Price'> price ????</div>
+        <div className='Price'>
+          {application.contract.price.toLocaleString()}
+        </div>
         <div className='Currency'> baht </div>
       </div>
     </div>
