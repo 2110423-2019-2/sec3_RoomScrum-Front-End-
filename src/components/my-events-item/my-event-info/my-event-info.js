@@ -9,13 +9,13 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Navbar } from "src/components/common";
 import { ConfirmDialog } from "src/components/common";
 import "./my-event-info.scss";
+import { ApplicationStatus, EventStatus } from 'src/enums';
 import Image from "react-image";
 
-const MyEventInfo = ({ each }) => {
+const MyEventInfo = ({ each, status }) => {
   const {
     eventId,
     eventName,
-    status,
     hirerId,
     description,
     address,
@@ -65,7 +65,7 @@ const MyEventInfo = ({ each }) => {
                 {each.startdatetime.substr(11, 8)}{" "}
                 {each.startdatetime.substr(0, 10)} to{" "}
                 {each.enddatetime.substr(11, 8)}{" "}
-                {each.enddatetime.substr(0, 10)}}
+                {each.enddatetime.substr(0, 10)}
               </div>
             </div>
             {/* <h6>Time</h6>
@@ -87,10 +87,18 @@ const MyEventInfo = ({ each }) => {
             {/* <button onClick={() => doDelete(event.eventId)} > Cancel </button> */}
           </div>
           <div className="AppliedMusician col-5">
+            {/* <Applicants eventId={each.eventId} /> */}
             {(() => {
-              return status == "Created" ? null : (
-                <Applicants eventId={each.eventId} />
-              );
+              if (status == "Created") {
+                return <div className="NoApllicant">You have no applicant</div>;
+              }
+              if (status == "HaveApplicant") {
+                return (
+                  
+                    <Applicants eventId={each.eventId} />
+ 
+                );
+              }
             })()}
           </div>
         </div>
