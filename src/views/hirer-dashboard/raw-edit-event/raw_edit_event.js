@@ -65,17 +65,16 @@ const Edit = ({ event }) => {
       userFormUpper["startDate"].value +
       "T" +
       userFormUpper["startTime"].value +
-      ":00.000Z";
+      ".000Z";
     sendData["enddatetime"] =
       userFormUpper["endDate"].value +
       "T" +
       userFormUpper["endTime"].value +
-      ":00.000Z";
+      ".000Z";
 
-    sendData["eventId"] = event.eventId;
-    sendData["userId"] = event.userId;
+    // sendData["userId"] = event.userId;
     sendData["eventImage"] = 
-      config.API_URL + `/events/${event.eventId}/pic`;
+      `/${event.eventId}/pic`;
     
     for (let key in userFormBelow) {
       sendData[key] = userFormBelow[key].value;
@@ -93,6 +92,7 @@ const Edit = ({ event }) => {
                       alert("Event Updated")
               // changeCallback();
                       closeModal();
+                      window.location.href = "/hirer/event";
                   })
                   .catch(err => {
                       alert("update Event error");

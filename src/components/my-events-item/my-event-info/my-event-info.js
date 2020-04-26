@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Navbar } from "src/components/common";
 import { ConfirmDialog } from "src/components/common";
 import "./my-event-info.scss";
-import { ApplicationStatus, EventStatus } from 'src/enums';
+import { ApplicationStatus, EventStatus } from "src/enums";
 import Image from "react-image";
 
 const MyEventInfo = ({ each, status }) => {
@@ -34,12 +34,10 @@ const MyEventInfo = ({ each, status }) => {
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(true);
-  
   };
   const afterOpenModal = () => {};
   const closeModal = () => {
     setIsOpen(false);
-
   };
 
   return (
@@ -81,10 +79,16 @@ const MyEventInfo = ({ each, status }) => {
               <div className="Label">About</div>
               <div className="Value">{each.description}</div>
             </div>
+            {(() => {
+              if (status == "Created" || status == "HaveApplicant") {
+                return (
+                  <div className="edit">
+                    <Edit event={each} />
+                  </div>
+                );
+              }
+            })()}
 
-            <div className="edit">
-              <Edit event={each} />
-            </div>
             {/* <button onClick={() => doDelete(event.eventId)} > Cancel </button> */}
           </div>
           <div className="AppliedMusician col-5">
@@ -94,9 +98,7 @@ const MyEventInfo = ({ each, status }) => {
                 return <div className="NoApllicant">You have no applicant</div>;
               }
               if (status == "HaveApplicant") {
-                return (               
-                    <Applicants eventId={each.eventId} />
-                );
+                return <Applicants eventId={each.eventId} />;
               }
             })()}
           </div>
