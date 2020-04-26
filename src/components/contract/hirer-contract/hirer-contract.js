@@ -43,12 +43,12 @@ const Btn = styled.button`
   border: none;
   color:white;
   background-color: #559be3;
-    ${props => props.type == 'primary' && 'background-color:#559BE3'}
-    ${props => props.type == 'secondary' && 'background-color:#939393'}
-    ${props => props.type == 'danger' && 'background-color:#BA2B2B'};
+    ${(props) => props.type == 'primary' && 'background-color:#559BE3'}
+    ${(props) => props.type == 'secondary' && 'background-color:#939393'}
+    ${(props) => props.type == 'danger' && 'background-color:#BA2B2B'};
 `;
 
-const HirerContract = ({ eventId }) => {
+const HirerContract = ({ eventId, application }) => {
   const [showContractDialog, setShowContractDialog] = useState(false);
 
   const viewContract = ({}) => {
@@ -64,12 +64,13 @@ const HirerContract = ({ eventId }) => {
   const accept = () => {
     request
       .get(`${config.API_URL}/contract/accept/${eventId}`)
-      .then(res => {
+      .withCredentials()
+      .then((res) => {
         console.log(res);
         alert('accept complete');
         setShowContractDialog(false);
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
 
@@ -77,26 +78,36 @@ const HirerContract = ({ eventId }) => {
   };
   const reject = () => {
     request
+      .withCredentials()
       .get(`${config.API_URL}/contract/reject/${eventId}`)
-      .then(res => {
+      .then((res) => {
         console.log(res);
         alert('reject complete');
         setShowContractDialog(false);
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
 
     alert('reject');
   };
-
+  console.log(application.contract);
   return (
     <div>
-      <button onClick={viewContract}>view contract</button>
+      {(() => {
+        return application.contract == 'NotActive' ? null : (
+          <Button name='View contract' onClick={viewContract}></Button>
+        );
+      })()}
       <Dialog
         isOpen={showContractDialog}
         onClose={() => setShowContractDialog(false)}>
-        <Contract eventId={eventId}></Contract>
+        {(() => {
+          console.log(application);
+        })()
+        //<Contract eventId={eventId} application={application}></Contract>
+        }
+        <Contract eventId={eventId} application={application}></Contract>
         <ContractModal>
           <div className='d-flex flex-row-reverse'>
             <Btn type='primary' onClick={accept}>

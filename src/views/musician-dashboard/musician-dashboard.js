@@ -11,6 +11,8 @@ import EventInvitations from './event-invitations';
 import MyEventsPage from './my-applications';
 import MusicianProfile from './musician-profile';
 import CalendarPage from './calendar';
+import PageRoleGuard from '../role-guard';
+import { Roles } from 'src/components/common/guard';
 
 const sidebarItems = [
   SideNavItemDetail('My Profile', '/musician/my-profile'),

@@ -31,7 +31,7 @@ export const ApplicationStatus = {
 export const ContractStatus = {
   DRAFTING: 'Drafting',
   REVIEW_PENDING: 'Sent', // i want it to make more sense
-  ACCEPTED: 'Accpeted',
+  ACCEPTED: 'Accepted',
   REJECTED: 'Rejected',
   CANCELLED: 'Cancelled',
   //OIL

@@ -127,22 +127,20 @@ const MusicianVideo = ({ musician: {videoUrl} }) => {
 const UserReviewItem = ({review}) => {
     const {
         reviewers: {firstName, lastName},
-        message,
-        star,
+        description,
     } = review;
     
     return (
         <div className="user-review-item">
             <div className="reviewer"> {firstName} {lastName} </div>
             <div className="divider"/>
-            <div className="message"> REVIEW: {message}</div>
-            <div className="rating"> {star} stars</div>
+            <div className="message"> {description}</div>
         </div>
     )
 }
 
 // user's review ()
-const UserReviews = ({userId}) => {
+export const UserReviews = ({userId}) => {
     const [reviews, setReviews] = useState(null);
     const lastFetch = useRef(null);
 

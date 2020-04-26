@@ -15,8 +15,15 @@ import { ApplicationStatus, EventStatus } from 'src/enums';
 import { AppliedEventAction } from '../components';
 import { HireeContract } from 'src/components/contract';
 import { ViewEventInfoButton } from 'src/components/action-buttons/view-event-info-button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import EmptyMessage from 'src/components/common/empty-message';
+import { Link } from 'react-router-dom';
 
 const AppliedEventItem = ({ application, refreshCallback }) => {
+  application.contract = application.event.contract
+    ? application.event.contract
+    : { status: 'NotActive' };
   application.contract = application.event.contract
     ? application.event.contract
     : { status: 'NotActive' };
@@ -109,7 +116,8 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
           <div className='value'>
             {/** TODO
               <ContractStatusIndicator contractStatus={'TODO'} />
-             */}
+             */
+            console.log(contractStatus)}
             <ContractStatusIndicator contractStatus={contractStatus} />
             {(() => {
               // console.log(contractStatus);
@@ -180,7 +188,7 @@ const MyApplications = () => {
         applications.sort(sortByTimestampDesc);
         setApplications(applications);
         //OIL
-        // console.log(res.body);
+        console.log(res.body);
         //OIL
       })
       .catch((err) => {

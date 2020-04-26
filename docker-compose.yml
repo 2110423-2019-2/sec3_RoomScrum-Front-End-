@@ -1,0 +1,23 @@
+version: '3.1'
+services: 
+  # frontend includes nginx
+  frontend: 
+    build: 
+      context: .
+    ports:
+      - ${RS_PORT:-80}:80 # port to expose
+    # just use .env
+    # environment:
+    #   PUBLIC_URL: ${RS_PUBLIC_URL:-/} # default is served at root of website
+    #   REACT_APP_API_URL: ${RS_API_URL:-/api/} # api served at /api/ prefix
+    #   # note: backend port is constant
+    
+    # nginx configs -- optional
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro 
+    # links: 
+    #   - backend
+networks: 
+  default:
+    external: 
+      name: ${RS_NETWORK:-se-network}

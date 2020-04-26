@@ -10,8 +10,14 @@ const InputField = React.forwardRef(
   ({ name, type, place, isTextarea, callback }, ref) => {
     const [value, setValue] = useState(place);
     const handleChange = (event) => {
-      setValue(event.target.value);
       callback(event.target.value);
+      if (type == 'number') {
+        try {
+          setValue(event.target.value);
+        } catch {
+          console.log('invalid input type');
+        }
+      }
     };
 
     if (ref) {
@@ -182,6 +188,7 @@ const ContractEditForm = ({ application }) => {
           <div className='col-9'>
             <InputField
               name='budget'
+              type='number'
               text={price}
               place={price}
               callback={updateBudget}
@@ -193,6 +200,7 @@ const ContractEditForm = ({ application }) => {
           <div className='col-9'>
             <InputField
               name='detail'
+              type='text'
               text={price}
               place={contract.description || '-'}
               isTextarea
