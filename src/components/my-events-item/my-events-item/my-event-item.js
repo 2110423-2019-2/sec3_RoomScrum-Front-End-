@@ -194,9 +194,10 @@ const MusicianInvitation = ({ eventId }) => {
           setOpenInvitationDialog(false);
           handleClose();
           alert("Invite musician success");
+          window.location.href = "/hirer/event";
         })
         .catch((err) => {
-          alert("Invite musician error");
+          alert("You've invited him/her before");
           console.error("Invite musician error", err);
         });
     }
@@ -267,7 +268,7 @@ const MusicianInvitation = ({ eventId }) => {
   );
 };
 
-const CreateReview = ({ eventId }) => {
+const CreateReview = ({ eventId, status }) => {
   const formReviewData = useRef();
   const [show, setShow] = useState(false);
   const [showAlert, setAlert] = useState(false);
@@ -333,9 +334,17 @@ const CreateReview = ({ eventId }) => {
   return (
     // style from admin
     <div classname="Review">
-      <div className="ArchieveButton" onClick={openModal}>
+      {(() => {
+        if (status == "Complete")
+          return (
+            <div className="ArchieveButton" onClick={openModal}>
+              <div className="ArchieveButtonTitle">Archieve</div>
+            </div>
+          );
+      })()}
+      {/* <div className="ArchieveButton" onClick={openModal}>
         <div className="ArchieveButtonTitle">Archieve</div>
-      </div>
+      </div> */}
 
       <Modal
         isOpen={isOpen}
@@ -398,8 +407,10 @@ const MyEventItem = ({ each, onClick }) => {
     enddatetime,
     isCancelled,
     eventImage,
-    userId
+    userId,
   } = each;
+
+  const [showCancelAlert, setCancelAlert] = useState(false);
 
   return (
     <div className="MyEventItem clearfix">
@@ -411,14 +422,12 @@ const MyEventItem = ({ each, onClick }) => {
       </div>
       <div className="EventInfoContainer">
         <div className="EventName">
-          <MyEventInfo each={each} />
+          <MyEventInfo each={each} status={status} />
         </div>
         <div className="Describtion">
           <div className="Label">Event Status</div>
           <div className="Value">
-            <HirerEventStatusIndicator
-              eventStatus = {status}             
-            />
+            <HirerEventStatusIndicator eventStatus={status} />
           </div>
         </div>
         <div className="Describtion">
@@ -430,12 +439,35 @@ const MyEventItem = ({ each, onClick }) => {
           <div className="Value">{province}</div>
         </div>
         <div className=" row HirerAction">
-          <Button type="danger" name="Cancel" onClick={() => onClick(eventId)}>
-            {" "}
-            Cancel{" "}
-          </Button>
+          <Modal className="center-popup" isOpen={showCancelAlert}>
+            <ConfirmDialog
+              title="Confirm?"
+              question="Do you want to cancel this event"
+              callback={(confirm) => {
+                setCancelAlert(false);
+                if (confirm) {
+                  // handleClose();
+                  onClick(eventId);
+                }
+              }}
+            />
+          </Modal>
+          {(() => {
+            if (status == "Created" || status == "HaveApplicant")
+              return (
+                <Button
+                  type="danger"
+                  name="Cancel"
+                  onClick={() => setCancelAlert(true)}
+                >
+                  {" "}
+                  Cancel{" "}
+                </Button>
+              );
+          })()}
+
           <HirerContract eventId={eventId} />
-          <CreateReview eventId={eventId} />
+          <CreateReview eventId={eventId} status={status} />
           <MusicianInvitation eventId={eventId} />
         </div>
       </div>

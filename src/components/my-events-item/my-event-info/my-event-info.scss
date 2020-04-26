@@ -11,8 +11,6 @@
 }
 
 .Container {
-
-
   .EventInfo {
     // margin: 0.1rem;
     // width: 500px;
@@ -72,24 +70,19 @@
   }
 
   .AppliedMusician {
-    // margin: 0.1rem;
-    // width: 500px;
-    // height: 500px;
-    max-width: 50%;
     background-color: $dark-navy;
-    // box-shadow: 0px 4px 4px #bababa;
+    max-width: 50%;
     margin-right: auto;
     margin-left: auto;
     // margin-left: 10px;
     display: inline-block;
-    float:right;
-
-
+    font-size: 25px;
+    // font-weight: bold;
+    float: right;
+    color: white;
+    text-align: center;
+    margin-top: 60 px;
+    margin-bottom: 60 px;
+    
   }
-  .NoApplicant{
-    background-color: white;
-    font-weight: bold;
-    font-size: 20px;
-  }
-
 }
