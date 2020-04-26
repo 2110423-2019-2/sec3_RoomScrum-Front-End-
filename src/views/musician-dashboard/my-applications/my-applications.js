@@ -17,8 +17,17 @@ import { HireeContract } from 'src/components/contract';
 import { ViewEventInfoButton } from 'src/components/action-buttons/view-event-info-button';
 
 const AppliedEventItem = ({ application, refreshCallback }) => {
+  application.contract = application.event.contract
+    ? application.event.contract
+    : { status: 'NotActive' };
+
+  application.event.price = application.contract.price
+    ? application.contract.price
+    : '-';
+
   const {
     status: applicationStatus,
+    contract: { status: contractStatus },
     event: {
       eventName,
       eventId,
@@ -27,7 +36,6 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
       province,
       userId: hirerId,
       price,
-      contractStatus,
       user: {
         // hirer
         firstName,
@@ -35,6 +43,19 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
       },
     },
   } = application;
+
+  // application.contract = application.event.contract
+  //   ? application.event.contract
+  //   : { status: 'NotActive' };
+
+  // application.event.price = application.event.price
+  //   ? application.event.price
+  //   : 10000;
+
+  // const contractStatus = application.contract.status;
+
+  // console.log(application);
+
   return (
     <div
       className={classNames({
@@ -86,9 +107,24 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
         <div className='desc'>
           <div className='label'> Contract Status </div>
           <div className='value'>
-            {/** TODO */}
-            <HireeContract eventId={eventId} application={application} />
-            <ContractStatusIndicator contractStatus={'TODO'} />
+            {/** TODO
+              <ContractStatusIndicator contractStatus={'TODO'} />
+             */}
+            <ContractStatusIndicator contractStatus={contractStatus} />
+            {(() => {
+              // console.log(contractStatus);
+              return contractStatus == 'NotActive' ? null : (
+                <HireeContract eventId={eventId} application={application} />
+              );
+              // applications.map((application) => (
+              //   <>
+              //     <HireeContract
+              //       eventId={eventId}
+              //       application={application}
+              //     />
+              //   </>
+              // ));
+            })()}
           </div>
         </div>
         <div className='desc'>
@@ -117,7 +153,7 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
         />
       </div>
       <div className='price-tag'>
-        <div className='price'> {price || 'price ????'}</div>
+        <div className='price'> {price.toLocaleString()}</div>
         <div className='currency'> baht </div>
       </div>
     </div>
@@ -143,7 +179,9 @@ const MyApplications = () => {
         const applications = res.body;
         applications.sort(sortByTimestampDesc);
         setApplications(applications);
-        console.log(res.body);
+        //OIL
+        // console.log(res.body);
+        //OIL
       })
       .catch((err) => {
         alert('Error getting applied events ');
