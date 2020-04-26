@@ -5,8 +5,8 @@ COPY package.json yarn.lock ./
 RUN npm set progress=false && \
     npm install --quiet 
 
-# ensure .env exist !
-COPY .env . 
+# ensure .env.production exist !
+COPY .env.production . 
 
 COPY . .
 RUN npm run build
