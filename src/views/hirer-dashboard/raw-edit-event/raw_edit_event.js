@@ -80,7 +80,7 @@ const Edit = ({ event }) => {
       ".000Z";
 
     // sendData["userId"] = event.userId;
-    sendData["eventImage"] = `/${event.eventId}/pic`;
+    // sendData["eventImage"] = `/${event.eventId}/pic`;
 
     for (let key in userFormBelow) {
       sendData[key] = userFormBelow[key].value;
@@ -89,7 +89,7 @@ const Edit = ({ event }) => {
     if (newProfileImage) {
       console.dir("new profile image", newProfileImage);
       await request
-        .post(config.API_URL + "/events/pic")
+        .post(`${config.API_URL}/events/event-pic/${event.eventId}`)
         .attach("image", newProfileImage)
         .withCredentials()
         .then(() => {

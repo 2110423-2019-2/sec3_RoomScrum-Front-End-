@@ -1,103 +1,123 @@
-import React, { useRef, useState } from "react";
-import "./editprofile.scss";
-import { Navbar, Form } from "src/components/common";
-import request from "superagent";
-import config from "src/config";
+import React, { useRef, useState } from 'react';
+import './editprofile.scss';
+import ImageUploader from 'src/components/common/image-upload/image-upload';
+import config from 'src/config';
+import { formStateBuilder } from 'src/components/common/form/form-state';
+import FormV2 from 'src/components/common/form/form-v2';
+import { setForm } from 'src/components/common/form/fields';
+import request from 'superagent';
+import { Button, ConfirmDialog } from 'src/components/common';
+import { hasError, getFormData } from 'src/components/common/form/util';
+import Dialog from 'src/components/common/dialog';
 import { userFormDef, musicianFormDef } from "./form-definition";
-import FormV2 from "src/components/common/form/form-v2";
-import { formStateBuilder } from "src/components/common/form/form-state";
-import ImageUploader from "src/components/common/image-upload/image-upload";
-import { setForm } from 'src/components/common/form/fields'
-import { Link } from 'react-router-dom';
-const EditProfile = () => {
+
+const EditProfile = ({userId , onClose}) => {
+  // const [userForm, dispatchUserForm] = formStateBuilder(userFormDef)();
+  // const [musicianForm, dispatchMusicianForm] = formStateBuilder(
+  //   musicianFormDef
+  // )();
+  // const [profileImage, setProfileImage] = useState(null);
+  // const [user, setUser] = useState({});
+  // const isFetch = useRef(false);
 
   const [userForm, dispatchUserForm] = formStateBuilder(userFormDef)();
-  const [musicianForm, dispatchMusicianForm] = formStateBuilder(
-    musicianFormDef
-  )();
-  const [profileImage, setProfileImage] = useState(null);
-  const [nationalCardImage, setNationalCardImage] = useState(null);
-  const [accepted, setAccepted] = useState(false);
-  const [user, setUser] = useState({});
-  const isFetch = useRef(false);
-  if (!isFetch.current) {
-    isFetch.current = true;
-    console.log("hello");
-    request.get(config.API_URL + '/auth/status')
-    .withCredentials()
-    .then(res => {
-      request.get(config.API_URL + '/user/' + res.body.userId)
+  const hasFetch = useRef(false);
+  const [newProfileImage, setNewProfileImage] = useState(null);
+  const [showDiscardDialog, setShowDiscardDialog] = useState(false);
+
+  if (!hasFetch.current) {
+    hasFetch.current = true;
+    request(config.API_URL + `/user/${userId}`)
       .withCredentials()
-      .then(res => {
-        setUser(res.body);
+      .then((res) => {
         setForm(dispatchUserForm)(res.body);
       })
-    })
-    .catch(err => {
-      alert("error" + JSON.stringify(err));
-    })
+      .catch((err) => {
+        alert(`Error getting musician #${userId} info ${err.response.text}`);
+        console.error("Error", err);
+      });
   }
-
-  const cancel = () => {
-    alert("Are you sure to discard change?")
-  }
-
   const submit = async () => {
-    dispatchMusicianForm({ type: "PRE_SUBMIT" });
+    // check form
     dispatchUserForm({ type: "PRE_SUBMIT" });
-    let hasError = false;
-    for (let key in userForm) {
-      console.log(userForm[key]);
-      if (userForm[key].errors && userForm[key].errors.length > 0) {
-        hasError = true;
-        break;
-      }
-    }
-    if (hasError) {
-      alert("Please enter all details");
+    const ok = !hasError(userForm);
+    const newProfileData = getFormData(userForm, userFormDef);
+    if (!ok) {
+      alert("Please Enter form correctly");
       return;
     }
-    const sendData = user;
-    for (let key in userForm)
-      if (!userFormDef[key].ignore) sendData[key] = userForm[key].value;
-    sendData.gender = +userForm.gender.value;
-    try {
-      request.post(`${config.API_URL}/user/update/${user.userId}`).send(user)
+
+    if (newProfileImage) {
+      console.dir("new profile image", newProfileImage);
+      await request
+        .post(config.API_URL + "/user/profile-pic")
+        .attach("image", newProfileImage)
+        .withCredentials()
+        .then(() => {
+          alert("Uploaded Profile Picture");
+        })
+        .catch((err) => {
+          alert("Profile image upload error");
+          console.error("Error uploading profile", err);
+        });
+    }
+
+    await request
+      .post(config.API_URL + `/user/update`)
       .withCredentials()
+      .send(newProfileData)
       .then(() => {
-        alert("Profile Updated")
-        window.location.href = './me'
+        alert("Profile Updated");
+        onClose();
+        window.location.href = "/hirer/profile/me";
       })
-    }
-    catch (err) {
-      alert("error");
-    }
+      .catch((err) => {
+        alert("update Profile error");
+        console.error("Error updating profile", err);
+      });
+  };
+
+  const discardChange = (confirm) => {
+    if (!confirm) return;
+    onClose();
   };
 
   return (
-     <div className="edit-profile bg-info">
-       <div className="container rounded-top rounded-lg shadow">
-         <h1>Edit Profile</h1>
-         <FormV2
-           formData={userForm}
-           dispatch={dispatchUserForm}
-           formDef={userFormDef}
-         />
-         <div className="btn-line">
-          
-
-           <Link className="text-muted " onClick={cancel}>
-            Discard
-          </Link>
-          <body>     </body>
-           <Link className="text-blue " onClick={submit}>
-            Save
-          </Link>
-          
-
-         </div>
-       </div>
-     </div>
+    <div >
+      <div className="edit-profile">
+        <div className="Title">
+          Edit Profile
+        </div>
+        <ImageUploader
+          setImageFile={setNewProfileImage}
+          title="Upload profile image"
+          initialImage={`${config.API_URL}/user/profile-pic/${userId}`}
+        />
+        <FormV2
+          formData={userForm}
+          dispatch={dispatchUserForm}
+          formDef={userFormDef}
+        />
+        <div className="buttons">
+          <Button name="Save Changes" type="primary" onClick={submit} />
+          <Button
+            name="Discard"
+            type="danger"
+            onClick={() => setShowDiscardDialog(true)}
+          />
+        </div>
+        <Dialog
+          isOpen={showDiscardDialog}
+          onClose={() => setShowDiscardDialog(false)}
+        >
+          <ConfirmDialog
+            callback={discardChange}
+            title="Discard changes ?"
+            question="All your change will be lost, your profile won't be updated"
+          />
+        </Dialog>
+      </div>
+    </div>
   );
 };
 

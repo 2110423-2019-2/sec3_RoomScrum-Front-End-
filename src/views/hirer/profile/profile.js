@@ -7,13 +7,18 @@ import { userFormDef } from "src/views/register/form-definition";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
 import Image from "react-image";
-import MyReviews from "src/views/review/my-reviews"
+import MyReviews from "src/views/review/my-reviews";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import EditProfile from './edit-profile';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import Dialog from 'src/components/common/dialog';
 
 export default () => {
   const isFetch = useRef(false);
   const [user, setUser] = useState({});
   const [profileImageFile, setProfileImageFile] = useState({});
-  const report = async () => {};
+  const [showEditDialog, setShowEditDialog] = useState(false);
+
   if (!isFetch.current) {
     isFetch.current = true;
 
@@ -106,23 +111,29 @@ export default () => {
 
           <div className="row pt-2 pl-5 pr-5 textcolor">{bio}</div>
 
-          <div className="row pt-2 pl-5 textcolor">
-            <Link
-              className="text-blue"
-              onClick={() => {
-                window.location.href = "./edit";
-              }}
-            >
-              Edit my profile
-            </Link>
-          </div>
+          <button
+            className="edit-profile-button"
+            onClick={() => setShowEditDialog(true)}
+          >
+            <FontAwesomeIcon icon={faEdit} />
+            Edit my profile
+          </button>
+          <Dialog
+            isOpen={showEditDialog}
+            onClose={() => setShowEditDialog(false)}
+          >
+            <EditProfile
+              userId={userId}
+              onClose={() => setShowEditDialog(false)}
+            />
+          </Dialog>
         </div>
 
         <div className="col-md-5  ReviewContainer">
           <div className="row  ReviewTitle">Review</div>
           <div className="row pt-4 pl-5 text-dark">
             {/* waiting for review process */}
-            <MyReviews hirerId={userId}/>
+            <MyReviews hirerId={userId} />
           </div>
         </div>
       </div>
