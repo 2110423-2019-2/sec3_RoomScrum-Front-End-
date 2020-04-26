@@ -50,7 +50,6 @@ const Btn = styled.button`
 
 const HirerContract = ({ eventId, application }) => {
   const [showContractDialog, setShowContractDialog] = useState(false);
-  console.log(application);
 
   const viewContract = ({}) => {
     // alert('viewContract');
@@ -92,10 +91,14 @@ const HirerContract = ({ eventId, application }) => {
 
     alert('reject');
   };
-
+  console.log(application.contract);
   return (
     <div>
-      <button onClick={viewContract}>view contract</button>
+      {(() => {
+        return application.contract == 'NotActive' ? null : (
+          <Button name='View contract' onClick={viewContract}></Button>
+        );
+      })()}
       <Dialog
         isOpen={showContractDialog}
         onClose={() => setShowContractDialog(false)}>

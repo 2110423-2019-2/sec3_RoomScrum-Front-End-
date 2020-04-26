@@ -381,11 +381,12 @@ const CreateReview = ({ eventId, status }) => {
 };
 
 const MyEventItem = ({ each, onClick }) => {
+  const [fetch, setFetch] = useState(false);
   const showContract = () => {
     alert(eventId);
   };
   const [contract, setContract] = useState();
-  //const [application, setApplication] = useState();
+  const [app, setApp] = useState();
   const {
     eventId,
     eventName,
@@ -406,6 +407,7 @@ const MyEventItem = ({ each, onClick }) => {
   } = each;
 
   const application = {
+    contract: {},
     event: {
       eventName: eventName,
       district: district,
@@ -414,51 +416,39 @@ const MyEventItem = ({ each, onClick }) => {
       user: {},
     },
   };
-  // application.event = {
-  //   eventName: eventName,
-  //   district: district,
-  //   province: province,
-  //   eventId: eventId,
-  // };
-  // const {
-  //   contract: contract,
-  //   event: {
-  //     eventName: eventName,
-  //     district: district,
-  //     province: province,
-  //     eventId: eventId,
-  //   },
-  // } = application;
 
-  // const getContract = () => {
-  request
-    .get(`${config.API_URL}/contract/${eventId}`)
-    .withCredentials()
-    .then((res) => {
-      // console.log(res.body);
-      each.contract = res.body;
-      // console.log(each.contract);
-      // setApplication(each);
-      application.contract = res.body;
-      application.contract.price = application.contract.price
-        ? application.contract.price
-        : '-';
-      application.event.price = application.contract.price;
-      console.log(application);
+  if (!fetch) {
+    request
+      .get(`${config.API_URL}/contract/${eventId}`)
+      .withCredentials()
+      .then((res) => {
+        // console.log(res.body);
+        each.contract = res.body;
+        // console.log(each.contract);
+        // setApplication(each);
+        application.contract = res.body;
+        application.contract.price = application.contract.price
+          ? application.contract.price
+          : '-';
+        application.event.price = application.contract.price;
+        console.log(application);
 
-      request
-        .get(`${config.API_URL}/user/${userId}`)
-        .then((res) => {
-          console.log(res.body.firstName);
-          application.event.user.firstName = res.body.firstName;
-          application.event.user.lastName = res.body.lastName;
-          console.log(application);
-          // console.log(each.contract);
-          // setApplication(each);
-        })
-        .catch((err) => console.log(err));
-    })
-    .catch((err) => console.log(err));
+        request
+          .get(`${config.API_URL}/user/${userId}`)
+          .then((res) => {
+            console.log(res.body.firstName);
+            application.event.user.firstName = res.body.firstName;
+            application.event.user.lastName = res.body.lastName;
+            console.log(application);
+            setApp(application);
+            setFetch(true);
+            // console.log(each.contract);
+            // setApplication(each);
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  }
 
   // };
 
@@ -518,7 +508,9 @@ const MyEventItem = ({ each, onClick }) => {
                 </Button>
               );
           })()}
-
+          {(() => {
+            console.log(application.contract);
+          })()}
           <HirerContract eventId={eventId} application={application} />
           {console.log(application)}
           <CreateReview eventId={eventId} status={status} />
@@ -526,7 +518,7 @@ const MyEventItem = ({ each, onClick }) => {
         </div>
       </div>
       <div className='PriceTag'>
-        <div className='Price'> price ????'</div>
+        <div className='Price'> price ????</div>
         <div className='Currency'> baht </div>
       </div>
     </div>
