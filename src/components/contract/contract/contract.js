@@ -35,14 +35,11 @@ const ContractModal = styled.div`
 `;
 
 const Contract = ({ eventId, application }) => {
-  const [contractInfo, setContractInfo] = useState();
-  const [isFetch, setIsFetch] = useState(false);
+  // const [contractInfo, setContractInfo] = useState();
+  // const [isFetch, setIsFetch] = useState(false);
 
-  // const [status, setStatus] = useState('Drafting');
-  // const [eventName, setEventName] = useState('SE night miniconcert');
-  // const [hirer, setHirer] = useState('John Minian');
-  const [hiree, setHiree] = useState('-');
-
+  // const [hiree, setHiree] = useState();
+  const hiree = '-';
   // const getEvents = () => {
   //   return new Promise((resolve, reject) => {
   //     request
