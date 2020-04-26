@@ -49,14 +49,6 @@ const MusicianEventAction = ({ application, refreshCallback, debug }) => {
       {canCompleteEvent && (
         <CompleteEventButton eventId={eventId} onSuccess={refreshCallback} />
       )}
-      {
-        <PayByQRButton
-          accountNo='1234567890123'
-          amount='1999.99'
-          displayName='Rodchananat K.'
-        />
-      }
-      {canViewContract && <div> todo: view contract </div>}
       {canApply && (
         <ApplyEventButton eventId={eventId} onSuccess={refreshCallback} />
       )}
