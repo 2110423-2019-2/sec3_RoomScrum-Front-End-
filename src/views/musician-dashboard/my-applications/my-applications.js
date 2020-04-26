@@ -15,6 +15,10 @@ import { ApplicationStatus, EventStatus } from 'src/enums';
 import { AppliedEventAction } from '../components';
 import { HireeContract } from 'src/components/contract';
 import { ViewEventInfoButton } from 'src/components/action-buttons/view-event-info-button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import EmptyMessage from 'src/components/common/empty-message';
+import { Link } from 'react-router-dom';
 
 const AppliedEventItem = ({ application, refreshCallback }) => {
   application.contract = application.event.contract

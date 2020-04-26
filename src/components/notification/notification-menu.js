@@ -82,11 +82,11 @@ const NotificationMenu = () => {
                     <div className={
                         classNames({
                             "notif-list": true,
-                            empty: true || !sortedNotifs,
+                            empty: !sortedNotifs || sortedNotifs.length == 0,
                         })
                     }>
                         {
-                            false && sortedNotifs ? (
+                            sortedNotifs ? (
                                 sortedNotifs.map(notif => (
                                     <NotificationItem notif={notif}/>
                                 ))

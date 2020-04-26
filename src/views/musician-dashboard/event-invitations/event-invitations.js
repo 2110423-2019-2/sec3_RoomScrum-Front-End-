@@ -9,6 +9,9 @@ import Image from 'react-image';
 import { sortByTimestampDesc } from '../util';
 import AcceptInvitationButton from 'src/components/action-buttons/accept-invitation-button';
 import RejectInvitationButton from 'src/components/action-buttons/reject-invitation-button';
+import EmptyMessage from 'src/components/common/empty-message';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const EventInvitationItem = ({invitation: {
     // TODO: more fields
@@ -65,12 +68,18 @@ const EventInvitations = () => {
 
     return (
         <div className="event-invitations">
-            { 
-                invitations.map(invitation => <EventInvitationItem invitation={invitation} refreshCallback={fetchInvitations}/>)
-            }
+            <div className="title"> Event Invitations </div>
             {
-                (!invitations || invitations.length == 0) && (
-                    "No invitations"
+                (false && invitations && invitations.length > 0) ? (
+                    invitations.map(invitation => <EventInvitationItem invitation={invitation} refreshCallback={fetchInvitations}/>)
+                ) : (
+                    <EmptyMessage>
+                        <div className="no-invitation">
+                            <FontAwesomeIcon icon={faTimes} className="icon"/>
+                            <div> No inivitations  </div>
+                            <div> When hirer invite you, it will show up here </div>
+                        </div>
+                    </EmptyMessage>
                 )
             }
         </div>

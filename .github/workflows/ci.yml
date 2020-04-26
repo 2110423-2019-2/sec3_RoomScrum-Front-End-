@@ -1,0 +1,48 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - master
+      - dev
+      - test # for testing CI w/o messing up dev branch
+      - ci 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+
+    # - name: prepare key
+    #   env:
+    #     KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+    #   run: |
+        
+    - name: deployment
+      env:
+        KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+        ADDRESS: ${{ secrets.EC2_CONNECTION_STRING }}
+      run: |
+        export BRANCH=${GITHUB_REF/refs\/heads\//}
+        export PROJECT_DIR="~/Projects/se-frontend-$BRANCH"
+
+        echo "$KEY" >> private-key.cer
+        chmod 600 private-key.cer
+
+        CMD="cd $PROJECT_DIR &&
+          pwd &&
+          git checkout $BRANCH && git pull &&
+          set -a &&
+          source .env.production &&
+          set +a &&
+          docker-compose build &&
+          (docker network create \$RS_NETWORK || true) &&
+          docker-compose up -d
+        "
+        
+        ssh -oStrictHostKeyChecking=no -i private-key.cer $ADDRESS "
+          bash --login -i -c '$CMD'
+        "

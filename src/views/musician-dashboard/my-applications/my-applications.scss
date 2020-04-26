@@ -1,10 +1,36 @@
 @import '../../../styles/color.scss';
 
 // container
-.band-invitations {
+.my-applications {
     background-color: white;
     min-height: 100%;
     padding: 8px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+        color: $navy;
+        font-size: 40px;
+        text-align: center;
+        font-weight: bold;
+        background: white;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .no-application {
+        text-align: center;
+        font-size: 1.5em;
+        color: #888;
+
+        .icon {
+            font-size: 2em; // 1.5 * 2 = 3em
+        }
+    }
+
 }
 
 .applied-event-item {
