@@ -11,7 +11,7 @@ const AppliedMusicianItem = ({
     eventId,
     hireeId,
     hiree: { firstName, lastName, username },
-  },
+  }, onClick
 }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -38,6 +38,8 @@ const AppliedMusicianItem = ({
       });
   };
 
+  
+
   return (
     <div className="AppliedMusicianItem">
       <div className="MusicianImageContainer">
@@ -54,7 +56,7 @@ const AppliedMusicianItem = ({
           <div className="Value">@{username}</div>
         </div>
         <div className='ActionContainer'>
-          <div onClick={handleClose} className="Reject">
+          <div onClick={() => onClick(hireeId)} className="Reject">
             Reject
           </div>
           <Modal className="center-popup" isOpen={showAlert}>
