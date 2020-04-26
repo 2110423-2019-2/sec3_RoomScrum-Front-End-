@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState } from 'react';
 // import "./hirer-dashboard.scss";
-import { Navbar, Form } from "src/components/common";
-import request from "superagent";
-import config from "src/config";
-import { MyEventItem } from "src/components/my-events-item";
+import { Navbar, Form } from 'src/components/common';
+import request from 'superagent';
+import config from 'src/config';
+import { MyEventItem } from 'src/components/my-events-item';
 
 const HirerDashboard = () => {
   const [show, setShow] = useState(false);
@@ -51,7 +51,7 @@ const HirerDashboard = () => {
       .withCredentials()
       .send(eventId)
       .then(() => {
-        window.location.href = "/hirer/event";
+        window.location.href = '/hirer/event';
       })
       .catch((err) => console.log(err));
   };

@@ -37,40 +37,10 @@ const ContractModal = styled.div`
 const Contract = ({ eventId, application }) => {
   // const [contractInfo, setContractInfo] = useState();
   // const [isFetch, setIsFetch] = useState(false);
+  console.log(application);
 
-  // const [hiree, setHiree] = useState();
-  const hiree = '-';
-  // const getEvents = () => {
-  //   return new Promise((resolve, reject) => {
-  //     request
-  //       .get(`${config.API_URL}/contract/${eventId}`)
-  //       .withCredentials()
-  //       .then((res) => {
-  //         setIsFetch(true);
-  //         setContractInfo(res.body);
-  //         // console.log(res.body);
-  //         resolve(res.body);
-  //       })
-  //       .catch((err) => {
-  //         alert(err);
-  //         resolve(contractInfo);
-  //       });
-  //   });
-  // };
+  const [hiree, setHiree] = useState();
 
-  // if (!isFetch) {
-  //   getEvents().then((contract) => {
-  //     setStatus(contract.status);
-  //     setEventName(contract.event.eventName);
-  //     setHirer(contract.hirer.firstName + ' ' + contract.hirer.lastName);
-  //     try {
-  //       setHiree(contract.hiree.firstName + ' ' + contract.hiree.lastName);
-  //     } catch (error) {}
-  //     setBudget(contract.price);
-  //     setDescription(contract.description);
-  //     console.log('end');
-  //   });
-  // }
   const {
     contract: contract,
     event: {
@@ -87,8 +57,11 @@ const Contract = ({ eventId, application }) => {
       },
     },
   } = application;
+  // const price = 100;
+  // const hirerFirstName = 'oil';
+  // const hirerLastName = 'lastname';
 
-  console.log(application);
+  console.log(application.event.user);
 
   return (
     <div>

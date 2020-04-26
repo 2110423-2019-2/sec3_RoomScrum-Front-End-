@@ -50,6 +50,7 @@ const Btn = styled.button`
 
 const HirerContract = ({ eventId, application }) => {
   const [showContractDialog, setShowContractDialog] = useState(false);
+  console.log(application);
 
   const viewContract = ({}) => {
     // alert('viewContract');
@@ -96,6 +97,11 @@ const HirerContract = ({ eventId, application }) => {
       <Dialog
         isOpen={showContractDialog}
         onClose={() => setShowContractDialog(false)}>
+        {(() => {
+          console.log(application);
+        })()
+        //<Contract eventId={eventId} application={application}></Contract>
+        }
         <Contract eventId={eventId} application={application}></Contract>
         <ContractModal>
           <div className='d-flex flex-row-reverse'>

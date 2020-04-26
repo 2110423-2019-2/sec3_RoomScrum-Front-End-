@@ -73,8 +73,8 @@ const ContractModal = ({ eventId, status }) => {
         .withCredentials()
         .send()
         .then((res) => {
-          console.log('accept complete');
-          console.log(res.text);
+          // console.log('accept complete');
+          // console.log(res.text);
         })
         .catch((err) => {
           alert('err' + err);
@@ -93,8 +93,8 @@ const ContractModal = ({ eventId, status }) => {
         .withCredentials()
         .send()
         .then((res) => {
-          console.log('reject complete');
-          console.log(res.text);
+          // console.log('reject complete');
+          // console.log(res.text);
         })
         .catch((err) => {
           alert('err' + err);
@@ -384,11 +384,13 @@ const MyEventItem = ({ each, onClick }) => {
   const showContract = () => {
     alert(eventId);
   };
+  const [contract, setContract] = useState();
+  //const [application, setApplication] = useState();
   const {
     eventId,
     eventName,
     status,
-    // hirerId,
+    hirerId,
     description,
     address,
     subdistrict,
@@ -402,7 +404,65 @@ const MyEventItem = ({ each, onClick }) => {
     eventImage,
     userId,
   } = each;
-  console.log(each);
+
+  const application = {
+    event: {
+      eventName: eventName,
+      district: district,
+      province: province,
+      eventId: eventId,
+      user: {},
+    },
+  };
+  // application.event = {
+  //   eventName: eventName,
+  //   district: district,
+  //   province: province,
+  //   eventId: eventId,
+  // };
+  // const {
+  //   contract: contract,
+  //   event: {
+  //     eventName: eventName,
+  //     district: district,
+  //     province: province,
+  //     eventId: eventId,
+  //   },
+  // } = application;
+
+  // const getContract = () => {
+  request
+    .get(`${config.API_URL}/contract/${eventId}`)
+    .withCredentials()
+    .then((res) => {
+      // console.log(res.body);
+      each.contract = res.body;
+      // console.log(each.contract);
+      // setApplication(each);
+      application.contract = res.body;
+      application.contract.price = application.contract.price
+        ? application.contract.price
+        : '-';
+      application.event.price = application.contract.price;
+      console.log(application);
+
+      request
+        .get(`${config.API_URL}/user/${userId}`)
+        .then((res) => {
+          console.log(res.body.firstName);
+          application.event.user.firstName = res.body.firstName;
+          application.event.user.lastName = res.body.lastName;
+          console.log(application);
+          // console.log(each.contract);
+          // setApplication(each);
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+
+  // };
+
+  // getContract
 
   const [showCancelAlert, setCancelAlert] = useState(false);
 
@@ -459,8 +519,8 @@ const MyEventItem = ({ each, onClick }) => {
               );
           })()}
 
-          <HirerContract eventId={eventId} application={each} />
-          {console.log(each)}
+          <HirerContract eventId={eventId} application={application} />
+          {console.log(application)}
           <CreateReview eventId={eventId} status={status} />
           <MusicianInvitation eventId={eventId} />
         </div>
