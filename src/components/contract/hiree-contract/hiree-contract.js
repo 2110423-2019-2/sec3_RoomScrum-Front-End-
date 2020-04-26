@@ -151,29 +151,43 @@ const HireeContract = ({ eventId, application }) => {
           <div className='row'>
             <div className='label col-3 '></div>
             <div className='col-9 grey'>
-              {(() => {
-                return application.contract.status == 'WaitForStartDrafting' ||
-                  application.contract.status == 'Drafting' ||
-                  application.contract.status == 'Rejected' ? (
-                  <div onClick={edit}>
-                    <FontAwesomeIcon icon={faEdit} /> Edit my Contract
-                  </div>
-                ) : null;
-              })()}
+              {
+                //   (() => {
+                //   return application.contract.status == 'WaitForStartDrafting' ||
+                //     application.contract.status == 'Drafting' ||
+                //     application.contract.status == 'Rejected' ? (
+                //     <div onClick={edit}>
+                //       <FontAwesomeIcon icon={faEdit} /> Edit my Contract
+                //     </div>
+                //   ) : null;
+                // })()
+              }
             </div>
           </div>
         </ContractModal>
         <ContractModal>
           <div className='row '>
-            <div className='label col-3'>
+            <div className='label'>
               {(() => {
-                return application.event.contract.status ==
-                  'Accepted' ? null : (
-                  <BtnCancel className='btn' onClick={cancelContract}>
-                    <FontAwesomeIcon icon={faExclamationTriangle} /> cancel
-                  </BtnCancel>
-                );
+                return application.contract.status == 'WaitForStartDrafting' ||
+                  application.contract.status == 'Drafting' ||
+                  application.contract.status == 'Rejected' ? (
+                  <div className='grey' onClick={edit}>
+                    <FontAwesomeIcon icon={faEdit} /> Edit my Contract
+                  </div>
+                ) : null;
               })()}
+
+              {
+                //   (() => {
+                //   return application.event.contract.status ==
+                //     'Accepted' ? null : (
+                //     <BtnCancel className='btn' onClick={cancelContract}>
+                //       <FontAwesomeIcon icon={faExclamationTriangle} /> cancel
+                //     </BtnCancel>
+                //   );
+                // })()
+              }
             </div>
             <div className='col-9 grey'>
               <div className='d-flex flex-row-reverse'>
@@ -183,6 +197,15 @@ const HireeContract = ({ eventId, application }) => {
                       send
                     </Btn>
                   ) : null;
+                })()}
+
+                {(() => {
+                  return application.event.contract.status ==
+                    'Accepted' ? null : (
+                    <div className='grey' onClick={cancelContract}>
+                      <FontAwesomeIcon /> Cancel Contract
+                    </div>
+                  );
                 })()}
               </div>
             </div>

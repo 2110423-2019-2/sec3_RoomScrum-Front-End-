@@ -42,7 +42,6 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
       district,
       province,
       userId: hirerId,
-      price,
       user: {
         // hirer
         firstName,
@@ -137,7 +136,18 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
         />
       </div>
       <div className='price-tag'>
-        <div className='price'> {price.toLocaleString()}</div>
+        <div className='price'>
+          {(() => {
+            try {
+              return application.contract.price.toLocaleString();
+            } catch {
+              return '-';
+            }
+          })()}
+          {
+            // application.contract.price.toLocaleString()
+          }
+        </div>
         <div className='currency'> baht </div>
       </div>
     </div>
