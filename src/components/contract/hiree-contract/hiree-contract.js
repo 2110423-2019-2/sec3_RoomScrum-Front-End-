@@ -176,9 +176,13 @@ const HireeContract = ({ eventId, application }) => {
             </div>
             <div className='col-9 grey'>
               <div className='d-flex flex-row-reverse'>
-                <Btn type='primary' onClick={send}>
-                  send
-                </Btn>
+                {(() => {
+                  return application.event.contract.status == 'Drafting' ? (
+                    <Btn type='primary' onClick={send}>
+                      send
+                    </Btn>
+                  ) : null;
+                })()}
               </div>
             </div>
           </div>
