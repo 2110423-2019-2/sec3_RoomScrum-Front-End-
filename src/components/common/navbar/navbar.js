@@ -6,6 +6,7 @@ import {
   faCaretDown,
   faTruckMonster,
   faBell,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { globalLoginState } from "src/store/login-state";
 import { observer } from "mobx-react";
