@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { Navbar, Form } from "src/components/common";
 import request from "superagent";
 import config from "src/config";
-import {MyReviewsItem} from "src/components/my-reviews-item";
+import MyReviewsItem from "src/components/my-reviews-item";
 
 const MyReviews = (hirerID) => {
 
@@ -27,7 +27,7 @@ const MyReviews = (hirerID) => {
   
     if (!isFetch) {
       request
-      .post(`${config.API_URL}/review/of-user/${hirerID}`)
+      .get(`${config.API_URL}/review/of-user/${hirerID}`)
       .withCredentials()
       .then(res => {
         setIsFetch(true);

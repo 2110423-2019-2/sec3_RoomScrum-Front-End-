@@ -1,30 +1,21 @@
-import React, { useState } from 'react';
-import Modal from 'react-modal';
-import './my-review-item.scss';
-import request from 'superagent';
-import config from 'src/config';
+import React, { useState } from "react";
+import "./my-review-item.scss";
 
 const MyReviewsItem = ({ each }) => {
-
-    const {
-      ///
-    } = each;
-    return (
-      <div  className='my-review-item' >
-        <div >
-          <div>
-            <p1 > My Review </p1>
-          </div>
-          <div>
-            <p1 > ... </p1>
-          </div>
-
-       </div>
+  const { timeStamp, description } = each;
+  return (
+    <div className="MyReviewItem">
+      <div className="Text">
+          {description}
       </div>
-    );
-  };
-  
-  export default MyReviewsItem;
+      <div className="TimeStamp">
+          {timeStamp.substr(11, 8)}{" "}{timeStamp.substr(0,10)}
+      </div>
+    </div>
+  );
+};
 
-  //to be mapped with Review List
-  //Get Review List by GET: /review/of-user/${hirerID}
+export default MyReviewsItem;
+
+//to be mapped with Review List
+//Get Review List by GET: /review/of-user/${hirerID}

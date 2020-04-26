@@ -26,6 +26,9 @@ const DropdownMenu = ({ show, onClose, onLogout }) => {
                     <Link className='dropdown-item' to='/hirer/profile/me'>
                         My profile
                     </Link>
+                    {/* <Link className='dropdown-item' to='/event/create'>
+                        Create Event
+                    </Link> */}
                     <Link className='dropdown-item' to='/hirer/event'>
                         My Events
                     </Link>
