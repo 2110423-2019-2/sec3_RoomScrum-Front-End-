@@ -30,10 +30,8 @@ const MusicianEventAction = ({ application, refreshCallback, debug }) => {
 
   const canCancel =
     debug ||
-    !(
-      eventStatus == EventStatus.COMPLETE ||
-      eventStatus == EventStatus.CANCELLED
-    );
+    eventStatus == EventStatus.CREATED ||
+    eventStatus == EventStatus.HAVE_APPLICANT;
   const canAcceptPayment = debug || eventStatus == EventStatus.PAYMENT_PENDING;
   const canCompleteEvent = debug || eventStatus == EventStatus.SETTLE; // this should be on hirer!
   const canApply = debug || !applicationStatus;

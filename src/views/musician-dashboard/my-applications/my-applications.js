@@ -21,26 +21,25 @@ import EmptyMessage from 'src/components/common/empty-message';
 import { Link } from 'react-router-dom';
 
 const AppliedEventItem = ({ application, refreshCallback }) => {
-  application.contract = application.event.contract
-    ? application.event.contract
-    : { status: 'NotActive' };
-  application.contract = application.event.contract
-    ? application.event.contract
-    : { status: 'NotActive' };
+  // console.log(Object.keys(application));
 
-  application.event.price = application.contract.price
-    ? application.contract.price
-    : '-';
+  // application.contract = application.contract
+  //   ? application.contract
+  //   : { status: 'NotActive' };
+
+  // application.event.price = application.contract.price
+  //   ? application.contract.price
+  //   : '-';
 
   const {
     status: applicationStatus,
-    contract: { status: contractStatus },
     event: {
       eventName,
       eventId,
       status: eventStatus,
       district,
       province,
+      contract: contract,
       userId: hirerId,
       user: {
         // hirer
@@ -49,7 +48,8 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
       },
     },
   } = application;
-
+  // const contractStatus = contract.status;
+  console.log(application);
   return (
     <div
       className={classNames({
@@ -98,17 +98,25 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
             />
           </div>
         </div>
-        <div className='desc'>
-          <div className='label'> Contract Status </div>
-          <div className='value'>
-            <ContractStatusIndicator contractStatus={contractStatus} />
-            {(() => {
-              // return contractStatus == 'NotActive' ? null : (
-              //   <HireeContract eventId={eventId} application={application} />
-              // );
-            })()}
-          </div>
-        </div>
+        {(() => {
+          const hideFor = ['Cancelled', 'NotActive'];
+          return (
+            !hideFor.includes(application.event.contract.status) && (
+              <div className='desc'>
+                <div className='label'> Contract Status </div>
+                <div className='value'>
+                  <ContractStatusIndicator contractStatus={contract.status} />
+                  {(() => {
+                    // return contractStatus == 'NotActive' ? null : (
+                    //   <HireeContract eventId={eventId} application={application} />
+                    // );
+                  })()}
+                </div>
+              </div>
+            )
+          );
+        })()}
+
         <div className='desc'>
           <div className='label'> Payment Status </div>
           <div className='value'>
@@ -138,8 +146,9 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
         <div className='price'>
           {(() => {
             try {
-              return application.contract.price.toLocaleString();
+              return application.event.contract.price.toLocaleString();
             } catch {
+              // console.log(Object.keys(application));
               return '-';
             }
           })()}
@@ -169,12 +178,18 @@ const MyApplications = () => {
       })
       .withCredentials()
       .then((res) => {
-        const applications = res.body;
+        var applications = res.body;
         applications.sort(sortByTimestampDesc);
+        //OIL
+        for (let i = 0; i < applications.length; i++) {
+          if (applications[i].event.contract) {
+          } else {
+            applications[i].event.contract = { status: 'NotActive' };
+          }
+        }
+        // OIL;
         setApplications(applications);
-        //OIL
-        console.log(res.body);
-        //OIL
+        console.log(applications);
       })
       .catch((err) => {
         alert('Error getting applied events ');

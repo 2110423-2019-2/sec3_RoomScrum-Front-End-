@@ -55,6 +55,7 @@ const ContractModal = styled.div`
   overflow: scroll;
   padding: 50px;
   padding-top: 0px;
+  margin-top: -1px;
   /* border: 30px solid pink; */
   border: none;
   h1 {
@@ -96,12 +97,12 @@ const HireeContract = ({ eventId, application }) => {
     //
     //
     // console.log(application.event.contractStatus);
-    const button =
-      application.status == 'NotActive' ? (
-        <></>
-      ) : (
-        <Button onClick={viewContract} name='view contract' />
-      );
+    const hideFor = ['NotActive', 'Cancelled'];
+    const button = hideFor.includes(application.event.contract.status) ? (
+      <></>
+    ) : (
+      <Button onClick={viewContract} name='view contract' />
+    );
     return button;
   };
 
@@ -113,7 +114,7 @@ const HireeContract = ({ eventId, application }) => {
       .withCredentials()
       .then((res) => {
         console.log(res);
-        alert('send complete');
+        // alert('send complete');
         setShowContractDialog(false);
       })
       .catch((err) => {
@@ -129,12 +130,18 @@ const HireeContract = ({ eventId, application }) => {
       .withCredentials()
       .then((res) => {
         console.log(res);
-        alert('cancel complete');
+        // alert('cancel complete');
         setShowContractDialog(false);
+        window.location.href = '/musician/my-events';
       })
       .catch((err) => {
         alert(err);
       });
+  };
+
+  const discardAllChanges = () => {
+    setShowContractEditFormDialog(false);
+    setShowContractDialog(true);
   };
 
   return (
@@ -149,45 +156,22 @@ const HireeContract = ({ eventId, application }) => {
         <Contract eventId={eventId} application={application}></Contract>
         <ContractModal>
           <div className='row'>
-            <div className='label col-3 '></div>
-            <div className='col-9 grey'>
-              {
-                //   (() => {
-                //   return application.contract.status == 'WaitForStartDrafting' ||
-                //     application.contract.status == 'Drafting' ||
-                //     application.contract.status == 'Rejected' ? (
-                //     <div onClick={edit}>
-                //       <FontAwesomeIcon icon={faEdit} /> Edit my Contract
-                //     </div>
-                //   ) : null;
-                // })()
-              }
-            </div>
+            <div className='label col-3'></div>
+            <div className='label col-9'></div>
           </div>
         </ContractModal>
         <ContractModal>
           <div className='row '>
-            <div className='label'>
+            <div className='label col-3'>
               {(() => {
                 return application.contract.status == 'WaitForStartDrafting' ||
                   application.contract.status == 'Drafting' ||
                   application.contract.status == 'Rejected' ? (
                   <div className='grey' onClick={edit}>
-                    <FontAwesomeIcon icon={faEdit} /> Edit my Contract
+                    <FontAwesomeIcon icon={faEdit} /> Edit
                   </div>
                 ) : null;
               })()}
-
-              {
-                //   (() => {
-                //   return application.event.contract.status ==
-                //     'Accepted' ? null : (
-                //     <BtnCancel className='btn' onClick={cancelContract}>
-                //       <FontAwesomeIcon icon={faExclamationTriangle} /> cancel
-                //     </BtnCancel>
-                //   );
-                // })()
-              }
             </div>
             <div className='col-9 grey'>
               <div className='d-flex flex-row-reverse'>
@@ -202,9 +186,16 @@ const HireeContract = ({ eventId, application }) => {
                 {(() => {
                   return application.event.contract.status ==
                     'Accepted' ? null : (
-                    <div className='grey' onClick={cancelContract}>
-                      <FontAwesomeIcon /> Cancel Contract
-                    </div>
+                    <ConfirmButton
+                      children={
+                        <Btn type='danger' className='float-right'>
+                          Cancel
+                        </Btn>
+                      }
+                      action={cancelContract}
+                      title={'Confirmation'}
+                      question={`Please confirm to cancel this contract. The process can't be undone.`}
+                    />
                   );
                 })()}
               </div>
@@ -220,7 +211,8 @@ const HireeContract = ({ eventId, application }) => {
           show={
             application.event.contract.status == 'WaitForStartDrafting' ||
             application.event.contract.status == 'Drafting'
-          }></ContractEditForm>
+          }
+          discardAllChanges={discardAllChanges}></ContractEditForm>
       </Dialog>
     </div>
   );
@@ -233,3 +225,6 @@ export default HireeContract;
 //     return show ? <cancelContractButton /> : null;
 //   })();
 // }
+
+// , setShowContractDialog] = useState(false);
+//   const [showContractEditFormDialog, setShowContractEditFormDialog] = useState(

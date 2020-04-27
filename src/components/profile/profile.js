@@ -9,6 +9,8 @@ import './profile.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Dialog from 'src/components/common/dialog';
+import ReportButton from 'src/components/action-buttons/report-button';
+
 import { UserType } from 'src/enums';
 moment.locale('en', {
     relativeTime: {
@@ -28,9 +30,6 @@ moment.locale('en', {
     }
 });
 
-const ReportBtn = ({username}) => {
-    return (<h1> report profile </h1>)
-}
 // constructor for form field
 const formField = (name, value) => ({ name, value });
 
@@ -108,7 +107,7 @@ const Profile = ({
                 </Dialog>
                 </>
             )}
-            {!isSelf && (<ReportBtn/>)}
+            {!isSelf && (<ReportButton />)}
         </div>
     )
 };
