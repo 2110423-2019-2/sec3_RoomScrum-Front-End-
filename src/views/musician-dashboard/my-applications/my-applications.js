@@ -98,17 +98,25 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
             />
           </div>
         </div>
-        <div className='desc'>
-          <div className='label'> Contract Status </div>
-          <div className='value'>
-            <ContractStatusIndicator contractStatus={contract.status} />
-            {(() => {
-              // return contractStatus == 'NotActive' ? null : (
-              //   <HireeContract eventId={eventId} application={application} />
-              // );
-            })()}
-          </div>
-        </div>
+        {(() => {
+          const hideFor = ['Cancelled', 'NotActive'];
+          return (
+            !hideFor.includes(application.event.contract.status) && (
+              <div className='desc'>
+                <div className='label'> Contract Status </div>
+                <div className='value'>
+                  <ContractStatusIndicator contractStatus={contract.status} />
+                  {(() => {
+                    // return contractStatus == 'NotActive' ? null : (
+                    //   <HireeContract eventId={eventId} application={application} />
+                    // );
+                  })()}
+                </div>
+              </div>
+            )
+          );
+        })()}
+
         <div className='desc'>
           <div className='label'> Payment Status </div>
           <div className='value'>

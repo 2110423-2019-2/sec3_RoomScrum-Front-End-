@@ -173,7 +173,7 @@ const ContractEditForm = ({ application, discardAllChanges }) => {
       if (descriptionError != undefined) {
         e += descriptionError;
       }
-      // alert(e);
+      alert(e);
       if (budgetError == '') {
         console.log(`budgetError == ''`);
       }
@@ -198,6 +198,7 @@ const ContractEditForm = ({ application, discardAllChanges }) => {
             .withCredentials()
             .then((res) => {
               console.log('sendComplete');
+              window.location.href = '/musician/my-events';
             })
             .catch((err) => {
               alert('Error getting applied events when send');

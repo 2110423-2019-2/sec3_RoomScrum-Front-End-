@@ -97,12 +97,12 @@ const HireeContract = ({ eventId, application }) => {
     //
     //
     // console.log(application.event.contractStatus);
-    const button =
-      application.status == 'NotActive' ? (
-        <></>
-      ) : (
-        <Button onClick={viewContract} name='view contract' />
-      );
+    const hideFor = ['NotActive', 'Cancelled'];
+    const button = hideFor.includes(application.event.contract.status) ? (
+      <></>
+    ) : (
+      <Button onClick={viewContract} name='view contract' />
+    );
     return button;
   };
 
@@ -114,7 +114,7 @@ const HireeContract = ({ eventId, application }) => {
       .withCredentials()
       .then((res) => {
         console.log(res);
-        alert('send complete');
+        // alert('send complete');
         setShowContractDialog(false);
       })
       .catch((err) => {
@@ -130,8 +130,9 @@ const HireeContract = ({ eventId, application }) => {
       .withCredentials()
       .then((res) => {
         console.log(res);
-        alert('cancel complete');
+        // alert('cancel complete');
         setShowContractDialog(false);
+        window.location.href = '/musician/my-events';
       })
       .catch((err) => {
         alert(err);
