@@ -1,6 +1,6 @@
 import React, { useRef, useState, useReducer } from "react";
 // import "./create-event.scss";
-import { Navbar, Form } from "src/components/common";
+import { Navbar, Form, Button } from "src/components/common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleUp } from "@fortawesome/free-solid-svg-icons";
 import classnames from "classnames";
@@ -61,17 +61,9 @@ const CreateReview = ({eventId , afterReview}) => {
     
     return (
         // style from admin
-        <div classname = 'review'>
-          <div className='archieve-button'>
-
-            <button onClick={openModal}>
-                Archieve
-            </button>
-
-          </div>
-       
-
-        <Modal  
+        <>
+          <Button onClick={openModal} type="primary" name="Archive"> Archieve </Button>
+          <Modal  
         isOpen={isOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
@@ -108,7 +100,7 @@ const CreateReview = ({eventId , afterReview}) => {
          
                
         </Modal>
-      </div> 
+        </>
       );
 }
 
