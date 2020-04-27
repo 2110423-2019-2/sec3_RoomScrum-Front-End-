@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import EmptyMessage from 'src/components/common/empty-message';
 import { Link } from 'react-router-dom';
+import { ShowProfileButton } from 'src/components/profile'
 
 const AppliedEventItem = ({ application, refreshCallback }) => {
   // console.log(Object.keys(application));
@@ -41,15 +42,15 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
       province,
       contract: contract,
       userId: hirerId,
-      user: {
-        // hirer
-        firstName,
-        lastName,
-      },
+      user,
     },
   } = application;
   // const contractStatus = contract.status;
   console.log(application);
+
+  const firstName = user.firstName;
+  const lastName = user.lastName;
+
   return (
     <div
       className={classNames({
@@ -134,7 +135,9 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
         </div>
         <div className='desc'>
           <div className='label'> Hirer </div>
+          <ShowProfileButton user={user}>
           <div className='value'> {firstName + ' ' + lastName} </div>
+            </ShowProfileButton>
         </div>
 
         <AppliedEventAction
