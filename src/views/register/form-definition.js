@@ -22,7 +22,7 @@ export const userFormDef = {
     label: "Username",
     validator: [
       value => {
-        const usernameRegex = /^[a-z0-9_-]{3,15}$/;
+        const usernameRegex = /^[A-z0-9_\-.]{3,15}$/;
         if (!value) return "Enter Username";
         if (value.length < 3) return "Must be at least 3 characters";
         if (value.length > 15) return "Must be at most 15 characters";
