@@ -10,14 +10,13 @@ const InputField = React.forwardRef(
   ({ name, type, place, isTextarea, callback }, ref) => {
     const [value, setValue] = useState(place);
     const handleChange = (event) => {
+      setValue(event.target.value);
       callback(event.target.value);
-      if (type == 'number') {
-        try {
-          setValue(event.target.value);
-        } catch {
-          console.log('invalid input type');
-        }
-      }
+      // if (type == 'number') {
+      //   try {
+
+      //   } catch {}
+      // }
     };
 
     if (ref) {
@@ -100,19 +99,49 @@ const ContractEditForm = ({ application }) => {
   //oil-ข้อมูลที่ได้จากการเอา eventId มา get contract todo-end
 
   const [eventInfo, setEventInfo] = useState();
-  // const budgetInput = useRef();
-  // const detailInput = useRef();
-  const [budgetInput, setBudgetInput] = useState(0);
-  const [detailInput, setDetailInput] = useState('-');
 
+  const [budgetInput, setBudgetInput] = useState(application.contract);
+  const [detailInput, setDetailInput] = useState(null);
+  const [err, setErr] = useState('-');
+  function updateErr() {
+    console.log(budgetInput);
+    console.log(detailInput);
+    var e = [];
+    if (budgetInput == null || budgetInput == '') {
+      e.push('Price is required');
+    }
+    if (budgetInput == NaN) {
+      e.push('Price must be a number');
+    }
+
+    if (budgetInput != null && budgetInput < 0) {
+      e.push('Price must be positive');
+    }
+
+    if (detailInput == '') {
+      e.push('Description is required');
+    }
+    console.log(e);
+    if (e.length == 0) {
+      setErr('');
+    } else {
+      setErr(e.join());
+    }
+    // console.log(err.join());
+  }
   const updateBudget = (value) => {
-    setBudgetInput(Number(value));
+    if (value == '') {
+    } else {
+      setBudgetInput(Number(value));
+    }
     // console.log(`update budget:${value}`);
+    updateErr();
   };
 
   const updateDetail = (value) => {
     setDetailInput(value);
     // console.log(`updescription:${value}`);
+    updateErr();
   };
   // const sendContract = () => {
   //   request
@@ -188,7 +217,7 @@ const ContractEditForm = ({ application }) => {
           <div className='col-9'>
             <InputField
               name='budget'
-              type='number'
+              type='text'
               text={price}
               place={price}
               callback={updateBudget}
@@ -207,6 +236,10 @@ const ContractEditForm = ({ application }) => {
               callback={updateDetail}
             />
           </div>
+        </div>
+        <div className='row '>
+          <div className='label col-3'></div>
+          <div className='col-9'>{err}</div>
         </div>
       </ContractModal>
       <ContractModal>

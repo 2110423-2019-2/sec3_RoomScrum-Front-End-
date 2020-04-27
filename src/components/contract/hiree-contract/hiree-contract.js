@@ -148,22 +148,7 @@ const HireeContract = ({ eventId, application }) => {
         onClose={() => setShowContractDialog(false)}>
         <Contract eventId={eventId} application={application}></Contract>
         <ContractModal>
-          <div className='row'>
-            <div className='label col-3 '></div>
-            <div className='col-9 grey'>
-              {
-                //   (() => {
-                //   return application.contract.status == 'WaitForStartDrafting' ||
-                //     application.contract.status == 'Drafting' ||
-                //     application.contract.status == 'Rejected' ? (
-                //     <div onClick={edit}>
-                //       <FontAwesomeIcon icon={faEdit} /> Edit my Contract
-                //     </div>
-                //   ) : null;
-                // })()
-              }
-            </div>
-          </div>
+          <div className='row'></div>
         </ContractModal>
         <ContractModal>
           <div className='row '>
@@ -177,17 +162,6 @@ const HireeContract = ({ eventId, application }) => {
                   </div>
                 ) : null;
               })()}
-
-              {
-                //   (() => {
-                //   return application.event.contract.status ==
-                //     'Accepted' ? null : (
-                //     <BtnCancel className='btn' onClick={cancelContract}>
-                //       <FontAwesomeIcon icon={faExclamationTriangle} /> cancel
-                //     </BtnCancel>
-                //   );
-                // })()
-              }
             </div>
             <div className='col-9 grey'>
               <div className='d-flex flex-row-reverse'>
