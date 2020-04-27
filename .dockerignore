@@ -1,6 +1,8 @@
 node_modules
+.git
 .github
 .mock
 .nginx
 .dockerignore
+.env
 *.log
