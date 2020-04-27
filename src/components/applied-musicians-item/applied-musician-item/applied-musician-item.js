@@ -118,7 +118,7 @@ const AppliedMusicianItem = ({
             {" "}
             Accept{" "}
           </div>
-          <div><ReportButton username = {hiree.username}/></div>
+          
         </div>
       </div>
     </div>

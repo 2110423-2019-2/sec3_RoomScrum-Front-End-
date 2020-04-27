@@ -69,12 +69,19 @@ const ReportButton = ({ userId, username }) => {
   const formReport = {
     topic: {
       type: "textarea",
-      label: "",
+      label: "Topic",
       width: "12",
+      validator: [
+        (value) => {
+          if (value) return false;
+          return " ";
+        },
+      ],
+      
     },
     description: {
       type: "textarea",
-      label: "",
+      label: "Text Area",
       width: "12",
       // default: "write a review",
       validator: [
@@ -119,11 +126,11 @@ const ReportButton = ({ userId, username }) => {
           <Dialog
               isOpen={isOpen}
               onClose={() => setIsOpen(false)}
-              className='report-dialog'
+              className='report-dialog center-popup'
           >
         <div>
-          <div>
-            <h1> Report </h1>
+          <div className="Container">
+            <div className="Title"> Report </div>
             <div className="Description">
               <div className="Label"> Report to</div>
               <div className="Value">@{username}</div>
@@ -251,7 +258,7 @@ const Profile = ({
           </Dialog>
         </>
       )}
-      {!isSelf && <ReportButton />}
+      {!isSelf && <ReportButton username={username} />}
     </div>
   );
 };
