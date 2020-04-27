@@ -94,7 +94,7 @@ const ReportButton = ({username }) => {
         style={customStyles}
         className='report-modal'
       > */}
-      <Dialog  className="center-popup" isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog  className="center-popup" style={{"z-index":11}} isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <div className="Container">
           <div>
             <div className="Title"> Report </div>
@@ -103,8 +103,9 @@ const ReportButton = ({username }) => {
               <div className="Value">@{username}</div>
             </div>
             <Form formDef={formReport} ref={formReportData} />
-            <Modal className="center-popup Allign" isOpen={showAlert}>
+            <Modal className="center-popup"  isOpen={showAlert}>
               <ConfirmDialog
+                style={{"z-index":1111}}
                 title="Confirm?"
                 question="Do you want to report"
                 callback={(confirm) => {
