@@ -38,6 +38,7 @@ const Profile = ({
         birthdate,
         address, subdistrict, district, cityState, zipcode, country,
         phoneNumber,
+        userType,
 
         //musician
         bio,
@@ -49,7 +50,6 @@ const Profile = ({
         email,
     },
     onProfileUpdate,
-    userType,
     isSelf,
     EditProfileDialog
 }) => {
