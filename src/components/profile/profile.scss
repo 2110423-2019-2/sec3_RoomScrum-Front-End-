@@ -130,6 +130,7 @@
   text-align: center;
   font-weight: bold;
   margin-bottom: 20px;
+
 }
 
 .ReportLabel {
@@ -138,7 +139,7 @@
   color: $dark-navy;
   display: flex;
   flex-flow: row nowrap;
-  margin-left: 20px;
+
 }
 
 .ReportValue{
@@ -146,11 +147,14 @@
   color: $dark-navy;
   display: flex;
   flex-flow: row nowrap;
-  margin-left: 20px;
+
 }
 
 .ReportDialogContainer{
   background-color: white;
   width: 500px;
   height: 500px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
 }
