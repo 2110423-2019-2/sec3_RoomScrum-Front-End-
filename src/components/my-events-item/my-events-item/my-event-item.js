@@ -313,7 +313,6 @@ const CreateReview = ({ eventId, status }) => {
         window.location.href = '/hirer/event';
       })
       .catch((err) => console.log(err));
-    alert('foo');
   };
 
   const formReview = {
