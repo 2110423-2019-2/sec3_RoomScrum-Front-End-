@@ -103,7 +103,7 @@ const ReportButton = ({ userId, username }) => {
       .withCredentials()
       .send(data)
       .then(() => {
-        // window.location.href = "/hirer/event";
+        setIsOpen(false);
         alert("Report Success");
       })
       .catch((err) => console.log(err));

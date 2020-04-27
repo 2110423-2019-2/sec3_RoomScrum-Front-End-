@@ -18,6 +18,7 @@ const ShowProfileButton = ({ user, children }) => {
         onClick: () => setShowProfileDialog(true),
         className: cx(children.props.className, "show-profile-children"),
       })}
+      <div>
       <Dialog
         isOpen={showProfileDialog}
         onClose={() => setShowProfileDialog(false)}
@@ -33,6 +34,7 @@ const ShowProfileButton = ({ user, children }) => {
           </div>
         </div>
       </Dialog>
+      </div>
       <></>
     </>
   );
