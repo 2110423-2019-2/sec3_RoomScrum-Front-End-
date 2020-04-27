@@ -185,13 +185,28 @@ const CreateEventPage = () => {
   //       return JSON.parse(res.text);
   //     });
   // };
+  const btnStyle = () => {
+    const upload = uploadedFile.current;
+    return (upload && uploadedFile.current.files && uploadedFile.current.files[0]) ? {} : { backgroundColor: 'grey', 'border-color': 'transparent' }
+  }
 
   const createEvent = async () => {
-    await postData();
-    // await uploadImage();
-    window.location.href = '/hirer/event';
+    const upload = uploadedFile.current;
+    if (upload.files && upload.files[0]) {
+      await postData();
+      // await uploadImage();
+      window.location.href = '/hirer/event';
+
+    }
+      
   };
 
+  const onUploadClick = () => {
+    const upload = uploadedFile.current;
+    if (upload.files && upload.files[0]) {
+      setAlert(true)
+    }
+  }
   const [showAlert, setAlert] = useState(false);
 
   return (
@@ -246,9 +261,10 @@ const CreateEventPage = () => {
 
             <button
               className='btn btn-primary mt-4'
-              onClick={() => {
-                setAlert(true);
-              }}>
+              style={btnStyle()}
+              onClick={
+                onUploadClick
+              }>
               {' '}
               Submit{' '}
             </button>
