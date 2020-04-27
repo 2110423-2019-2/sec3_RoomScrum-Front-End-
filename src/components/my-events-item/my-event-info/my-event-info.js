@@ -92,10 +92,6 @@ const MyEventInfo = ({ each, status, application }) => {
                 );
               }
             })()}
-
-            <div className='edit'>
-              <Edit event={each} />
-            </div>
             {/* <button onClick={() => doDelete(event.eventId)} > Cancel </button> */}
           </div>
           <div className='AppliedMusician col-5'>
@@ -115,6 +111,9 @@ const MyEventInfo = ({ each, status, application }) => {
                     <Applicants eventId={each.eventId} />
                   </div>
                 );
+              }
+              if (status == 'ContractDrafting') {
+                return <MyMusician eventId={eventId}/>; //to change
               }
             })()}
           </div>
