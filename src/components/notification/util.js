@@ -1,4 +1,5 @@
 import config from 'src/config';
+import { UserType } from 'src/enums';
 
 // please sync this with backend  !!!
 const NotificationType = {
@@ -35,6 +36,7 @@ const N = (text) => ({text, type: "normal"});
 
 export const getTextFormat = (notif) => {
     const {event, sender, receiver} = notif;
+
     const {eventName} = event || {eventName: "fo"};
     const senderName = sender.firstName + ' ' + sender.lastName[0] + '.'; // FirstName L.
 
@@ -89,5 +91,42 @@ export const getTextFormat = (notif) => {
             ]
         default:
             return [N("Unknown Notif type"), B(notif.type)]
+    }
+}
+
+
+export const getNotifLinkFor = (notif) => {
+    const {event, sender, receiver: {userType: role}} = notif;
+
+    const {eventName} = event || {eventName: "fo"};
+    const senderName = sender.firstName + ' ' + sender.lastName[0] + '.'; // FirstName L.
+
+    switch (notif.type) {
+        case NotificationType.ApplicationAccepted: 
+            return "/musician/my-events";
+        case NotificationType.ContractSent: 
+            return "/musician/my-events"
+        case NotificationType.ContractCancelledByHirer: 
+            return "#"
+        case NotificationType.ContractCancelledByMusician: 
+            return "#"
+        case NotificationType.ContractAccepted: 
+            return "/musician/my-events"
+        case NotificationType.ContractRejected: 
+            return "/musician/my-events"
+        case NotificationType.EventCancelled: 
+            return "/musician/my-events"
+        case NotificationType.EventCompleted: 
+            return role == UserType.HIRER ? "/hirer/event" : "/musician/my-events";
+        case NotificationType.MusicianApplied: 
+            return "/hirer/event";
+        case NotificationType.NewReview: 
+        return role == UserType.HIRER ? "/hirer/profile/me" : "/musician/my-profile";
+        case NotificationType.InvitationReceived: 
+            return "/musician/event-invitations";
+        case NotificationType.ApplicationRejected: 
+            return "#"
+        default:
+            return "#"
     }
 }
