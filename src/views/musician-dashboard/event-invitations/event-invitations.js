@@ -76,7 +76,7 @@ const EventInvitations = () => {
                     <EmptyMessage>
                         <div className="no-invitation">
                             <FontAwesomeIcon icon={faTimes} className="icon"/>
-                            <div> No inivitations  </div>
+                            <div> No invitations  </div>
                             <div> When hirer invite you, it will show up here </div>
                         </div>
                     </EmptyMessage>

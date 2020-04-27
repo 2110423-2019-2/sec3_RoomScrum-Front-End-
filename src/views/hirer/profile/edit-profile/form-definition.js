@@ -134,6 +134,6 @@ export const musicianFormDef = {
   },
   videoUrl: {
     type: "text",
-    label: "Autdition Video",
+    label: "Audition Video",
   },
 };

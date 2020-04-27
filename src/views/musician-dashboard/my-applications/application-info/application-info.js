@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { HireeEventStatusIndicator, ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
 import { AppliedEventAction } from '../../components';
+import { ShowProfileButton } from 'src/components/profile'
 
 const TimeDisplay = ({ start, end }) => {
     return (
@@ -33,10 +34,11 @@ const ApplicationInfoDialog = ({ application, onClose, onCancel }) => {
         address, subdistrict, district, province, zipcode,
         budget,
         description,
-        user: {
-            firstName, lastName,
-        }
+        user
     } = event;
+
+    const firstName = user.firstName;
+    const lastName = user.lastName;
 
     return (
         <div className="event-info-dialog">
@@ -87,9 +89,12 @@ const ApplicationInfoDialog = ({ application, onClose, onCancel }) => {
                             </div>
                             <div className="desc">
                                 <div className="label"> Hirer </div>
+                              
+                                <ShowProfileButton user={user}>
                                 <div className="value">
                                     {firstName + ' ' + lastName}
                                 </div>
+                                </ShowProfileButton>
                             </div>
                             <div className="desc">
                                 <div className="label"> About </div>

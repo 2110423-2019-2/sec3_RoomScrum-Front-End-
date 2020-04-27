@@ -27,7 +27,7 @@ const ShowProfileButton = (
                                     isSelf={false}  />}   
                             </div>
                             <div className='item reviews'>
-                                <Reivews userId={user.userId} className='reviews'/>
+                                {user && <Reivews userId={user.userId} className='reviews'/>}
                             </div>
                     </div>
                 </Dialog>
