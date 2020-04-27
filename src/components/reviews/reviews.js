@@ -6,7 +6,7 @@ import './reviews.scss';
 
 const UserReviewItem = ({ review }) => {
     const {
-        reviewers: { firstName, lastName },
+        reviewer: { firstName, lastName },
         description,
     } = review;
 

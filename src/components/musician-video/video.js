@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import './musician-profile.scss';
+import './video.scss';
 
 
 // musician videos (youtube)
