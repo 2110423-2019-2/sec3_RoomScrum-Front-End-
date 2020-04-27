@@ -12,13 +12,15 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'src/components/common';
 import request from 'superagent';
 import config from 'src/config';
+import { ConfirmButton } from 'src/components/action-buttons/base/confirm-button';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 const ContractModal = styled.div`
   background-color: #fcfcfc;
   overflow: scroll;
   padding: 50px;
   padding-top: 0px;
-
+  margin-top: -1px;
   h1 {
     text-align: center;
     color: #364d9b;
@@ -54,6 +56,20 @@ const HirerContract = ({ eventId, application }) => {
   const viewContract = ({}) => {
     setShowContractDialog(true);
     return <div></div>;
+  };
+
+  const cancelContract = () => {
+    request
+      .get(`${config.API_URL}/contract/cancel/${eventId}`)
+      .withCredentials()
+      .then((res) => {
+        console.log(res);
+        alert('cancel complete');
+        setShowContractDialog(false);
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
 
   const accept = () => {
@@ -103,24 +119,61 @@ const HirerContract = ({ eventId, application }) => {
         //<Contract eventId={eventId} application={application}></Contract>
         }
         <Contract eventId={eventId} application={application}></Contract>
-        {(() => {
-          const status = application.contract.status;
-          const hideFor = ['Accepted', 'WaitForStartDrafting'];
-          return (
-            !hideFor.includes(status) && (
-              <ContractModal>
-                <div className='d-flex flex-row-reverse'>
-                  <Btn type='primary' onClick={accept}>
-                    accept
-                  </Btn>
-                  <Btn type='danger' onClick={reject}>
-                    reject
-                  </Btn>
-                </div>
-              </ContractModal>
-            )
-          );
-        })()}
+
+        <ContractModal>
+          <div className='row'>
+            <div className='col-12'>
+              {(() => {
+                const status = application.contract.status;
+                const hideFor = ['Accepted', 'WaitForStartDrafting'];
+                return (
+                  !hideFor.includes(status) && (
+                    <div>
+                      <ConfirmButton
+                        children={
+                          <Btn type='primary' className='float-right'>
+                            Accept
+                          </Btn>
+                        }
+                        action={accept}
+                        title={'Confirmation'}
+                        question={`Please confirm to accept this contract. The process can't be undone.`}
+                      />
+                      <ConfirmButton
+                        children={
+                          <Btn type='danger' className='float-right'>
+                            Reject
+                          </Btn>
+                        }
+                        action={reject}
+                        title={'Confirmation'}
+                        question={`Please confirm to reject this contract. The process can't be undone.`}
+                      />
+                    </div>
+                  )
+                );
+              })()}
+              {(() => {
+                const status = application.contract.status;
+                const hideFor = ['Accepted', 'WaitForStartDrafting'];
+                return (
+                  <ConfirmButton
+                    children={
+                      <Btn type='danger' className='float-right'>
+                        Cancel
+                      </Btn>
+                    }
+                    action={cancelContract}
+                    title={'Confirmation'}
+                    question={`Please confirm to cancel this contract. The process can't be undone.`}
+                  />
+
+                  // )
+                );
+              })()}
+            </div>
+          </div>
+        </ContractModal>
       </Dialog>
     </div>
   );

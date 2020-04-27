@@ -55,6 +55,7 @@ const ContractModal = styled.div`
   overflow: scroll;
   padding: 50px;
   padding-top: 0px;
+  margin-top: -1px;
   /* border: 30px solid pink; */
   border: none;
   h1 {
@@ -153,17 +154,20 @@ const HireeContract = ({ eventId, application }) => {
         onClose={() => setShowContractDialog(false)}>
         <Contract eventId={eventId} application={application}></Contract>
         <ContractModal>
-          <div className='row'></div>
+          <div className='row'>
+            <div className='label col-3'></div>
+            <div className='label col-9'></div>
+          </div>
         </ContractModal>
         <ContractModal>
           <div className='row '>
-            <div className='label'>
+            <div className='label col-3'>
               {(() => {
                 return application.contract.status == 'WaitForStartDrafting' ||
                   application.contract.status == 'Drafting' ||
                   application.contract.status == 'Rejected' ? (
                   <div className='grey' onClick={edit}>
-                    <FontAwesomeIcon icon={faEdit} /> Edit my Contract
+                    <FontAwesomeIcon icon={faEdit} /> Edit
                   </div>
                 ) : null;
               })()}
@@ -183,13 +187,13 @@ const HireeContract = ({ eventId, application }) => {
                     'Accepted' ? null : (
                     <ConfirmButton
                       children={
-                        <div className='grey'>
-                          <FontAwesomeIcon /> Cancel Contract
-                        </div>
+                        <Btn type='danger' className='float-right'>
+                          Cancel
+                        </Btn>
                       }
                       action={cancelContract}
                       title={'Confirmation'}
-                      question={`Please confirm to cancel this contract.The process can't be undone.`}
+                      question={`Please confirm to cancel this contract. The process can't be undone.`}
                     />
                   );
                 })()}

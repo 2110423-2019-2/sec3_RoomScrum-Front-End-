@@ -81,7 +81,7 @@ const Contract = ({ application }) => {
         <div className='row'>
           <div className='label col-3'>Hiree</div>
           <div className='col-9'>
-            {application.contract.hiree.firstName}
+            {application.contract.hiree.firstName}{' '}
             {application.contract.hiree.lastName}
           </div>
         </div>

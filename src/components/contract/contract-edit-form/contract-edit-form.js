@@ -82,7 +82,8 @@ const ContractModal = styled.div`
 
 const ContractEditForm = ({ application, discardAllChanges }) => {
   //oil-ข้อมูลที่ได้จากการเอา eventId มา get contract todo-start
-  const [hiree, setHiree] = useState('-');
+  // const [hiree, setHiree] = useState('-');
+  // console.log(application);
   const {
     contract: contract,
     event: {
@@ -155,14 +156,15 @@ const ContractEditForm = ({ application, discardAllChanges }) => {
   //     });
   // };
   // console.log(typeof setBudgetInput);
-  const hasError = () => {
-    return (
-      !(budgetError == '' || budgetError == null) &&
-      (descriptionError = '' || descriptionError == null)
-    );
-  };
+  function checkError() {
+    console.log(budgetError !== '' && descriptionError !== '');
+    return budgetError !== '' && descriptionError !== '';
+  }
 
   const saveEditContract = () => {
+    console.log(budgetInput);
+    console.log(detailInput);
+    const hasError = checkError();
     if (hasError) {
       var e = '';
       if (budgetError != undefined) {
@@ -171,7 +173,13 @@ const ContractEditForm = ({ application, discardAllChanges }) => {
       if (descriptionError != undefined) {
         e += descriptionError;
       }
-      alert(e);
+      // alert(e);
+      if (budgetError == '') {
+        console.log(`budgetError == ''`);
+      }
+      if (descriptionError == '') {
+        console.log(`descriptionError == ''`);
+      }
     } else {
       console.log(`budget:${budgetInput}`);
       console.log(`detail:${detailInput}`);
@@ -226,7 +234,10 @@ const ContractEditForm = ({ application, discardAllChanges }) => {
         </div>
         <div className='row'>
           <div className='label col-3'>Hiree</div>
-          <div className='col-9'>{hiree}</div>
+          <div className='col-9'>
+            {application.event.contract.hiree.firstName}{' '}
+            {application.event.contract.hiree.lastName}
+          </div>
         </div>
         <div className='row'>
           <div className='label col-3'>Budget</div>
@@ -235,7 +246,7 @@ const ContractEditForm = ({ application, discardAllChanges }) => {
               name='budget'
               type='text'
               text={price}
-              place={price}
+              place={application.event.contract.price}
               callback={updateBudget}
               err={budgetError}
             />
