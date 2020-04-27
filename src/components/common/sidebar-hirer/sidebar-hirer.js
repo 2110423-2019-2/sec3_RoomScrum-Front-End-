@@ -7,7 +7,7 @@ import classname from 'classnames';
 const fakeItems = [
     {text: "My profile", href: "/hirer/profile/me"},
     {text: "My event", href: "/hirer/event"},
-    {text: "Current contract", href: "/hirer/contract"},
+    
 ] 
 
 const SideNavItem = ({item}) => {
