@@ -18,7 +18,10 @@ import Image from 'react-image';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import Dialog from 'src/components/common/dialog';
 import ConfirmDialog from 'src/views/admin/user-report/confirm-dialog';
-import { HirerEventStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
+import {
+  HirerEventStatusIndicator,
+  ContractStatusIndicator,
+} from 'src/components/event-item/status-indicator/status-indicator';
 import { PayByQRButton } from 'src/components/action-buttons/pay-by-qr-button';
 
 // import { ConfirmDialog } from "src/components/common";
@@ -447,6 +450,22 @@ const MyEventItem = ({ each, onClick }) => {
             <HirerEventStatusIndicator eventStatus={status} />
           </div>
         </div>
+        {(() => {
+          const hideFor = ['Cancelled', 'NotActive', ''];
+          return (
+            <div className='Describtion'>
+              <div className='Label'> Contract Status </div>
+              <div className='Value'>
+                <ContractStatusIndicator contractStatus={contract.status} />
+                {(() => {
+                  // return contractStatus == 'NotActive' ? null : (
+                  //   <HireeContract eventId={eventId} application={application} />
+                  // );
+                })()}
+              </div>
+            </div>
+          );
+        })()}
         <div className='Describtion'>
           <div className='Label'>District</div>
           <div className='Value'>{district}</div>

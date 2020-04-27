@@ -158,7 +158,7 @@ const ContractEditForm = ({ application, discardAllChanges }) => {
   // console.log(typeof setBudgetInput);
   function checkError() {
     console.log(budgetError !== '' && descriptionError !== '');
-    return budgetError !== '' && descriptionError !== '';
+    return !(budgetError == '' && descriptionError == '');
   }
 
   const saveEditContract = () => {
@@ -260,7 +260,7 @@ const ContractEditForm = ({ application, discardAllChanges }) => {
               name='detail'
               type='text'
               text={price}
-              place={contract.description || '-'}
+              place={contract.description}
               isTextarea
               callback={updateDetail}
               err={descriptionError}

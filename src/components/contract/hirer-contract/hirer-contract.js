@@ -64,8 +64,9 @@ const HirerContract = ({ eventId, application }) => {
       .withCredentials()
       .then((res) => {
         console.log(res);
-        alert('cancel complete');
+        // alert('cancel complete');
         setShowContractDialog(false);
+        window.location.href = '/hirer/event';
       })
       .catch((err) => {
         alert(err);
@@ -78,14 +79,15 @@ const HirerContract = ({ eventId, application }) => {
       .withCredentials()
       .then((res) => {
         console.log(res);
-        alert('accept complete');
+        // alert('accept complete');
         setShowContractDialog(false);
+        window.location.href = '/hirer/event';
       })
       .catch((err) => {
         alert(err);
       });
 
-    alert('accept');
+    // alert('accept');
   };
   const reject = () => {
     request
@@ -93,14 +95,15 @@ const HirerContract = ({ eventId, application }) => {
       .withCredentials()
       .then((res) => {
         console.log(res);
-        alert('reject complete');
+        // alert('reject complete');
         setShowContractDialog(false);
+        window.location.href = '/hirer/event';
       })
       .catch((err) => {
         alert(err);
       });
 
-    alert('reject');
+    // alert('reject');
   };
   console.log(application.contract);
   return (
@@ -125,7 +128,11 @@ const HirerContract = ({ eventId, application }) => {
             <div className='col-12'>
               {(() => {
                 const status = application.contract.status;
-                const hideFor = ['Accepted', 'WaitForStartDrafting'];
+                const hideFor = [
+                  'Accepted',
+                  'WaitForStartDrafting',
+                  'Rejected',
+                ];
                 return (
                   !hideFor.includes(status) && (
                     <div>
@@ -155,18 +162,20 @@ const HirerContract = ({ eventId, application }) => {
               })()}
               {(() => {
                 const status = application.contract.status;
-                const hideFor = ['Accepted', 'WaitForStartDrafting'];
+                const hideFor = ['Accepted'];
                 return (
-                  <ConfirmButton
-                    children={
-                      <Btn type='danger' className='float-right'>
-                        Cancel
-                      </Btn>
-                    }
-                    action={cancelContract}
-                    title={'Confirmation'}
-                    question={`Please confirm to cancel this contract. The process can't be undone.`}
-                  />
+                  !hideFor && (
+                    <ConfirmButton
+                      children={
+                        <Btn type='danger' className='float-right'>
+                          Cancel
+                        </Btn>
+                      }
+                      action={cancelContract}
+                      title={'Confirmation'}
+                      question={`Please confirm to cancel this contract. The process can't be undone.`}
+                    />
+                  )
 
                   // )
                 );
