@@ -73,7 +73,7 @@ const Profile = ({
         ),
         formField("Email", email),
         formField("Phone Number", phoneNumber),
-        (userType != "Hirer" && formField("Bio", bio))
+        // (userType != "Hirer" && formField("Bio", bio))
     ];
 
     const [showEditDialog, setShowEditDialog] = useState(false);
