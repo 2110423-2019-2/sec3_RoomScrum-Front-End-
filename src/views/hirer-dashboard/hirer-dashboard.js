@@ -52,7 +52,7 @@ const HirerDashboard = () => {
 
     return (
       <div>
-        {(false && myEventList && myEventList.length) > 0 ? (
+        {( myEventList && myEventList.length > 0 )? (
            myEventList.map(each => <MyEventItem each={each} onClick={deleteItem} />)
         ) : (
           <EmptyMessage>
