@@ -4,18 +4,30 @@ import "./event-item-info.scss";
 import request from "superagent";
 import config from "src/config";
 import Image from "react-image";
+import Dialog from 'src/components/common/dialog';
+import ConfirmDialog from 'src/views/admin/user-report/confirm-dialog';
 
-const EventItemInfo = ({ description,eventId }) => {
+const EventItemInfo = ({ description, eventId }) => {
   const formdata = {
     eventId: eventId,
   };
-  const handleApply = () => {
+
+  const [showAlert, setAlert] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+    console.log('openModal');
+  };
+  
+
+    const handleApply = () => {
     request
       .post(`${config.API_URL}/application/apply`)
       .withCredentials()
       .send(formdata)
       .then((res) => {
         console.log(res.text);
+        window.location.href = '/musician/event-invitations'
       })
       .catch((err) => {
         alert("err" + err);
@@ -36,13 +48,29 @@ const EventItemInfo = ({ description,eventId }) => {
       {/* <p>{description}</p>
             <p>{startdatetime}</p>
             <p>{enddatetime}</p> */}
+      <Modal className="center-popup" isOpen={showAlert}>
+        <ConfirmDialog
+          title="Confirm?"
+          question="Do you want to apply this event"
+          callback={(confirm) => {
+            setAlert(false);
+            if (confirm) {
+              // callbackAction.current();
+              handleApply();
+            }
+          }}
+        />
+      </Modal>
       <button
-        type="button"
-        class="btn btn-primary float-right"
-        onClick={handleApply}
+        className="ApplyButton btn-primary "
+        onClick={() => {
+          setAlert(true);
+        }}
       >
-        Apply
+        {" "}
+        Apply{" "}
       </button>
+
     </div>
   );
 };
