@@ -78,8 +78,12 @@ const EditProfile = ({userId , onClose}) => {
   };
 
   const discardChange = (confirm) => {
-    if (!confirm) return;
-    onClose();
+    if (!confirm) {
+      setShowDiscardDialog(false);
+    } else{
+      onClose();
+    }
+    
   };
 
   return (
