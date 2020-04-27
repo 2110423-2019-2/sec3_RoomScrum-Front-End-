@@ -9,6 +9,7 @@ import './profile.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Dialog from 'src/components/common/dialog';
+import { UserType } from 'src/enums';
 moment.locale('en', {
     relativeTime: {
         future: "in %s",
@@ -63,7 +64,8 @@ const Profile = ({
             `( ${moment(birthdate).fromNow()} years old )`
         ),
         formField("Gender", gender),
-        formField("About", bio),
+        // formField("About", bio),
+        (userType != "Hirer" && formField("About", bio)),
         formField("National ID", nationalId),
         formField(
             "Address",
