@@ -52,14 +52,9 @@ const HirerContract = ({ eventId, application }) => {
   const [showContractDialog, setShowContractDialog] = useState(false);
 
   const viewContract = ({}) => {
-    // alert('viewContract');
     setShowContractDialog(true);
     return <div></div>;
   };
-
-  // const edit = () => {
-  //   alert('edit');
-  // };
 
   const accept = () => {
     request
@@ -78,8 +73,8 @@ const HirerContract = ({ eventId, application }) => {
   };
   const reject = () => {
     request
-      .withCredentials()
       .get(`${config.API_URL}/contract/reject/${eventId}`)
+      .withCredentials()
       .then((res) => {
         console.log(res);
         alert('reject complete');
@@ -108,16 +103,24 @@ const HirerContract = ({ eventId, application }) => {
         //<Contract eventId={eventId} application={application}></Contract>
         }
         <Contract eventId={eventId} application={application}></Contract>
-        <ContractModal>
-          <div className='d-flex flex-row-reverse'>
-            <Btn type='primary' onClick={accept}>
-              accept
-            </Btn>
-            <Btn type='danger' onClick={reject}>
-              reject
-            </Btn>
-          </div>
-        </ContractModal>
+        {(() => {
+          const status = application.contract.status;
+          const hideFor = ['Accepted', 'WaitForStartDrafting'];
+          return (
+            !hideFor.includes(status) && (
+              <ContractModal>
+                <div className='d-flex flex-row-reverse'>
+                  <Btn type='primary' onClick={accept}>
+                    accept
+                  </Btn>
+                  <Btn type='danger' onClick={reject}>
+                    reject
+                  </Btn>
+                </div>
+              </ContractModal>
+            )
+          );
+        })()}
       </Dialog>
     </div>
   );
