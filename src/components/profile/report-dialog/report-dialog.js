@@ -15,7 +15,7 @@ import { Button } from "src/components/common";
 import ConfirmDialog from "src/views/admin/user-report/confirm-dialog";
 
 
-const ReportButton = ({username }) => {
+const ReportButtonnn = ({username }) => {
   const [openReportDialog, setOpenReportDialog] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showAlert, setAlert] = useState(false);
@@ -134,4 +134,4 @@ const ReportButton = ({username }) => {
   );
 };
 
-export default ReportButton;
+export default ReportButtonnn;

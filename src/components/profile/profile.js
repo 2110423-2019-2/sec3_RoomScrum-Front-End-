@@ -68,7 +68,7 @@ const ReportButton = ({ userId, username }) => {
   };
   const formReport = {
     topic: {
-      type: "textarea",
+      type: "input",
       label: "Topic",
       width: "12",
       validator: [
@@ -77,7 +77,6 @@ const ReportButton = ({ userId, username }) => {
           return " ";
         },
       ],
-      
     },
     description: {
       type: "textarea",
@@ -111,24 +110,17 @@ const ReportButton = ({ userId, username }) => {
   };
 
   return (
-    <div className="Report">
+    <div>
       <div className="ReportTitle" onClick={() => openModal()}>
         Report
       </div>
-      {/* <Modal
+      
+      <Dialog
         isOpen={isOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        // contentLabel="Modal"
-        style={customStyles}
-        className='report-modal'
-      > */}
-          <Dialog
-              isOpen={isOpen}
-              onClose={() => setIsOpen(false)}
-              className='report-dialog center-popup'
-          >
-        <div>
+        onClose={() => setIsOpen(false)}
+        className="report-dialog center-popup"
+      >
+     
           <div className="Container">
             <div className="Title"> Report </div>
             <div className="Description">
@@ -159,7 +151,7 @@ const ReportButton = ({ userId, username }) => {
               {" "}
               Submit{" "}
             </button>
-          </div>
+         
         </div>
       </Dialog>
     </div>

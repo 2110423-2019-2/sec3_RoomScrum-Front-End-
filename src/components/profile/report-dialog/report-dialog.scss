@@ -1,65 +1,67 @@
 @import "src/styles/color.scss";
-.Container{
-    background-color: white;
-    
+.Container {
+  background-color: white;
+  // max-width: 500px;
 }
 
-  .ReportTitle {
-    font-size: 15px;
+.ReportTitle {
+  font-size: 15px;
+  font-weight: bold;
+  color: red;
+  cursor: pointer;
+}
+.Title {
+  font-size: 35px;
+  text-align: center;
+
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+.Description {
+  display: flex;
+  flex-flow: row nowrap;
+
+  > * {
+    font-size: 14px;
+    color: $dark-navy;
+  }
+
+  > .Label {
+    // flex: 0 0 180px;
     font-weight: bold;
-    color: red;
-    cursor: pointer;
   }
-  .Title {
-    font-size: 35px;
-    text-align: center;
 
-    font-weight: bold;
+  > .Value {
+    // flex: 1 0 0;
+    word-wrap: break-word;
   }
-  .Description {
-    display: flex;
-    flex-flow: row nowrap;
+}
+.archieve-button {
+  flex: 0 0 100%;
+  text-align: right;
 
-    > * {
-      font-size: 14px;
-      color: $dark-navy;
-    }
+  button {
+    border: none;
+    background-color: transparent;
+    // color: $grey;
 
-    > .Label {
-      // flex: 0 0 180px;
-      font-weight: bold;
-    }
-
-    > .Value {
-      // flex: 1 0 0;
-      word-wrap: break-word;
+    &:hover {
+      color: red;
     }
   }
-  .archieve-button {
-    flex: 0 0 100%;
-    text-align: right;
+}
 
-    button {
-      border: none;
-      background-color: transparent;
-      // color: $grey;
+.ReviewModal {
+  width: 300px;
+  height: 500px;
+  background-color: cadetblue;
+  border-color: darkblue;
+}
 
-      &:hover {
-        color: red;
-      }
-    }
-  }
-
-  .ReviewModal {
-    width: 300px;
-    height: 500px;
-    background-color: cadetblue;
-    border-color: darkblue;
-  }
-
-  .header {
-    text-align: center;
-  }
-  .Allign{
-    z-index: 999;
-  }
+.header {
+  text-align: center;
+}
+.Allign {
+  z-index: 999;
+}
