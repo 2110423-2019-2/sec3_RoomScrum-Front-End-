@@ -3,6 +3,10 @@ import Dialog from 'src/components/common/dialog';
 import request from 'superagent';
 import Profile from 'src/components/profile';
 import config from 'src/config';
+import './show-profile-button.scss';
+import Reivews from 'src/components/reviews'
+
+var cx = require('classnames');
 
 const ShowProfileButton = (
     {
@@ -11,35 +15,23 @@ const ShowProfileButton = (
     }
 ) => {
     const [showProfileDialog, setShowProfileDialog] = useState(false);
-    // const user = {
-    //     firstName, lastName,
-    //     username,
-    //     userId,
-    //     birthdate,
-    //     address, subdistrict, district, cityState, zipcode, country,
-    //     phoneNumber,
-    //     userType,
-
-    //     //musician
-    //     bio,
-    //     video,
-
-    //     //sensitive
-    //     nationalId,
-    //     gender,
-    //     email,
-    // };
 
     return (
         <>  
-            <div onClick={()=>setShowProfileDialog(true)}>
-                {children}
-            </div>
-            <Dialog isOpen={showProfileDialog} onClose={() => setShowProfileDialog(false)}>
-                {user && <Profile 
-                    user={user}  
-                    isSelf={false}  />}
-            </Dialog>
+            {React.cloneElement(children, { onClick: () => setShowProfileDialog(true) , className:cx(children.props.className, 'show-profile-children')} ) }
+                <Dialog isOpen={showProfileDialog} onClose={() => setShowProfileDialog(false)}>
+                    <div className="show-profile-dialog">
+                            <div className='item profile'>
+                                {user && <Profile 
+                                    user={user}  
+                                    isSelf={false}  />}   
+                            </div>
+                            <div className='item reviews'>
+                                <Reivews userId={user.userId} className='reviews'/>
+                            </div>
+                    </div>
+                </Dialog>
+                <></>
         </>
     );
 }
