@@ -130,10 +130,10 @@ const CreateEventPage = () => {
 
     for (let key in formDataUpper.current) {
       if (
-        key != "startDate" &&
-        key != "startTime" &&
-        key != "endDate" &&
-        key != "endTime"
+        key != 'startDate' &&
+        key != 'startTime' &&
+        key != 'endDate' &&
+        key != 'endTime'
       )
         data[key] = formDataUpper.current[key].value;
     }
@@ -197,21 +197,21 @@ const CreateEventPage = () => {
 
   return (
     // style from admin
-    <div className="full-height create-event">
+    <div className='full-height create-event'>
       <Navbar />
-      <div className="rest">
-        <div className="container rounded-top rounded-lg shadow">
+      <div className='rest'>
+        <div className='container rounded-top rounded-lg shadow'>
           <h1> Create Event</h1>
-          <div className="container-fluid">
-            <div className="row upload-image">
-              <div className="upload-image">
+          <div className='container-fluid'>
+            <div className='row upload-image'>
+              <div className='upload-image'>
                 {eventImage && <img src={eventImage} />}
 
                 <input
-                  name="image"
+                  name='image'
                   ref={uploadedFile}
                   onChange={updateEventImage}
-                  type="file"
+                  type='file'
                   hidden
                 />
                 <div
@@ -219,20 +219,19 @@ const CreateEventPage = () => {
                     overlay: true,
                     "force-show": !eventImage,
                   })}
-                  onClick={clickUpload}
-                >
+                  onClick={clickUpload}>
                   <div>
                     <FontAwesomeIcon icon={faArrowCircleUp} />
                   </div>
                 </div>
               </div>
-              <div className="col">
+              <div className='col'>
                 <Form formDef={formUpper} ref={formDataUpper} />
               </div>
             </div>
             <Form formDef={formBelow} ref={formDataBelow} />
 
-            <Modal className="center-popup" isOpen={showAlert}>
+            <Modal className='center-popup' isOpen={showAlert}>
               <ConfirmDialog
                 title="Confirm?"
                 question="Do you want to create event"
@@ -247,13 +246,12 @@ const CreateEventPage = () => {
             </Modal>
 
             <button
-              className="btn btn-primary mt-4"
+              className='btn btn-primary mt-4'
               onClick={() => {
                 setAlert(true);
-              }}
-            >
-              {" "}
-              Submit{" "}
+              }}>
+              {' '}
+              Submit{' '}
             </button>
           </div>
         </div>
