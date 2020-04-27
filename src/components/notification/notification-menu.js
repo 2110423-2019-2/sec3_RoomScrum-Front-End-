@@ -3,13 +3,14 @@ import './notification.scss';
 import * as moment from 'moment';
 import request from 'superagent';
 import config from 'src/config';
-import { getImageURLFromNotif, getTextFormat } from './util';
+import { getImageURLFromNotif, getTextFormat, getNotifLinkFor } from './util';
 import { TextFormatter } from './text-formatter';
 import Modal from 'react-modal';
 import { sortByTimestampDesc } from 'src/views/musician-dashboard/util';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBellSlash } from '@fortawesome/free-regular-svg-icons';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 moment.locale('en', {
     relativeTime: {
@@ -31,7 +32,7 @@ moment.locale('en', {
 
 const NotificationItem = ({notif}) => {
     return (
-        <div className="notif-item">
+        <Link className="notif-item" to={getNotifLinkFor(notif)}>
             <div className="image">
                 <img src={getImageURLFromNotif(notif)} />
             </div>
@@ -41,7 +42,7 @@ const NotificationItem = ({notif}) => {
                 </div>
                 <div className="timestamp"> {moment(notif.timestamp).fromNow()}</div>
             </div>
-        </div>
+        </Link>
     );
 }
 

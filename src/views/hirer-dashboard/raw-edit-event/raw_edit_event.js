@@ -94,10 +94,11 @@ const Edit = ({ event }) => {
         .withCredentials()
         .then(() => {
           // alert("Uploaded Profile Picture");
-          alert(newProfileImage);
+          // alert(newProfileImage);
+          console.log("Uploaded Profile Picture");
         })
         .catch((err) => {
-          alert("Profile image upload error");
+          // alert("Profile image upload error");
           console.error("Error uploading profile", err);
         });
     }
