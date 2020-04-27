@@ -33,7 +33,10 @@ const LoginDialog = ({ open, onRequestClose }) => {
         }
       })
       .catch(err => {
-        alert("Username or Password is incorrect");
+        // check if status is undefined
+        const message = err.status ? "Username or Password is incorrect" :
+         "Connection Error: CORS or connection refused" ;
+        alert(message);
       });
   };
   return (

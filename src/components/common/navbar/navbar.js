@@ -43,7 +43,7 @@ const LoginButtons = () => {
 const Avatar = observer(({ loginState }) => {
   const onLogout = () => {
     loginState.username = null;
-    document.cookie = 'token=; expires = 01 Jan 1970 00:00:00'; // clear cookie
+    document.cookie = 'token=; expires = 01 Jan 1970 00:00:00; path=/'; // clear cookie
     setTimeout(() => {
       document.location.href = '/';
     }, 200);
