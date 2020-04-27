@@ -7,16 +7,11 @@ import cancelContractButton from '../cancel-contract-button';
 import { ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
 
 const InputField = React.forwardRef(
-  ({ name, type, place, isTextarea, callback }, ref) => {
+  ({ name, type, place, isTextarea, callback, err }, ref) => {
     const [value, setValue] = useState(place);
     const handleChange = (event) => {
       setValue(event.target.value);
       callback(event.target.value);
-      // if (type == 'number') {
-      //   try {
-
-      //   } catch {}
-      // }
     };
 
     if (ref) {
@@ -34,6 +29,9 @@ const InputField = React.forwardRef(
               className={'form-control '}
               id={name}
             />
+            {!(err == '' || err == undefined) && (
+              <div className='text-danger'>*{err}</div>
+            )}
           </div>
         </div>
       );
@@ -48,6 +46,9 @@ const InputField = React.forwardRef(
             className={'form-control '}
             id={name}
           />
+          {!(err == '' || err == undefined) && (
+            <div className='text-danger'>*{err}</div>
+          )}
         </div>
       </div>
     );
@@ -101,47 +102,42 @@ const ContractEditForm = ({ application }) => {
   const [eventInfo, setEventInfo] = useState();
 
   const [budgetInput, setBudgetInput] = useState(application.contract);
-  const [detailInput, setDetailInput] = useState(null);
-  const [err, setErr] = useState('-');
-  function updateErr() {
-    console.log(budgetInput);
-    console.log(detailInput);
-    var e = [];
-    if (budgetInput == null || budgetInput == '') {
-      e.push('Price is required');
-    }
-    if (budgetInput == NaN) {
-      e.push('Price must be a number');
-    }
+  const [detailInput, setDetailInput] = useState();
+  const [budgetError, setBudgetError] = useState();
+  const [descriptionError, setDescriptionError] = useState();
 
-    if (budgetInput != null && budgetInput < 0) {
-      e.push('Price must be positive');
-    }
-
-    if (detailInput == '') {
-      e.push('Description is required');
-    }
-    console.log(e);
-    if (e.length == 0) {
-      setErr('');
-    } else {
-      setErr(e.join());
-    }
-    // console.log(err.join());
-  }
   const updateBudget = (value) => {
+    setBudgetError('');
     if (value == '') {
+      console.log('budget is empty');
+      setBudgetError('Price is required. ');
     } else {
-      setBudgetInput(Number(value));
+      console.log('[correct] budget is not empty');
+      if (isNaN(value)) {
+        console.log('Price must be a number');
+        setBudgetError('Price must be a number. ');
+      } else {
+        console.log('[correct] budget is number and not empty');
+        if (value < 0) {
+          console.log('Price must be positive');
+          setBudgetError('Price must be positive. ');
+        } else {
+          setBudgetError('');
+          console.log('correctInput');
+          setBudgetInput(Number(value));
+        }
+      }
     }
-    // console.log(`update budget:${value}`);
-    updateErr();
   };
 
   const updateDetail = (value) => {
+    setDescriptionError('');
+    if (value == '') {
+      setDescriptionError('Description is required.');
+    } else {
+      setDescriptionError('');
+    }
     setDetailInput(value);
-    // console.log(`updescription:${value}`);
-    updateErr();
   };
   // const sendContract = () => {
   //   request
@@ -156,35 +152,52 @@ const ContractEditForm = ({ application }) => {
   //     });
   // };
   // console.log(typeof setBudgetInput);
+  const hasError = () => {
+    return (
+      !(budgetError == '' || budgetError == null) &&
+      (descriptionError = '' || descriptionError == null)
+    );
+  };
 
   const saveEditContract = () => {
-    console.log(`budget:${budgetInput}`);
-    console.log(`detail:${detailInput}`);
-    request
-      .post(`${config.API_URL}/contract/${eventId}`) // get my applications, with event detail
-      .send({
-        eventId: eventId,
-        price: budgetInput,
-        description: detailInput,
-      })
-      .withCredentials()
-      .then((res) => {
-        console.log('save contract complete');
-        request
-          .get(`${config.API_URL}/contract/send/${eventId}`) // get my applications, with event detail
-          .withCredentials()
-          .then((res) => {
-            console.log('sendComplete');
-          })
-          .catch((err) => {
-            alert('Error getting applied events when send');
-            console.error('Error: Fetch applied events');
-          });
-      })
-      .catch((err) => {
-        alert('Error getting applied events when save ');
-        console.error('Error: Fetch applied events');
-      });
+    if (hasError) {
+      var e = '';
+      if (budgetError != undefined) {
+        e += budgetError;
+      }
+      if (descriptionError != undefined) {
+        e += descriptionError;
+      }
+      alert(e);
+    } else {
+      console.log(`budget:${budgetInput}`);
+      console.log(`detail:${detailInput}`);
+      request
+        .post(`${config.API_URL}/contract/${eventId}`) // get my applications, with event detail
+        .send({
+          eventId: eventId,
+          price: budgetInput,
+          description: detailInput,
+        })
+        .withCredentials()
+        .then((res) => {
+          console.log('save contract complete');
+          request
+            .get(`${config.API_URL}/contract/send/${eventId}`) // get my applications, with event detail
+            .withCredentials()
+            .then((res) => {
+              console.log('sendComplete');
+            })
+            .catch((err) => {
+              alert('Error getting applied events when send');
+              console.error('Error: Fetch applied events');
+            });
+        })
+        .catch((err) => {
+          alert('Error getting applied events when save ');
+          console.error('Error: Fetch applied events');
+        });
+    }
   };
 
   return (
@@ -221,6 +234,7 @@ const ContractEditForm = ({ application }) => {
               text={price}
               place={price}
               callback={updateBudget}
+              err={budgetError}
             />
           </div>
         </div>
@@ -234,12 +248,9 @@ const ContractEditForm = ({ application }) => {
               place={contract.description || '-'}
               isTextarea
               callback={updateDetail}
+              err={descriptionError}
             />
           </div>
-        </div>
-        <div className='row '>
-          <div className='label col-3'></div>
-          <div className='col-9'>{err}</div>
         </div>
       </ContractModal>
       <ContractModal>
