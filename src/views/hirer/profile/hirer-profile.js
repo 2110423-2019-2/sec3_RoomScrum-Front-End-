@@ -33,7 +33,7 @@ const _MusicianProfilePage = observer(({ loginState: { userId } }) => {
 
   return (
     <div className="musician-profile-page">
-      {musicianInfo && <Profile user={musicianInfo} onProfileUpdate={fetchMusicianInfo} EditProfileDialog={EditProfile} />}
+      {musicianInfo && <Profile user={musicianInfo} onProfileUpdate={fetchMusicianInfo} isSelf={true} EditProfileDialog={EditProfile} />}
       <div className="navy-bg">
         {<Reviews userId={userId} />}
       </div>
