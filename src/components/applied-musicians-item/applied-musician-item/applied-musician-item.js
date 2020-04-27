@@ -5,19 +5,26 @@ import request from "superagent";
 import config from "src/config";
 import { ConfirmDialog } from "src/components/common";
 import Image from "react-image";
-import { ShowProfileButton } from 'src/components/profile'
+import { ShowProfileButton } from "src/components/profile";
 import ReportButton from "src/components/profile/report-dialog";
+import { RoleGuard } from "src/components/common/guard";
 
 const AppliedMusicianItem = ({
   each: {
     eventId,
     hireeId,
     hiree: {
-      firstName, lastName,
+      firstName,
+      lastName,
       username,
       userId,
       birthdate,
-      address, subdistrict, district, cityState, zipcode, country,
+      address,
+      subdistrict,
+      district,
+      cityState,
+      zipcode,
+      country,
       phoneNumber,
       userType,
 
@@ -34,11 +41,17 @@ const AppliedMusicianItem = ({
   onClick,
 }) => {
   const hiree = {
-    firstName, lastName,
+    firstName,
+    lastName,
     username,
     userId,
     birthdate,
-    address, subdistrict, district, cityState, zipcode, country,
+    address,
+    subdistrict,
+    district,
+    cityState,
+    zipcode,
+    country,
     phoneNumber,
     userType,
 
@@ -51,7 +64,7 @@ const AppliedMusicianItem = ({
     gender,
     email,
   };
-  
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const [showAlert, setAlert] = useState(false);
@@ -87,39 +100,40 @@ const AppliedMusicianItem = ({
       </div>
       <div className="MusicianInfo">
         <div className="Description">
-        <ShowProfileButton user={hiree}>
-          <div className="Label">
-            {firstName} {lastName}
-          </div>
-        </ShowProfileButton>
+          <ShowProfileButton user={hiree}>
+            <div className="Label">
+              {firstName} {lastName}
+            </div>
+          </ShowProfileButton>
         </div>
         <div className="Value">@{username}</div>
-        <div className="ActionContainer">
-          <Modal className="center-popup" isOpen={showAlert}>
-            <ConfirmDialog
-              title="Confirm?"
-              question="Do you want to accept this musician?"
-              callback={(confirm) => {
-                setAlert(false);
-                if (confirm) {
-                  // callbackAction.current();
-                  handleAccept();
-                  handleClose();
-                }
+        <RoleGuard role="Musician">
+          <div className="ActionContainer">
+            <Modal className="center-popup" isOpen={showAlert}>
+              <ConfirmDialog
+                title="Confirm?"
+                question="Do you want to accept this musician?"
+                callback={(confirm) => {
+                  setAlert(false);
+                  if (confirm) {
+                    // callbackAction.current();
+                    handleAccept();
+                    handleClose();
+                  }
+                }}
+              />
+            </Modal>
+            <div
+              className="Accept"
+              onClick={() => {
+                setAlert(true);
               }}
-            />
-          </Modal>
-          <div
-            className="Accept"
-            onClick={() => {
-              setAlert(true);
-            }}
-          >
-            {" "}
-            Accept{" "}
+            >
+              {" "}
+              Accept{" "}
+            </div>
           </div>
-          
-        </div>
+        </RoleGuard>
       </div>
     </div>
   );

@@ -4,8 +4,9 @@ import "./event-item-info.scss";
 import request from "superagent";
 import config from "src/config";
 import Image from "react-image";
-import Dialog from 'src/components/common/dialog';
-import ConfirmDialog from 'src/views/admin/user-report/confirm-dialog';
+import Dialog from "src/components/common/dialog";
+import ConfirmDialog from "src/views/admin/user-report/confirm-dialog";
+import { RoleGuard } from 'src/components/common/guard';
 
 const EventItemInfo = ({ description, eventId }) => {
   const formdata = {
@@ -16,18 +17,17 @@ const EventItemInfo = ({ description, eventId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(true);
-    console.log('openModal');
+    console.log("openModal");
   };
-  
 
-    const handleApply = () => {
+  const handleApply = () => {
     request
       .post(`${config.API_URL}/application/apply`)
       .withCredentials()
       .send(formdata)
       .then((res) => {
         console.log(res.text);
-        window.location.href = '/musician/event-invitations'
+        window.location.href = "/musician/event-invitations";
       })
       .catch((err) => {
         alert("err" + err);
@@ -61,16 +61,17 @@ const EventItemInfo = ({ description, eventId }) => {
           }}
         />
       </Modal>
-      <button
-        className="ApplyButton btn-primary "
-        onClick={() => {
-          setAlert(true);
-        }}
-      >
-        {" "}
-        Apply{" "}
-      </button>
-
+      <RoleGuard role="Musician">
+        <button
+          className="ApplyButton btn-primary "
+          onClick={() => {
+            setAlert(true);
+          }}
+        >
+          {" "}
+          Apply{" "}
+        </button>
+      </RoleGuard>
     </div>
   );
 };
