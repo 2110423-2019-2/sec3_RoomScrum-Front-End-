@@ -105,16 +105,21 @@ const ReportButton = ({ userId, username }) => {
 
   return (
     <div className="Report">
-      <div className="ReportTitle" onClick={openModal}>
+      <div className="ReportTitle" onClick={() => openModal()}>
         Report
       </div>
-      <Modal
+      {/* <Modal
         isOpen={isOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        contentLabel="Modal"
+        // contentLabel="Modal"
         style={customStyles}
-      >
+        className='report-modal'
+      > */}
+          <Dialog
+              isOpen={isOpen}
+              onClose={() => setIsOpen(false)}
+          >
         <div>
           <div>
             <h1> Report </h1>
@@ -148,7 +153,7 @@ const ReportButton = ({ userId, username }) => {
             </button>
           </div>
         </div>
-      </Modal>
+      </Dialog>
     </div>
   );
 };
