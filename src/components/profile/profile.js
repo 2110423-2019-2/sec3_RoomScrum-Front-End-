@@ -119,6 +119,7 @@ const ReportButton = ({ userId, username }) => {
           <Dialog
               isOpen={isOpen}
               onClose={() => setIsOpen(false)}
+              className='report-dialog'
           >
         <div>
           <div>
@@ -128,7 +129,7 @@ const ReportButton = ({ userId, username }) => {
               <div className="Value">@{username}</div>
             </div>
             <Form formDef={formReport} ref={formReportData} />
-            <Modal className="center-popup" isOpen={showAlert}>
+            <Dialog className="center-popup" isOpen={showAlert}>
               <ConfirmDialog
                 title="Confirm?"
                 question="Do you want to report"
@@ -141,7 +142,7 @@ const ReportButton = ({ userId, username }) => {
                   }
                 }}
               />
-            </Modal>
+            </Dialog>
             <button
               className="btn btn-primary mt-4"
               onClick={() => {
