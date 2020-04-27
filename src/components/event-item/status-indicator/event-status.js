@@ -28,7 +28,7 @@ export const calculateHireeEventColor = (eventStatus, applicationStatus) => {
     }
 }
 
-export const calculateHirerEventStatus = (eventStatus, applicationStatus) => {
+export const calculateHirerEventStatus = (eventStatus) => {
     switch (eventStatus) {
         case EventStatus.CREATED:
             return "Created";
@@ -41,26 +41,26 @@ export const calculateHirerEventStatus = (eventStatus, applicationStatus) => {
         case EventStatus.SETTLE:
             return "Settle";
         case EventStatus.COMPLETE:
-            return "Settle";
+            return "Complete";
         case EventStatus.CANCELLED:
             return "Cancelled";
     }
 }
-export const calculateHirerEventColor = (eventStatus, applicationStatus) => {
+export const calculateHirerEventColor = (eventStatus) => {
     switch (eventStatus) {
         case EventStatus.CREATED:
-            return "Created";
+            return "aqua";
         case EventStatus.HAVE_APPLICANT:
-            return "Have hiree(s)";
+            return "blue";
         case EventStatus.CONTRACT_DRAFTING:
-            return "In Contract Process";
+            return "yellow";
         case EventStatus.PAYMENT_PENDING:
-            return "Payment Pending";
+            return "orange";
         case EventStatus.SETTLE:
-            return "Settle";
+            return "red";
         case EventStatus.COMPLETE:
-            return "Settle";
+            return "green";
         case EventStatus.CANCELLED:
-            return "Cancelled";
+            return "grey";
     }
 }

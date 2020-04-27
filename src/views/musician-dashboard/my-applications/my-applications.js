@@ -5,7 +5,11 @@ import classNames from 'classnames';
 import './my-applications.scss';
 import request from 'superagent';
 import config from 'src/config';
-import { HireeEventStatusIndicator, PaymentStatusIndicator, ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
+import {
+  HireeEventStatusIndicator,
+  PaymentStatusIndicator,
+  ContractStatusIndicator,
+} from 'src/components/event-item/status-indicator/status-indicator';
 import { sortByTimestampDesc } from '../util';
 import { ApplicationStatus, EventStatus } from 'src/enums';
 import { AppliedEventAction } from '../components';
@@ -16,116 +20,143 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import EmptyMessage from 'src/components/common/empty-message';
 import { Link } from 'react-router-dom';
 
+const AppliedEventItem = ({ application, refreshCallback }) => {
+  application.contract = application.event.contract
+    ? application.event.contract
+    : { status: 'NotActive' };
+  application.contract = application.event.contract
+    ? application.event.contract
+    : { status: 'NotActive' };
 
+  application.event.price = application.contract.price
+    ? application.contract.price
+    : '-';
 
-const AppliedEventItem = ({
-    application, 
-    refreshCallback,    
-}) => {
-    const {
-        status: applicationStatus,
-        event: {
-            eventName,
-            eventId,
-            status: eventStatus,
-            district, province,
-            userId: hirerId,
-            price,
-            contractStatus,
-            user: { // hirer
-                firstName, lastName
-            }
-        }
-    } = application;
-    return (
-        <div className={
-            classNames({
-                "applied-event-item clearfix": true,
-                "cancelled": applicationStatus == ApplicationStatus.APPLICATION_REJECTED || eventStatus == EventStatus.CANCELLED
-            })
-        }>
-            <div className="event-image-container">
-                <Image className="event-image" src={[
-                    config.API_URL + `/events/${eventId}/pic`,
-                    'https://i.pravatar.cc/180',
-                ]} loader={<div className="event-image placeholder"></div>}
-                />
-                <div className="banner-container">
-                    <div className={
-                        classNames({
-                            "banner": true,
-                            "show": eventStatus == EventStatus.COMPLETE || 
-                            eventStatus == EventStatus.CANCELLED ||
-                            applicationStatus == ApplicationStatus.APPLICATION_REJECTED,
-                        })
-                    }>
-                        {
-                            (() => {
-                                if (eventStatus == EventStatus.COMPLETE) return "Completed";
-                                if (eventStatus == EventStatus.CANCELLED) return "Cancelled";
-                                if (applicationStatus == ApplicationStatus.APPLICATION_REJECTED) return "Rejected";
-                            })()
-                        }
-                    </div>
-                </div>
-            </div>
-            <div className="event-info">
-                <ViewEventInfoButton application={application}>
-                    <div className="event-name"> {eventName} </div>
-                </ViewEventInfoButton>
-                <div className="desc">
-                    <div className="label"> Your status </div>
-                    <div className="value">
-                        <HireeEventStatusIndicator
-                            eventStatus={eventStatus}
-                            applicationStatus={applicationStatus}
-                        />
-                    </div>
-                </div>
-                <div className="desc">
-                    <div className="label"> Contract Status </div>
-                    <div className="value">
-                        {/** TODO */}
-                        <HireeContract eventId={eventId} application={application} />
-                          <ContractStatusIndicator contractStatus={"TODO"} />
-                    </div>
-                </div>
-                <div className="desc">
-                    <div className="label"> Payment Status </div>
-                    <div className="value">
-                        {/** TODO */}
-                        <PaymentStatusIndicator eventStatus={eventStatus}/>
-                    </div>
-                </div>
-                <div className="desc">
-                    <div className="label"> District </div>
-                    <div className="value"> {district}</div>
-                </div>
-                <div className="desc">
-                    <div className="label"> Province </div>
-                    <div className="value"> {province}</div>
-                </div>
-                <div className="desc">
-                    <div className="label"> Hirer </div>
-                    <div className="value"> {firstName + ' ' + lastName} </div>
-                </div>
-                <AppliedEventAction
-                    application={application}
-                    debug={true}
-                    refreshCallback={refreshCallback}
-                />
-            </div>
-            <div className="price-tag">
-                <div className="price"> {price || 'price ????'}</div>
-                <div className="currency"> baht </div>
-            </div>
+  const {
+    status: applicationStatus,
+    contract: { status: contractStatus },
+    event: {
+      eventName,
+      eventId,
+      status: eventStatus,
+      district,
+      province,
+      userId: hirerId,
+      user: {
+        // hirer
+        firstName,
+        lastName,
+      },
+    },
+  } = application;
+
+  return (
+    <div
+      className={classNames({
+        'applied-event-item clearfix': true,
+        cancelled:
+          applicationStatus == ApplicationStatus.APPLICATION_REJECTED ||
+          eventStatus == EventStatus.CANCELLED,
+      })}>
+      <div className='event-image-container'>
+        <Image
+          className='event-image'
+          src={[
+            config.API_URL + `/events/${eventId}/pic`,
+            'https://i.pravatar.cc/180',
+          ]}
+          loader={<div className='event-image placeholder'></div>}
+        />
+        <div className='banner-container'>
+          <div
+            className={classNames({
+              banner: true,
+              show:
+                eventStatus == EventStatus.COMPLETE ||
+                eventStatus == EventStatus.CANCELLED ||
+                applicationStatus == ApplicationStatus.APPLICATION_REJECTED,
+            })}>
+            {(() => {
+              if (eventStatus == EventStatus.COMPLETE) return 'Completed';
+              if (eventStatus == EventStatus.CANCELLED) return 'Cancelled';
+              if (applicationStatus == ApplicationStatus.APPLICATION_REJECTED)
+                return 'Rejected';
+            })()}
+          </div>
         </div>
+      </div>
+      <div className='event-info'>
+        <ViewEventInfoButton application={application}>
+          <div className='event-name'> {eventName} </div>
+        </ViewEventInfoButton>
+        <div className='desc'>
+          <div className='label'> Your status </div>
+          <div className='value'>
+            <HireeEventStatusIndicator
+              eventStatus={eventStatus}
+              applicationStatus={applicationStatus}
+            />
+          </div>
+        </div>
+        <div className='desc'>
+          <div className='label'> Contract Status </div>
+          <div className='value'>
+            <ContractStatusIndicator contractStatus={contractStatus} />
+            {(() => {
+              // return contractStatus == 'NotActive' ? null : (
+              //   <HireeContract eventId={eventId} application={application} />
+              // );
+            })()}
+          </div>
+        </div>
+        <div className='desc'>
+          <div className='label'> Payment Status </div>
+          <div className='value'>
+            {/** TODO */}
+            <PaymentStatusIndicator eventStatus={eventStatus} />
+          </div>
+        </div>
+        <div className='desc'>
+          <div className='label'> District </div>
+          <div className='value'> {district}</div>
+        </div>
+        <div className='desc'>
+          <div className='label'> Province </div>
+          <div className='value'> {province}</div>
+        </div>
+        <div className='desc'>
+          <div className='label'> Hirer </div>
+          <div className='value'> {firstName + ' ' + lastName} </div>
+        </div>
+
+        <AppliedEventAction
+          application={application}
+          // debug={true}
+          refreshCallback={refreshCallback}
+        />
+      </div>
+      <div className='price-tag'>
+        <div className='price'>
+          {(() => {
+            try {
+              return application.contract.price.toLocaleString();
+            } catch {
+              return '-';
+            }
+          })()}
+          {
+            // application.contract.price.toLocaleString()
+          }
+        </div>
+        <div className='currency'> baht </div>
+      </div>
+    </div>
   );
 };
 
 const MyApplications = () => {
-    const [applications, setApplications] = useState([]);
-    const isFetch = useRef(false);
+  const [applications, setApplications] = useState([]);
+  const isFetch = useRef(false);
 
   const fetchApplications = () => {
     request
@@ -134,52 +165,41 @@ const MyApplications = () => {
         status: [
           ApplicationStatus.APPLICATION_REJECTED,
           ApplicationStatus.IS_ACCEPTED,
-          ApplicationStatus.IS_APPLIED
-        ]
+          ApplicationStatus.IS_APPLIED,
+        ],
       })
       .withCredentials()
-      .then(res => {
+      .then((res) => {
         const applications = res.body;
         applications.sort(sortByTimestampDesc);
         setApplications(applications);
+        //OIL
+        console.log(res.body);
+        //OIL
       })
-      .catch(err => {
+      .catch((err) => {
         alert('Error getting applied events ');
         console.error('Error: Fetch applied events');
       });
   };
 
-    if (!isFetch.current) {
-        isFetch.current = true;
-        fetchApplications();
-    }
+  if (!isFetch.current) {
+    isFetch.current = true;
+    fetchApplications();
+  }
 
-
-    return (
-        <div className="my-applications">
-            <div className="title"> Applied Events </div>
-            {
-                (applications && applications.length > 0) ? (
-                    applications.map(application => (
-                        <>
-                            <AppliedEventItem
-                                application={application}
-                                refreshCallback={fetchApplications} // on success -> fetch appl.
-                            />
-                        </>
-                    ))
-                ) : (
-                    <EmptyMessage>
-                        <div className="no-application">
-                            <FontAwesomeIcon icon={faTimes} className="icon"/>
-                            <div> You have not applied to any events </div>
-                            <Link to="/find/events"> Find event to apply </Link>
-                        </div>
-                    </EmptyMessage>
-                )
-            }
-        </div>
-    )
-}
+  return (
+    <div className='band-invitations'>
+      {applications.map((application) => (
+        <>
+          <AppliedEventItem
+            application={application}
+            refreshCallback={fetchApplications} // on success -> fetch appl.
+          />
+        </>
+      ))}
+    </div>
+  );
+};
 
 export default MyApplications;

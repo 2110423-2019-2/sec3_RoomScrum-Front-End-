@@ -1,3 +1,4 @@
+@import "src/styles/color.scss";
 .view-profile {
     height: 100%;
     .pic {
@@ -22,7 +23,7 @@
         padding: 5px 10px 5px 10px
     }
 
-    .img {
+    .Image {
         height: 150px;
         weight: 125px;
     }
@@ -35,5 +36,16 @@
     .textcolor{
         color:darkblue;
         word-wrap: break-word;
+    }
+    .ReviewTitle{
+        color: white;
+        text-align: center;
+        margin-left: 30px;
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .ReviewContainer{
+        background-color: $dark-navy;
     }
 }
