@@ -5,6 +5,7 @@ import { observer } from "mobx-react";
 import { globalLoginState } from "src/store";
 import Image from "react-image";
 import moment from "moment";
+import Modal from "react-modal";
 import "./profile.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -39,6 +40,8 @@ const formField = (name, value) => ({ name, value });
 const ReportButton = ({ userId, username }) => {
   const [openReportDialog, setOpenReportDialog] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [showAlert, setAlert] = useState(false);
+  const formReportData = useRef();
   const openModal = () => {
     setIsOpen(true);
     console.log("openModal");
@@ -85,7 +88,7 @@ const ReportButton = ({ userId, username }) => {
 
   const postData = () => {
     const data = {};
-    for (let key in formRportData.current) {
+    for (let key in formReportData.current) {
       data[key] = formReportData.current[key].value;
     }
     data["reportTo"] = username; // to change
