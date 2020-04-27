@@ -159,18 +159,15 @@ const CreateEventPage = () => {
       .then((res) => {
         // setEventId(res.body.eventId);
         // const eventId = res.body.eventId;
-        eventId = res.body.eventId;
-        alert(res.body.eventId);
+        const eventId = res.body.eventId;
+        request
+          .post(`${config.API_URL}/events/event-pic/${eventId}`)
+          .withCredentials()
+          .send(form)
+          .then((res) => {alert(res.body.eventId);})
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
-    console.log(`This is ${eventId}`);
-    request
-      .post(`${config.API_URL}/events/event-pic/${eventId}`)
-      .withCredentials()
-      .send(form)
-      .then((res) => {
-        return JSON.parse(res.text);
-      });
   };
 
   // const uploadImage = async () => {
