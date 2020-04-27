@@ -29,31 +29,6 @@ moment.locale('en', {
     }
 });
 
-
-// musician videos (youtube)
-// const MusicianVideo = ({ musician: {videoUrl} }) => {
-
-//     const id = videoUrl.substr(videoUrl.indexOf("?v=") + 3);
-    
-//     return (
-//         <div className="musician-video">
-//             <div className="title"> Videos </div>
-//             <div className="musician-video-list">
-//                 <div className="yt-wrapper">
-//                     <div className="yt-container">
-//                         <iframe
-//                             src={`https://www.youtube.com/embed/${id}`}
-//                             frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-//                             allowFullScreen
-//                             className="yt-vid"
-//                         ></iframe>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     )
-// }
-
 const _MusicianProfilePage = observer(({ loginState: { userId } }) => {
     const [musicianInfo, setMusicianInfo] = useState(null);
     const lastFetched = useRef(null);
