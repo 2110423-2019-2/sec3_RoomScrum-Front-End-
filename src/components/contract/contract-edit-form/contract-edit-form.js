@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import request from 'superagent';
 import config from 'src/config';
 import { Button } from 'src/components/common';
+import { ConfirmButton } from 'src/components/action-buttons/base/confirm-button';
+
 import cancelContractButton from '../cancel-contract-button';
 import { ContractStatusIndicator } from 'src/components/event-item/status-indicator/status-indicator';
 
@@ -77,7 +79,8 @@ const ContractModal = styled.div`
     overflow: hidden;
   }
 `;
-const ContractEditForm = ({ application }) => {
+
+const ContractEditForm = ({ application, discardAllChanges }) => {
   //oil-ข้อมูลที่ได้จากการเอา eventId มา get contract todo-start
   const [hiree, setHiree] = useState('-');
   const {
@@ -255,12 +258,28 @@ const ContractEditForm = ({ application }) => {
       </ContractModal>
       <ContractModal>
         <div className='d-flex flex-row-reverse'>
-          <Button
-            className='mr-auto'
-            name='Save & Send'
-            type='primary'
-            onClick={saveEditContract}></Button>
-          <Button className='mr-auto' name='Discard' type='secondary'></Button>
+          <ConfirmButton
+            children={
+              <Button
+                className='mr-auto'
+                name='Save & Send'
+                type='primary'></Button>
+            }
+            action={saveEditContract}
+            title={'Confrimation'}
+            question={`Please confirm to save and send. This process can't be undone `}
+          />
+          <ConfirmButton
+            children={
+              <Button
+                className='mr-auto'
+                name='Discard'
+                type='secondary'></Button>
+            }
+            action={discardAllChanges}
+            title={'Confrimation'}
+            question={`Please confirm to discard all changes. This process can't be undone `}
+          />
           <cancelContractButton />
         </div>
       </ContractModal>

@@ -137,6 +137,11 @@ const HireeContract = ({ eventId, application }) => {
       });
   };
 
+  const discardAllChanges = () => {
+    setShowContractEditFormDialog(false);
+    setShowContractDialog(true);
+  };
+
   return (
     <div>
       {/**
@@ -176,9 +181,16 @@ const HireeContract = ({ eventId, application }) => {
                 {(() => {
                   return application.event.contract.status ==
                     'Accepted' ? null : (
-                    <div className='grey' onClick={cancelContract}>
-                      <FontAwesomeIcon /> Cancel Contract
-                    </div>
+                    <ConfirmButton
+                      children={
+                        <div className='grey'>
+                          <FontAwesomeIcon /> Cancel Contract
+                        </div>
+                      }
+                      action={cancelContract}
+                      title={'Confirmation'}
+                      question={`Please confirm to cancel this contract.The process can't be undone.`}
+                    />
                   );
                 })()}
               </div>
@@ -194,7 +206,8 @@ const HireeContract = ({ eventId, application }) => {
           show={
             application.event.contract.status == 'WaitForStartDrafting' ||
             application.event.contract.status == 'Drafting'
-          }></ContractEditForm>
+          }
+          discardAllChanges={discardAllChanges}></ContractEditForm>
       </Dialog>
     </div>
   );
@@ -207,3 +220,6 @@ export default HireeContract;
 //     return show ? <cancelContractButton /> : null;
 //   })();
 // }
+
+// , setShowContractDialog] = useState(false);
+//   const [showContractEditFormDialog, setShowContractEditFormDialog] = useState(
