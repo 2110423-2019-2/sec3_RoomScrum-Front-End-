@@ -81,7 +81,7 @@ const FindEvents = () => {
         </div>
       </div>
       <div className="row ">
-        <div className="EventItemContainer col-sm justify-content-between">
+        <div className="EventItemContainer col-sm ">
           {eventItems}
         </div>
       </div>
