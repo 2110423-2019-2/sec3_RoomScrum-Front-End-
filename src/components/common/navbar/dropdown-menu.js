@@ -16,10 +16,10 @@ const DropdownMenu = ({ show, onClose, onLogout }) => {
                         Calendar
                     </Link>
                     <Link className='dropdown-item' to='/musician/event-invitations'>
-                        My Applications
+                        Invitations
                     </Link>
                     <Link className='dropdown-item' to='/musician/my-events'>
-                        Invitations
+                        My Applications
                     </Link>
                 </RoleGuard>
                 <RoleGuard role={Roles.Hirer}>

@@ -162,7 +162,7 @@ const HirerContract = ({ eventId, application }) => {
               })()}
               {(() => {
                 const status = application.contract.status;
-                const hideFor = ['Accepted'];
+                const hideFor = ['Accepted', 'WaitForStartDrafting'];
                 return (
                   !hideFor.includes(status) && (
                     <ConfirmButton
