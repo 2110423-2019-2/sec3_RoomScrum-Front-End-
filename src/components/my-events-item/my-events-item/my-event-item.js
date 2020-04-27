@@ -514,7 +514,6 @@ const MyEventItem = ({ each, onClick }) => {
             const hideFor = [
               'ContractDrafting',
               'PaymentPending',
-              'HaveApplicant',
               'Complete',
               'Drafting',
             ];
