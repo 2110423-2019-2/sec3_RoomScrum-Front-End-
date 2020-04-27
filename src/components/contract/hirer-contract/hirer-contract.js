@@ -164,7 +164,7 @@ const HirerContract = ({ eventId, application }) => {
                 const status = application.contract.status;
                 const hideFor = ['Accepted'];
                 return (
-                  !hideFor && (
+                  !hideFor.includes(status) && (
                     <ConfirmButton
                       children={
                         <Btn type='danger' className='float-right'>
