@@ -43,7 +43,7 @@ const EventItem = ({
       marginBottom: "auto",
       //   transform             : 'translate(-50%, -50%)',
       width: "50%",
-      height: "70%",
+      height: "50%",
     },
   };
 
