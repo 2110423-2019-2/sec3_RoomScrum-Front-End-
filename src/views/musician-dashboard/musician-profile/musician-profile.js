@@ -44,8 +44,8 @@ const MusicianVideo = ({ musician: {videoUrl} }) => {
                     <div className="yt-container">
                         <iframe
                             src={`https://www.youtube.com/embed/${id}`}
-                            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
+                            frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
                             className="yt-vid"
                         ></iframe>
                     </div>
@@ -57,7 +57,7 @@ const MusicianVideo = ({ musician: {videoUrl} }) => {
 
 const UserReviewItem = ({review}) => {
     const {
-        reviewers: {firstName, lastName},
+        reviewer: {firstName, lastName},
         description,
     } = review;
     
