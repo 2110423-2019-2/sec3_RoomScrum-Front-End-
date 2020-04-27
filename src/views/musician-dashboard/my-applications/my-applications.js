@@ -42,7 +42,6 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
       district,
       province,
       userId: hirerId,
-      price,
       user: {
         // hirer
         firstName,
@@ -50,18 +49,6 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
       },
     },
   } = application;
-
-  // application.contract = application.event.contract
-  //   ? application.event.contract
-  //   : { status: 'NotActive' };
-
-  // application.event.price = application.event.price
-  //   ? application.event.price
-  //   : 10000;
-
-  // const contractStatus = application.contract.status;
-
-  // console.log(application);
 
   return (
     <div
@@ -114,24 +101,11 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
         <div className='desc'>
           <div className='label'> Contract Status </div>
           <div className='value'>
-            {/** TODO
-              <ContractStatusIndicator contractStatus={'TODO'} />
-             */
-            console.log(contractStatus)}
             <ContractStatusIndicator contractStatus={contractStatus} />
             {(() => {
-              // console.log(contractStatus);
-              return contractStatus == 'NotActive' ? null : (
-                <HireeContract eventId={eventId} application={application} />
-              );
-              // applications.map((application) => (
-              //   <>
-              //     <HireeContract
-              //       eventId={eventId}
-              //       application={application}
-              //     />
-              //   </>
-              // ));
+              // return contractStatus == 'NotActive' ? null : (
+              //   <HireeContract eventId={eventId} application={application} />
+              // );
             })()}
           </div>
         </div>
@@ -154,13 +128,25 @@ const AppliedEventItem = ({ application, refreshCallback }) => {
           <div className='label'> Hirer </div>
           <div className='value'> {firstName + ' ' + lastName} </div>
         </div>
+
         <AppliedEventAction
           application={application}
           refreshCallback={refreshCallback}
         />
       </div>
       <div className='price-tag'>
-        <div className='price'> {price.toLocaleString()}</div>
+        <div className='price'>
+          {(() => {
+            try {
+              return application.contract.price.toLocaleString();
+            } catch {
+              return '-';
+            }
+          })()}
+          {
+            // application.contract.price.toLocaleString()
+          }
+        </div>
         <div className='currency'> baht </div>
       </div>
     </div>

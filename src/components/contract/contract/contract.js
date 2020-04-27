@@ -34,22 +34,19 @@ const ContractModal = styled.div`
   }
 `;
 
-const Contract = ({ eventId, application }) => {
+const Contract = ({ application }) => {
   // const [contractInfo, setContractInfo] = useState();
   // const [isFetch, setIsFetch] = useState(false);
   console.log(application);
-
-  const [hiree, setHiree] = useState();
 
   const {
     contract: contract,
     event: {
       eventName,
-      // eventId,
+      eventId,
       district,
       province,
       userId: hirerId,
-      price,
       user: {
         // hirer
         firstName: hirerFirstName,
@@ -57,9 +54,6 @@ const Contract = ({ eventId, application }) => {
       },
     },
   } = application;
-  // const price = 100;
-  // const hirerFirstName = 'oil';
-  // const hirerLastName = 'lastname';
 
   console.log(application.event.user);
 
@@ -86,11 +80,24 @@ const Contract = ({ eventId, application }) => {
         </div>
         <div className='row'>
           <div className='label col-3'>Hiree</div>
-          <div className='col-9'>{hiree}</div>
+          <div className='col-9'>
+            {application.contract.hiree.firstName}
+            {application.contract.hiree.lastName}
+          </div>
         </div>
         <div className='row'>
           <div className='label col-3'>Budget</div>
-          <div className='col-9'>{price.toLocaleString()}</div>
+          {(() => {
+            try {
+              return (
+                <div className='col-9'>
+                  {application.contract.price.toLocaleString()}
+                </div>
+              );
+            } catch {
+              return <div className='col-9'>-</div>;
+            }
+          })()}
         </div>
         <div className='row '>
           <div className='label col-3'>Detail</div>
