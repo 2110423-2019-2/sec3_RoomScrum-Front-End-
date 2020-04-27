@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
-import { Navbar } from 'src/components/common';
-import { SearchEventsBox } from 'src/components/search-event-box';
-import { EventItem } from 'src/components/event-item';
-import request from 'superagent';
-import config from 'src/config';
+import React, { useState, useRef } from "react";
+import { Navbar } from "src/components/common";
+import { SearchEventsBox } from "src/components/search-event-box";
+import { EventItem } from "src/components/event-item";
+import request from "superagent";
+import config from "src/config";
+import "./find-events.scss";
 
 const FindEvents = () => {
   const [isFetch, setIsFetch] = useState(false);
@@ -13,13 +14,17 @@ const FindEvents = () => {
 
   const getEvents = () => {
     request
-      .get(`${config.API_URL}/events`)
-      .then(res => {
+      .post(`${config.API_URL}/events/search`)
+      .send({
+        searchType: 'default',
+        value: '',
+      })
+      .then((res) => {
         setIsFetch(true);
         setEventList(res.body);
         console.log(res.body);
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   };
@@ -33,17 +38,17 @@ const FindEvents = () => {
       .post(`${config.API_URL}/events/search`)
       .send({
         searchType: searchInput.current.value,
-        value: keywordInput.current.value
+        value: keywordInput.current.value,
       })
-      .then(res => {
+      .then((res) => {
         setEventList(res.body);
       })
-      .catch(err => {
+      .catch((err) => {
         getEvents();
       });
   };
 
-  const eventItems = eventList.map(each => {
+  const eventItems = eventList.map((each) => {
     return (
       <div>
         <EventItem each={each} />
@@ -52,29 +57,31 @@ const FindEvents = () => {
   });
 
   return (
-    <div className='FindEvents'>
+    <div className="FindEvents">
       <Navbar />
-      <h1> FindEvents Page</h1>
-      <div className='container'>
-        <div className='md-form mt-0 row'>
+      <div className="Title"> Find Events Page</div>
+      <div className="SearchContainer">
+        <div className="md-form mt-0 row">
           <input
-            className='form-control col-8'
+            className="form-control col-8"
             ref={keywordInput}
-            type='text'
+            type="text"
           />
-          <select id='cars' className='col-2' ref={searchInput}>
-            <option value='default'>sarch by all</option>
-            <option value='name'>sarch by name</option>
-            <option value='description'>sarch by description</option>
-            <option value='location'>search by location</option>
+          <select id="cars" className="col-2" ref={searchInput}>
+            <option value="default">search by all</option>
+            <option value="name">search by name</option>
+            <option value="description">search by description</option>
+            <option value="location">search by location</option>
           </select>
-          <button className='col-2' onClick={advanceSearch}>
-            submitka
-          </button>
+          <div className="SubmitButtonContainer">
+            <div className="SubmitButton col-2" onClick={advanceSearch}>
+              Submit
+            </div>
+          </div>
         </div>
       </div>
-      <div className='row no-gutters'>
-        <div className='col-sm border border-primary d-flex flex-wrap justify-content-between'>
+      <div className="row ">
+        <div className="EventItemContainer col-sm justify-content-between">
           {eventItems}
         </div>
       </div>
@@ -83,3 +90,4 @@ const FindEvents = () => {
 };
 
 export default FindEvents;
+{/* <div className="EventItemContainer col-sm d-flex flex-wrap justify-content-between"></div> */}

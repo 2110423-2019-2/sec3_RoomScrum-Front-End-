@@ -14,10 +14,16 @@ import ContractEditForm from 'src/components/contract/contract-edit-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'src/components/common';
+import { ConfirmButton } from 'src/components/action-buttons/base/confirm-button';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import CancelContractButton from 'src/components/contract/cancel-contract-button';
 import request from 'superagent';
 import config from 'src/config';
+import {
+  HireeEventStatusIndicator,
+  PaymentStatusIndicator,
+  ContractStatusIndicator,
+} from 'src/components/event-item/status-indicator/status-indicator';
 
 const Btn = styled.button`
   min-width: 120px;
@@ -28,9 +34,9 @@ const Btn = styled.button`
   border: none;
   color:white;
   background-color: #559be3;
-    ${props => props.type == 'primary' && 'background-color:#559BE3'}
-    ${props => props.type == 'secondary' && 'background-color:#939393'}
-    ${props => props.type == 'danger' && 'background-color:#BA2B2B'};
+    ${(props) => props.type == 'primary' && 'background-color:#559BE3'}
+    ${(props) => props.type == 'secondary' && 'background-color:#939393'}
+    ${(props) => props.type == 'danger' && 'background-color:#BA2B2B'};
 `;
 
 const BtnCancel = styled.button`
@@ -49,6 +55,8 @@ const ContractModal = styled.div`
   overflow: scroll;
   padding: 50px;
   padding-top: 0px;
+  /* border: 30px solid pink; */
+  border: none;
   h1 {
     text-align: center;
     color: #364d9b;
@@ -92,21 +100,23 @@ const HireeContract = ({ eventId, application }) => {
       application.status == 'NotActive' ? (
         <></>
       ) : (
-        <button onClick={viewContract}>view contract</button>
+        <Button onClick={viewContract} name='view contract' />
       );
     return button;
   };
+
+  // console.log(application.contract);
 
   const send = () => {
     request
       .get(`${config.API_URL}/contract/send/${eventId}`)
       .withCredentials()
-      .then(res => {
+      .then((res) => {
         console.log(res);
         alert('send complete');
         setShowContractDialog(false);
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
 
@@ -117,12 +127,12 @@ const HireeContract = ({ eventId, application }) => {
     request
       .get(`${config.API_URL}/contract/cancel/${eventId}`)
       .withCredentials()
-      .then(res => {
+      .then((res) => {
         console.log(res);
         alert('cancel complete');
         setShowContractDialog(false);
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   };
@@ -136,29 +146,67 @@ const HireeContract = ({ eventId, application }) => {
       <Dialog
         isOpen={showContractDialog}
         onClose={() => setShowContractDialog(false)}>
-        <Contract eventId={eventId}></Contract>
+        <Contract eventId={eventId} application={application}></Contract>
         <ContractModal>
-          <div className='row '>
-            <div className='label col-3'></div>
+          <div className='row'>
+            <div className='label col-3 '></div>
             <div className='col-9 grey'>
-              <div onClick={edit}>
-                <FontAwesomeIcon icon={faEdit} /> Edit my Contract
-              </div>
+              {
+                //   (() => {
+                //   return application.contract.status == 'WaitForStartDrafting' ||
+                //     application.contract.status == 'Drafting' ||
+                //     application.contract.status == 'Rejected' ? (
+                //     <div onClick={edit}>
+                //       <FontAwesomeIcon icon={faEdit} /> Edit my Contract
+                //     </div>
+                //   ) : null;
+                // })()
+              }
             </div>
           </div>
         </ContractModal>
         <ContractModal>
           <div className='row '>
-            <div className='label col-3'>
-              <BtnCancel className='btn' onClick={cancelContract}>
-                <FontAwesomeIcon icon={faExclamationTriangle} /> cancel
-              </BtnCancel>
+            <div className='label'>
+              {(() => {
+                return application.contract.status == 'WaitForStartDrafting' ||
+                  application.contract.status == 'Drafting' ||
+                  application.contract.status == 'Rejected' ? (
+                  <div className='grey' onClick={edit}>
+                    <FontAwesomeIcon icon={faEdit} /> Edit my Contract
+                  </div>
+                ) : null;
+              })()}
+
+              {
+                //   (() => {
+                //   return application.event.contract.status ==
+                //     'Accepted' ? null : (
+                //     <BtnCancel className='btn' onClick={cancelContract}>
+                //       <FontAwesomeIcon icon={faExclamationTriangle} /> cancel
+                //     </BtnCancel>
+                //   );
+                // })()
+              }
             </div>
             <div className='col-9 grey'>
               <div className='d-flex flex-row-reverse'>
-                <Btn type='primary' onClick={send}>
-                  send
-                </Btn>
+                {(() => {
+                  return application.event.contract.status == 'Drafting' ? (
+                    <Btn type='primary' onClick={send}>
+                      send
+                    </Btn>
+                  ) : null;
+                })()}
+
+                {(() => {
+                  return application.event.contract.status ==
+                    'Accepted' ? null : (
+                    <div className='grey' onClick={cancelContract}>
+                      <FontAwesomeIcon /> Cancel Contract
+                    </div>
+                  );
+                })()}
               </div>
             </div>
           </div>
@@ -167,10 +215,21 @@ const HireeContract = ({ eventId, application }) => {
       <Dialog
         isOpen={showContractEditFormDialog}
         onClose={() => setShowContractEditFormDialog(false)}>
-        <ContractEditForm eventId={eventId}></ContractEditForm>
+        <ContractEditForm
+          application={application}
+          show={
+            application.event.contract.status == 'WaitForStartDrafting' ||
+            application.event.contract.status == 'Drafting'
+          }></ContractEditForm>
       </Dialog>
     </div>
   );
 };
 
 export default HireeContract;
+// {
+//   (() => {
+//     console.log(show);
+//     return show ? <cancelContractButton /> : null;
+//   })();
+// }

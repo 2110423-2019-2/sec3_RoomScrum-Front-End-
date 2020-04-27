@@ -116,7 +116,7 @@ const Registration = () => {
   };
 
   return (
-    <div className="register bg-info">
+    <div className="register">
       <Navbar />
       <div className="container rounded-top rounded-lg shadow">
         <h1>Registration</h1>

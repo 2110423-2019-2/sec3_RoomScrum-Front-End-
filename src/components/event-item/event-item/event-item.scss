@@ -1,9 +1,44 @@
+@import "src/styles/color.scss";
 .event-item {
-    margin: 0.1rem;
+  margin: 0.1rem;
 
-    .card-text {
-        font-size: 1rem;
-        line-height: 70%;
+  .EventNameContainer {
+    background-color: $dark-navy;
+    .EventName {
+      text-align: center;
+      font-size: 25px;
+      font-weight: bold;
+      color: white;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
+  }
+  .Description {
+    // display: flex;
+    flex-flow: row nowrap;
+    margin-bottom: 0.5em;
+
+    > * {
+      font-size: 14px;
+      color: $dark-navy;
+    }
+    > .Label {
+      flex: 0 0 180px;
+      font-weight: bold;
+    }
+
+    > .Value {
+      flex: 1 0 0;
+      word-wrap: break-word;
+    }
+    
+  }
+
+  .card-text {
+    font-size: 1rem;
+    line-height: 70%;
+  }
+
+  
 
 }

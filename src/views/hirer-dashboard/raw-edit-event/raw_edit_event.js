@@ -13,8 +13,11 @@ import FormV2 from "src/components/common/form/form-v2";
 import { formBelow, formUpper } from "./form-definition";
 import { setForm } from "src/components/common/form/fields";
 import moment from "moment";
+import { getFormData } from "src/components/common/form/util";
+import ImageUploader from "src/components/common/image-upload/image-upload";
 
 const Edit = ({ event }) => {
+  const [newProfileImage, setNewProfileImage] = useState(null);
   const [show, setShow] = useState(false);
   const handleShow = () => {
     setShow(true);
@@ -23,14 +26,14 @@ const Edit = ({ event }) => {
 
   const [showAlert, setAlert] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-    const openModal = () => {
-      setIsOpen(true);
-      console.log('openModal')
-    };
-    const afterOpenModal = () => {};
-    const closeModal = () => {
-      setIsOpen(false);
-    };
+  const openModal = () => {
+    setIsOpen(true);
+    console.log("openModal");
+  };
+  const afterOpenModal = () => {};
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   let { startdatetime, enddatetime } = event;
 
@@ -55,50 +58,82 @@ const Edit = ({ event }) => {
 
   const save = async () => {
     const sendData = {};
-    for (let key in formUpper) sendData[key] = formUpper[key].value;
+    for (let key in userFormUpper) {
+      if (
+        key != "startDate" &&
+        key != "startTime" &&
+        key != "endDate" &&
+        key != "endTime"
+      ) {
+        sendData[key] = userFormUpper[key].value;
+      }
+    }
     sendData["startdatetime"] =
-      formUpper["startDate"].value +
+      userFormUpper["startDate"].value +
       "T" +
-      formUpper["startTime"].value +
-      ":00.000Z";
+      userFormUpper["startTime"].value +
+      ".000Z";
     sendData["enddatetime"] =
-      formUpper["endDate"].value +
+      userFormUpper["endDate"].value +
       "T" +
-      formUpper["endTime"].value +
-      ":00.000Z";
-  
-    for (let key in formBelow) sendData[key] = formBelow[key].value;
-        await request.post(`${config.API_URL}/events/update/${event.eventId}`)
-                      .withCredentials()
-                      .send(sendData)
-            //   .then(() => {
-            //     alert("Event Updated")
-            //     // changeCallback();
-            //     // handleClose();
-            // })
-            .then(() => {
-              alert("Event Updated")
-              // changeCallback();
-              handleClose();
-          })
-          .catch(err => {
-              alert("update Event error");
-              console.error("Error updating event", err);
-          })
+      userFormUpper["endTime"].value +
+      ".000Z";
 
-  }
+    // sendData["userId"] = event.userId;
+    // sendData["eventImage"] = `/${event.eventId}/pic`;
+
+    for (let key in userFormBelow) {
+      sendData[key] = userFormBelow[key].value;
+    }
+
+    if (newProfileImage) {
+      console.dir("new profile image", newProfileImage);
+      await request
+        .post(`${config.API_URL}/events/event-pic/${event.eventId}`)
+        .attach("image", newProfileImage)
+        .withCredentials()
+        .then(() => {
+          // alert("Uploaded Profile Picture");
+          alert(newProfileImage);
+        })
+        .catch((err) => {
+          alert("Profile image upload error");
+          console.error("Error uploading profile", err);
+        });
+    }
+
+    await request
+      .post(`${config.API_URL}/events/update/${event.eventId}`)
+      .withCredentials()
+      .send(sendData)
+      .then(() => {
+        alert("Event Updated");
+        closeModal();
+        window.location.href = "/hirer/event";
+      })
+      .catch((err) => {
+        alert("update Event error");
+        console.error("Error updating event", err);
+      });
+  };
 
   return (
     <div>
-      <button classname='button' variant="primary" onClick={openModal}>
+      <button classname="button" variant="primary" onClick={openModal}>
         Edit
       </button>
 
-      <Modal 
+      <Modal
         isOpen={isOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        contentLabel="Modal">
+        contentLabel="Modal"
+      >
+        <ImageUploader
+          setImageFile={setNewProfileImage}
+          title="Upload Event Image"
+          initialImage={`${config.API_URL}/events/${event.eventId}/pic`}
+        />
         <FormV2
           formData={userFormUpper}
           dispatch={dispatchUserFormUpper}
@@ -110,11 +145,10 @@ const Edit = ({ event }) => {
           formDef={formBelow}
         />
         <Modal className="center-popup" isOpen={showAlert}>
-          
           <ConfirmDialog
             title="Confirm?"
             question="Do you want to Edit event"
-            callback={confirm => {
+            callback={(confirm) => {
               setAlert(false);
               if (confirm) {
                 // callbackAction.current();
@@ -129,7 +163,6 @@ const Edit = ({ event }) => {
           className="btn btn-primary mt-4"
           onClick={() => {
             setAlert(true);
-           
           }}
         >
           {" "}
