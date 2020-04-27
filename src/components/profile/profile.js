@@ -68,13 +68,19 @@ const ReportButton = ({ userId, username }) => {
   };
   const formReport = {
     topic: {
-      type: "textarea",
-      label: "",
+      type: "input",
+      label: "Topic",
       width: "12",
+      validator: [
+        (value) => {
+          if (value) return false;
+          return " ";
+        },
+      ],
     },
     description: {
       type: "textarea",
-      label: "",
+      label: "Text Area",
       width: "12",
       // default: "write a review",
       validator: [
@@ -97,7 +103,7 @@ const ReportButton = ({ userId, username }) => {
       .withCredentials()
       .send(data)
       .then(() => {
-        // window.location.href = "/hirer/event";
+        setIsOpen(false);
         alert("Report Success");
       })
       .catch((err) => console.log(err));
@@ -108,27 +114,21 @@ const ReportButton = ({ userId, username }) => {
       <div className="ReportTitle" onClick={() => openModal()}>
         Report
       </div>
-      {/* <Modal
+      
+      <Dialog
         isOpen={isOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        // contentLabel="Modal"
-        style={customStyles}
-        className='report-modal'
-      > */}
-          <Dialog
-              isOpen={isOpen}
-              onClose={() => setIsOpen(false)}
-          >
-        <div>
-          <div>
-            <h1> Report </h1>
-            <div className="Description">
-              <div className="Label"> Report to</div>
-              <div className="Value">@{username}</div>
+        onClose={() => setIsOpen(false)}
+        className="ReportDialog"
+      >
+     
+          <div className="ReportDialogContainer">
+            <div className="ReportHeader"> Report </div>
+            <div className="ReportDescription">
+              <div className="ReportLabel"> Report to</div>
+              <div className="ReportValue">@{username}</div>
             </div>
             <Form formDef={formReport} ref={formReportData} />
-            <Modal className="center-popup" isOpen={showAlert}>
+            <Dialog className="center-popup" isOpen={showAlert}>
               <ConfirmDialog
                 title="Confirm?"
                 question="Do you want to report"
@@ -141,7 +141,7 @@ const ReportButton = ({ userId, username }) => {
                   }
                 }}
               />
-            </Modal>
+            </Dialog>
             <button
               className="btn btn-primary mt-4"
               onClick={() => {
@@ -151,7 +151,7 @@ const ReportButton = ({ userId, username }) => {
               {" "}
               Submit{" "}
             </button>
-          </div>
+         
         </div>
       </Dialog>
     </div>
@@ -250,7 +250,7 @@ const Profile = ({
           </Dialog>
         </>
       )}
-      {!isSelf && <ReportButton />}
+      {!isSelf && <ReportButton username={username} />}
     </div>
   );
 };

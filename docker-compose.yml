@@ -1,7 +1,8 @@
 version: '3.1'
 services: 
   # frontend includes nginx
-  frontend: 
+  frontend:
+    restart: unless-stopped 
     build: 
       context: .
     ports:

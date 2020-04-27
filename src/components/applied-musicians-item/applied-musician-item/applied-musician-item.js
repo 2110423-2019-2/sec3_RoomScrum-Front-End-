@@ -6,6 +6,7 @@ import config from "src/config";
 import { ConfirmDialog } from "src/components/common";
 import Image from "react-image";
 import { ShowProfileButton } from 'src/components/profile'
+import ReportButton from "src/components/profile/report-dialog";
 
 const AppliedMusicianItem = ({
   each: {
@@ -117,6 +118,7 @@ const AppliedMusicianItem = ({
             {" "}
             Accept{" "}
           </div>
+          
         </div>
       </div>
     </div>

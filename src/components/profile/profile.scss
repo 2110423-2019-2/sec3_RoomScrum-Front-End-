@@ -1,65 +1,156 @@
-@import '../../styles/color.scss';
-
-
-
+@import "../../styles/color.scss";
 
 .profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-    min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  min-height: 100%;
 
-    .title {
-        color: $navy;
-        font-size: 40px;
+  .title {
+    color: $navy;
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .profile-image {
+    width: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    object-fit: cover;
+    // display: inline-block;
+    border-radius: 50%;
+    margin: 32px 0;
+  }
+
+  .alias {
+    text-align: center;
+    color: $navy;
+    font-size: 24px;
+  }
+
+  .desc {
+    margin-bottom: 0.5em;
+    align-self: stretch;
+    color: $dark-navy;
+
+    .label {
+      margin-bottom: -4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .value {
+      font-size: 16px;
+    }
+  }
+
+  .edit-profile-button {
+    color: $dark-navy;
+    margin-top: 32px;
+    align-self: flex-start;
+    border: 0;
+    background-color: transparent;
+  }
+  .Report {
+    .Container {
+      background-color: white;
+      // max-width: 500px;
+    }
+
+    .ReportTitle {
+      font-size: 15px;
+      font-weight: bold;
+      color: red;
+      cursor: pointer;
+    }
+    .report-dialog {
+      .Title {
+        font-size: 35px;
         text-align: center;
+
         font-weight: bold;
-    }
+        margin-top: 30px;
+        margin-bottom: 20px;
+      }
+      .Description {
+        display: flex;
+        flex-flow: row nowrap;
 
+        > * {
+          font-size: 14px;
+          color: $dark-navy;
+        }
 
-    .profile-image {
+        > .Label {
+          // flex: 0 0 180px;
+          font-weight: bold;
+        }
+
+        > .Value {
+          // flex: 1 0 0;
+          word-wrap: break-word;
+        }
+      }
+      .archieve-button {
+        flex: 0 0 100%;
+        text-align: right;
+
+        button {
+          border: none;
+          background-color: transparent;
+          // color: $grey;
+
+          &:hover {
+            color: red;
+          }
+        }
+      }
+
+      .ReviewModal {
         width: 300px;
-        min-height: 300px;
-        max-height: 300px;
-        object-fit: cover;
-        // display: inline-block;
-        border-radius: 50%;
-        margin: 32px 0;
-    }
+        height: 500px;
+        background-color: cadetblue;
+        border-color: darkblue;
+      }
 
-    .alias {
+      .header {
         text-align: center;
-        color: $navy;
-        font-size: 24px;
+      }
+      .Allign {
+        z-index: 999;
+      }
     }
+  }
+}
 
-    .desc {
-        margin-bottom: 0.5em;
-        align-self: stretch;
-        color: $dark-navy;
-        
-        .label {
-            margin-bottom: -4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
+.ReportHeader {
+  font-size: 35px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 
-        .value {
-            font-size: 16px;
-        }
-    
-    }
+.ReportLabel {
+  font-weight: bold;
+  font-size: 14px;
+  color: $dark-navy;
+  display: flex;
+  flex-flow: row nowrap;
+  margin-left: 20px;
+}
 
-    .edit-profile-button {
-        color: $dark-navy;
-        margin-top: 32px;
-        align-self: flex-start;
-        border: 0;
-        background-color: transparent;
-    }
+.ReportValue{
+  font-size: 14px;
+  color: $dark-navy;
+  display: flex;
+  flex-flow: row nowrap;
+  margin-left: 20px;
+}
 
-    
-
-
+.ReportDialogContainer{
+  background-color: white;
+  width: 500px;
+  height: 500px;
 }
