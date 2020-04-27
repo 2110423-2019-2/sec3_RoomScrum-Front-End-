@@ -333,7 +333,7 @@ const CreateReview = ({ eventId, status }) => {
 
   return (
     // style from admin
-    <div classname='Review'>
+    <div className='Review'>
       {(() => {
         if (status == 'Complete')
           return (
