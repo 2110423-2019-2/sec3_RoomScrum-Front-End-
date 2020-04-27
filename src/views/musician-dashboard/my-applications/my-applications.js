@@ -188,7 +188,8 @@ const MyApplications = () => {
   }
 
   return (
-    <div className='band-invitations'>
+    <div className='my-applications'>
+      <div className="title"> Event Invitations </div>
       {applications.map((application) => (
         <>
           <AppliedEventItem
