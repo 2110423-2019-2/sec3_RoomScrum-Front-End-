@@ -56,7 +56,7 @@ const CreateReview = ({eventId }) => {
           window.location.href = "/hirer/event";
         })
         .catch(err => console.log(err));
-        alert('foo')
+        alert('Review Success')
     };
     
     return (

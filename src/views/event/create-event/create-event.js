@@ -159,7 +159,7 @@ const CreateEventPage = () => {
       .then((res) => {
         // setEventId(res.body.eventId);
         // const eventId = res.body.eventId;
-        const eventId = JSON.parse(res.eventId);
+        eventId = res.body.eventId;
         alert(res.body.eventId);
       })
       .catch((err) => console.log(err));
