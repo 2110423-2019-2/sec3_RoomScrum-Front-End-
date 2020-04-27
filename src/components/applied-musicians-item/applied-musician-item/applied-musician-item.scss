@@ -10,10 +10,13 @@
   .MusicianImageContainer {
     position: relative;
     align-self: flex-start;
+    width: 100x;
+    height: 100px;
+
   }
   .MusicianImage {
-    flex: 0 0 auto;
-    width: 100x;
+    // flex: 0 0 auto;
+    width: 100px;
     height: 100px;
     margin: 8px 24px 0px 8px;
 
@@ -25,15 +28,16 @@
   .Description {
     // display: flex;
     // flex-flow: row nowrap;
-    display: inline-block;
-    margin-right: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    margin-left: 10px;
     > * {
       color: $dark-navy;
     }
 
     > .Label {
       font-size: 18px;
-      flex: 0 0 180px;
+      // flex: 0 0 180px;
       font-weight: bold;
       margin-top: 25px;
     }
@@ -44,8 +48,17 @@
       word-wrap: break-word;
     }
   }
+  .Value {
+    font-size: 12px;
+    flex: 1 0 0;
+    word-wrap: break-word;
+    display: flex;
+    flex-flow: row nowrap;
+    margin-left: 10px;
+    color: $dark-navy;
+  }
   .ActionContainer {
-    display: inline-block;
+    // display: inline-block;
     margin-left: 150px;
     .Reject {
       cursor: pointer;
@@ -59,10 +72,10 @@
 
     .Accept {
       cursor: pointer;
-      display: inline-block;
+      // display: inline-block;
       color: $dark-navy;
-      margin-right: auto;
-      margin-left: auto;
+      // margin-right: auto;
+      // margin-left: auto;
       font-weight: bold;
       font-size: 15px;
     }

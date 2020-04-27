@@ -8,10 +8,10 @@ import Modal from "react-modal";
 import { Link } from "react-router-dom";
 import Image from "react-image";
 import MyReviews from "src/views/review/my-reviews";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import EditProfile from './edit-profile';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import Dialog from 'src/components/common/dialog';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import EditProfile from "./edit-profile";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import Dialog from "src/components/common/dialog";
 
 export default () => {
   const isFetch = useRef(false);
@@ -69,74 +69,54 @@ export default () => {
     gender = "Other";
   }
   return (
-    <div className="container view-profile">
-      <div className="row high">
-        <div className="col-md-7">
-          <div className="row">
-            <div className="col-md-12 text-primary text-center pt-3 size font-weight-bold">
-              {firstName + " " + lastName}
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-12 text-primary text-center pt-3">
-              {"@" + username}
-            </div>
-          </div>
-
-          <div className="row pt-4">
-            <div className="col-sm-12 text-center">
-              <Image
-                className="Image"
-                src={[config.API_URL + `/user/profile-pic/${userId}`]}
-              />
-            </div>
-          </div>
-
-          <div className="row pt-4 font-weight-bold pl-5 textcolor">
-            Birthdate
-          </div>
-
-          <div className="row pt-2 pl-5 textcolor">{birthdate}</div>
-
-          <div className="row pt-2 font-weight-bold pl-5 textcolor">
-            Location
-          </div>
-
-          <div className="row pt-2 pl-5 textcolor">
+    <div className="HirerProfilePage">
+      <div className="ViewProfile">
+        <div className="Title">{firstName + " " + lastName}</div>
+        <div className="Alias">{"@" + username}</div>
+        <Image
+          className="ProfileImage"
+          src={[config.API_URL + `/user/profile-pic/${userId}`]}
+        />
+        <div className="Description">
+          <div className="Label">Birthdate</div>
+          <div className="Value">{birthdate}</div>
+        </div>
+        <div className="Description">
+          <div className="Label">Location</div>
+          <div className="Value">
             {subdistrict + "," + district + "," + cityState + "," + country}
           </div>
-
-          <div className="row pt-2 font-weight-bold pl-5 textcolor">About</div>
-
-          <div className="row pt-2 pl-5 pr-5 textcolor">{bio}</div>
-
-          <button
-            className="edit-profile-button"
-            onClick={() => setShowEditDialog(true)}
-          >
-            <FontAwesomeIcon icon={faEdit} />
-            Edit my profile
-          </button>
-          <Dialog
-            isOpen={showEditDialog}
-            onClose={() => setShowEditDialog(false)}
-          >
-            <EditProfile
-              userId={userId}
-              onClose={() => setShowEditDialog(false)}
-            />
-          </Dialog>
+        </div>
+        <div className="Description">
+          <div className="Label">About</div>
+          <div className="Value">{bio}</div>
         </div>
 
-        <div className="col-md-5  ReviewContainer">
-          <div className="row  ReviewTitle">Review</div>
-          <div className="row pt-4 pl-5 text-dark">
-            {/* waiting for review process */}
-            <MyReviews hirerId={userId} />
-          </div>
+        <button
+          className="edit-profile-button"
+          onClick={() => setShowEditDialog(true)}
+        >
+          <FontAwesomeIcon icon={faEdit} />
+          Edit my profile
+        </button>
+        <Dialog
+          isOpen={showEditDialog}
+          onClose={() => setShowEditDialog(false)}
+        >
+          <EditProfile
+            userId={userId}
+            onClose={() => setShowEditDialog(false)}
+          />
+        </Dialog>
+      </div>
+      <div className="navy-bg">
+        <div className="ReviewTitle">Review</div>
+        <div className="MyReviewContainer">
+          {/* waiting for review process */}
+          <MyReviews hirerId={userId} />
         </div>
       </div>
     </div>
   );
 };
+

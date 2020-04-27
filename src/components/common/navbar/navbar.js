@@ -85,12 +85,12 @@ const Navbar = observer(({ loginState }) => {
           Finmus
         </Link>
       </div>
-      <div className='navbar-right flex-row'>
-        <div className='link-section flex-row'>
-          <Link className='text-white' to='/find/musician'>
+      <div className="navbar-right flex-row">
+        <div className="link-section flex-row">
+          {/* <Link className='text-white' to='/find/musician'>
             Find Musician
-          </Link>
-          <Link className='text-white' to='/find/events'>
+          </Link> */}
+          <Link className="text-white" to="/find/events">
             Find Events
           </Link>
           {/* <Link className='text-white' to='/find/bands'>
@@ -106,6 +106,12 @@ const Navbar = observer(({ loginState }) => {
               Manage
             </Link>
           </RoleGuard>
+          {/* <RoleGuard role="Hirer">
+            <Link className='text-white' to='/event/create'>
+              <FontAwesomeIcon icon={faPlus} className="mr-2"/>
+              New Event
+            </Link>
+          </RoleGuard> */}
         </div>
         <div className='dynamic-section'>
           {!loginState.isLoggedIn && <LoginButtons />}
