@@ -32,9 +32,9 @@ const DropdownMenu = ({ show, onClose, onLogout }) => {
                     <Link className='dropdown-item' to='/hirer/event'>
                         My Events
                     </Link>
-                    <Link className='dropdown-item' to='/hirer/profile/edit'>
+                    {/* <Link className='dropdown-item' to='/hirer/profile/edit'>
                         Edit My Profile
-                    </Link>
+                    </Link> */}
                 </RoleGuard>
                 {/* <RoleGuard role={Roles.Hirer}>
                     <div className='dropdown-divider'></div>
