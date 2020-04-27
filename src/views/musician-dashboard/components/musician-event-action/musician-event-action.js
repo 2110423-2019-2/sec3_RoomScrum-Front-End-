@@ -9,6 +9,7 @@ import ApplyEventButton from 'src/components/action-buttons/apply-event-button';
 import AcceptInvitationButton from 'src/components/action-buttons/accept-invitation-button';
 import RejectInvitationButton from 'src/components/action-buttons/reject-invitation-button';
 import { HireeContract } from 'src/components/contract';
+import CreateReview from 'src/views/review/create-reviews';
 
 // Hiree's event action
 const MusicianEventAction = ({ application, refreshCallback, debug }) => {
@@ -38,6 +39,8 @@ const MusicianEventAction = ({ application, refreshCallback, debug }) => {
   const canViewContract =
     debug || application.contract.status != ContractStatus.NOT_ACTIVE;
 
+  const canReview = debug || eventStatus == EventStatus.COMPLETE;
+
   return (
     <div className='musician-event-actions row'>
       {canCancel && (
@@ -56,6 +59,10 @@ const MusicianEventAction = ({ application, refreshCallback, debug }) => {
       {canViewContract && (
         <HireeContract eventId={eventId} application={application} />
       )}
+
+      { canReview && <CreateReview eventId={eventId} afterReview={() => {window.location.href = "/musician/my-events"}}/> }
+          
+
     </div>
   );
 };
