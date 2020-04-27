@@ -48,9 +48,6 @@ export default () => {
             <Route path={url + "/event"}>
               <Event />
             </Route>
-            <Route path={url + "/contract"}>
-              <Contract />
-            </Route>
             <Route path={url + "/"}>404 Admin</Route>
           </Switch>
         </DashboardContent>
