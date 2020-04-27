@@ -530,9 +530,9 @@ const MyEventItem = ({ each, onClick }) => {
             return (
               showFor.includes(status) && (
                 <PayByQRButton
-                  accountNo='1234567890123'
+                  accountNo={application.contract.hiree.nationalId}
                   amount={application.contract.price}
-                  displayName='Rodchananat K.'
+                  displayName={`${application.contract.hiree.firstName} ${application.contract.hiree.lastName}`}
                 />
               )
             );
