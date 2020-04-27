@@ -27,7 +27,7 @@ const EventItemInfo = ({ description, eventId }) => {
       .send(formdata)
       .then((res) => {
         console.log(res.text);
-        window.location.href = "/musician/event-invitations";
+        window.location.href = "/musician/my-events";
       })
       .catch((err) => {
         alert("err" + err);

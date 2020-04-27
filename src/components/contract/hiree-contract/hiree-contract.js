@@ -184,18 +184,17 @@ const HireeContract = ({ eventId, application }) => {
                 })()}
 
                 {(() => {
-                  return application.event.contract.status ==
-                    'Accepted' ? null : (
+                  return (application.event.contract.status ==
+                    'Accepted' || application.event.contract.status == 'WaitForStartDrafting') ? null : (
                     <ConfirmButton
-                      children={
-                        <Btn type='danger' className='float-right'>
-                          Cancel
-                        </Btn>
-                      }
                       action={cancelContract}
                       title={'Confirmation'}
                       question={`Please confirm to cancel this contract. The process can't be undone.`}
-                    />
+                    >
+                        <Btn type='danger' className='float-right'>
+                        Cancel
+                        </Btn>
+                    </ConfirmButton>
                   );
                 })()}
               </div>
