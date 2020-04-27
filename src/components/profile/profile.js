@@ -69,13 +69,12 @@ const ReportButton = ({ userId, username }) => {
   const formReport = {
     topic: {
       type: "textarea",
-      label: "Topic",
+      label: "",
       width: "12",
-      height: "3"
     },
     description: {
       type: "textarea",
-      label: "Description",
+      label: "",
       width: "12",
       // default: "write a review",
       validator: [
@@ -117,7 +116,11 @@ const ReportButton = ({ userId, username }) => {
         style={customStyles}
         className='report-modal'
       > */}
-      <Dialog isOpen={isOpen} onClose={() => setIsOpen(false)}>
+          <Dialog
+              isOpen={isOpen}
+              onClose={() => setIsOpen(false)}
+              className='report-dialog'
+          >
         <div>
           <div>
             <h1> Report </h1>
@@ -126,7 +129,7 @@ const ReportButton = ({ userId, username }) => {
               <div className="Value">@{username}</div>
             </div>
             <Form formDef={formReport} ref={formReportData} />
-            <Modal className="center-popup" isOpen={showAlert}>
+            <Dialog className="center-popup" isOpen={showAlert}>
               <ConfirmDialog
                 title="Confirm?"
                 question="Do you want to report"
@@ -139,7 +142,7 @@ const ReportButton = ({ userId, username }) => {
                   }
                 }}
               />
-            </Modal>
+            </Dialog>
             <button
               className="btn btn-primary mt-4"
               onClick={() => {
@@ -248,7 +251,7 @@ const Profile = ({
           </Dialog>
         </>
       )}
-      {/* {!isSelf && <ReportButton />} */}
+      {!isSelf && <ReportButton />}
     </div>
   );
 };
