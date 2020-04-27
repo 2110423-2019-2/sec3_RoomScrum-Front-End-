@@ -3,6 +3,9 @@ import request from 'superagent';
 import config from 'src/config';
 import './reviews.scss';
 import {ShowProfileButton} from 'src/components/profile'
+import EmptyMessage from 'src/components/common/empty-message';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const UserReviewItem = ({ review }) => {
     const {
@@ -51,6 +54,20 @@ const Reviews = ({ userId }) => {
             <div className="user-review-list">
                 {reviews && reviews.map(review => <UserReviewItem review={review} />)}
             </div>
+            {
+                reviews && reviews.length == 0
+                &&
+                <EmptyMessage>
+                    <div className="no-review">
+                        <FontAwesomeIcon icon={faTimes} className="icon" />
+                        <div> No review  </div>
+                        <div> There are no review for this user yet </div>
+                    </div>
+                </EmptyMessage>
+                
+                
+
+            }
         </div>
     )
 }

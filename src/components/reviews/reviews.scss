@@ -30,3 +30,18 @@
         
     }
 }
+
+.no-review {
+    text-align: center;
+    font-size: small;
+    color: white;
+    min-height: 100%;
+    padding: 8px;
+    // display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+
+    .icon {
+        font-size: 2em; // 1.5 * 2 = 3em
+    }
+}
