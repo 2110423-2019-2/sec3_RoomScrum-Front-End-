@@ -31,9 +31,6 @@ const EventItem = ({
   const closeModal = () => {
     setIsOpen(false);
   };
-  const formdata = {
-    eventId: eventId,
-  };
   const customStyles = {
     content: {
       // top                   : '50%',
@@ -48,19 +45,6 @@ const EventItem = ({
       width: "50%",
       height: "70%",
     },
-  };
-  const handleApply = () => {
-    request
-      .post(`${config.API_URL}/application/apply`)
-      .withCredentials()
-      .send(formdata)
-      .then((res) => {
-        console.log(res.text);
-      })
-      .catch((err) => {
-        alert("err" + err);
-      });
-    setIsOpen(false);
   };
 
   return (

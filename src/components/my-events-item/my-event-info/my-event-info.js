@@ -11,7 +11,7 @@ import { ConfirmDialog } from 'src/components/common';
 import './my-event-info.scss';
 import { ApplicationStatus, EventStatus } from 'src/enums';
 import Image from 'react-image';
-
+import MyMusician from './my-musician'
 const MyEventInfo = ({ each, status, application }) => {
   if (application.contract) {
     console.log(application.contract.status);
@@ -113,7 +113,8 @@ const MyEventInfo = ({ each, status, application }) => {
                 );
               }
               if (status == 'ContractDrafting') {
-                return <MyMusician eventId={eventId}/>; //to change
+                // return <MyMusician eventId={eventId}/>; //can't use
+                return <div className='ShowMusician'>You have accepted musician</div>;
               }
             })()}
           </div>
