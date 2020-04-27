@@ -110,7 +110,7 @@ const ReportButton = ({ userId, username }) => {
   };
 
   return (
-    <div>
+    <div className="Report">
       <div className="ReportTitle" onClick={() => openModal()}>
         Report
       </div>
@@ -118,14 +118,14 @@ const ReportButton = ({ userId, username }) => {
       <Dialog
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        className="report-dialog center-popup"
+        className="ReportDialog"
       >
      
-          <div className="Container">
-            <div className="Title"> Report </div>
-            <div className="Description">
-              <div className="Label"> Report to</div>
-              <div className="Value">@{username}</div>
+          <div className="ReportDialogContainer">
+            <div className="ReportHeader"> Report </div>
+            <div className="ReportDescription">
+              <div className="ReportLabel"> Report to</div>
+              <div className="ReportValue">@{username}</div>
             </div>
             <Form formDef={formReport} ref={formReportData} />
             <Dialog className="center-popup" isOpen={showAlert}>
