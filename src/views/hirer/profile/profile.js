@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import EditProfile from "./edit-profile";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import Dialog from "src/components/common/dialog";
+import moment from "moment";
 
 export default () => {
   const isFetch = useRef(false);
@@ -79,18 +80,37 @@ export default () => {
         />
         <div className="Description">
           <div className="Label">Birthdate</div>
-          <div className="Value">{birthdate}</div>
+          <div className="Value">
+            {moment({birthdate}).format("MMM DD, YYYY") +
+              " " +
+              `(${moment({birthdate}).fromNow()}years old )`}
+          </div>
+        </div>
+        <div className="Description">
+          <div className="Label">Gender</div>
+          <div className="Value">
+            {gender}
+          </div>
         </div>
         <div className="Description">
           <div className="Label">Location</div>
           <div className="Value">
-            {subdistrict + "," + district + "," + cityState + "," + country}
+            {address + " " + subdistrict + " " + district + " " + cityState + " " + country}
           </div>
         </div>
         <div className="Description">
-          <div className="Label">About</div>
-          <div className="Value">{bio}</div>
+          <div className="Label">Email</div>
+          <div className="Value">
+            {email}
+          </div>
         </div>
+        <div className="Description">
+          <div className="Label">Phone Number</div>
+          <div className="Value">
+            {phoneNumber}
+          </div>
+        </div>
+        
 
         <button
           className="edit-profile-button"
@@ -119,4 +139,3 @@ export default () => {
     </div>
   );
 };
-
