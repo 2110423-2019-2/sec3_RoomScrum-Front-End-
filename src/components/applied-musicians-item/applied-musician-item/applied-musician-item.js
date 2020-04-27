@@ -5,15 +5,52 @@ import request from "superagent";
 import config from "src/config";
 import { ConfirmDialog } from "src/components/common";
 import Image from "react-image";
+import { ShowProfileButton } from 'src/components/profile'
 
 const AppliedMusicianItem = ({
   each: {
     eventId,
     hireeId,
-    hiree: { firstName, lastName, username },
+    hiree: {
+      firstName, lastName,
+      username,
+      userId,
+      birthdate,
+      address, subdistrict, district, cityState, zipcode, country,
+      phoneNumber,
+      userType,
+
+      //musician
+      bio,
+      video,
+
+      //sensitive
+      nationalId,
+      gender,
+      email,
+    },
   },
   onClick,
 }) => {
+  const hiree = {
+    firstName, lastName,
+    username,
+    userId,
+    birthdate,
+    address, subdistrict, district, cityState, zipcode, country,
+    phoneNumber,
+    userType,
+
+    //musician
+    bio,
+    video,
+
+    //sensitive
+    nationalId,
+    gender,
+    email,
+  };
+  
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const [showAlert, setAlert] = useState(false);
@@ -49,9 +86,11 @@ const AppliedMusicianItem = ({
       </div>
       <div className="MusicianInfo">
         <div className="Description">
+        <ShowProfileButton user={hiree}>
           <div className="Label">
             {firstName} {lastName}
           </div>
+        </ShowProfileButton>
         </div>
         <div className="Value">@{username}</div>
         <div className="ActionContainer">
