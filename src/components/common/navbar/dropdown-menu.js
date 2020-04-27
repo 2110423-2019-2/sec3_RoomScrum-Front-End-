@@ -8,7 +8,7 @@ const DropdownMenu = ({ show, onClose, onLogout }) => {
             <div className="dropdown-triangle"></div>
             <div
                 className={'dropdown-menu dropdown list-group'}>
-                {/* <RoleGuard role={Roles.Musician}> */}
+                <RoleGuard role={Roles.Musician}>
                     <Link className='dropdown-item' to='/musician/my-profile'>
                         My profile
                     </Link>
@@ -21,8 +21,8 @@ const DropdownMenu = ({ show, onClose, onLogout }) => {
                     <Link className='dropdown-item' to='/musician/my-events'>
                         Invitations
                     </Link>
-                {/* </RoleGuard> */}
-                {/* <RoleGuard role={Roles.Hirer}> */}
+                </RoleGuard>
+                <RoleGuard role={Roles.Hirer}>
                     <Link className='dropdown-item' to='/hirer/profile/me'>
                         My profile
                     </Link>
@@ -32,16 +32,16 @@ const DropdownMenu = ({ show, onClose, onLogout }) => {
                     <Link className='dropdown-item' to='/hirer/event'>
                         My Events
                     </Link>
-                    <Link className='dropdown-item' to='/hirer/profile/edit'>
+                    {/* <Link className='dropdown-item' to='/hirer/profile/edit'>
                         Edit My Profile
-                    </Link>
-                {/* </RoleGuard> */}
-                {/* <RoleGuard role={Roles.Hirer}> */}
+                    </Link> */}
+                </RoleGuard>
+                {/* <RoleGuard role={Roles.Hirer}>
                     <div className='dropdown-divider'></div>
                     <Link className='dropdown-item' to='/event/create'>
                         Create Event
                     </Link>
-                {/* </RoleGuard> */}
+                </RoleGuard> */}
                 <div className='dropdown-divider'></div>
                 <div className='text-danger dropdown-item' onClick={onLogout}>
                     Logout

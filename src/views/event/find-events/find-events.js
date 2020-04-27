@@ -68,9 +68,9 @@ const FindEvents = () => {
             type="text"
           />
           <select id="cars" className="col-2" ref={searchInput}>
-            <option value="default">sarch by all</option>
-            <option value="name">sarch by name</option>
-            <option value="description">sarch by description</option>
+            <option value="default">search by all</option>
+            <option value="name">search by name</option>
+            <option value="description">search by description</option>
             <option value="location">search by location</option>
           </select>
           <div className="SubmitButtonContainer">
@@ -81,7 +81,7 @@ const FindEvents = () => {
         </div>
       </div>
       <div className="row ">
-        <div className="EventItemContainer col-sm d-flex flex-wrap justify-content-between">
+        <div className="EventItemContainer col-sm justify-content-between">
           {eventItems}
         </div>
       </div>
@@ -90,3 +90,4 @@ const FindEvents = () => {
 };
 
 export default FindEvents;
+{/* <div className="EventItemContainer col-sm d-flex flex-wrap justify-content-between"></div> */}

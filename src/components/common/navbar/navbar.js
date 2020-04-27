@@ -30,10 +30,10 @@ const LoginButtons = () => {
   return (
     <div className='login-buttons'>
       <LoginDialog open={isOpen} onRequestClose={closeDialog} />
-      <Link className='btn btn-secondary' onClick={openDialog}>
+      <div className="btn btn-secondary" onClick={openDialog}>
         Login
-      </Link>
-      <Link className='btn btn-secondary' to='/register'>
+      </div>
+      <Link className="btn btn-secondary" to="/register">
         Register
       </Link>
     </div>
@@ -85,12 +85,12 @@ const Navbar = observer(({ loginState }) => {
           Finmus
         </Link>
       </div>
-      <div className='navbar-right flex-row'>
-        <div className='link-section flex-row'>
-          <Link className='text-white' to='/find/musician'>
+      <div className="navbar-right flex-row">
+        <div className="link-section flex-row">
+          {/* <Link className='text-white' to='/find/musician'>
             Find Musician
-          </Link>
-          <Link className='text-white' to='/find/events'>
+          </Link> */}
+          <Link className="text-white" to="/find/events">
             Find Events
           </Link>
           {/* <Link className='text-white' to='/find/bands'>
@@ -106,12 +106,12 @@ const Navbar = observer(({ loginState }) => {
               Manage
             </Link>
           </RoleGuard>
-          <RoleGuard role='Hirer'>
+          {/* <RoleGuard role="Hirer">
             <Link className='text-white' to='/event/create'>
-              <FontAwesomeIcon icon={faPlus} className='mr-2' />
+              <FontAwesomeIcon icon={faPlus} className="mr-2"/>
               New Event
             </Link>
-          </RoleGuard>
+          </RoleGuard> */}
         </div>
         <div className='dynamic-section'>
           {!loginState.isLoggedIn && <LoginButtons />}

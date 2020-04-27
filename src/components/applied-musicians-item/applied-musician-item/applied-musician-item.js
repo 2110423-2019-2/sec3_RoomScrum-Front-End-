@@ -11,7 +11,8 @@ const AppliedMusicianItem = ({
     eventId,
     hireeId,
     hiree: { firstName, lastName, username },
-  }, onClick
+  },
+  onClick,
 }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -38,10 +39,8 @@ const AppliedMusicianItem = ({
       });
   };
 
-  
-
   return (
-    <div className="AppliedMusicianItem">
+    <div className="AppliedMusicianItem clearfix">
       <div className="MusicianImageContainer">
         <Image
           className="MusicianImage"
@@ -53,9 +52,9 @@ const AppliedMusicianItem = ({
           <div className="Label">
             {firstName} {lastName}
           </div>
-          <div className="Value">@{username}</div>
         </div>
-        <div className='ActionContainer'>
+        <div className="Value">@{username}</div>
+        <div className="ActionContainer">
           <Modal className="center-popup" isOpen={showAlert}>
             <ConfirmDialog
               title="Confirm?"

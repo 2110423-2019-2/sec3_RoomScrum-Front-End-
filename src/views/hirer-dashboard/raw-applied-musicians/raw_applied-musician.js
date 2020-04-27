@@ -75,7 +75,7 @@ const Applicants = ({ eventId }) => {
   return (
     <div>
       <p class="applied-musician">Applied Musician</p>
-      <div>{appliedMusicianItem};</div>
+      <div>{appliedMusicianItem}</div>
     </div>
   );
 };

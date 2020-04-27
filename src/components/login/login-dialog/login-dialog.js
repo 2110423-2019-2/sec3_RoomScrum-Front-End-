@@ -33,7 +33,7 @@ const LoginDialog = ({ open, onRequestClose }) => {
         }
       })
       .catch(err => {
-        alert("wrong password");
+        alert("Username or Password is incorrect");
       });
   };
   return (
