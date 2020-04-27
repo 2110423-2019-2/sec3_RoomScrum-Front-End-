@@ -27,7 +27,7 @@ const customStyles = {
     }
   };
 
-const CreateReview = ({eventId }) => {
+const CreateReview = ({eventId , afterReview}) => {
     const formReviewData = useRef();
     const [show, setShow] = useState(false);
     const [showAlert, setAlert] = useState(false);
@@ -53,7 +53,7 @@ const CreateReview = ({eventId }) => {
         .withCredentials()
         .send(data)
         .then(() => {
-          window.location.href = "/hirer/event";
+          afterReview && afterReview();
         })
         .catch(err => console.log(err));
         alert('Review Success')
