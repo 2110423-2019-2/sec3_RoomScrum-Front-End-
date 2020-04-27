@@ -107,7 +107,6 @@ const AppliedMusicianItem = ({
           </ShowProfileButton>
         </div>
         <div className="Value">@{username}</div>
-        <RoleGuard role="Musician">
           <div className="ActionContainer">
             <Modal className="center-popup" isOpen={showAlert}>
               <ConfirmDialog
@@ -133,7 +132,7 @@ const AppliedMusicianItem = ({
               Accept{" "}
             </div>
           </div>
-        </RoleGuard>
+ 
       </div>
     </div>
   );
