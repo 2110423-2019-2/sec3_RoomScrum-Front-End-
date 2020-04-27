@@ -1,18 +1,18 @@
-import React, { useRef, useState, useReducer } from "react";
-import "./create-event.scss";
-import { Navbar, Form } from "src/components/common";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowCircleUp } from "@fortawesome/free-solid-svg-icons";
-import classnames from "classnames";
-import request from "superagent";
-import config from "src/config";
-import Modal from "react-modal";
-import { ConfirmDialog } from "src/components/common";
-import { formBelow, formUpper } from "./form-definition";
-import FormV2 from "src/components/common/form/form-v2";
-import { formStateBuilder } from "src/components/common/form/form-state";
-import ImageUploader from "src/components/common/image-upload/image-upload";
-import { UserType } from "src/enums";
+import React, { useRef, useState, useReducer } from 'react';
+import './create-event.scss';
+import { Navbar, Form } from 'src/components/common';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
+import classnames from 'classnames';
+import request from 'superagent';
+import config from 'src/config';
+import Modal from 'react-modal';
+import { ConfirmDialog } from 'src/components/common';
+import { formBelow, formUpper } from './form-definition';
+import FormV2 from 'src/components/common/form/form-v2';
+import { formStateBuilder } from 'src/components/common/form/form-state';
+import ImageUploader from 'src/components/common/image-upload/image-upload';
+import { UserType } from 'src/enums';
 
 // const CreateEvent = () => {
 //   const [eventFormBelow, dispatchEventFormBelow] = formStateBuilder(
@@ -78,7 +78,7 @@ import { UserType } from "src/enums";
 //     try {
 //       await request
 //         .post(`${config.API_URL}/user/create`) //to change
-//         .send(sendData) 
+//         .send(sendData)
 //         .then((res) => {
 //           const { token, username } = JSON.parse(res.text);
 //           if (token) {
@@ -125,8 +125,8 @@ const CreateEventPage = () => {
     const data = {};
     const form = new FormData();
     const upload = uploadedFile.current;
-    if (!upload.files || !upload.files[0]) throw new Error("No file uploaded");
-    form.append("image", uploadedFile.current.files[0]);
+    if (!upload.files || !upload.files[0]) throw new Error('No file uploaded');
+    form.append('image', uploadedFile.current.files[0]);
 
     for (let key in formDataUpper.current) {
       if (
@@ -141,16 +141,16 @@ const CreateEventPage = () => {
       data[key] = formDataBelow.current[key].value;
     }
     // data["eventImage"] = imageName;
-    data["startdatetime"] =
-      formDataUpper.current["startDate"].value +
-      "T" +
-      formDataUpper.current["startTime"].value +
-      ":00.000Z";
-    data["enddatetime"] =
-      formDataUpper.current["endDate"].value +
-      "T" +
-      formDataUpper.current["endTime"].value +
-      ":00.000Z";
+    data['startdatetime'] =
+      formDataUpper.current['startDate'].value +
+      'T' +
+      formDataUpper.current['startTime'].value +
+      ':00.000Z';
+    data['enddatetime'] =
+      formDataUpper.current['endDate'].value +
+      'T' +
+      formDataUpper.current['endTime'].value +
+      ':00.000Z';
     console.log(JSON.stringify(data));
     request
       .post(`${config.API_URL}/events/create-event`)
@@ -164,7 +164,9 @@ const CreateEventPage = () => {
           .post(`${config.API_URL}/events/event-pic/${eventId}`)
           .withCredentials()
           .send(form)
-          .then((res) => {alert(res.body.eventId);})
+          .then((res) => {
+            //alert(res.body.eventId);
+          })
           .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
@@ -187,7 +189,7 @@ const CreateEventPage = () => {
   const createEvent = async () => {
     await postData();
     // await uploadImage();
-    window.location.href = "/hirer/event";
+    window.location.href = '/hirer/event';
   };
 
   const [showAlert, setAlert] = useState(false);
@@ -214,7 +216,7 @@ const CreateEventPage = () => {
                 <div
                   className={classnames({
                     overlay: true,
-                    "force-show": !eventImage,
+                    'force-show': !eventImage,
                   })}
                   onClick={clickUpload}>
                   <div>
@@ -230,8 +232,8 @@ const CreateEventPage = () => {
 
             <Modal className='center-popup' isOpen={showAlert}>
               <ConfirmDialog
-                title="Confirm?"
-                question="Do you want to create event"
+                title='Confirm?'
+                question='Do you want to create event'
                 callback={(confirm) => {
                   setAlert(false);
                   if (confirm) {
