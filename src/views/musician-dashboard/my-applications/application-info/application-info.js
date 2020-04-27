@@ -34,10 +34,11 @@ const ApplicationInfoDialog = ({ application, onClose, onCancel }) => {
         address, subdistrict, district, province, zipcode,
         budget,
         description,
-        user: {
-            firstName, lastName,
-        }
+        user
     } = event;
+
+    const firstName = user.firstName;
+    const lastName = user.lastName;
 
     return (
         <div className="event-info-dialog">
@@ -87,12 +88,13 @@ const ApplicationInfoDialog = ({ application, onClose, onCancel }) => {
                                 <div className="value"> {budget || '<<budget>>'} baht </div>
                             </div>
                             <div className="desc">
-                                <ShowProfileButton>
-                                    <div className="label"> Hirer </div>
-                                </ShowProfileButton>
+                                <div className="label"> Hirer </div>
+                              
+                                <ShowProfileButton user={user}>
                                 <div className="value">
                                     {firstName + ' ' + lastName}
                                 </div>
+                                </ShowProfileButton>
                             </div>
                             <div className="desc">
                                 <div className="label"> About </div>
