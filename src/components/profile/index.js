@@ -1,2 +1,2 @@
 export { default } from './profile.js';
-export { ProfileDialog } from './profile-dialog.js'
+export { ShowProfileButton } from './show-profile-button.js'

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import request from 'superagent';
 import config from 'src/config';
 import './reviews.scss';
-
+import {ShowProfileButton} from 'src/components/profile'
 
 const UserReviewItem = ({ review }) => {
     const {
@@ -12,9 +12,12 @@ const UserReviewItem = ({ review }) => {
 
     return (
         <div className="user-review-item">
-            <div className="reviewer"> {firstName} {lastName} </div>
+            <ShowProfileButton user={review.reviewer}>
+                <div className="reviewer"> {firstName} {lastName} </div>  
+            </ShowProfileButton>       
             <div className="divider" />
             <div className="message"> {description}</div>
+            
         </div>
     )
 }
