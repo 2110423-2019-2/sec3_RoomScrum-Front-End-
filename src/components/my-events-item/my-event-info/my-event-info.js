@@ -11,7 +11,7 @@ import { ConfirmDialog } from 'src/components/common';
 import './my-event-info.scss';
 import { ApplicationStatus, EventStatus } from 'src/enums';
 import Image from 'react-image';
-
+import MyMusician from './my-musician'
 const MyEventInfo = ({ each, status, application }) => {
   if (application.contract) {
     console.log(application.contract.status);
@@ -92,10 +92,6 @@ const MyEventInfo = ({ each, status, application }) => {
                 );
               }
             })()}
-
-            <div className='edit'>
-              <Edit event={each} />
-            </div>
             {/* <button onClick={() => doDelete(event.eventId)} > Cancel </button> */}
           </div>
           <div className='AppliedMusician col-5'>
@@ -115,6 +111,10 @@ const MyEventInfo = ({ each, status, application }) => {
                     <Applicants eventId={each.eventId} />
                   </div>
                 );
+              }
+              if (status == 'ContractDrafting') {
+                // return <MyMusician eventId={eventId}/>; //can't use
+                return <div className='ShowMusician'>You have accepted musician</div>;
               }
             })()}
           </div>

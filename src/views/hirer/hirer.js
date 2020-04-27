@@ -16,8 +16,6 @@ import "./hirer.scss";
 import { SideNavigation } from "src/components/common/sidebar-hirer/sidebar-hirer";
 import Event from 'src/views/hirer/event'
 import Contract from "./contract";
-import EditProfile from "./profile/edit-profile"
-import MyEventInfo from "src/components/my-events-item/my-event-info"
 
 const ListItem = ({ url, text }) => {
   return (
@@ -46,9 +44,6 @@ export default () => {
           <Switch>
             <Route path={url + "/profile/me"}>
               <Profile />
-            </Route>
-            <Route path={url + "/profile/edit"}>
-              <EditProfile />
             </Route>
             <Route path={url + "/event"}>
               <Event />

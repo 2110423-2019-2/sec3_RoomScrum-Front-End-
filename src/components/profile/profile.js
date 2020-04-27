@@ -9,6 +9,7 @@ import './profile.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Dialog from 'src/components/common/dialog';
+import { UserType } from 'src/enums';
 moment.locale('en', {
     relativeTime: {
         future: "in %s",
@@ -27,6 +28,9 @@ moment.locale('en', {
     }
 });
 
+const ReportBtn = ({username}) => {
+    return (<h1> report profile </h1>)
+}
 // constructor for form field
 const formField = (name, value) => ({ name, value });
 
@@ -38,6 +42,7 @@ const Profile = ({
         birthdate,
         address, subdistrict, district, cityState, zipcode, country,
         phoneNumber,
+        userType,
 
         //musician
         bio,
@@ -49,7 +54,6 @@ const Profile = ({
         email,
     },
     onProfileUpdate,
-    userType,
     isSelf,
     EditProfileDialog
 }) => {
@@ -60,7 +64,8 @@ const Profile = ({
             `( ${moment(birthdate).fromNow()} years old )`
         ),
         formField("Gender", gender),
-        formField("About", bio),
+        // formField("About", bio),
+        (userType != "Hirer" && formField("About", bio)),
         formField("National ID", nationalId),
         formField(
             "Address",
@@ -68,6 +73,7 @@ const Profile = ({
         ),
         formField("Email", email),
         formField("Phone Number", phoneNumber),
+        // (userType != "Hirer" && formField("Bio", bio))
     ];
 
     const [showEditDialog, setShowEditDialog] = useState(false);
@@ -91,14 +97,18 @@ const Profile = ({
                     )
                 })
             }
-            <button className="edit-profile-button" onClick={() => setShowEditDialog(true)}>
-                <FontAwesomeIcon icon={faEdit} />
+            {isSelf && (
+                <>
+                <button className="edit-profile-button" onClick={() => setShowEditDialog(true)}>
+                    <FontAwesomeIcon icon={faEdit} />
                 Edit my profile
-            </button>
-            <Dialog isOpen={showEditDialog} onClose={() => setShowEditDialog(false)}>
-                <EditProfileDialog userId={userId} onClose={() => setShowEditDialog(false)} changeCallback={onProfileUpdate} />
-            </Dialog>
-            <h1> report profile </h1>
+                </button>
+                <Dialog isOpen={showEditDialog} onClose={() => setShowEditDialog(false)}>
+                    <EditProfileDialog userId={userId} onClose={() => setShowEditDialog(false)} changeCallback={onProfileUpdate} />
+                </Dialog>
+                </>
+            )}
+            {!isSelf && (<ReportBtn/>)}
         </div>
     )
 };
