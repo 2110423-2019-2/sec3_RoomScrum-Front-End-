@@ -7,7 +7,8 @@ import { sortByTimestampDesc } from "src/views/musician-dashboard/util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import EmptyMessage from "src/components/common/empty-message";
-import './hirer-dashboard.scss'
+import "./hirer-dashboard.scss";
+import { Link } from 'react-router-dom';
 const HirerDashboard = () => {
   const [show, setShow] = useState(false);
   const [isFetch, setIsFetch] = useState(false);
@@ -50,24 +51,25 @@ const HirerDashboard = () => {
       .catch((err) => console.log(err));
   };
 
-    return (
-      <div>
-        {( myEventList && myEventList.length > 0 )? (
-           myEventList.map(each => <MyEventItem each={each} onClick={deleteItem} />)
-        ) : (
-          <EmptyMessage>
-            <div className="no-invitation">
-              <FontAwesomeIcon icon={faTimes} className="icon" />
-              <div> No Event </div>
-              <div> Create Now! </div>
-            </div>
-          </EmptyMessage>
-        )}
-      </div>
-    );
-
-  
-
+  return (
+    <div>
+      {myEventList && myEventList.length > 0 ? (
+        myEventList.map((each) => (
+          <MyEventItem each={each} onClick={deleteItem} />
+        ))
+      ) : (
+        <EmptyMessage>
+          <div className="no-invitation">
+            <FontAwesomeIcon icon={faTimes} className="icon" />
+            <div> You have no event </div>
+            <Link className="goCreate" to="/event/create">
+              CREATE HERE!
+            </Link>
+          </div>
+        </EmptyMessage>
+      )}
+    </div>
+  );
 };
 
 export default HirerDashboard;
