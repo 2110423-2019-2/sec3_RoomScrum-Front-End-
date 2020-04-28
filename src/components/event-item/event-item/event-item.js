@@ -6,10 +6,11 @@ import config from "src/config";
 import Image from "react-image";
 import EventItemInfo from "./event-item-info";
 
-const EventItem = ({
-  each: {
+const EventItem = ({ each }) => {
+  const {
     eventId,
     eventName,
+    hirerId,
     description,
     address,
     subdistrict,
@@ -19,10 +20,11 @@ const EventItem = ({
     zipcode,
     startdatetime,
     enddatetime,
+    isCancelled,
     eventImage,
-    hirerName,
-  },
-}) => {
+    userId,
+  } = each;
+
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(true);
@@ -87,7 +89,7 @@ const EventItem = ({
         onRequestClose={closeModal}
         style={customStyles}
       >
-        <EventItemInfo description={description} eventId={eventId} />
+        <EventItemInfo each={each} />
       </Modal>
     </>
   );
