@@ -7,7 +7,7 @@ import { userFormDef, musicianFormDef } from "./form-definition";
 import FormV2 from "src/components/common/form/form-v2";
 import { formStateBuilder } from "src/components/common/form/form-state";
 import ImageUploader from "src/components/common/image-upload/image-upload";
-import { UserType } from 'src/enums';
+import { UserType } from "src/enums";
 
 const Registration = () => {
   const [userForm, dispatchUserForm] = formStateBuilder(userFormDef)();
@@ -18,7 +18,7 @@ const Registration = () => {
   const [nationalCardImage, setNationalCardImage] = useState(null);
   const [accepted, setAccepted] = useState(false);
 
-  const handleCheck = evt => {
+  const handleCheck = (evt) => {
     console.log(evt.target.checked);
     setAccepted(evt.target.checked);
   };
@@ -49,11 +49,11 @@ const Registration = () => {
     const profileImageName = await request
       .post(`${config.API_URL}/user/temp-profile-pic`)
       .attach("image", profileImage)
-      .then(res => {
+      .then((res) => {
         const { imageName } = JSON.parse(res.text);
         return imageName;
       })
-      .catch(err => {
+      .catch((err) => {
         alert("profile upload err");
         console.log(err);
         return null;
@@ -65,11 +65,11 @@ const Registration = () => {
       nationalCardImageName = await request
         .post(`${config.API_URL}/user/temp-id-pic`)
         .attach("image", nationalCardImage)
-        .then(res => {
+        .then((res) => {
           const { imageName } = JSON.parse(res.text);
           return imageName;
         })
-        .catch(err => {
+        .catch((err) => {
           alert("national card upload err");
           console.log(err);
           return null;
@@ -87,7 +87,7 @@ const Registration = () => {
 
     Object.assign(sendData, {
       profileImage: profileImageName,
-      nationalCardImage: nationalCardImageName
+      nationalCardImage: nationalCardImageName,
     });
 
     try {
@@ -96,9 +96,9 @@ const Registration = () => {
         .post(`${config.API_URL}/auth/login`)
         .send({
           username: userForm.username.value,
-          password: userForm.password.value
+          password: userForm.password.value,
         })
-        .then(res => {
+        .then((res) => {
           const { token, username } = JSON.parse(res.text);
           if (token) {
             document.cookie = `token=${token}`;
@@ -107,7 +107,7 @@ const Registration = () => {
             alert("invalid response from server");
           }
         })
-        .catch(err => {
+        .catch((err) => {
           alert("error auto-logging in, please try login manually");
         });
     } catch (err) {
@@ -116,8 +116,16 @@ const Registration = () => {
   };
 
   return (
-    <div className="register">
+    <div className="register-page">
       <Navbar />
+
+      <div>
+        <img
+          className="register-cover-image register-bg-image"
+          src="/bg-1.png"
+        />
+      </div>
+
       <div className="container rounded-top rounded-lg shadow">
         <h1>Registration</h1>
         <div className="row justify-content-center m-4">
@@ -164,9 +172,14 @@ const Registration = () => {
           disabled={!accepted}
         >
           {" "}
-          Register
-          {" "}
+          Register{" "}
         </button>
+      </div>
+      <div>
+        <img
+          className="register-cover-image2 register-bg-image2"
+          src="/bg-2.png"
+        />
       </div>
     </div>
   );

@@ -1,14 +1,22 @@
 @import "src/styles/color.scss";
-.register {
+.register-page {
+
+    // height: 100vh;
+    // max-height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    background-color: $dark-navy;
+    // background-color: $dark-navy;
     // background-image: image('bg-1.png');
     // background-size: cover;
+    position: absolute;
+    flex-direction: column;
+    // background-color: black;
 
-    > .container {
+
+    .container {
         margin-top: 64px;
         box-sizing: border-box;
         height: 100%;
@@ -16,6 +24,10 @@
         max-width: 768px;
         padding: 16px 32px;  
         background-color: white;
+        position: relative;
+        display: block;
+        
+        
         
         h1 {
             text-align: center;
@@ -69,3 +81,45 @@
         }
     }
 }
+
+.register-cover-image {
+    width: 100%;
+    height: 75vh; // navbar and headline
+    object-fit: cover;
+    z-index: -1;
+    flex-direction: column;
+    // overflow: auto;
+    display: grid;
+    // flex-wrap: wrap;
+
+    
+   
+
+
+    &.register-bg-image {
+        position: absolute;
+        left: 0%;
+        height: 75vh; 
+        // opacity: 0.65;
+    }
+}
+
+.register-cover-image2 {
+    width: 100%;
+    height: 75vh; // navbar and headline
+    object-fit: cover;
+    z-index: -1;
+    flex-direction: column;
+    overflow: auto;
+    display: grid;
+    flex-wrap: wrap;
+    top:700px;
+
+    &.register-bg-image2 {
+        position: absolute;
+        left: 0%;
+        height: 75vh; 
+        // opacity: 0.65;
+    }
+}
+
