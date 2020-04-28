@@ -1,7 +1,7 @@
 @import "src/styles/color.scss";
 .AppliedMusicianItem {
   background-color: white;
-  //   box-shadow: 0px 4px 4px #bababa;
+  box-shadow: 0px 4px 4px #bababa;
   margin-bottom: 16px;
   display: flex;
   flex-flow: row wrap;
@@ -12,7 +12,6 @@
     align-self: flex-start;
     width: 100x;
     height: 100px;
-
   }
   .MusicianImage {
     // flex: 0 0 auto;

@@ -245,7 +245,7 @@ const MusicianInvitation = ({ eventId }) => {
         </Dialog>
         <div className='container p-0'>
           <div className='centered header'>
-            <div className='label'> Enter username to invite</div>
+            <div className='InviteLabel mb-3'> Enter musician's username to invite him/her</div>
             <AsyncTypeahead
               options={musicianChoice}
               isLoading={isLoading}
@@ -254,7 +254,7 @@ const MusicianInvitation = ({ eventId }) => {
               multiple={false}
               minLength={3}
               onSearch={fetchChoice}
-              placeholder='enter username to invite'
+              placeholder='enter username'
               onChange={handleSelection}
               renderMenuItemChildren={(option, props) => {
                 const { firstName, lastName, username } = option;
@@ -353,7 +353,12 @@ const CreateReview = ({ eventId, status }) => {
         style={customStyles}>
         <div>
           <div>
-            <h1> Review </h1>
+            <div className = 'ReviewLabel'>
+               Review 
+            </div>
+            <div className = 'ReviewValue'>
+               review your musician to finish the process 
+            </div>
             <Form formDef={formReview} ref={formReviewData} />
             <Modal className='center-popup' isOpen={showAlert}>
               <ConfirmDialog
