@@ -4,6 +4,8 @@ import './home.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import LoginDialog from 'src/components/login';
+import { observer } from 'mobx-react';
+import { globalLoginState } from 'src/store';
 
 const Footer = () => {
   return (
@@ -13,7 +15,7 @@ const Footer = () => {
   )
 }
 
-const Home = () => {
+const Home = observer(() => {
   const [showLogin, setShowLogin] = useState(false);
   
   const showLoginDialog = () => setShowLogin(true);
@@ -41,8 +43,12 @@ const Home = () => {
               <span> Hire best musician  </span>
             </div>
             <div className="cta-buttons">
+            {!globalLoginState.isLoggedIn && 
+              <>
               <button onClick={goRegister}> Register </button>
               <button onClick={showLoginDialog}> Login </button>
+              </>
+            }
             </div>
           </div>
         </div>
@@ -51,6 +57,6 @@ const Home = () => {
       <LoginDialog open={showLogin} onRequestClose={() => setShowLogin(false)}/>
     </div>
   );
-};
+});
 
 export default Home;
