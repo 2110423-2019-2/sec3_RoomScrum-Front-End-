@@ -213,7 +213,13 @@ const CreateEventPage = () => {
     // style from admin
     <div className='full-height create-event'>
       <Navbar />
-      <div className='rest'>
+      <div>
+        <img
+          className="create-event-cover-image create-event-bg-image"
+          src="/bg-1.png"
+        />
+      </div>
+      <div className='rest'>  
         <div className='container rounded-top rounded-lg shadow'>
           <h1> Create Event</h1>
           <div className='container-fluid'>
@@ -270,6 +276,12 @@ const CreateEventPage = () => {
             </button>
           </div>
         </div>
+      </div>
+      <div>
+        <img
+          className="create-event-cover-image2 create-event-bg-image2"
+          src="/bg-2.png"
+        />
       </div>
     </div>
   );
