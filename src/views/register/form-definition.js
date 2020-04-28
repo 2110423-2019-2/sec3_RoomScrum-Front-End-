@@ -5,6 +5,11 @@ const MinLength = length => value => {
   if (value.length < length) return `Must be at least ${length} characters`;
 };
 
+const MaxLength = length => value => {
+  if (!value) return "Required";
+  if (value.length > length) return `Must be at most ${length} characters`;
+};
+
 const MatchRegex = (regex, msg) => value => {
   if (!value) return "Required";
   if (!msg) msg = `Must match regex ${regex}`;
@@ -159,7 +164,8 @@ export const userFormDef = {
 export const musicianFormDef = {
   bio: {
     type: "textarea",
-    label: "Bio"
+    label: "Bio",
+    validator: [MaxLength(150)]
   },
   videoUrl: {
     type: "text",

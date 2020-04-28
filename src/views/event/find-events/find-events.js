@@ -80,7 +80,7 @@ const FindEvents = () => {
           </div>
         </div>
       </div>
-      <div className="row ">
+      <div className="RowOfEvent row ">
         <div className="EventItemContainer col ">
           {eventItems}
         </div>
