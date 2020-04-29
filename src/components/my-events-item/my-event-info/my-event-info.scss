@@ -102,6 +102,7 @@
 
   .AppliedMusician {
     // max-width: 50%;
+
     overflow: auto;
     // margin-right: auto;
     // margin-left: auto;
@@ -111,16 +112,23 @@
     // font-weight: bold;
     float: right;
     color: white;
-    text-align: center;
+    text-align:center;
+    width: 100%;
     .NoApllicant {
       font-size: 100px;
       margin-top: 100px;
     }
     .ShowMusician {
       font-size: 100px;
-
-      margin-right: auto;
-      margin-left: auto;
+      margin-top: 100px;
+    }
+    .CompleteEvent{
+      font-size: 70px;
+      margin-top: 100px;
+    }
+    .PaymentPending{
+      font-size: 90px;
+      margin-top: 100px;
     }
   }
 }

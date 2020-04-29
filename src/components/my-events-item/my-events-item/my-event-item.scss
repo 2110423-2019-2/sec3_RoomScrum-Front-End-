@@ -9,6 +9,32 @@
   .EventImageContainer {
     position: relative;
     align-self: flex-start;
+    .banner-container {
+      position: absolute;
+      // same as event-image
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 24px;
+      
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .banner {
+          width: 100%;
+          background: $navy;
+          color: white;
+          font-size: 24px;
+          padding: 8px 0;
+          text-align: center;
+          display: none;
+
+          &.show {
+              display: block;
+          }
+      }
+  }
   }
 
   .EventImage {

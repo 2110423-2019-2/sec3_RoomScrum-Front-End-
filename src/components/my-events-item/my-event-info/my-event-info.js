@@ -180,6 +180,21 @@ const MyEventInfo = ({ each, status, application }) => {
                   <div className="ShowMusician">You have accepted musician</div>
                 );
               }
+              if (status == "PaymentPending" || status == "Settle") {
+                return (
+                  <div className="PaymentPending">Your are in payment process</div>
+                );
+              }
+              // if (status == "Settle") {
+              //   return (
+              //     <div className="ShowMusician">Your event is almost finished</div>
+              //   );
+              // }
+              if (status == "Complete") {
+                return (
+                  <div className="CompleteEvent">Your event is finished. Don't forget to review your musician</div>
+                );
+              }
             })()}
           </div>
         </div>
