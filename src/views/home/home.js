@@ -41,14 +41,7 @@ const Home = observer(({ loginState }) => {
               <FontAwesomeIcon icon={faCheckCircle} />
               <span> Hire best musician </span>
             </div>
-            <div className='cta-buttons'>
-              {!globalLoginState.isLoggedIn && (
-                <>
-                  <button onClick={goRegister}> Register </button>
-                  <button onClick={showLoginDialog}> Login </button>
-                </>
-              )}
-            </div>
+            <div className='cta-buttons'></div>
 
             {(() => {
               if (!loginState.isLoggedIn) {
