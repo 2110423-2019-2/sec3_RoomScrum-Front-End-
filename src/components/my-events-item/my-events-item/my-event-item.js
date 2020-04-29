@@ -346,7 +346,7 @@ const CreateReview = ({ eventId, status }) => {
         if (status == "Complete")
           return (
             <div className="ArchieveButton" onClick={openModal}>
-              <div className="ArchieveButtonTitle">Archieve</div>
+              <div className="ArchieveButtonTitle">Complete</div>
             </div>
           );
       })()}
