@@ -60,7 +60,7 @@ const MusicianEventAction = ({ application, refreshCallback, debug }) => {
         <HireeContract eventId={eventId} application={application} />
       )}
 
-      { canReview && <CreateReview eventId={eventId} afterReview={() => {window.location.href = "/musician/my-events"}}/> }
+      { <CreateReview eventId={eventId} afterReview={() => {window.location.href = "/musician/my-events"}}/> }
           
 
     </div>
