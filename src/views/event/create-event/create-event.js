@@ -172,7 +172,7 @@ const CreateEventPage = () => {
       .catch((err) => console.log(err));
   };
 
-  // const uploadImage = async () => {
+  // const uploadImage = async () => {  src='/bg-2.png'
   //   const form = new FormData();
   //   const upload = uploadedFile.current;
   //   if (!upload.files || !upload.files[0]) throw new Error("No file uploaded");
@@ -187,8 +187,13 @@ const CreateEventPage = () => {
   // };
   const btnStyle = () => {
     const upload = uploadedFile.current;
-    return (upload && uploadedFile.current.files && uploadedFile.current.files[0]) ? {} : { backgroundColor: 'grey', 'border-color': 'transparent' }
-  }
+    return upload && uploadedFile.current.files && uploadedFile.current.files[0]
+      ? {}
+      : {
+          backgroundColor: 'grey',
+          'border-color': 'transparent',
+        };
+  };
 
   const createEvent = async () => {
     const upload = uploadedFile.current;
@@ -196,30 +201,23 @@ const CreateEventPage = () => {
       await postData();
       // await uploadImage();
       window.location.href = '/hirer/event';
-
     }
-      
   };
 
   const onUploadClick = () => {
     const upload = uploadedFile.current;
     if (upload.files && upload.files[0]) {
-      setAlert(true)
+      setAlert(true);
     }
-  }
+  };
   const [showAlert, setAlert] = useState(false);
 
   return (
     // style from admin
     <div className='full-height create-event'>
       <Navbar />
-      <div>
-        <img
-          className="create-event-cover-image create-event-bg-image"
-          src="/bg-1.png"
-        />
-      </div>
-      <div className='rest'>  
+
+      <div className='rest'>
         <div className='container rounded-top rounded-lg shadow'>
           <h1> Create Event</h1>
           <div className='container-fluid'>
@@ -268,20 +266,12 @@ const CreateEventPage = () => {
             <button
               className='btn btn-primary mt-4'
               style={btnStyle()}
-              onClick={
-                onUploadClick
-              }>
+              onClick={onUploadClick}>
               {' '}
               Submit{' '}
             </button>
           </div>
         </div>
-      </div>
-      <div>
-        <img
-          className="create-event-cover-image2 create-event-bg-image2"
-          src="/bg-2.png"
-        />
       </div>
     </div>
   );

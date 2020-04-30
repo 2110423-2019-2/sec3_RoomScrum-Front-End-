@@ -5,6 +5,7 @@
   // flex-direction: column;
   // align-items: center;
   background-color: white;
+
   // height: 100vh;
   // max-height: 100vh;
   // overflow: auto;
@@ -14,13 +15,18 @@
     width: 100%;
     // overflow: auto;
     display: flex;
-    // background-color: red;
-    z-index: 1;
+    // background-color: black;
+    // z-index: 1;
     align-items: center;
     flex-direction: column;
     // min-height: 100vh;
+    background-image: url("/bg-3.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 
-    > .container {
+
+    >.container {
       margin-top: 64px;
       box-sizing: border-box;
       width: 100%;
@@ -28,7 +34,7 @@
       padding: 16px;
       background-color: white;
       position: absolute;
-     
+
 
       h1 {
         text-align: center;
@@ -39,6 +45,7 @@
         position: relative;
         flex: 0 0 192px;
         min-height: 192px;
+
         // align-items: center;
         img {
           height: 192px;
@@ -58,7 +65,7 @@
           cursor: pointer;
           font-size: 64px;
 
-          > div {
+          >div {
             background-color: transparent;
             color: transparent;
             text-align: center;
@@ -66,12 +73,14 @@
             border-radius: 50%;
           }
 
-          &.force-show > div {
+          &.force-show>div {
             color: rgba(64, 64, 64, 0.3);
           }
-          &:hover > div {
+
+          &:hover>div {
             color: rgba(255, 255, 255, 0.7);
           }
+
           &:hover {
             background-color: rgba(48, 18, 18, 0.3);
           }
@@ -85,7 +94,7 @@
   width: 100%;
   height: 50vh; // navbar and headline
   object-fit: cover;
-  z-index: 0;
+  // z-index: -1;
   flex-direction: column;
   // overflow: auto;
   display: grid;
@@ -104,13 +113,13 @@
   width: 100%;
   // height: 75vh; // navbar and headline
   object-fit: cover;
-  z-index: 0;
+  // z-index: -1;
   flex-direction: column;
   overflow: auto;
   display: grid;
   flex-wrap: wrap;
   top: 520px;
-  
+
 
   &.create-event-bg-image2 {
     position: absolute;
